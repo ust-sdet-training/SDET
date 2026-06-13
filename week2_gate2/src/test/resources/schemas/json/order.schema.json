@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+
+  "required": [
+    "id",
+    "orderNumber",
+    "status",
+    "payment",
+    "paymentMethod",
+    "items",
+    "subtotal",
+    "total",
+    "deliverySlot",
+    "address"
+  ],
+  "properties": {
+    "id": {"type": "integer"},
+    "orderNumber": {"type": "string"},
+    "userId": {"type": "integer"},
+    "ownerKey": {"type": "string"},
+    "placedOn": {"type": "string"},
+    "status": {"type": "string"},
+    "payment": {"type": "string"},
+    "paymentMethod": {"type": "string"},
+    "channel": {"type": "string"},
+
+    "items": {
+      "type": "array",
+
+      "items": {
+        "type": "object",
+
+        "properties": {
+          "id": {"type": "integer"},
+          "productId": {"type": "integer"},
+          "quantity": {"type": "integer"},
+          "size": {"type": "string"},
+          "color": {"type": "string"},
+          "fulfilment": {"type": "string"},
+          "product": {
+            "type": "object",
+
+            "properties": {
+              "id": {"type": "integer"},
+              "name": {"type": "string"},
+              "category": {"type": "string"},
+              "price": {"type": "integer"},
+              "stock": {"type": "integer"},
+              "brand": {"type": "string"},
+              "sku": {"type": "string"},
+              "summary": {"type": "string"},
+
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "subtotal": {"type": "integer"},
+    "shipping": {"type": "integer"},
+    "discount": {"type": "integer"},
+    "total": {"type": "integer"},
+    "deliverySlot": {"type": "string"},
+    "address": {"type": "string"},
+    "coupon": {"type": "string"}
+  }
+}

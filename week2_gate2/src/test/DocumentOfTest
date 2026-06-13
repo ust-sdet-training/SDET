@@ -1,0 +1,57 @@
+ Folder Structure:
+ src->test->java->packages->base
+                          ->config
+                          ->models
+                          ->services
+                          ->specs
+                          ->support
+                          ->tests
+
+src->resources package->schemas packages->json
+                                        ->xsd
+
+base->BaseTest
+
+config->ConfigReader
+      ->DatabaseConfig
+
+models->OrderRequest
+      ->OrderResponse
+      ->OrderRow
+
+services->AuthServices
+        ->OrderService
+
+specs->RequestSpecs
+     ->ResponseSpecs
+     ->SpecFactory
+
+support->DbSupport
+       ->TestEnvironment
+       ->TokenManager
+
+tests->AllocateOrder(it is test for the orderAllocation and it contain all the order lifecycle)
+     ->AuthenticationTest(it is the code for the test the authentication)
+     ->Authentication(it to check the config file)
+     ->createOrder(it is the test for the order creation)
+     ->DatabaseConfigTest(this is the code for testing the database)
+     ->invalidClientSecret(this is the test by giving invalid secret)
+     ->Invalidtoken(this is the test using invalid token)
+     ->NonExistingOrder(this is the test for the checking the order which is not existing)
+     ->orderNotFound(this is the test for checking the 404)
+     ->PersistentTest(this test for db persistence)
+     ->productschemavalidation(test for checking the product schema)
+     ->productTest(test for the products)
+     ->productXml(test for check the xsd)
+     ->testContainerSmoke(this is the test for the testcontainer)
+     ->wrongRole403(the test for the 403)
+
+schemas->json->allocate-schema.json
+       ->order.order.json
+       ->product.schema.json
+       ->product-list.schema.json
+       ->ship-schema.schema.json
+
+schemas->xsd->product.xsd
+
+
