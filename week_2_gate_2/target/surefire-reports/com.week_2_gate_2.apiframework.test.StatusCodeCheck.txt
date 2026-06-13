@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.week_2_gate_2.apiframework.test.StatusCodeCheck
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.517 s -- in com.week_2_gate_2.apiframework.test.StatusCodeCheck
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.849 s -- in com.week_2_gate_2.apiframework.test.StatusCodeCheck

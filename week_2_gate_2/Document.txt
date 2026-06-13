@@ -10,4 +10,15 @@ create order(in this itsel iam asserting with db and scyhema also checked)
 similary check the whater the order is allocated or not also check the schema and database
 then i check in the shipped also 
 
-in apiframework/test/
+in apiframework/test/StatusCodeCheck
+
+to get differnt 4** code i have writtern a StatucCodeCheck
+
+1. 404 -> api/secure/orders/  I check an invalid orderID -9999
+2. 401 -> api/secure/orders/ I checked tp get order without login
+3. 409 -> api/secure/orders/{id}/ship" I checked whether an created product can be directly added to ship
+4. 403 -> api/secure/orders I checked to post a product from viewer
+
+in apiframework/test/XMLcheck
+
+using this checking the schema of the xml response

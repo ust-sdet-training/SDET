@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.List;
@@ -41,13 +42,15 @@ import io.restassured.specification.RequestSpecification;
 public class StatusCodeCheck {
     
     private static String authToken;
-    private static String viewToken;
+    private static String viwerToken;
+    private static DbSupport database;
     
 
     @BeforeAll
     static void setup(){
         authToken = ApiSupport.Fetch(TOKEN_URL_CLIENT_ID(), TOKEN_URL_CLIENT_SECRET());
-
+        viwerToken = ApiSupport.Fetch(VIEWER_CLIENT_ID(), VIEWER_CLIENT_SECRET());
+        database = new DbSupport(DBconfig.fromEnvironment());
     }
 
 
@@ -65,7 +68,7 @@ public class StatusCodeCheck {
     }
 
      @Test
-    @DisplayName("checking Unkown element is there or not")
+    @DisplayName("checking cart without login for 401 error")
     void notyloginpost_401(){
         given()
             .spec(notAuthed)
@@ -79,11 +82,47 @@ public class StatusCodeCheck {
 
     @Test
     @DisplayName("Calling Allocate after Shipped for 409")
-    void shipedProductAllocate_409(){
+    void shipedProductAllocate_409() throws SQLException{
+
+        Response response = given()
+                                .spec(authed(authToken))
+                                .body(orderRequest)
+                            .when()
+                                .post("/secure/orders")
+                            .then()
+                                .spec(postJson)
+                                .body("id", notNullValue())
+                                .body("orderId", notNullValue())
+                                .body(matchesJsonSchemaInClasspath("schemas/json/order.schema.json"))
+                                .extract()
+                                .response();
+        
+        long id =((Number) response.path("orderId")).longValue();
+        orderRow row =  database.findOrder(id);
+
       given().spec(authed(authToken))
-              .when().post("/secure/orders/{id}/allocate",5026)
-              .then().spec(res409);
+              .when().post("/secure/orders/{id}/ship",id)
+              .then().spec(res409)
+              .body("message", equalTo("Cannot move order from CREATED to SHIPPED"));
     }
+
+    @Test
+    @DisplayName("Not logined person checking the unkown product.Verifiying with 401 error")
+    void wrongRole_is403(){
+
+        
+
+        given()
+            .spec(authed(viwerToken))
+             .body(Map.of("items",List.of(101,107),"currency","INR"))
+        .when()
+            .post("/secure/orders")
+        .then()
+            .statusCode(403)
+            .body("message",equalTo("OPS role required"));
+    }
+
+
 
     
 

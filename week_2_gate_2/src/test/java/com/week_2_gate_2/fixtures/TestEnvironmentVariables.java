@@ -1,14 +1,18 @@
 package com.week_2_gate_2.fixtures;
 import com.week_2_gate_2.apiframework.config.TestEnvironment;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 public class TestEnvironmentVariables {
-    private static final String TOKEN_URL_CLIENT_ID = TestEnvironment.value("OAUTH_CLIENT_ID", "");
-    private static final String TOKEN_URL_CLIENT_SECRET = TestEnvironment.value("OAUTH_CLIENT_SECRET", "");
-    private static final String VIEWER_CLIENT_ID = TestEnvironment.value("OAUTH_VIEWER_CLIENT_ID", "");
-    private static final String VIEWER_CLIENT_SECRET = TestEnvironment.value("OAUTH_VIEWER_CLIENT_SECRET", "");
-    private static final String EXPIRED_CLIENT_ID = TestEnvironment.value("OAUTH_EXPIRED_CLIENT_ID", "");
-    private static final String EXPIRED_CLIENT_SECRET = TestEnvironment.value("OAUTH_EXPIRED_CLIENT_SECRET", "");
-    private static final String API_KEY = TestEnvironment.value("RETAIL_API_KEY", "retail-demo-key");
+
+    private static final Dotenv dotenv = Dotenv.load();
+    private static final String TOKEN_URL_CLIENT_ID = dotenv.get("OAUTH_CLIENT_ID", "retail-ops-client");
+    private static final String TOKEN_URL_CLIENT_SECRET = dotenv.get("OAUTH_CLIENT_SECRET");
+    private static final String VIEWER_CLIENT_ID = dotenv.get("OAUTH_VIEWER_CLIENT_ID", "retail-viewer-client");
+    private static final String VIEWER_CLIENT_SECRET = dotenv.get("OAUTH_VIEWER_CLIENT_SECRET");
+    private static final String EXPIRED_CLIENT_ID = dotenv.get("OAUTH_EXPIRED_CLIENT_ID", "retail-expired-client");
+    private static final String EXPIRED_CLIENT_SECRET = dotenv.get("OAUTH_EXPIRED_CLIENT_SECRET");
+    private static final String API_KEY = dotenv.get("RETAIL_API_KEY", "retail-demo-key");
 
     public static String TOKEN_URL_CLIENT_ID(){
         return TOKEN_URL_CLIENT_ID;
