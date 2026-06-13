@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "id",
+    "orderNumber",
+    "userId",
+    "status",
+    "items",
+    "subtotal",
+    "total"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "orderNumber": {
+      "type": "string"
+    },
+    "userId": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "ownerKey": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "placedOn": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["Confirmed", "CREATED", "Pending", "Cancelled"]
+    },
+    "payment": {
+      "type": "string",
+      "enum": ["Paid", "Pending", "Failed"]
+    },
+    "paymentMethod": {
+      "type": "string"
+    },
+    "channel": {
+      "type": "string"
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "productId",
+          "quantity",
+          "product"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "userId": {
+            "type": "integer"
+          },
+          "ownerKey": {
+            "type": "string"
+          },
+          "productId": {
+            "type": "integer"
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "size": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          },
+          "fulfilment": {
+            "type": "string"
+          },
+          "product": {
+            "type": "object",
+            "required": [
+              "id",
+              "name",
+              "category",
+              "price"
+            ],
+            "properties": {
+              "id": { "type": "integer" },
+              "name": { "type": "string" },
+              "category": { "type": "string" },
+              "price": { "type": "integer", "minimum": 0 },
+              "stock": { "type": "integer", "minimum": 0 },
+              "brand": { "type": "string" },
+              "sku": { "type": "string" },
+              "summary": { "type": "string" },
+              "tags": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "subtotal": { "type": "integer", "minimum": 0 },
+    "shipping": { "type": "integer", "minimum": 0 },
+    "discount": { "type": "integer", "minimum": 0 },
+    "total": { "type": "integer", "minimum": 0 },
+    "deliverySlot": { "type": "string" },
+    "address": { "type": "string" },
+    "coupon": { "type": "string" }
+  },
+  "additionalProperties": false
+}
