@@ -45,4 +45,16 @@ Folders
 <br>
 <strong>API</strong> --> Contains the api test functions for supporting the middle path
 
-
+<h2>ENV KEYS REQUIRED</h2>
+OAUTH_CLIENT_ID <br>
+OAUTH_CLIENT_SECRET<br>
+OAUTH_VIEWER_CLIENT_SECRET<br>
+OAUTH_EXPIRED_CLIENT_SECRET<br>
+DEMO_JWT_SECRET<br>
+RETAIL_API_KEY<br>
+DATABASE_URL<br>
+DB_HOST<br>
+DB_PORT<br>
+DB_USER<br>
+DB_PASSWORD<br>
+DB_NAME<br>
