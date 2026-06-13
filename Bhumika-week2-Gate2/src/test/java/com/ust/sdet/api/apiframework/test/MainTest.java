@@ -12,7 +12,6 @@ import com.ust.sdet.api.dbframework.model.OrderRow;
 import com.ust.sdet.api.dbframework.support.DBSupport;
 
 import io.restassured.http.ContentType;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,25 +30,27 @@ public class MainTest extends BaseTest {
     DBSupport dbSupport = new DBSupport(config);
 
     private final List<Long> createdOrderIds = new ArrayList<>();
-//clean up one
+
     @AfterEach
-    void cleanCreatedRows() throws Exception {
+    void cleanCreatedRows() {
 
+        if (createdOrderIds.isEmpty()) {
+            return;
+        }
         for (Long orderId : createdOrderIds) {
+            try {
+                int deletedRows = dbSupport.deleteOrder(orderId);
 
-            int deletedRows =
-                    dbSupport.deleteOrder(orderId);
+                System.out.println("Deleted Order ID: " + orderId + " | Rows Deleted: " + deletedRows);
 
-            System.out.println(
-                    "Deleted Order ID: "
-                            + orderId
-                            + " | Rows Deleted: "
-                            + deletedRows
-            );
+            } catch (Exception e) {
+                System.out.println("Failed to delete Order ID: " + orderId);
+            }
         }
 
         createdOrderIds.clear();
     }
+
 
     @Test
     @DisplayName("Create Order")
@@ -60,8 +61,7 @@ public class MainTest extends BaseTest {
         given()
                 .baseUri(ConfigManager.BASE_URL)
                 .contentType(ContentType.JSON)
-                .auth()
-                .oauth2(token)
+                .auth().oauth2(token)
                 .body(ModelObject.createOrder())
 
                 .when()
@@ -70,24 +70,30 @@ public class MainTest extends BaseTest {
                 .then()
                 .statusCode(201)
                 .body("status", equalTo("CREATED"))
-                .body(matchesJsonSchemaInClasspath(
-                        "schemas/json/ordersecure.schema.json"));
+                .body(matchesJsonSchemaInClasspath("schemas/json/ordersecure.schema.json"));
     }
 
     @Test
     @DisplayName("Get Existing Order")
     void getOrder() {
 
+        String token = TokenManager.getOpsToken();
+
+        Integer orderId = TokenManager.createSecureOrder(token);
+        createdOrderIds.add(orderId.longValue());
+
         given()
                 .spec(AllSpec.secureOrdersSpec())
+                .pathParam("id", orderId)
 
                 .when()
-                .get("/{id}", 5001)
+                .get("/{id}")
 
                 .then()
                 .statusCode(200)
-                .body("id", equalTo(5001));
+                .body("id", equalTo(orderId));
     }
+
 
     @Test
     @DisplayName("Missing Token")
@@ -109,8 +115,7 @@ public class MainTest extends BaseTest {
 
         given()
                 .baseUri(ConfigManager.BASE_URL)
-                .auth()
-                .oauth2(TokenManager.getExpiredToken())
+                .auth().oauth2(TokenManager.getExpiredToken())
 
                 .when()
                 .get("/api/secure/orders/5001")
@@ -126,8 +131,7 @@ public class MainTest extends BaseTest {
         given()
                 .baseUri(ConfigManager.BASE_URL)
                 .contentType(ContentType.JSON)
-                .auth()
-                .oauth2(TokenManager.getViewerToken())
+                .auth().oauth2(TokenManager.getViewerToken())
                 .body(ModelObject.createOrder())
 
                 .when()
@@ -138,66 +142,54 @@ public class MainTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Customer Created Flow With DB Validation")
-    void debugOrderFlow() throws SQLException {
+    @DisplayName("Customer Flow With DB Validation")
+    void debugOrderFlow() {
 
         String userToken = TokenManager.loginAndGetToken();
 
         TokenManager.clearCart(userToken);
         TokenManager.addItem(userToken);
 
-        Integer orderId =
-                TokenManager.createOrder(userToken);
+        Integer orderId = TokenManager.createOrder(userToken);
 
         createdOrderIds.add(orderId.longValue());
 
-        System.out.println(
-                "Customer Order Id = " + orderId
-        );
-
-
+        System.out.println("Customer Order Id = " + orderId);
     }
 
     @Test
-    @DisplayName("Create Order Flow With DB Validation")
+    @DisplayName("Order Lifecycle Flow With DB Validation")
     void createOrder_thenReadItBack() throws SQLException {
 
         String opsToken = TokenManager.getOpsToken();
 
         Integer orderId = TokenManager.createSecureOrder(opsToken);
-
         createdOrderIds.add(orderId.longValue());
 
         System.out.println("Order Id = " + orderId);
 
         OrderRow dbOrder = dbSupport.findOrder(orderId);
-
         DbAssertions.assertOrderExists(dbOrder);
         DbAssertions.assertOrderStatus(dbOrder, "CREATED");
 
         TokenManager.allocateOrder(opsToken, orderId);
-
         dbOrder = dbSupport.findOrder(orderId);
-
         DbAssertions.assertOrderStatus(dbOrder, "ALLOCATED");
 
         TokenManager.shipOrder(opsToken, orderId);
-
         dbOrder = dbSupport.findOrder(orderId);
-
         DbAssertions.assertOrderStatus(dbOrder, "SHIPPED");
 
         TokenManager.getSecureOrder(opsToken, orderId);
     }
 
     @Test
-    @DisplayName("Negative Path")
+    @DisplayName("Negative Path - Ship Before Allocate")
     void shipBeforeAllocate() {
 
         String opsToken = TokenManager.getOpsToken();
 
         Integer orderId = TokenManager.createSecureOrder(opsToken);
-
         createdOrderIds.add(orderId.longValue());
 
         given()
