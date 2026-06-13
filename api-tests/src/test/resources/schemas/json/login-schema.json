@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+
+  "type": "object",
+
+  "required": [
+    "token",
+    "user"
+  ],
+
+  "properties": {
+
+    "token": {
+      "type": "string"
+    },
+
+    "user": {
+
+      "type": "object",
+
+      "required": [
+        "id",
+        "email",
+        "role",
+        "name"
+      ],
+
+      "properties": {
+
+        "id": {
+          "type": "integer"
+        },
+
+        "email": {
+          "type": "string"
+        },
+
+        "role": {
+          "type": "string"
+        },
+
+        "name": {
+          "type": "string"
+        }
+
+      }
+
+    }
+
+  }
+
+}
