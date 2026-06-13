@@ -1,0 +1,21 @@
+Demo-Report
+
+To run the test, cd into SDET/week2_gate2 and run the command: mvn clean test -Dtest=E2EFlow.
+
+Inside E2EFlow test, an order is first placed and created inside the database.
+Record is fetched and assertions are created to ensure that the record is actually being
+created and saved in the database, not just the API. The created record is then allocated and similarly asserted to ensure the record's
+status is properly changed to "ALLOCATED". Finally, the order is shipped and status is asserted
+to be "SHIPPED". The record is then deleted to ensure that the database is not polluted during and after tests are run.
+
+Negative paths are also checked:
+    401, invalid token
+    401, missing token
+    403, incorrect role/authorization
+    404, order not found
+
+Specs are created to authenticate requests in the happy path, as well as separate specs
+to test negative paths.
+
+Test environment contains the client_ids and secrets to generate a token for a user
+with correct roles, a user without OSP role and an expired token.
