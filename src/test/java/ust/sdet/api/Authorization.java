@@ -48,7 +48,6 @@ public class Authorization {
                         .then()
                         .statusCode(200)
                         .body("token_type", equalToIgnoringCase("Bearer"))
-                        .log().all()
                         .extract()
                         .path("access_token");
     }

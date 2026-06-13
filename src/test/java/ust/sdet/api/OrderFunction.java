@@ -6,10 +6,14 @@ import io.restassured.specification.RequestSpecification;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.matcher.RestAssuredMatchers.matchesXsdInClasspath;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
 import static ust.sdet.api.Authorization.BASE_URL;
 import static ust.sdet.api.Authorization.authedReqSpec;
+import static ust.sdet.spec.Assertions.assertOrderBody;
+import static ust.sdet.spec.Headers.assertOkXmlContract;
+import static ust.sdet.spec.Headers.legacyproducts;
 
 public class OrderFunction {
 
@@ -21,6 +25,7 @@ public class OrderFunction {
                         .post("")
                         .then()
                         .body("status", equalTo("CREATED"))
+                .spec(assertOrderBody())
                 .body(matchesJsonSchemaInClasspath("schemas/json/orders.schema.json"))
                         .extract().response();
 
@@ -33,6 +38,18 @@ public class OrderFunction {
                 .post("")
                 .then()
                 .spec(ResponseJson.ErrorJson(errorcode));
+
+    }
+    public static void deleteNewOrder(String accessToken,int orderid){
+
+        given()
+                .spec(authedReqSpec(accessToken))
+                .basePath("/api/secure/orders")
+                .when()
+                .delete("/{id}",orderid)
+                .then()
+                .spec(ResponseJson.ErrorJson(404));
+
 
     }
 
@@ -89,6 +106,17 @@ public class OrderFunction {
                         .spec(authedReqSpec(token))
                         .basePath("/api/secure/orders")
                         .body(maps);
+    }
+
+    public static void productDetails_MatchesXmlSchema(int id){
+        Response response = given()
+                .spec(legacyproducts())
+                .when()
+                .get("/{id}.xml",id)
+                .then()
+                .extract().response();
+
+        assertOkXmlContract(response,"schemas/xml/products.xsd");
     }
 
 }

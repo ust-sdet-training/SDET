@@ -17,6 +17,8 @@ import static io.restassured.RestAssured.given;
 import static java.util.Map.entry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static ust.sdet.api.OrderFunction.productDetails_MatchesXmlSchema;
+import static ust.sdet.spec.Headers.assertOkXmlContract;
 
 
 public class SDETMainTest {
@@ -59,11 +61,10 @@ public class SDETMainTest {
        ));
 
 
-       //System.out.println(response.asPrettyString());
+       System.out.println(response.asPrettyString());
 
        String orderid = Integer.toString(response.path("id"));
 
-       createdOrderIds.add(orderid);
 
        DBFunctions.validateDBStatus(response,"CREATED");
        OrderFunction.allocateSecureOrder(accessToken,orderid);
@@ -90,6 +91,13 @@ public class SDETMainTest {
                 entry("items", List.of(101, 107)),
                 entry("currency", "INR")
         ),401);
+
+    }
+    //404 test
+    @Test
+    void DeleteUnknownOrder() {
+
+        OrderFunction.deleteNewOrder(accessToken,101);
 
     }
     @Test
@@ -131,6 +139,13 @@ public class SDETMainTest {
         OrderFunction.shipSecureOrderFail(accessToken,orderid);
 
     }
+
+    @Test
+    void CheckXMLFormat(){
+        productDetails_MatchesXmlSchema(101);
+    }
+
+
 
 
 }
