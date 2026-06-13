@@ -1,0 +1,13 @@
+To run the code first change the envs either from terminal or set env in the pom.xml
+
+after that run the backend server run mvn clean -Dtest=#class name
+
+in apiframework/test/E2E
+there is a happy path test case in which
+using @Before all iam seting up the database connection and token is getting using api support fuction fetch
+in main test the flow is 
+create order(in this itsel iam asserting with db and scyhema also checked)
+similary check the whater the order is allocated or not also check the schema and database
+then i check in the shipped also 
+
+in apiframework/test/

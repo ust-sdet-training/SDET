@@ -1,0 +1,68 @@
+package com.week_2_gate_2.dbframework.support;
+
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.week_2_gate_2.dbframework.config.DBconfig;
+import com.week_2_gate_2.dbframework.model.orderRow;
+
+public final class DbSupport {
+  private final DBconfig config;
+
+  public DbSupport(DBconfig config) {
+    this.config = config;
+  }
+
+  public boolean isReachable() throws SQLException {
+    try (Connection connection = openConnection();
+         PreparedStatement statement = connection.prepareStatement("SELECT 1");
+         ResultSet result = statement.executeQuery()) {
+      return result.next() && result.getInt(1) == 1;
+    }
+  }
+
+  public orderRow findOrder(long orderId) throws SQLException {
+    String sql = """
+        SELECT id, order_number, status, total, user_id, created_at
+        FROM orders
+        WHERE id = ?
+        """;
+
+    try (Connection connection = openConnection();
+         PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setLong(1, orderId);
+
+      try (ResultSet result = statement.executeQuery()) {
+        if (!result.next()) {
+          return null;
+        }
+
+        return new orderRow(
+            result.getLong("id"),
+            result.getString("order_number"),
+            result.getString("status"),
+            result.getBigDecimal("total"),
+            result.getString("user_id"),
+            result.getTimestamp("created_at").toInstant()
+        );
+      }
+    }
+  }
+
+  public int deleteOrder(long orderId) throws SQLException {
+    try (Connection connection = openConnection();
+         PreparedStatement statement = connection.prepareStatement("DELETE FROM orders WHERE id = ?")) {
+      statement.setLong(1, orderId);
+      return statement.executeUpdate();
+    }
+  }
+
+  private Connection openConnection() throws SQLException {
+    return DriverManager.getConnection(config.jdbcUrl(), config.username(), config.password());
+  }
+}
+
