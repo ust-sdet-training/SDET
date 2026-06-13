@@ -1,0 +1,30 @@
+API Test Flow
+
+Login (auth) --> delete cart
+ --> add to cart (productId, quantity, size, color, fulfilment)
+  --> place order (paymentMethod, address, shipping, coupon)
+  --> get order by id (confirm created order details)
+  --> allocate order (status becomes ALLOCATED)
+  --> ship order (status becomes SHIPPED)
+
+Description:
+This API testing covers full order flow from login to shipping.
+It also includes negative test cases like missing token, invalid token,
+expired token and no permission (403)   .
+Then main flow starts where I login and get token, clear cart,
+add items, place order, and verify response using status code and schema.
+After that I fetch same order using GET and then move order status from
+CREATED → ALLOCATED → SHIPPED. Each step checks response data and status code.
+
+DB Test Flow
+
+Description:
+In DB testing, I created order using API and then connect to database using JDBC.
+I fetch same order using orderId and check if data is saved properly.
+Then I verify status is CREATED and total value in DB matches API response.
+
+create order through API -->
+get orderId from response -->
+fetch same order from database using JDBC -->
+verify record exists --> check status is CREATED -->
+compare total from API response and database value (both must match)
