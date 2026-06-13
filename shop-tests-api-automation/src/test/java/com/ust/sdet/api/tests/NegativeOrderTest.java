@@ -77,8 +77,6 @@ public class NegativeOrderTest {
                 .get("/{id}", 5001)
                 .then()
                 .statusCode(401);
-
-
     }
 
     @Test
@@ -94,5 +92,16 @@ public class NegativeOrderTest {
                 .post()
                 .then()
                 .statusCode(403);
+    }
+
+    //Conflict
+    @Test
+    @DisplayName("M6: 404 not found test")
+    void Test(){
+        given()
+                .spec(orderReqSpec(TOKEN))
+                .when().post("{id}/ship", -1)
+                .then()
+                .statusCode(404);
     }
 }

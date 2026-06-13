@@ -19,8 +19,5 @@ public class ProductXMLTest {
                 .then()
                 .body(matchesXsdInClasspath("schemas/xsd/product.xsd"))
                 .body("product.category", equalTo("Footwear"));
-
-        //ContractAsserts.assertOkXMLContract(response, "schemas/xsd/product.xsd");
-//        assertEquals("Footwear", response.path("product.category"));
     }
 }

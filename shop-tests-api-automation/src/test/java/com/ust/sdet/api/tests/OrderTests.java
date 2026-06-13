@@ -70,7 +70,6 @@ public class OrderTests {
                 .then()
                 .spec(orderResSpec())
                 .body(matchesJsonSchemaInClasspath("schemas/json/order.schema.json"))
-                .body("items.size()",notNullValue())
                 .body("items.size()",equalTo(2))
                 .body("status", equalTo("CREATED"))
                 .extract().response();
@@ -110,5 +109,4 @@ public class OrderTests {
                 .body("partner",notNullValue())
                 .body("order.items.size()", greaterThan(0) );
     }
-
 }
