@@ -1,0 +1,53 @@
+I have created the structure file in a layerd-structure format.
+which will be implementing the oops Concept.
+ I will explain the each Steps how it works so that later u can go through my codes.
+
+ step1. I have created the pom.xml file ,so that i will be having all the dependecy installed and the properties later which will be included to write my test cases
+
+ step2. I created the config.properties that will be having my Database name, password .And the port number where my backend server is running .
+
+ step3.later i navigated to the package config -> 1.configReader
+                                                   2.DatabaseConfig
+                                                   these two files will have having the proper information about my Database connection.And where exactly my server will be communicating with the backend and database.
+ step4.Then i created the pacakage base-->BaseTest
+ which means BaseTest is a base class used for API tests that initializes a reusable RequestSpecification before all tests run using the @BeforeAll annotation.
+  It calls a helper method (RequestSpecs.requestSpec()) to centralize and standardize request configuration like base URL, headers, or authentication.
+
+  step5: Then i created Authservice services-->Auth service
+ `AuthService` is responsible for generating an OAuth access token by sending client credentials (ID and secret) encoded in Base64 to an authentication endpoint.
+ It makes a POST request with required headers and form parameters, then extracts and returns the `access_token` from the API response.
+
+ Step6: Later after preparing these layer , i Started writting test for Authenticationtest tests-->Authentication Test
+AuthenticationTest contains API test cases that use a token from TokenManager to validate secured endpoints like fetching and creating orders.
+It verifies correct behavior by sending authorized requests and asserting response status codes and response body values
+
+Step7:then i craeted the pacakage called database-->DatabaseUtils
+DatabaseUtils is a utility class used to fetch the status of an order directly from the database using its orderId.
+It executes a parameterized SQL query safely, retrieves the result, and returns the order status (or throws an exception if something goes wrong).
+
+step8:I created the test file called-->OrderDatabaseValidationTest
+OrderDatabaseValidationTest verifies that an order created via API is correctly stored in the database.
+It creates an order, retrieves its ID from the response, fetches the status from the database using DatabaseUtils, and asserts that the status is "CREATED"
+
+step9: Then i created -->OrderLifecycleTest
+OrderLifecycleTest tests the full lifecycle of an order by creating, allocating, and then shipping it using secured API calls.
+It validates each step by checking the response status and ensuring the order status transitions correctly from CREATED → ALLOCATED → SHIPPED.
+
+step10:then i craeted the Schema->>1.allocate
+                                   2.Create-order
+                                   3.order
+                                   4.ship
+ then i wrote -->Schemavalidation
+ SchemaValidationTest checks whether the API response for creating an order matches a predefined JSON schema.
+ It ensures the structure and data types of the response are correct by validating it against order-schema.json stored in the classpath.
+
+ step11: i created the xml-->xmlSchemaValidation
+XmlSchemaValidationTest verifies that a sample XML response follows the structure defined in an XSD schema file.
+It loads the schema, validates the XML against it, and ensures no validation errors occur using assertDoesNotThrow.
+step 12: I craeted models-->1.orderRequest
+                            2.OrderResponse
+                            3.OrderRow
+conclusion:This framework demonstrates a complete end-to-end API testing approach by combining authentication, request validation, schema checks, and database verification to ensure both functional correctness and data integrity.
+
+
+
