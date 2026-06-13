@@ -1,0 +1,51 @@
+    Folder Structures:
+
+
+            test->java->base
+                      ->config
+                      ->models
+                      ->services
+                      ->specs
+                      ->support
+                      ->tests
+                 ->resources
+                    ->schemas
+
+
+base     -> BaseTest.java file (this file tests the url and env is accesable or not)
+
+config   -> ConfigReader ( Reads The Environment variables)
+         -> DatabaseConfig ( Configures the database to do database testing)
+
+models  -> OrderRequest(tells what to include in order request)
+        -> OrderResponse(tells what will the api responses as a order response)
+        -> OrderRow(What all the columns does order contain)
+
+services -> AuthService ( provide authentication service so that it is used in tests)
+         -> OrderService(provide full order flow service)
+
+specs    -> RequestSpecs (contains all the specs used for request its like a factory)
+         -> ResponseSpecs (Contains all the response specs later to be used in tests)
+
+support  -> DbSupport (Contains all the required database operations)
+         -> TestEnvironment(read the env file)
+         -> TokenManager(returns the token from AuthService)
+
+tests    -> AuthenticationTest ( tests the user is authored or not ) -- test passed
+         -> DatabaseConnectionTest ( Database is connected ) -- test passed
+         -> DatabaseValidationTest( The connected database is reachable or not ) -- test passed
+         -> NegativeTests( Failure Path if the user is not authorised ,not validated ,wrong password or wrong username) -- test passed
+         -> OrderDbValidationTest( Created order is storing in db or not ) -- test passed
+         -> OrderLifecycleTest(full order lifecycle from start to end created->allocated-shipped) -- test passed
+         -> ProductXmlSchemaTest(prodcut is matching the schema or not) -- test passed
+         -> TestContainerSmokeTest(uses the test container) -- test failed
+
+schemas -> allocate-schema.json (schema for order allocation)
+        -> create-order-schema.json (schema for order creation)
+        -> error-schema.json (schema for any errors)
+        -> order-schema.json (schema for order)
+        -> ship-schema.json ( schema for shipment details)
+        -> product.xsd ( product schema in xsd format)
+
+
+

@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "id",
+    "orderId",
+    "orderNumber",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "orderId": {
+      "type": "integer"
+    },
+    "orderNumber": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["ALLOCATED"]
+    }
+  }
+}

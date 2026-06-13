@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "id",
+    "orderId",
+    "orderNumber",
+    "status",
+    "payment",
+    "paymentMethod",
+    "channel",
+    "items",
+    "subtotal",
+    "shipping",
+    "discount",
+    "total",
+    "address",
+    "deliverySlot"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "orderId": {
+      "type": "integer"
+    },
+    "orderNumber": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "payment": {
+      "type": "string"
+    },
+    "paymentMethod": {
+      "type": "string"
+    },
+    "channel": {
+      "type": "string"
+    },
+    "items": {
+      "type": "array"
+    },
+    "subtotal": {
+      "type": "number"
+    },
+    "shipping": {
+      "type": "number"
+    },
+    "discount": {
+      "type": "number"
+    },
+    "total": {
+      "type": "number"
+    },
+    "address": {
+      "type": "string"
+    },
+    "deliverySlot": {
+      "type": "string"
+    }
+  }
+}
