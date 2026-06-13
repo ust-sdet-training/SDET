@@ -11,15 +11,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import static com.ust.sdet.api.specification.CommonSpec.commonReqSpecXML;
 import static com.ust.sdet.api.specification.CommonSpec.commonResSpec;
 import static com.ust.sdet.api.specification.LoginSpec.apiKeyReqSpec;
 import static com.ust.sdet.api.specification.OrderSpec.orderReqSpec;
 import static com.ust.sdet.api.specification.OrderSpec.orderResSpec;
 import static com.ust.sdet.api.support.Utils.*;
 import static io.restassured.RestAssured.given;
-import static io.restassured.matcher.RestAssuredMatchers.matchesXsdInClasspath;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -97,7 +94,7 @@ public class OrderTests {
     }
 
     @Test
-    @DisplayName("M9: Get /Orders All API KEY")
+    @DisplayName("M4: Get /Orders All API KEY")
     void getOrderedProducts(){
         given()
                 .spec(apiKeyReqSpec("/partner/orders"))

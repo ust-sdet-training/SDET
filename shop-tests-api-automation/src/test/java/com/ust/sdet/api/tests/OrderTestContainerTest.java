@@ -1,8 +1,5 @@
 package com.ust.sdet.api.tests;
 
-import com.ust.sdet.api.config.DatabaseConfig;
-import com.ust.sdet.api.model.OrderRow;
-import com.ust.sdet.api.support.DbSupport;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -41,7 +38,7 @@ public class OrderTestContainerTest {
     }
 
     @Test
-    @DisplayName("M3: Created -> ALLOCATED -> SHIPPED is persisted")
+    @DisplayName("M1: Created -> ALLOCATED -> SHIPPED is persisted")
     void orderLifecycle_isPersisted() throws Exception{
         var order = Map.of(
                 "items", List.of(107,106),
@@ -67,8 +64,8 @@ public class OrderTestContainerTest {
                                                     """);
 
         System.out.println(row);
-//        assertNotNull(row, "order must be persisted");
-//        assertEquals("CREATED", row.);
+        assertNotNull(row, "order must be persisted");
+//        assertEquals("CREATED", row)//.function to get status);
 //        assertEquals(0, row.total().compareTo(c.jsonPath().getObject("total", BigDecimal.class)));
 
         //ALLOCATED

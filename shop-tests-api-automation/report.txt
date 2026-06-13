@@ -1,0 +1,23 @@
+REPORT
+
+ASSIGNMENT: TO AUTOMATE API FLOW OF CREATING ORDER TO SHIPPING ORDER AND COVER EDGE CASES
+
+I started by creating a project structure which allows me to reuse the code.
+created config package to configure local database and tried to use testContainer
+
+model contains OrderRow which has some fields of Order details which is used to get the data from database and assert with api request to check whether the data is persisted.
+
+specification package hold all the specification of both request and response which can be reused for testing all the api
+
+support helps to manage, reuse and config the test env variables and DbSupport help with retrieving data from database.
+
+test package contains all the test separated with both happy path tests and negative test along with an xml test
+
+added the schemas in resources which can be used to validate the api responses
+
+at last for test containers part I have managed to create a config(hope it works) i have passed the user and password hard coded so make sure while running you substitute with env variables
+for testing using containers I have written a separate test to validate the flow of order, I got confused on how to retrieve data from containers.
+
+NOTES
+- environment variable are not set for test container.
+- For the order flow I have created, allocated, shipped in the same test.
