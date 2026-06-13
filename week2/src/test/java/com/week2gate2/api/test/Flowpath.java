@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static io.restassured.matcher.RestAssuredMatchers.matchesXsdInClasspath;
-import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ import java.util.List;
 
 import static com.week2gate2.api.model.Mapclass.*;
 import static com.week2gate2.api.support.Specfactory.*;
+import static com.week2gate2.api.support.Specfactory.post;
 import static io.restassured.RestAssured.*;
 import static com.week2gate2.fixtures.credentials.*;
 import static org.hamcrest.Matchers.*;
@@ -41,7 +41,7 @@ public class Flowpath
                 .then().spec(post)
                     .body("id",notNullValue())
                     .body("orderId",notNullValue())
-                        .extract().response();
+                        .body(matchesJsonSchemaInClasspath("schema/json/order.schema.json")).extract().response();
 
        Integer Order_id=first_order.path("id");
 //        Integer id = first_order.path("orderId");
@@ -68,7 +68,6 @@ public class Flowpath
                 .body("id",equalTo(Order_id))
                 .body("orderId",equalTo(Order_id))
                 .body("orderNumber",notNullValue())
-                .body("status",equalToIgnoringCase("shipped"))
                 .body("status",equalToIgnoringCase("Allocated"))
                 .body(matchesJsonSchemaInClasspath("schema/json/order.schema.json")).extract().response();
 
@@ -84,7 +83,7 @@ public class Flowpath
                 .body("orderId",equalTo(Order_id))
                 .body("orderNumber",notNullValue())
                 .body("status",equalToIgnoringCase("shipped"))
-                .extract().response();
+                .body(matchesJsonSchemaInClasspath("schema/json/order.schema.json")).extract().response();
 
         given()         //negative test case that will return 401
                 .spec(sec_api)
@@ -103,10 +102,10 @@ public class Flowpath
                 .statusCode(401);
 
         given().spec(Auth2Tokn(viewer_token))
-                .when()
-                .post("/api/secure/orders")
+                .when().log().all()
+                .post("/secure/orders")
                 .then()
-                .statusCode(404);
+                .statusCode(403);
 
 
     }
