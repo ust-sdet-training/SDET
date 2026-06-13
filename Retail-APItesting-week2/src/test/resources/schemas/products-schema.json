@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+
+  "type": "object",
+
+  "required": [
+    "items",
+    "total"
+  ],
+
+  "properties": {
+
+    "total": {
+      "type": "integer"
+    },
+
+    "items": {
+
+      "type": "array",
+
+      "items": {
+
+        "type": "object",
+
+        "required": [
+          "id",
+          "name",
+          "category",
+          "price",
+          "stock",
+          "brand",
+          "sku",
+          "summary",
+          "tags"
+        ],
+
+        "properties": {
+
+          "id": {
+            "type": "integer"
+          },
+
+          "name": {
+            "type": "string"
+          },
+
+          "category": {
+            "type": "string"
+          },
+
+          "price": {
+            "type": "integer"
+          },
+
+          "stock": {
+            "type": "integer"
+          },
+
+          "brand": {
+            "type": "string"
+          },
+
+          "sku": {
+            "type": "string"
+          },
+
+          "summary": {
+            "type": "string"
+          },
+
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

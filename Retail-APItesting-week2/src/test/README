@@ -1,0 +1,229 @@
+#Folder structure
+test->java->
+    ->base
+        -BaseTest
+    ->db
+        -DbSupport
+    ->models
+        ->request
+            -cartrequest
+            -craeteorderrequest
+            -Loginrequest
+        ->response
+            -cartResponse
+            -ErrorResponse
+            -Loginresponse
+            -Oauthresponse
+            -orderesponse
+        ->OrderRow
+
+    ->specs
+        -Requestspecs
+        -Responsespecs
+
+    ->tests
+        -AuthenticationTests
+        -Carttests
+        -ConfigReadertests
+        -DatabasevalidationTests
+        -NragtiveTests
+        -orderlifecycletests
+        -productTests
+        -Testcontainer
+
+       ->utils
+        -configreader
+        -DButils
+        -Testdatareader
+        -Tokenmanager
+    ->resources
+        ->schemas
+        ->xsd
+        ->config.properties
+        ->testdata.properties
+
+
+The approach I followed:
+     Instead of writing everything inside test classes, I separated the framework into different packages so that code can be reused and maintained easily.
+     Stage by stage creation  of files  from database creation and proper validations .
+     creating specs like request and response specs where we have created methods where we can reuse them in other files easily.
+     I have set Set Base URL,Initialize Request Specifications,Initialize Response Specifications,Initialize Database Connection,Common setup for all tests.
+
+Test containers:
+    I have created test container for specific table creation like inserting data into products table and another table .
+
+## Base Package
+
+**BaseTest.java**
+
+* Serves as the parent class for all testing classes.
+* Establishes the Base URI.
+* Initializes both Request and Response Specifications.
+* Sets up the Database Connection.
+* Provides common setup utilized by all tests.
+
+---
+
+### DB Package
+
+**DbSupport.java**
+
+* A reusable JDBC utility class.
+* Facilitates connection to PostgreSQL.
+* Fetches order details from the database.
+* Cleans up test data post-execution.
+* Employed for validation between API and Database.
+
+---
+
+### Models Package
+
+#### Request Models
+**LoginRequest.java**
+* Constructs the login request payload.
+
+**CartRequest.java**
+* Constructs the cart request payload.
+
+**CreateOrderRequest.java**
+* Constructs the order request payload.
+
+#### Response Models
+
+**LoginResponse.java**
+* Holds the login API response.
+
+**OAuthResponse.java**
+* Holds the OAuth token response.
+
+**CartResponse.java**
+* Holds the cart API response.
+
+**OrderResponse.java**
+* Holds the order API response.
+
+**ErrorResponse.java**
+* Holds details of error responses.
+
+**OrderRow.java**
+* Represents an order record from the database.
+* Utilized for database validation.
+
+### Specs Package
+**RequestSpecs.java**
+* Contains specifications for reusable requests.
+* Manages common headers.
+* Manages authentication headers.
+* Includes reusable endpoint paths.
+
+**ResponseSpecs.java**
+* Contains validations for reusable responses.
+* Validates common status codes and response formats.
+
+### Utils Package
+**ConfigReader.java**
+* Extracts configuration values from config.properties.
+
+**TestDataReader.java**
+* Extracts reusable test data from testdata.properties.
+
+**TokenManager.java**
+* Generates and retains JWT and OAuth tokens.
+* Reuses tokens throughout tests.
+
+**DBUtils.java**
+
+* Contains essential methods for database assistance.
+* Minimizes repetitive JDBC code.
+* Utilized in scenarios requiring reusable database operations.
+
+---
+
+### Tests Package
+
+**AuthenticationTests.java**
+
+* Confirms customer login functionality.
+* Confirms the generation of OAuth tokens.
+* Assesses the authentication process.
+
+**ProductTests.java**
+
+* Confirms the functionality of product APIs.
+* Assesses the accuracy of product response data.
+* Conducts schema validation on product responses.
+
+**CartTests.java**
+
+* Confirms the add-to-cart feature.
+* Assesses cart details and associated data.
+
+**OrderLifecycleTests.java**
+
+* Confirms the entire order process.
+* Create Order → Allocate Order → Ship Order → Fetch Order.
+* Conducts API and Database validation at each phase.
+* Assesses transitions in order status.
+
+**DatabaseValidationTests.java**
+
+* Confirms database connectivity.
+* Assesses the reachability of the database.
+* Verifies the persistence of order data.
+
+**NegativeTests.java**
+* Confirms error handling scenarios.
+* 401 Unauthorized.
+* 403 Forbidden.
+* 404 Not Found.
+* 409 Conflict.
+
+**ConfigReaderTests.java**
+* Assesses the correct loading of configuration values from properties files.
+
+**TestContainer.java**
+
+* Illustrates the use of TestContainers.
+* Dynamically initiates a PostgreSQL container.
+* Establishes a JDBC connection to the container.
+* Executes SQL commands.
+* Validates database information using assertions.
+
+### Resources Package
+
+**config.properties**
+
+* Contains environment configuration settings.
+* Base URL.
+* Database information.
+* OAuth credentials.
+* API key.
+
+**testdata.properties**
+
+* Contains reusable test data.
+* User credentials.
+* Product IDs.
+* Test values utilized across various tests.
+
+---
+
+### Schemas Folder
+
+**login-schema.json**
+* Validates the structure of the login API response.
+
+**oauth-schema.json**
+* Validates the structure of the OAuth token response.
+
+**products-schema.json**
+* Validates the structure of the products API response.
+
+**cart-schema.json**
+* Validates the structure of the cart response.
+
+**cart-item-schema.json**
+* Validates the structure of individual cart items.
+
+**order-schema.json**
+* Validates the structure of the order response.
