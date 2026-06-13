@@ -1,0 +1,8 @@
+{
+  "type": "object",
+  "required": ["orderId", "status"],
+  "properties": {
+    "orderId": { "type": "integer" },
+    "status":  { "type": "string"  }
+  }
+}

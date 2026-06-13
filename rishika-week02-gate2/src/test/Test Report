@@ -1,0 +1,28 @@
+I have separated the framework into different layers:
+
+-Config for database configuration
+-Database utilities for database validation
+-Models for records
+-Services for API operations
+-Specs for request specifications and response specifications
+-Support utilities for token management and Db support
+-Test classes for positive and negative test scenarios
+
+Authentication:
+I used OAuth2. It retrieves an access token and uses it for secured API requests.
+
+Order Creation:
+I create an order using the Create Order API.
+The response returns status code 201 and an Order ID.
+I validate the response body and schema.
+
+After creating the order, I validate the database record using JDBC.
+The order status in the database is CREATED.
+
+Negative Testing:
+-401 Unauthorized:
+    I send a request without a valid token and verify that the API returns 401.
+-404 Not Found:
+    I request an order that does not exist and verify that the API returns 404.
+-409 Conflict:
+    I attempt an invalid state transition and verify that the API returns 409 Conflict.
