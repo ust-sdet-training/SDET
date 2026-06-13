@@ -7,24 +7,30 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
 import static com.ust.sdet.api.support.Utils.BASE_URL;
-import static io.restassured.RestAssured.oauth2;
 import static org.hamcrest.Matchers.lessThan;
 
-public class OrderSpec extends CommonSpec{
-    public static RequestSpecification orderReqSpec(String token) {
+public class CommonSpec {
+    static RequestSpecification commonReqSpec(){
         return new RequestSpecBuilder()
                 .setBaseUri(BASE_URL)
-                .setBasePath("/api/secure/orders")
-                .setContentType(ContentType.JSON)
-                .setAccept(ContentType.JSON)
-                .setAuth(oauth2(token))
+                .setBasePath("/api")
                 .build();
     }
-    public static ResponseSpecification orderResSpec() {
-        return new ResponseSpecBuilder()
-                .expectStatusCode(201)
+
+    public static ResponseSpecification commonResSpec() {
+        return  new ResponseSpecBuilder()
+                .expectStatusCode(200)
                 .expectContentType(ContentType.JSON)
                 .expectResponseTime(lessThan(800L))
+                .build();
+    }
+
+    public static RequestSpecification commonReqSpecXML(String path){
+        return new RequestSpecBuilder()
+                .setBaseUri(BASE_URL)
+                .setBasePath("/api" + path)
+                .setContentType(ContentType.XML)
+                .setAccept(ContentType.XML)
                 .build();
     }
 }

@@ -1,5 +1,7 @@
 package com.ust.sdet.api.config;
 
+import com.ust.sdet.api.support.TestEnvironment;
+
 import java.net.URI;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
