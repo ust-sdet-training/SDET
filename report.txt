@@ -1,0 +1,15 @@
+Framework is organized into packages like models, specs, config, base and tests.
+
+Models - contains request and response payload classes.
+
+Specs - contains reusable RequestSpec and ResponseSpec configurations.
+
+Base - contains common test setup and utility methods used across tests.
+
+Config - stores environment variables, test data and database configurations.
+
+DBFramework - is used for JDBC database validations and database support classes.
+
+Tests - contains test cases such as Auth, Cart, Orders and Products.
+
+Resources - contains JSON schemas and XSD files used for schema validation.
