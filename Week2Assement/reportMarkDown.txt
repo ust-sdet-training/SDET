@@ -1,0 +1,61 @@
+Mark Down Report:
+
+This is Week 2 Assessment
+
+1 )  OrderCycleWithDbValidation
+
+I validate all the cycle of order with their respective
+  status and all in happy path with db connection with validation and schema validation
+  of create order
+
+-> schema validation like change of status Create -> Allocated -> Shipped
+->also check when the status is change in db with getting status by using assert to verify
+
+2)
+OrderCycleWithDbValidationNegative
+
+I validate all the cycle of order with their respective
+  status and all in negative un happy path with db connection with validation and schema validation
+  of create order
+
+-> we cant shipped two times with same id give 409 status
+-> also we cant allocate two time with same id gives 409 status
+-> schema validation like change of status like revere order cant be go like shipped->allocated->created
+->also check when the status is change in db with getting status by using assert to verify that is not reflect to db
+
+3)
+JsonApiStatusTest
+
+-> verify all the api status code like 200,201,204,401,403,404,409
+->  valid user can create order and get order and delete order get their respective status like 201,200,204
+-> invalid user can create order get status 403(forbidden)
+-> with expire token we cant create or get it gives 401 status
+->if we delete two time same things in first time we get 204 no content and if we again deleter it give 404 status
+
+4)
+ValidateXMLValidationTest
+-> here i validate the xml validation  of product with api "api/legacy/products/101.xml"
+   and check the element of xml by using xmlPath() and use assert
+
+ 5)
+ TestContainerTest
+ -> in this i use @TestContainers to declare class as continer and define with repective parameter like
+ database name ,username,password and path
+ -> and check it is running or not
+
+ 6) for connecting db I use DatabaseConfign class with Datasupport that helps to connect with database
+
+ 7)here i use System.getenv() for variable not hard code
+ 8)follow structure and oops concept to reuse more component
+   ->config
+   ->model
+   ->specFactory
+   ->support
+   ->tests
+  ->resourses for schema_json and xsd schema
+
+  9) i use Specification like specFactory to write request Specification and response Specification
+
+10) Total 17 test cases regarding all fields
+Note : There is no docker so TestContainer is failed
+
