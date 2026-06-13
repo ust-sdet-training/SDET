@@ -1,0 +1,113 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Order Schema",
+  "type": "object",
+  "required": [
+    "id",
+    "orderId",
+    "orderNumber",
+    "status",
+    "payment",
+    "paymentMethod",
+    "channel",
+    "items",
+    "subtotal",
+    "shipping",
+    "discount",
+    "total",
+    "address",
+    "deliverySlot",
+    "userId",
+    "createdAt"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "orderId": {
+      "type": "integer"
+    },
+    "orderNumber": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "payment": {
+      "type": "string"
+    },
+    "paymentMethod": {
+      "type": "string"
+    },
+    "channel": {
+      "type": "string"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "product",
+          "quantity",
+          "productId"
+        ],
+        "properties": {
+          "product": {
+            "type": "object",
+            "required": [
+              "id",
+              "name",
+              "price",
+              "category"
+            ],
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "price": {
+                "type": "integer"
+              },
+              "category": {
+                "type": "string"
+              }
+            }
+          },
+          "quantity": {
+            "type": "integer"
+          },
+          "productId": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "subtotal": {
+      "type": "integer"
+    },
+    "shipping": {
+      "type": "integer"
+    },
+    "discount": {
+      "type": "integer"
+    },
+    "total": {
+      "type": "integer"
+    },
+    "address": {
+      "type": "string"
+    },
+    "deliverySlot": {
+      "type": "string"
+    },
+    "userId": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
