@@ -61,8 +61,6 @@ public class SDETMainTest {
        ));
 
 
-       System.out.println(response.asPrettyString());
-
        String orderid = Integer.toString(response.path("id"));
 
 
