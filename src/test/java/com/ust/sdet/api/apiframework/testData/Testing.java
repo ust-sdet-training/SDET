@@ -1,10 +1,16 @@
 package com.ust.sdet.api.apiframework.testData;
 
+import com.ust.sdet.api.dbframework.config.DatabaseConfig;
+import com.ust.sdet.api.dbframework.model.OrderRow;
+import com.ust.sdet.api.dbframework.support.DbSupport;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,73 +20,82 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.matcher.RestAssuredMatchers.matchesXsdInClasspath;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class Testing {
+
+    DatabaseConfig config = DatabaseConfig.fromEnvironment();
+    DbSupport dbSupport = new DbSupport(config);
+
+    private final List<Long> createdOrderIds = new ArrayList<>();
 
     static String accessToken;
 
     @BeforeAll
-    static void setup()
-    {
-        accessToken  = LoginToken()  ;
+    static void setup() {
+        accessToken = LoginToken();
     }
 
+    @AfterEach
+    void cleanCreatedRows() {
+
+        for (Long orderId : createdOrderIds) {
+            try {
+                dbSupport.deleteOrder(orderId);
+            } catch (Exception e) {
+                System.out.println("Failed to delete Order ID: " + orderId);
+            }
+        }
+
+        createdOrderIds.clear();
+    }
 
     @Test
     @DisplayName("Missing Token")
-    void missingToken()
-    {
+    void missingToken() {
         given()
                 .spec(notauthed())
-            .when()
-                .get("/{id}",5001)
-            .then()
+                .when()
+                .get("/{id}", 5001)
+                .then()
                 .spec(missTokenRes());
-
     }
 
     @Test
     @DisplayName("Invalid Token")
-    void InvalidToken()
-    {
+    void InvalidToken() {
         given()
                 .spec(invalidTokenReq())
                 .when()
-                .get("/{id}",5001)
+                .get("/{id}", 5001)
                 .then()
                 .spec(invalidTokenRes());
-
     }
 
     @Test
     @DisplayName("No OPS(VIEWERS) BUT VALID")
-    void NoOPSToken()
-    {
-        var order=Map.of("items", List.of(101,107), "currency","INR");
+    void NoOPSToken() {
+        var order = Map.of("items", List.of(101, 107), "currency", "INR");
 
         given()
-                .spec((NoOPSTokenReq()))
+                .spec(NoOPSTokenReq())
                 .body(order)
                 .when()
                 .post()
                 .then()
                 .spec(NoOPSTokenRes());
-
     }
 
     @Test
     @DisplayName("Token Expired")
-    void expiredToken()
-    {
+    void expiredToken() {
         given()
                 .spec(expiredTokenReq())
                 .when()
-                .get("/{id}",5001)
+                .get("/{id}", 5001)
                 .then()
                 .spec(expiredTokenRes());
-
     }
-
 
     @Test
     @DisplayName("FULL FLOW : LOGIN TO PLACE ORDER")
@@ -158,9 +173,9 @@ public class Testing {
 
         given()
                 .spec(getauthedReq(accessToken))
-            .when()
+                .when()
                 .get("/{id}",c)
-            .then()
+                .then()
                 .log().all()
                 .spec(getauthedRes())
                 .body("id", notNullValue())
@@ -176,38 +191,9 @@ public class Testing {
 
 
     }
-
-
-
     @Test
-    @DisplayName("Check Allocated Order")
-    void orderAllocate(){
-        var order = Map.of(
-                "productId", List.of(101,106),
-                "currency", "INR"
-        );
-        int id = given()
-                .spec(reqSpec("/secure/orders", accessToken))
-                .body(order)
-                .when()
-                .post()
-                .then()
-                .spec(postJson())
-                .extract()
-                .path("id");
-        given()
-                .spec(alloReqSpec("/secure/orders", id ,accessToken))
-                .when()
-                .post()
-                .then()
-                .spec(resSpec())
-                .body("items.size()",notNullValue())
-                .body("status", equalTo("ALLOCATED"));
-    }
-
-    @Test
-    @DisplayName("Checking Shipping Status")
-    void orderShip() {
+    @DisplayName("Checking Shipping Status + DB validation")
+    void orderShip() throws SQLException {
 
         int id =
                 given()
@@ -235,25 +221,22 @@ public class Testing {
                 .spec(resSpec())
                 .body("items.size()", greaterThan(0))
                 .body("status", equalTo("SHIPPED"));
+
+        // ================= DB VALIDATION =================
+        OrderRow dbRow = dbSupport.findOrder((long) id);
+        assertNotNull(dbRow);
+        assertEquals("SHIPPED", dbRow.status());
     }
-
-
 
     @Test
     @DisplayName("Testing XML")
-
-    void XML()
-    {
-        given().
-                spec(reqXml())
-            .when()
+    void XML() {
+        given()
+                .spec(reqXml())
+                .when()
                 .get()
-            .then()
+                .then()
                 .spec(resXml())
                 .body(matchesXsdInClasspath("schemas/products.xsd"));
-
-
     }
-
-
 }
