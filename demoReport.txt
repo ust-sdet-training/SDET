@@ -1,0 +1,90 @@
+
+This is document is test report for the the sdet-retail-app. The web page application was tested on
+the api layer and database layer. The technique used were blackbox testing; and the test environment was local system.
+The following are the features which were tested:-
+
+
+Test1:
+Api tested: "/oauth/token"
+Description: Login using client_credentials and the grantype and status code 200 was expected.
+Observation: The test passed.
+Result: The user is successfully logged in.
+
+Test2:
+Api tested: "/auth/login"
+Description: Login using sample customer credentials, status code 200 was expected
+and token should be received.
+Observation: The test passed.
+Result: The user is successfully logged in using sample credentials.
+
+Test3:
+Api tested: "/products"
+Description: Fetching all products through api get method by passing token; which was created
+through client_id and client_secret,schema match against a standard json schema was done
+ and status code 200 was expected.
+Observation: The test passed.
+Result: The product list was successfully received as response.
+
+Test4:
+Api tested: "/cart/items"
+Description: Adding an item to cart, with a token and an order object was,
+with the expected status code 201
+Observation: The test passed.
+Result: The item was added succesfully added to cart.
+
+Test5:
+Api tested: "/cart/items"
+Description: Adding a product which has reached cart limit, it was expected the customer should not
+be able to add and a 409 status code was expected.
+Observation: The test passed.
+Result: The item was not added.
+
+Test6:
+Api tested: "/secure/orders"
+Description: Placing an order, with a token and a product_details object was added to
+supplement additional details for request body, the schema was compared against the standard json
+schema and a "CREATED" status was expected from the response.
+Observation: The test passed.
+Result: The order was successfully placed and the "CREATED" status was true.
+
+
+Test7:
+Api tested: "/partner/orders"
+Description: Using Retail-app-key an attempt to access an order was done with the intent to
+view the orders details.
+Observation: The test passed.
+Result: The order was successfully seen with the id and partner seen.
+
+
+Test8:
+Api tested: "/orders"
+Description: Additional details were added to the /order api, and a "post" was done while
+asserting the schemas match .
+Observation: The test passed.
+Result: The order details was successfully recieved in response.
+
+
+Test9:
+Api tested: "/secure/orders" and "/secure/orders/{id}/allocate"
+Description: The id was stored from the first api, then was passed to second api to verify the
+orders was allocated.
+Observation: The test passed.
+Result: The order status changed from "CREATED" to "ALLOCATED" status.
+
+Test10:
+Api tested: "/secure/orders" and "/secure/orders/{id}/allocate" then "/secure/orders/{id}/ship"
+Description: The id was stored from the first api, then was passed to second api to verify the
+orders was allocated and the orderid was stored, then was passed to  the third api.
+Observation: The test passed.
+Result: The order status changed from "CREATED" to "ALLOCATED" after the second api completed the
+request and then the status changed from "ALLOCATED" to "SHIPPED".
+
+
+Test9:
+Api tested: "/secure/orders" and "/secure/orders/{id}/ship"
+Description: The orderid was stored from the first api, then was passed to second api to be shipped
+and status code 409 was expected and asserted.
+Observation: The test passed.
+Result: The order status cannot be changed from "CREATED" to "SHIPPED" status; the status was 409.
+
+
