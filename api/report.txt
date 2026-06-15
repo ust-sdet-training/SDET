@@ -1,0 +1,18 @@
+Week 2 Demo Report
+
+First I implemented OAuth authentication and API Key authentication and I generated access for secure API
+after this tested invalid token and expired token scenarios.
+Then I create Order,Get Order and Delete Order APIs.
+After i create assertion which it shows responses like status,time checks validation
+After that, I check negative test such as 401 Unauthorized, 403 Forbidden, 404 Not Found,expired token 200  and 409 Conflict whether it passing as i expect.
+I done the JSON Schema Validation and also XML response validation and XSD schema validation.
+For database valid checking I connect my database with Mysql and checked the API response and I checked the Database
+After that i have done the xsd and schema validation
+In the Authtests i check the 14 cases and all were passing and i add more assertions to check the test cases strongly whether it present or not
+I also check important database fields such as Order ID, Order Number, Status, User ID and Total Amount.
+I worked with request specifications and response specifications to reduce code duplication and improve maintainability.
+finally i checked and verified the testcase
+
+Overall, I successfully completed authentication testing, API functional testing, negative testing, schema validation, XML validation and MySQL database validation using REST Assured.
+
+
