@@ -124,8 +124,11 @@ public final class RequestSpecs {
 
         return "Bearer " + token;
     }
-
     public static RequestSpecification basicSpec() {
+
+        return basicRequestSpec;
     }
+
+
 
 }

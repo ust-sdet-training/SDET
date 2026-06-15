@@ -1,5 +1,5 @@
 package tests;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import base.BaseTest;
 import models.request.LoginRequest;
 import models.response.LoginResponse;

@@ -96,12 +96,13 @@ public final class ResponseSpecs {
                 .expectBody("total", greaterThan(0))
                 .build();
 
-        ResponseSpecification cartCreatedSpec = new ResponseSpecBuilder()
-                .expectStatusCode(201)
-                .expectContentType(ContentType.JSON)
-                .expectBody("id", notNullValue())
-                .expectBody("quantity", greaterThan(0))
-                .expectBody("product.id", notNullValue())
-                .build();
+        cartCreatedSpec =
+                new ResponseSpecBuilder()
+                        .expectStatusCode(201)
+                        .expectContentType(ContentType.JSON)
+                        .expectBody("id", notNullValue())
+                        .expectBody("quantity", greaterThan(0))
+                        .expectBody("product.id", notNullValue())
+                        .build();
     }
 }
