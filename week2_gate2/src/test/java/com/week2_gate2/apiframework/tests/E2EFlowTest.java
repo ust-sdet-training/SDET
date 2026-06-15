@@ -23,7 +23,7 @@ import io.restassured.specification.RequestSpecification;
 
 import com.week2_gate2.dbframework.support.DbSupport;
 
-public class E2EFlow {
+public class E2EFlowTest {
     private static String token;
     private static String invalid_token;
     private static String wrong_role_token;
