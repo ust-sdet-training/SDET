@@ -39,7 +39,7 @@ public class AllocateOrder {
 
         assertTrue(orderId > 0);
 
-        // Allocate Order
+
         OrderResponse allocatedOrder =
                 orderService.allocateOrder(orderId)
                         .then()
@@ -52,7 +52,7 @@ public class AllocateOrder {
 
         assertNotNull(allocatedOrder.getStatus());
 
-        // Ship Order
+
         OrderResponse shippedOrder =
                 orderService.shipOrder(orderId)
                         .then()
@@ -65,7 +65,6 @@ public class AllocateOrder {
 
         assertNotNull(shippedOrder.getStatus());
 
-        // Fetch Order
         OrderResponse fetchedOrder =
                 orderService.fetchOrder(orderId)
                         .then()

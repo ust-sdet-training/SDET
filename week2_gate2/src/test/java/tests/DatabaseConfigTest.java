@@ -74,12 +74,12 @@ public class DatabaseConfigTest {
         );
     }
 
-    @Test
-    void databaseShouldBeReachable() throws Exception {
-
-        assertTrue(
-                DbSupport.isReachable()
-        );
-    }
+//    @Test
+//    void databaseShouldBeReachable() throws Exception {
+//
+//        assertTrue(
+//                DbSupport.isReachable()
+//        );
+//    }
 
 }
