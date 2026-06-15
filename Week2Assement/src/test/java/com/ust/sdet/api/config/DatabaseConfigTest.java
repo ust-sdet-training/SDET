@@ -15,8 +15,5 @@ class DatabaseConfigTest {
         DatabaseConfig config =  DatabaseConfig.fromEnvironmentCredential();
         DbSupport dbSupport = new DbSupport(config);
         System.out.println(dbSupport.isReachable());
-        System.out.println(config.username().compareTo(System.getenv("DB_USER")));
-
-
     }
 }

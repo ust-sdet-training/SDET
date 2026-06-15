@@ -1,9 +1,9 @@
 package com.ust.sdet.api.support;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -83,6 +83,7 @@ public final class TestEnvironment {
             ).toAbsolutePath().normalize();
             startingPoints.add(codeLocation);
         } catch (URISyntaxException ignored) {
+            // The working-directory search still provides a normal fallback.
         }
 
         for (Path startingPoint : startingPoints) {

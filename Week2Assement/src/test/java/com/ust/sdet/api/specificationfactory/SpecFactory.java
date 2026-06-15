@@ -1,5 +1,6 @@
 package com.ust.sdet.api.specificationfactory;
 
+import com.ust.sdet.api.support.TestEnvironment;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
@@ -15,7 +16,7 @@ public class SpecFactory {
     public static final String BASE_URL = System.getProperty("baseurl",System.getenv().getOrDefault("BASEURL","http://localhost:4000"));
 
     public static Map<String,String> generateTokenBody =
-            Map.of(System.getenv("GRANT_TYPE"),System.getenv("GRANT_SECRET"));
+            Map.of(TestEnvironment.required("GRANT_TYPE"),TestEnvironment.required("GRANT_SECRET"));
 
     public static String getToken(String username,String password)
     {

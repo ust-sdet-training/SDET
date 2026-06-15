@@ -3,6 +3,7 @@ package com.ust.sdet.api.tests;
 import com.ust.sdet.api.config.DatabaseConfig;
 import com.ust.sdet.api.model.OrderRow;
 import com.ust.sdet.api.support.DbSupport;
+import com.ust.sdet.api.support.TestEnvironment;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
@@ -36,7 +37,7 @@ public class OrderCycleWithDbValidationTest
     static void setup() {
 
         database = new DbSupport(DatabaseConfig.fromEnvironmentCredential());
-        token = getToken(System.getenv("OAUTH_CLIENT_ID"), System.getenv("OAUTH_CLIENT_SECRET"));
+        token = getToken(TestEnvironment.required("OAUTH_CLIENT_ID"), TestEnvironment.required("OAUTH_CLIENT_SECRET"));
     }
 
     @AfterEach
