@@ -16,7 +16,7 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class Flow {
+class CustomerFlow {
 
     private static String customerToken;
 
@@ -60,8 +60,7 @@ class Flow {
 
                 .then()
                 .spec(SpecFactory.ok200())
-                .body(matchesJsonSchemaInClasspath(
-                        "schema/json/product-list.schema.json"))
+                .body(matchesJsonSchemaInClasspath("schema/json/product-list.schema.json"))
                 .body("items.size()", greaterThan(0))
                 .body("items[0].name", equalTo("Running Shoes"))
                 .body("items[0].stock", equalTo(18))

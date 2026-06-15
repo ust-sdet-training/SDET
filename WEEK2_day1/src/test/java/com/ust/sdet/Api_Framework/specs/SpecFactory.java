@@ -80,16 +80,16 @@ public final class SpecFactory {
     }
 
     public static final String PRODUCT_SCHEMA =
-            "Schemas/json/product.schema.json";
+            "schema/json/product.schema.json";
 
     public static final String PRODUCT_LIST_SCHEMA =
-            "Schemas/json/productList.schema.json";
+            "schema/json/product-list.schema.json";
 
     public static final String CUSTOMER_ORDER_SCHEMA =
-            "Schemas/json/orders_schema/customer-orders.schema.json";
+            "schema/json/orders_schema/customer-orders.schema.json";
 
     public static final String OPS_ORDER_SCHEMA =
-            "Schemas/json/orders_schema/partner-orders.schema.json";
+            "schema/json/orders_schema/partner-orders.schema.json";
 
 
     public static RequestSpecification readSpec() {

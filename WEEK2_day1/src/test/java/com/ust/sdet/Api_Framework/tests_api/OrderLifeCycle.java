@@ -1,4 +1,4 @@
-//package com.ust.sdet.tests.life_cycle.LifeCycle;
+package com.ust.sdet.Api_Framework.tests_api;
 
 import com.ust.sdet.Api_Framework.specs.SpecFactory;
 import com.ust.sdet.Api_Framework.config.ApiConfig;
@@ -53,8 +53,7 @@ public class OrderLifeCycle {
 
         for (Long orderId : createdOrderIds) {
 
-            int deletedRows =
-                    repository.deleteOrder(orderId);
+            int deletedRows = repository.deleteOrder(orderId);
 
             System.out.println(
                     "Deleted Order ID: "
@@ -158,14 +157,14 @@ public class OrderLifeCycle {
 
         OrderRow dbOrder = repository.findOrder(orderId);
 
-        Db_Assertions.assertOrderExists(dbOrder);
+        Db_Assertions.OrderExistsorNot(dbOrder);
 
-        Db_Assertions.assertOrderStatus(
+        Db_Assertions.OrderStatus(
                 dbOrder,
                 response.jsonPath().getString("status")
         );
 
-        Db_Assertions.assertOrderNumber(
+        Db_Assertions.OrderNumber(
                 dbOrder,
                 response.jsonPath().getString("orderNumber")
         );

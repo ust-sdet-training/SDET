@@ -97,7 +97,7 @@ public class NegativeTests {
                 .spec(SpecFactory.opsRead())
 
                 .when()
-                .get(SpecFactory.secureOrderById(999999))
+                .get(SpecFactory.secureOrderById(10000))
 
                 .then()
                 .spec(SpecFactory.notFound404());

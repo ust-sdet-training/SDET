@@ -1,15 +1,11 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$schema": "https://json-schema.org/draft-04/schema#",
   "type": "object",
-  "required": ["id", "name", "category", "price","stock"],
+  "required": ["id", "name", "category", "price"],
   "properties": {
     "id": {"type": "integer", "minimum": 1},
     "name": {"type": "string", "minLength": 1},
-    "category": {
-      "type": "string",
-      "enum": ["Footwear", "Bags", "Electronics", "Fitness",
-      "Apparel","Workspace","Grocery","Home","Beauty"]
-    },
+    "category": {"type": "string", "enum": ["Footwear", "Bags", "Electronics"]},
     "price": {"type": "integer", "minimum": 0},
     "stock": {"type": "integer", "minimum": 0},
     "brand": {"type": "string"},
@@ -20,6 +16,5 @@
       "items": {"type": "string"}
     }
   },
-
-  "additionalProperties": false
+  "additionalProperties": true
 }
