@@ -34,7 +34,7 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 
 import com.week_2_gate_2.dbframework.config.DBconfig;
 import com.week_2_gate_2.dbframework.model.orderRow;
-public class E2E {
+public class E2ETest {
     
     private static String authToken;
     private static DbSupport database;

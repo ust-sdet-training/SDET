@@ -7,7 +7,7 @@ import static com.week_2_gate_2.apiframework.support.ApiSupport.*;
 import static io.restassured.RestAssured.given;
 import static io.restassured.matcher.RestAssuredMatchers.matchesXsdInClasspath;
 
-public class XMLcheck {
+public class XMLcheckTest {
 
     @Test
     @DisplayName("M3: product detail matches product JSON schema")

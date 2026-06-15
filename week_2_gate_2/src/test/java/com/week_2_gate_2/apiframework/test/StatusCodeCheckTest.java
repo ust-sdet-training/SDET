@@ -39,7 +39,7 @@ import com.week_2_gate_2.dbframework.model.orderRow;
 
 import io.restassured.specification.RequestSpecification;
 
-public class StatusCodeCheck {
+public class StatusCodeCheckTest {
     
     private static String authToken;
     private static String viwerToken;
