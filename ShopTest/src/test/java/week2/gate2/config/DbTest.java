@@ -1,7 +1,7 @@
 package week2.gate2.config;
 
-import org.example.dbframework.config.DatabaseConfig;
-import org.example.dbframework.support.DbSupport;
+import week2.gate2.config.DatabaseConfig;
+import week2.gate2.support.DbSupport;
 import org.junit.jupiter.api.Test;
 
 class DbTest {
