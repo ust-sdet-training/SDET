@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="353e9786-9b3f-4c87-9689-beb9618b70f6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/.env" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/Container/TestContainer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/config/Config.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/dbframework/config/DatabaseConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/dbframework/config/DatabaseConfigTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/dbframework/model/OrderRow.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/dbframework/support/DbSupport.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/dbframework/support/TestEnvironment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/report.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/specs/SpecFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/tests/AuthTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/tests/DbTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/tests/LocalMySqlDbValidationDemo.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="3FAXYacOoWCx3aQ2fQKGXJOgEND" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JUnit.CatalogFlowPOMTest.SortRating.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CatalogFlowPOMTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CatalogFlowPOMTest.full_journey_of_all_stages.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CatalogFlowPOMTest.searchFindson.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CatalogFlowPOMTest.searchproduct.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CatalogFlowTest.CategorySearchProducts.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CatalogFlowTest.Size_guide_page.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CatalogFlowTest.addToCartUpdatesBadge.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CatalogFlowTest.detailAddToCartUpdatesBadge.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CatalogFlowTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CatalogFlowTest.hoverRevealsQuickViewMarker.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CatalogFlowTest.invalidSearchShowsNoResults.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CatalogFlowTest.searchShowsmatchingCards.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CatalogFlowTest.sortLowToHighShowsAscendingPrices.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CatalogPOMTest.full_journey_of_all_stages.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CatalogPOMTest.sortProductsBasedOnthePrice.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RunCucumberTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SmokeTest.Catalog_Test.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SmokeTest.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;karthikeyan-week02-gate2&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/310970/Desktop/Day1/sdet-playwright-ts/SDET/WEEK03_GATE2_KARTHIKEYAN&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/310970/Desktop/Week 3/week3Project/src/main/java/org/example/Main.java&quot;
+  }
+}</component>
+  <component name="RunManager" selected="JUnit.CatalogFlowPOMTest.full_journey_of_all_stages">
+    <configuration name="CatalogFlowPOMTest.SortRating" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Seleniumproject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.ust.sdet.tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.ust.sdet.tests" />
+      <option name="MAIN_CLASS_NAME" value="com.ust.sdet.tests.CatalogFlowPOMTest" />
+      <option name="METHOD_NAME" value="SortRating" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CatalogFlowPOMTest.full_journey_of_all_stages" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Seleniumproject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.ust.sdet.tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.ust.sdet.tests" />
+      <option name="MAIN_CLASS_NAME" value="com.ust.sdet.tests.CatalogFlowPOMTest" />
+      <option name="METHOD_NAME" value="full_journey_of_all_stages" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CatalogFlowPOMTest.searchFindson" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Seleniumproject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.ust.sdet.tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.ust.sdet.tests" />
+      <option name="MAIN_CLASS_NAME" value="com.ust.sdet.tests.CatalogFlowPOMTest" />
+      <option name="METHOD_NAME" value="searchFindson" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CatalogPOMTest.full_journey_of_all_stages" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Seleniumproject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.ust.sdet.tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.ust.sdet.tests" />
+      <option name="MAIN_CLASS_NAME" value="com.ust.sdet.tests.CatalogPOMTest" />
+      <option name="METHOD_NAME" value="full_journey_of_all_stages" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CatalogPOMTest.sortProductsBasedOnthePrice" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Seleniumproject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.ust.sdet.tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.ust.sdet.tests" />
+      <option name="MAIN_CLASS_NAME" value="com.ust.sdet.tests.CatalogPOMTest" />
+      <option name="METHOD_NAME" value="sortProductsBasedOnthePrice" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.CatalogPOMTest.sortProductsBasedOnthePrice" />
+        <item itemvalue="JUnit.CatalogPOMTest.full_journey_of_all_stages" />
+        <item itemvalue="JUnit.CatalogFlowPOMTest.SortRating" />
+        <item itemvalue="JUnit.CatalogFlowPOMTest.searchFindson" />
+        <item itemvalue="JUnit.CatalogFlowPOMTest.full_journey_of_all_stages" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="353e9786-9b3f-4c87-9689-beb9618b70f6" name="Changes" comment="" />
+      <created>1781518898003</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1781518898003</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.feature" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Main.java</url>
+          <line>13</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
