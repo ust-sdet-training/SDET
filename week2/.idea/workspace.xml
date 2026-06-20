@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b5d9f95d-4cac-4ee5-89eb-1c5055f395a6" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="3F2i6EzG5kv6OE6s6LsJhcwpx40" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.credentials.executor": "Run",
+    "JUnit.All in week2gate2.executor": "Run",
+    "JUnit.Flowpath.api_test.executor": "Run",
+    "JUnit.com.week2gate2 in week2gate2.executor": "Run",
+    "JUnit.test1.api_test.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "kotlin-language-version-configured": "true",
+    "onboarding.tips.debug.path": "C:/Users/310960/IdeaProjects/week2/src/main/java/org/example/Main.java",
+    "run.code.analysis.last.selected.profile": "pProject Default"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\310960\IdeaProjects\week2\src\test\java\com\week2gate2" />
+      <recent name="C:\Users\310960\IdeaProjects\week2\src\test\java\com\week2gate2\api" />
+      <recent name="C:\Users\310960\IdeaProjects\week2\src\test\resources\schema" />
+      <recent name="C:\Users\310960\IdeaProjects\week2\src\main\java\ust\week2\exam" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.com.week2gate2 in week2gate2">
+    <configuration name="All in week2gate2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="week2gate2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.week2gate2.api.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <envs>
+        <env name="OAUTH_CLIENT_ID" value="retail-ops-client" />
+        <env name="OAUTH_CLIENT_SECRET" value="2a2729b27b47fe27b6412403d886ef4781bbff36b0e2b58e" />
+        <env name="OAUTH_EXPIRED_CLIENT_ID" value="retail-expired-client" />
+        <env name="OAUTH_EXPIRED_CLIENT_SECRET" value="851d19d4df703b868ae8fc71d0143410670272630553ae21" />
+        <env name="OAUTH_VIEWER_CLIENT_ID" value="retail-viewer-client" />
+        <env name="OAUTH_VIEWER_CLIENT_SECRET" value="241354ac6e2b75796df4eea67c3681ee520fed7d1d78c7fb" />
+        <env name="RETAIL_API_KEY" value="retail-demo-key  " />
+      </envs>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Flowpath.api_test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="week2gate2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.week2gate2.api.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.week2gate2.api.test" />
+      <option name="MAIN_CLASS_NAME" value="com.week2gate2.api.test.Flowpath" />
+      <option name="METHOD_NAME" value="api_test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="com.week2gate2 in week2gate2" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+      <module name="week2gate2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.week2.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.week2gate2" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <envs>
+        <env name="OAUTH_CLIENT_ID" value="retail-ops-client" />
+        <env name="OAUTH_CLIENT_SECRET" value="2a2729b27b47fe27b6412403d886ef4781bbff36b0e2b58e" />
+        <env name="OAUTH_EXPIRED_CLIENT_ID" value="retail-expired-client" />
+        <env name="OAUTH_EXPIRED_CLIENT_SECRET" value="851d19d4df703b868ae8fc71d0143410670272630553ae21" />
+        <env name="OAUTH_VIEWER_CLIENT_ID" value="retail-viewer-client" />
+        <env name="OAUTH_VIEWER_CLIENT_SECRET" value="241354ac6e2b75796df4eea67c3681ee520fed7d1d78c7fb" />
+        <env name="RETAIL_API_KEY" value="retail-demo-key  " />
+      </envs>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="JUnit.com.week2gate2 in week2gate2" />
+      <item itemvalue="JUnit.All in week2gate2" />
+      <item itemvalue="JUnit.Flowpath.api_test" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.Flowpath.api_test" />
+        <item itemvalue="JUnit.All in week2gate2" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b5d9f95d-4cac-4ee5-89eb-1c5055f395a6" name="Changes" comment="" />
+      <created>1781279389704</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1781279389704</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Main.java</url>
+          <line>13</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/com/week2gate2/api/test/Flowpath.java</url>
+          <line>28</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/test/java/com/week2gate2/test/test1.java</url>
+          <line>24</line>
+          <properties class="com.week2gate2.test.test1">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
