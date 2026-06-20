@@ -12,9 +12,15 @@ Feature: Catalog checkout
     And I add the first result to the cart
     Then the cart badge shows 1
     When I open the cart
-    Then the cart has 2 line item
+    Then the cart has 1 line item
     When I place the order
     Then the order is confirmed
+
+  @smoke
+  Scenario: cart badge reflects the number of items
+    When I search for "headphones"
+    And I add the first result to the cart
+    Then the cart badge shows 1
 
   @regression
   Scenario Outline: Buy "<product>" end to end
@@ -32,9 +38,15 @@ Feature: Catalog checkout
       | shoes      | 1     |
       | lamp       | 1     |
 
-  @exercise
+  @regression
   Scenario: A fresh cart is empty
     When I open the cart
     Then the cart has 0 line items
+
+  @negative
+  Scenario: deliberately failing scenario to demonstrate the failure screenshot
+    When I search for "headphones"
+    And I add the first result to the cart
+    Then the cart badge shows 0
 
 
