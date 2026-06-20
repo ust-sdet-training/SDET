@@ -12,7 +12,7 @@ public class CheckoutPage extends BasePage{
     private static final By CONFIRMATION = By.cssSelector("[data-test='order-confirmation']");
 
     public CheckoutPage waitForPage(){
-        visible(ORDER_BTN);   // waits until page loads
+        visible(ORDER_BTN);
         return this;
     }
 
