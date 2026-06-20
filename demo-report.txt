@@ -1,0 +1,33 @@
+Created a feature file called enetoend.feature in which:
+
+1) A smoke test in which the full flow is tested. A product is searched for and added
+to cart, cart badges are verified. The cart is opened and cart lines are also verified.
+The order for the selected product is placed and confirmed.
+
+2) A second smoke test to test searching for a single product and adding it to cart and
+checking the cart badge.
+
+3) A regression test is created to test the full flow from search to placing order 
+with multiple search queries using Scenario Outline.
+
+4) A regression test to check that the cart is empty before adding any items.
+
+5) A negative Scenario where we assert incorrectly to generate allure report. This test is
+supposed to fail as it incorrectly asserts that the products list is not sorted.
+
+Tests all work as intended when headless=false in Config.
+Errors occur when headless=true in Config.
+
+The steps of this .feature file are defined in EndToEndSteps.java and the test is run using
+RunCucumberTest.java file.
+
+Allure reports are generated in target/allure-results
+Spark.html report is genertaed in folder test-output contains screenshot of the failure.
+
+Commands:
+
+1) Run all Smoke test: mvn clean test -Dtest=RunCucumberTest "-Dcucumber.filter.tags=@smoke"
+2) Run all Regression test: mvn clean test -Dtest=RunCucumberTest "-Dcucumber.filter.tags=@regression"
+3) Run all Negative test: mvn clean test -Dtest=RunCucumberTest "-Dcucumber.filter.tags=@negative"
+4) Run all tests: mvn clean test -Dtest=RunCucumberTest "-Dcucumber.filter.tags=@smoke or @regression or @negative"
+5) Serve allure reports: allure serve target/allure-results (requires Allure CLI to be installed)
