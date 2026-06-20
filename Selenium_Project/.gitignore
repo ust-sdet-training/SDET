@@ -6,6 +6,8 @@ target/
 
 test-output/
 
+.env
+
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml
