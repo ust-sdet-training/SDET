@@ -29,7 +29,7 @@ public class LoginPage extends BasePage{
 
         emailInput.clear();
         emailInput.sendKeys(text);
-        emailInput.sendKeys(Keys.ENTER);
+        //emailInput.sendKeys(Keys.ENTER);
         return this;
     }
 
@@ -44,7 +44,7 @@ public class LoginPage extends BasePage{
 
         passwordInput.clear();
         passwordInput.sendKeys(text);
-        passwordInput.sendKeys(Keys.ENTER);
+        //passwordInput.sendKeys(Keys.ENTER);
 
         return this;
     }

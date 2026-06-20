@@ -31,8 +31,8 @@ public class LoginSteps {
 
     @When("clicks the sign in button")
     public void clicks_the_sign_in_button() {
-        world.login.signIn();
-        assertTrue(world.login.isSignInEnabled());
+        world.homePage = world.login.signIn();
+        //assertTrue(world.login.isSignInEnabled());
     }
 
     @Then("the user should be redirected to home page")

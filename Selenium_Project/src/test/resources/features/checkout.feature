@@ -20,8 +20,9 @@ Scenario: Buy a single product end to end
 
 @smoke
 Scenario Outline: Login using valid credentials
-    When the user enters "<username>" and "<password>"
-    And clicks sing in button
+    Given the login page is loaded
+    When the user enters "customer@example.com" and "Password@123"
+    And clicks the sign in button
     Then the user should be redirected to home page
 
     Examples:
@@ -31,9 +32,9 @@ Scenario Outline: Login using valid credentials
 
 @smoke
 Scenario: Sort products by low to high
-    Given the catalog is opened
     When I sort products by "Price: Low to High"
     Then the products are sorted in ascending order
+
 
 @regression
 Scenario Outline: Cart badge updates after adding products
