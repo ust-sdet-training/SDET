@@ -10,7 +10,7 @@ public class CartPage extends BasePage{
 
     private static final By CART_COUNT = By.cssSelector("[data-test='cart-count']");
     private static final By CART_ITEMS = By.cssSelector("[data-test='cart-line']");
-    private static final By CHECKOUT_BTN = By.cssSelector("[data-test='checkout-button'");
+    private static final By CHECKOUT_HEADER = By.cssSelector(".main-nav a:nth-of-type(10)");
 
     public int cartCount(){
         return Integer.parseInt(text(CART_COUNT));
@@ -20,8 +20,8 @@ public class CartPage extends BasePage{
         return elements(CART_ITEMS).size();
     }
 
-    public CheckoutPage checkout(){
-        click(CHECKOUT_BTN);
+    public CheckoutPage proceed(){
+        click(CHECKOUT_HEADER);
         return new CheckoutPage(driver);
     }
 }

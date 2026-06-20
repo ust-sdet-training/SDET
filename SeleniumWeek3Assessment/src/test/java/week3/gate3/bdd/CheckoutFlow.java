@@ -48,8 +48,9 @@ public class CheckoutFlow {
     }
 
     @When("I place the order")
-    public void placeOrder(){
-        world.checkout = world.cart.checkout().placeOrder();
+    public void iPlaceTheOrder() {
+        world.checkout = world.cart.proceed();
+        world.checkout.placeOrder();
     }
 
     @Then("the order is confirmed")
