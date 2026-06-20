@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="bf8928c5-c60d-4214-b9c1-ba0ebc5d72ce" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/ust/sdet/bdd/CheckoutSteps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/ust/sdet/bdd/Hooks.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/ust/sdet/bdd/RunCucumberTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/ust/sdet/bdd/World.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/ust/sdet/pages/BasePage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/ust/sdet/pages/CartPage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/ust/sdet/pages/CatalogPage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/ust/sdet/pages/CheckoutPage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/ust/sdet/pages/ProductPage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/ust/sdet/pages/components/CartBadge.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/ust/sdet/pages/components/Header.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/ust/sdet/support/Config.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/ust/sdet/support/DriverFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/ust/sdet/support/TestEnvironment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/allure.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/allure/environment.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/extent.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/features/checkout.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/junit-platform.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="3F4UC6L3mQzsPO92UNXd936Foj3" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.SDETMainTest.executor": "Run",
+    "JUnit.SQLDBValidationTest.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "aravind-week03-gate3",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/310962/IdeaProjects/SDET/SDET/src/test/java/ust/sdet/support",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\310962\IdeaProjects\SDET\SDET\src\test\java\ust\sdet\support" />
+      <recent name="C:\Users\310962\IdeaProjects\SDET\SDET\src\test\resources" />
+      <recent name="C:\Users\310962\IdeaProjects\SDET\SDET" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="ust.sdet.support" />
+      <recent name="ust.sdet.bdd" />
+      <recent name="ust.sdet.db.config" />
+      <recent name="ust.sdet.db.model" />
+      <recent name="ust.sdet.test" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.SDETMainTest">
+    <configuration name="SDETMainTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ShopTest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ust.sdet.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ust.sdet.test" />
+      <option name="MAIN_CLASS_NAME" value="ust.sdet.test.SDETMainTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SQLDBValidationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ShopTest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ust.sdet.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ust.sdet.test" />
+      <option name="MAIN_CLASS_NAME" value="ust.sdet.test.SQLDBValidationTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.SDETMainTest" />
+        <item itemvalue="JUnit.SQLDBValidationTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bf8928c5-c60d-4214-b9c1-ba0ebc5d72ce" name="Changes" comment="" />
+      <created>1781333704533</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1781333704533</updated>
+    </task>
+    <servers />
+  </component>
+</project>
