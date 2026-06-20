@@ -1,0 +1,28 @@
+package com.ust.sdet.support;
+
+public class Config {
+
+    private Config(){
+    }
+
+    public static String baseUrl(){
+        return System.getProperty("baseUrl","http://localhost:5173").replaceAll("/$","");
+    }
+
+    public static String catalogUrl(){
+        return baseUrl()+"/catalog";
+    }
+
+    public static boolean headless(){
+        return Boolean.parseBoolean(
+                System.getProperty("headless", "true")
+        );
+    }
+
+    public static boolean headed() {
+        return Boolean.parseBoolean(
+                System.getProperty("headless", "false")
+        );
+    }
+
+}
