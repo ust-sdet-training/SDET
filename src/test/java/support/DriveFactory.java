@@ -33,7 +33,7 @@ public class DriveFactory {
     {
         options.addArguments("--headless=new");
     }
-        options.addArguments("--window size = 1440,900");
+        options.addArguments("--window-size=1440,900");
 
         return new ChromeDriver(options);
  }
