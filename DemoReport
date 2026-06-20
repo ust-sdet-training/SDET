@@ -1,0 +1,107 @@
+Catalog Checkout – Test Scenario Documentation
+
+Feature Overview:
+
+ * Feature Name: Catalog Checkout
+
+ * UserStory:
+    ---------
+    As a shopper, I want to search the catalog, add a product to my cart and complete checkout so that I can purchase products successfully and ensure the purchase flow works correctly on every application build.
+
+ * Background
+   ----------
+    Given the catalog is open //(This step is executed before every scenario and ensures that the user starts from the catalog page.)
+
+    -> Smoke Test Scenarios
+        -----------------
+    1) Buy a Single Product End-to-End
+
+    - Objective:
+    Verify that a shopper can search for a product, add it to the cart and successfully place an order.
+
+    - Test Steps:
+    The user searches for "headphones" in the catalog and adds the first product from the search results to the shopping cart.
+    The cart badge should update and display 1 item. The user then opens the cart and verifies that it contains one product.
+    After confirming the cart contents, the user proceeds to checkout and places the order.
+    The order should be completed successfully and an order confirmation message should be displayed to the user.
+
+    - Expected Result:
+    The order is placed successfully and an order confirmation is displayed.
+
+
+    2) Cart Badge Reflects Added Item Count
+
+    - Objective:
+    Verify that the cart badge count updates correctly after adding a product.
+
+    - Test Steps:
+    The user searches for "running" in the catalog and views the matching products displayed in the search results.
+    The user then adds the first product from the results to the shopping cart.
+    After the product is added, the cart badge should update and display a count of 1,
+    confirming that the item has been successfully added to the cart.
+
+    - Expected Result:
+    Cart badge accurately reflects the number of items added.
+
+
+    -> Regression Test Scenarios
+        ---------------------
+    3) Buy Product End-to-End Using Multiple Test Data
+
+    - Objective:
+    Verify that different products can be purchased successfully using data-driven testing.
+
+    - Test Data:
+    | Product    | Expected Count |
+    | ---------- | -------------- |
+    | headphones |      1         |
+    | shoes      |      1         |
+    | laptop     |      1         |
+
+    - Test Steps:
+    The user searches for a product using the test data provided, such as headphones, shoes or a laptop.
+    From the search results, the user adds the first available product to the shopping cart.
+    The cart badge is then verified to ensure it displays the expected item count.
+    The user opens the cart and confirms that the correct number of items is present.
+    After verifying the cart contents, the user proceeds to place the order.
+    The checkout process should complete successfully and an order confirmation message should be displayed,
+    indicating that the purchase was successful.
+
+    - Expected Result:
+    Each product can be purchased successfully and the order is confirmed.
+
+    4) Verify Fresh Cart is Empty
+
+    - Objective:
+    Verify that a newly opened cart contains no products.
+
+    - Test Steps:
+    The user opens the shopping cart without adding any products. The cart page should open successfully
+    and the user should be able to verify that the cart is empty. The cart should display 0 line items, confirming that no products have been added.
+
+    - Expected Result:
+    An empty cart should show 0 items.
+
+
+    -> Negative Test Scenario
+        --------------------
+    5) Attempt to Buy a Product Not Available in Catalog
+
+    - Objective:
+    Verify system behavior when a user searches for a product that does not exist.
+
+    - Test Steps:
+    The user searches for "lamb" in the catalog.
+    Since no products matching the search term are available, the system should display a message indicating that no products were found.
+    When the user attempts to add a product to the cart, the system should prevent the action because there are no search results available.
+    An appropriate error or informational message should be displayed and no items should be added to the shopping cart.
+
+    - Expected Result:
+    User should be informed that no products are available, and no item should be added to the cart.
+
+    - Validation Points:
+    * Search results list should be empty.
+    * Cart badge should remain 0.
+    * No product should be added to the cart.
+    * Appropriate "No products found" message should be displayed.
+
