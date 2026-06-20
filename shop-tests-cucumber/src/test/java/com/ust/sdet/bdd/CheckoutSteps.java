@@ -46,10 +46,10 @@ public class CheckoutSteps {
     public void theCartHasLineItems(int count) {
         world.scenario.attach(
                 (
-                        "Cart Total: " + world.cart.total() + "\nLine Items: " + world.cart.lineCount()
+                        "Cart Items: " + world.cart.lineCount()
                 ).getBytes(),
                 "text/plain",
-                "cart-state"
+                "cart-item-count"
         );
 
         assertEquals(count, world.cart.lineCount());
