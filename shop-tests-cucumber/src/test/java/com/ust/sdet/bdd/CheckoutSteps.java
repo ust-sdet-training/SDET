@@ -44,12 +44,27 @@ public class CheckoutSteps {
     @Then("the cart has {int} line item")
     @Then("the cart has {int} line items")
     public void theCartHasLineItems(int count) {
+        world.scenario.attach(
+                (
+                        "Cart Total: " + world.cart.total() + "\nLine Items: " + world.cart.lineCount()
+                ).getBytes(),
+                "text/plain",
+                "cart-state"
+        );
+
         assertEquals(count, world.cart.lineCount());
     }
 
     @When("I place the order")
     public void iPlaceTheOrder() {
         world.checkout = world.cart.proceed();
+//        world.scenario.attach(
+//                (
+//                        "Checkout Total: " + world.checkout.checkoutTotalText()
+//                ).getBytes(),
+//                "text/plain",
+//                "checkout-total"
+//        );
         world.checkout.placeOrder();
     }
 

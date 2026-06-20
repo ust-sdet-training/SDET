@@ -1,12 +1,15 @@
 package com.ust.sdet.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class CartPage extends BasePage {
     private static final By CART_PAGE = By.cssSelector("[data-test = 'cart-page']");
     private static final By LINES = By.cssSelector("[data-test = 'cart-line']");
     private static final By TOTAL = By.cssSelector("[data-test = 'cart-total']");
     private static final By CHECKOUT = By.cssSelector("[data-test = 'checkout-button']");
+    private static final By CHECKOUT_HEADER = By.cssSelector(".main-nav a:nth-of-type(10)");
+
 
     public CartPage(WebDriver driver) {
         super(driver);
@@ -22,7 +25,7 @@ public class CartPage extends BasePage {
     }
 
     public CheckoutPage proceed() {
-        click(CHECKOUT);
+        click(CHECKOUT_HEADER);
         return new CheckoutPage(driver);
     }
 }

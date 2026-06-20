@@ -5,6 +5,7 @@ import com.ust.sdet.pages.CatalogPage;
 import com.ust.sdet.pages.CheckoutPage;
 import com.ust.sdet.pages.ProductPage;
 import com.ust.sdet.pages.components.Header;
+import io.cucumber.java.Scenario;
 import org.openqa.selenium.WebDriver;
 
 public class World {
@@ -13,6 +14,7 @@ public class World {
     public ProductPage product;
     public CartPage cart;
     public CheckoutPage checkout;
+    public Scenario scenario;
 
     public Header header() {
         return new Header(driver);

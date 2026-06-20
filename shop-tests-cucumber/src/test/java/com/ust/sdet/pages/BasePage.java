@@ -4,6 +4,7 @@ import com.ust.sdet.pages.components.Header;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -38,7 +39,11 @@ public class BasePage {
     }
 
     protected void click(By by){
-        wait.until(ExpectedConditions.elementToBeClickable(by)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(by));
+        new Actions(driver)
+                .moveToElement(driver.findElement(by))
+                .click()
+                .perform();
     }
 
     protected void type(By by, CharSequence...  text){

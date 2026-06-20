@@ -15,8 +15,9 @@ public class Hooks {
     }
 
     @Before
-    public void setUp() {
+    public void setUp(Scenario scenario) {
         world.driver = DriverFactory.createChromeDriver();
+        world.scenario = scenario;
     }
 
     @After(order = 1)
