@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../sdet-playwright-ts"
+		},
+		{
+			"path": "../sdet-retail-app"
+		}
+	]
+}
