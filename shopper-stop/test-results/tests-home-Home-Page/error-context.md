@@ -1,0 +1,913 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: tests\home.spec.ts >> Home Page
+- Location: tests\home.spec.ts:5:5
+
+# Error details
+
+```
+Error: expect(locator).toBeVisible() failed
+
+Locator: getByRole('heading', { name: 'Shoes' })
+Expected: visible
+Timeout: 5000ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toBeVisible" with timeout 5000ms
+  - waiting for getByRole('heading', { name: 'Shoes' })
+
+```
+
+```yaml
+- main:
+  - text: "Use code: NEW10, for an extra 10% off for first-time users."
+  - paragraph: Store Locator
+  - paragraph: Get The App
+  - paragraph: Help
+  - link "logo":
+    - /url: /home
+    - img "logo"
+  - img "search"
+  - textbox "Search": shoes
+  - img
+  - img
+  - img
+  - img "wishlist-icon"
+  - img "shopping-cart"
+  - navigation:
+    - navigation:
+      - list:
+        - link "Barga%ns":
+          - /url: /bargain
+        - link "MEN":
+          - /url: /category/men
+        - link "WOMEN":
+          - /url: /category/women
+        - link "KIDS":
+          - /url: /category/kids
+        - link "WATCHES":
+          - /url: /category/watches
+        - link "HOMESTOP":
+          - /url: /category/Homestop
+        - link "LUXE":
+          - /url: /luxe
+        - link "BRANDS":
+          - /url: /home
+        - link "GIFTS":
+          - /url: /category/gifts
+        - link "logo1":
+          - /url: https://ssbeauty.shoppersstop.com/category/beauty
+          - img "logo1"
+  - link "hero_banner":
+    - /url: /search/result?q=Footwear&filter=categoryPath3_uFilter%253A%2522Sports%2520Shoes%252CCasual%2520Shoes%2520%2526%2520Loafers%252CSneakers%252CFootwear%2522
+    - img "hero_banner"
+  - list:
+    - listitem:
+      - button "1"
+    - listitem:
+      - button "2"
+    - listitem:
+      - button "3"
+    - listitem:
+      - button "4"
+    - listitem:
+      - button "5"
+    - listitem:
+      - button "6"
+    - listitem:
+      - button "7"
+  - link "hero_banner":
+    - /url: /search/result?q=Shop+till+you+drop
+    - img "hero_banner"
+  - list:
+    - listitem:
+      - button "1"
+    - listitem:
+      - button "2"
+  - link:
+    - /url: /search/result?q=Luxe+Watches
+    - img
+  - link "hero_banner":
+    - /url: /search/result?q=Luxe+Watches
+    - img "hero_banner"
+  - link:
+    - /url: /search/result?q=beauty%20essentails
+    - img
+  - link "hero_banner":
+    - /url: /search/result?q=beauty%20essentails
+    - img "hero_banner"
+  - strong: Top Categories, Best Prices
+  - strong: Covetable Beauty
+  - strong: Indianwear Icons On Offer
+  - strong: The Big Drop Zone
+  - img "luxe"
+  - paragraph: Indulge In The World Of Luxury
+  - button "SWITCH TO luxe":
+    - paragraph:
+      - text: SWITCH TO
+      - img "luxe"
+  - link "hero_banner":
+    - /url: ""
+    - img "hero_banner"
+  - text: Vacation Checklist
+  - img
+  - text: UP TO 50% OFF
+  - img
+  - text: UP TO 50% OFF
+  - img
+  - text: MIN. 20% OFF
+  - img
+  - text: "₹500 Off Use Coupon Code: SALE26"
+  - img "hero_banner"
+  - strong: Home Glow-Up Sale
+  - img "image1"
+  - img "image1"
+  - paragraph
+  - img "image1"
+  - paragraph
+  - img "image1"
+  - paragraph
+  - img "100% Authentic"
+  - paragraph: 100% Authentic
+  - img "Fast Delivery"
+  - paragraph: Fast Delivery
+  - img "Easy Return"
+  - paragraph: Easy Return
+  - img "2000+ brands"
+  - paragraph: 2000+ brands
+  - text: Download App Download our app for exclusive access to wellness tips, personalized products, and seamless shopping
+  - img "QR Code"
+  - link "App Store":
+    - /url: https://apps.apple.com/in/app/shoppers-stop-fashion-shopping/id1047171444
+    - img "App Store"
+  - link "Google Play":
+    - /url: https://play.google.com/store/apps/details?id=shoppersstop.shoppersstop&hl=en
+    - img "Google Play"
+  - img "App Preview"
+  - img "customization_logo"
+  - text: Personal Shopper What's your style? Let us help you find it. BOOK YOUR ADVISOR
+  - img "navigation"
+  - paragraph:
+    - strong
+  - heading "Shoppers Stop – Best Fashion Shopping Site in India" [level=1]:
+    - strong: Shoppers Stop – Best Fashion Shopping Site in India
+  - paragraph
+  - paragraph:
+    - text: Shoppers Stop is one of India’s largest departmental stores and finest retailers for more than 30 years. It offers one of the country’s widest ranges in the latest apparel, beauty, home decor, fragrances, accessories and
+    - link "luxury watches":
+      - /url: https://www.shoppersstop.com/
+    - text: at the best prices. Today shoppersstop.com is an easy way to shop for all your fashion and lifestyle needs online from the comfort of your home. Log in to bag the best deals, get exclusive offers and enjoy your ‘Shop Anytime Anywhere’ time with free shipping, cash on delivery and the great customer service that Shoppers Stop is known for.
+  - paragraph:
+    - text: shoppersstop.com is a one stop destination for your family's fashion needs be it
+    - link "men’s clothing":
+      - /url: https://www.shoppersstop.com/category/men
+    - text: ","
+    - link "women’s clothing":
+      - /url: https://www.shoppersstop.com/category/women
+    - text: ", fashion footwear and kids’ wear to name a few of the top categories to check out. Here are some of the best brands and products across categories for a powerful style statement:"
+  - paragraph:
+    - strong
+  - heading "Men’s Clothing and Accessories" [level=2]:
+    - strong: Men’s Clothing and Accessories
+  - paragraph
+  - paragraph:
+    - text: Give your wardrobe a makeover with men’s apparel and accessories from shoppersstop.com that’ll take you from the boardroom to the beach. Brands that you should definitely check out are
+    - link "Bandeya":
+      - /url: https://www.shoppersstop.com/brand/BANDEYA
+    - text: for
+    - link "men’s Indianwear":
+      - /url: https://www.shoppersstop.com/men-clothing-ethnicwear/c-A101090
+    - text: like kurtas and pyjamas, and
+    - link "Stop":
+      - /url: https://www.shoppersstop.com/brand/STOP?filter=categoryPath1_uFilter%253A%2522Men%2522&page=1
+    - text: that retails smart men’s clothing like formal shirts and trousers. Check out Alt Life for cool casuals like printed t-shirts and jeans that will keep you looking confident and feeling comfortable.
+  - paragraph: Whether it’s polos, casual jackets or even men’s sports and activewear, you’ll find something for you that’s versatile and reliable to create your fit for the day. Wallets, belts, watches and laptop bags are everyday practical pieces that will complete your look.
+  - paragraph:
+    - strong
+  - heading "Trendy Women’s Clothing and Accessories" [level=2]:
+    - strong: Trendy Women’s Clothing and Accessories
+  - paragraph
+  - paragraph:
+    - text: Choose shoppersstop.com as your destination for online shopping for women that offers the latest fashion picks from the best brands. Find everything in one place from women’s ethnic wear like kurtis from
+    - link "W":
+      - /url: https://www.shoppersstop.com/brand/W
+    - text: and
+    - link "Biba":
+      - /url: https://www.shoppersstop.com/brand/BIBA?filter=categoryPath1_uFilter%253A%2522Women%2522&page=1
+    - text: to salwar and churidar sets from exclusive brands like
+    - link "Haute Curry":
+      - /url: https://www.shoppersstop.com/brand/HAUTE%20CURRY
+    - text: and
+    - link "Fratini":
+      - /url: https://www.shoppersstop.com/brand/FRATINI?filter=categoryPath1_uFilter%253A%2522Women%2522&page=1
+    - text: . Celebrate in festive wear by
+    - link "Kashish":
+      - /url: https://www.shoppersstop.com/brand/KASHISH
+    - text: with gorgeous sparkly lehenga cholis, patiala suits and sharara sets.
+  - paragraph: Date night will always be fun with flirty and feminine dresses and jumpsuits. Find tops and tees in all your favourite styles like peplum tops, shirt style, kaftans, off shoulder tops, camisoles and more to pair with skirts, palazzos, jeans and jeggings.
+  - paragraph: To enhance your style further, choose from the massive collection of handbags, jewellery and other fashion accessories that are sure to become part of your go-to collection for all occasions. Work out for maximum burn with sports and activewear in ultra-supportive styles and soft moisture-wicking fabrics..
+  - paragraph: U R You is a fashion brand for plus-sized men and women to embrace body positivity and inspire you to feel as good as you look.
+  - paragraph:
+    - strong
+  - heading "Fashion Footwear" [level=2]:
+    - strong: Fashion Footwear
+  - paragraph
+  - paragraph:
+    - text: Good shoes take you to good places and the right pair can definitely get you through many muddy situations. Shop from an exhaustive collection of casual, formal and sports shoes for men and women only at shoppersstop.com. Loafers, oxfords, boots, brogues and sneakers can carry you wherever you roam whether it’s at work or play. Running
+    - link "shoes for men":
+      - /url: https://www.shoppersstop.com/men-footwear/c-A1030?filter=categoryPath3_uFilter%253A%2522Sports%2520Shoes%2520%2526%2520Sneakers%2522&page=1
+    - text: and women from
+    - link "Adidas":
+      - /url: https://www.shoppersstop.com/brand/ADIDAS?filter=categoryPath2_uFilter%253A%2522Footwear%2522&page=1
+    - text: ","
+    - link "Skechers":
+      - /url: https://www.shoppersstop.com/brand/SKECHERS?filter=categoryPath2_uFilter%253A%2522Footwear%2522&page=1
+    - text: ","
+    - link "Reebok":
+      - /url: https://www.shoppersstop.com/brand/REEBOK?filter=categoryPath2_uFilter%253A%2522Footwear%2522&page=1
+    - text: and more will always keep you at the top of your footwear game.
+  - paragraph:
+    - text: Sandals, floaters and flip flops are all about channeling holiday vibes giving you the ultimate comfort and laid-back summertime feels. Fashionable
+    - link "footwear for ladies":
+      - /url: https://www.shoppersstop.com/women-footwear/c-A2030
+    - text: like stilettos, sandals, ballerinas, boots and more are all you need to add that dash of style and shimmer to your outfits.
+  - paragraph:
+    - strong
+  - heading "Kids’ wear Online For Fun with Fashion" [level=2]:
+    - strong: Kids’ wear Online For Fun with Fashion
+  - paragraph
+  - paragraph:
+    - text: Keep your little ones looking fashionable and having fun with
+    - link "online shopping for kids clothes":
+      - /url: https://www.shoppersstop.com/category/kids
+    - text: in India at shoppersstop.com. Trendy designs and high-quality kids’ clothing from casual wear to party attire are at your fingertips. Explore the site for baby clothes and dress your newborns, toddlers and kids in cute and comfy outfits that’ll make them the most stylish baby on the block.
+  - paragraph: Shop now and give your little ones the best. The wide range of apparels, toys, games and other accessories for your kids from brands like Karrot, Pepe Jeans, Cutecumber,Pippin and more ensures you have an unmatched experience while shopping for your kids.
+  - paragraph:
+    - strong
+  - heading "Best of Beauty and Cosmetics Online" [level=2]:
+    - strong: Best of Beauty and Cosmetics Online
+  - paragraph
+  - paragraph:
+    - text: Blend, brighten and bronze with
+    - link "beauty products":
+      - /url: https://www.shoppersstop.com/category/beauty
+    - text: like skincare, makeup, haircare, personal care and grooming supplies at shoppersstop.com. Browse a wide range of face creams, serums, face masks, soaps, shower gels, body lotions and more to cleanse, protect and rejuvenate the skin. Shampoos, conditioners and hair oils are some of the top hair care products to keep your mane shiny and strong. Look for skin and hair care bestsellers from L'Oreal, Clinique, Shiseido, Mamaearth, Yves Rocher amongst others.
+  - paragraph: Natural and Ayurvedic beauty products are a great way to bring the healing power of Mother Nature to your beauty shelf. Tap into the power of Mother Nature and Ayurveda with brands like Earthi, Kama Ayurveda and more. Love creating makeup looks to get those double taps flowing? Shop face, eye and lip makeup and makeup sets from brands like Lakme, M.A.C, Bobbi Brown, Arcelia, Maybelline, Estee Lauder and more.
+  - paragraph:
+    - strong
+  - heading "Stylish Fashion Accessories for Men and Women" [level=2]:
+    - strong: Stylish Fashion Accessories for Men and Women
+  - paragraph
+  - paragraph:
+    - text: shoppersstop.com offers the best
+    - link "fashion accessories":
+      - /url: https://www.shoppersstop.com/women-accessories/c-A2020
+    - text: for men and women to add that stylish finishing touch to your outfits. Complement your smart workwear with analogue, digital and smart watches. A coordinated leather belt and wallet with your crisp shirt and trousers are small but significant details that will definitely help you command attention. Do a truly fierce airport look with bags, luggage, laptop bags and mobile accessories to match. As for fashion jewellery, opt for your personal preference whether you like minimalistic jewellery or statement pieces that sparkle and shine.
+  - paragraph:
+    - strong
+  - 'heading "Signature Scents: Fragrances for Men and Women" [level=2]':
+    - strong: "Signature Scents: Fragrances for Men and Women"
+  - paragraph
+  - paragraph:
+    - link "Fragrances":
+      - /url: https://www.shoppersstop.com/beauty-fragrance-for-men/c-B1080
+    - text: are instant pick-me-ups for your spirits and your senses. They are also an inseparable part of daily grooming rituals be it colognes or deodorants. shoppersstop.com is a treasure trove of the top premium and luxury perfume brands like Gucci, Armani, Hugo Boss, Yves Saint Laurent and more. There is something for everyone whether you like soft floral body sprays, fun fruity body mists, fresh aqua perfumes or warm oud fragrances. Opt for a fragrance for the season and your personal needs - go for a deodorant to control body odor in summers or an EDP for a night out. You can also find perfume gift sets that you can gift your loved ones on special occasions or just to cheer them up.
+  - paragraph:
+    - strong
+  - heading "Beautiful Bed, Bath and Home Decor to Furnish in Style" [level=2]:
+    - strong: Beautiful Bed, Bath and Home Decor to Furnish in Style
+  - paragraph
+  - paragraph: Beautify your home with the perfect pieces from shoppersstop.com to add a finishing touch to your space. Turn your living room or bedroom into a lively space with furnishings and upholstery from brands like Tangerine, Ivy, Portico and more. Choose your kitchen appliances from trusted companies like Wonderchef or Russell Hobbs at the click of a button. Amp up the home decor with clocks, decorative accents, decals, photo frames, home fragrances, candles and more. Reinventing homes was never easier.
+  - paragraph:
+    - strong
+  - heading "Benefits of Shopping with Shoppers Stop" [level=2]:
+    - strong: Benefits of Shopping with Shoppers Stop
+  - paragraph
+  - paragraph: Shoppers Stop is home to a multitude of amazing products across fashion and lifestyle to cater to the needs of the entire family. While Shoppers Stop retail is a complete house of leading national and international brands for an exciting and memorable shopping experience, you can also shop at shoppersstop.com to take advantage of all the same benefits here.
+  - paragraph:
+    - strong: 1. Simple Shopping Experience
+    - text: Whether you shop online or in store, Shoppers Stop offers a seamless omnichannel experience in terms of products, prices and customer service.
+  - paragraph:
+    - strong: 2. Secure Shopping
+    - text: 100% safe shopping with secure transmission of your card details directly to the bank for payment processing.
+  - paragraph:
+    - strong: 3. Wide Range of Products
+    - text: At shoppersstop.com you will find the best brands, trends, patterns, colours and more from a wide selection for men, women, kids and home.
+  - paragraph:
+    - strong: 4. Free Returns
+    - text: Free and easy returns on most merchandise bought online. shoppersstop.com allows you to exchange the items at your nearest store or opt for return pickup.
+  - paragraph:
+    - strong: 5. 100% Original
+    - text: All products are sourced from the brand and carry brand warranty and certificate of authenticity.
+  - paragraph:
+    - strong: 6. Free Alterations
+    - text: Buy online and if you don’t like the fit, you can easily come over to your nearest Shoppers Stop store for a fully free alteration.
+  - paragraph:
+    - strong: 7. Express Store Pick Up
+    - text: Head over to a store to pick up your order as per your convenience.
+  - paragraph:
+    - strong: 8. Personalized Shopping at Store and Home
+    - text: Avail the assistance of a Personal Shopper with prior appointment so you can shop at home online or in person.
+  - paragraph
+  - paragraph:
+    - strong: "Popular Search In Women:"
+    - text: "-"
+    - link "Women Clothing":
+      - /url: https://www.shoppersstop.com/category/women
+    - text: "|"
+    - link "Women Indianwear":
+      - /url: https://www.shoppersstop.com/women-indianwear/c-A2010
+    - text: "|"
+    - link "Women Westernwear":
+      - /url: https://www.shoppersstop.com/women-westernwear/c-A2060
+    - text: "|"
+    - link "Lingerie & Nightwear":
+      - /url: https://www.shoppersstop.com/women-lingerie-nightwear/c-A20110
+    - text: "|"
+    - link "Women Footwear":
+      - /url: https://www.shoppersstop.com/women-footwear/c-A2030
+    - text: "|"
+    - link "women watches":
+      - /url: https://www.shoppersstop.com/women-watches/c-A2035
+    - text: "|"
+    - link "Fragrance For Women":
+      - /url: https://www.shoppersstop.com/women-fragrance-for-women/c-B1070
+    - text: "|"
+    - link "Women Bags & Wallets":
+      - /url: https://www.shoppersstop.com/women-bags-wallets/c-A2025
+    - text: "|"
+    - link "Women Sunglasses":
+      - /url: https://www.shoppersstop.com/women-sunglasses-frames/c-A2045
+    - text: "|"
+    - link "Women Jewellery":
+      - /url: https://www.shoppersstop.com/women-jewellery/c-A2095
+    - text: "|"
+    - link "Women Accessories":
+      - /url: https://www.shoppersstop.com/women-accessories/c-A2020
+  - paragraph
+  - paragraph:
+    - strong: Popular Search In Men
+    - text: :-
+    - link "Men Clothing":
+      - /url: https://www.shoppersstop.com/men-clothing/c-A1010
+    - text: "|"
+    - link "Men Footwear":
+      - /url: https://www.shoppersstop.com/men-footwear/c-A1030
+    - text: "|"
+    - link "Men Watches":
+      - /url: https://www.shoppersstop.com/men-watches/c-A1080
+    - text: "|"
+    - link "Fragrance For Men":
+      - /url: https://www.shoppersstop.com/men-fragrance-for-men/c-B1080
+    - text: "|"
+    - link "Grooming For Men":
+      - /url: https://www.shoppersstop.com/men-grooming-for-men/c-B1090
+    - text: "|"
+    - link "Men Sunglasses":
+      - /url: https://www.shoppersstop.com/men-sunglasses-frames/c-A1070
+    - text: "|"
+    - link "Men jewellery":
+      - /url: https://www.shoppersstop.com/men-jewellery/c-A10230
+    - text: "|"
+    - link "Men Accessories":
+      - /url: https://www.shoppersstop.com/men-accessories/c-A1020
+  - paragraph:
+    - strong: Popular Search In Makeup:-
+    - link "Makeup":
+      - /url: https://www.shoppersstop.com/beauty-makeup/c-1046
+    - text: "|"
+    - link "Face":
+      - /url: https://www.shoppersstop.com/beauty-makeup-face/c-1055
+    - text: "|"
+    - link "Face Primers":
+      - /url: https://www.shoppersstop.com/beauty-makeup-face-face-primers-/c-1108
+    - text: "|"
+    - link "Color Correctors":
+      - /url: https://www.shoppersstop.com/beauty-makeup-face-color-correctors-/c-1111
+    - text: "|"
+    - link "Concealers":
+      - /url: https://www.shoppersstop.com/beauty-makeup-face-concealers-/c-1114
+    - text: "|"
+    - link "BB and CC Creams":
+      - /url: https://www.shoppersstop.com/beauty-makeup-face-bb-cc-creams-/c-1116
+    - text: "|"
+    - link "Tinted Moisturizers":
+      - /url: https://www.shoppersstop.com/beauty-makeup-face-tinted-moisturizers-/c-1118
+    - text: "|"
+    - link "Foundations":
+      - /url: https://www.shoppersstop.com/beauty-makeup-face-foundations-/c-1119
+    - text: "|"
+    - link "Compacts":
+      - /url: https://www.shoppersstop.com/beauty-makeup-face-compacts-/c-1121
+    - text: "|"
+    - link "Blushes":
+      - /url: https://www.shoppersstop.com/beauty-makeup-face-blushes-/c-1123
+    - text: "|"
+    - link "Bronzers":
+      - /url: https://www.shoppersstop.com/beauty-makeup-face-bronzers-/c-1125
+    - text: "|"
+    - link "Highlighters and Illuminators":
+      - /url: https://www.shoppersstop.com/beauty-makeup-face-highlighters-illuminators-/c-1126
+    - text: "|"
+    - link "Setting Sprays":
+      - /url: https://www.shoppersstop.com/beauty-makeup-face-setting-sprays-/c-1127
+    - text: "|"
+    - link "Face Palettes and Sets":
+      - /url: https://www.shoppersstop.com/beauty-makeup-face-face-palettes-sets-/c-1129
+    - text: "|"
+    - link "Makeup Removers":
+      - /url: https://www.shoppersstop.com/beauty-makeup-face-makeup-removers-/c-1133
+    - text: "|"
+    - link "Loose Powders":
+      - /url: https://www.shoppersstop.com/beauty-makeup-face-loose-powders-/c-1134
+    - text: "|"
+    - link "Eyes":
+      - /url: https://www.shoppersstop.com/beauty-makeup-eyes/c-1058
+    - text: "|"
+    - link "Under Eye Concealers":
+      - /url: https://www.shoppersstop.com/beauty-makeup-eyes-under-eye-concealers-/c-1141
+    - text: "|"
+    - link "Kajals":
+      - /url: https://www.shoppersstop.com/beauty-makeup-eyes-kajals-/c-1151
+    - text: "|"
+    - link "Eye Pencils":
+      - /url: https://www.shoppersstop.com/beauty-makeup-eyes-eye-pencils-/c-1155
+    - text: "|"
+    - link "Eyeliners":
+      - /url: https://www.shoppersstop.com/beauty-makeup-eyes-eyeliners-/c-1163
+    - text: "|"
+    - link "Mascaras":
+      - /url: https://www.shoppersstop.com/beauty-makeup-eyes-mascaras-/c-1168
+    - text: "|"
+    - link "Eye Shadows":
+      - /url: https://www.shoppersstop.com/beauty-makeup-eyes-eye-shadows-/c-1172
+    - text: "|"
+    - link "Eye Brow Enhancers":
+      - /url: https://www.shoppersstop.com/beauty-makeup-eyes-eye-brow-enhancers-/c-1176
+    - text: "|"
+    - link "False Eyelashes":
+      - /url: https://www.shoppersstop.com/beauty-makeup-eyes-false-eyelashes-/c-1184
+    - text: "|"
+    - link "Eye Palettes And Sets":
+      - /url: https://www.shoppersstop.com/beauty-makeup-eyes-eye-palettes-and-sets-/c-1187
+    - text: "|"
+    - link "Eye Makeup Removers":
+      - /url: https://www.shoppersstop.com/beauty-makeup-eyes-eye-makeup-removers-/c-1193
+    - text: "|"
+    - link "Lips":
+      - /url: https://www.shoppersstop.com/beauty-makeup-lips/c-1060
+    - text: "|"
+    - link "Lip Liners":
+      - /url: https://www.shoppersstop.com/beauty-makeup-lips-lip-liners-/c-1206
+    - text: "|"
+    - link "Lipsticks":
+      - /url: https://www.shoppersstop.com/beauty-makeup-lips-lipsticks-/c-1211
+    - text: "|"
+    - link "Lip Glosses":
+      - /url: https://www.shoppersstop.com/beauty-makeup-lips-lip-glosses-/c-1214
+    - text: "|"
+    - link "Lips Stains and Tints":
+      - /url: https://www.shoppersstop.com/beauty-makeup-lips-lips-stains-tints-/c-1219
+    - text: "|"
+    - link "Lip Balms":
+      - /url: https://www.shoppersstop.com/beauty-makeup-lips-lip-balms-/c-1228
+    - text: "|"
+    - link "Lip Palettes and Sets":
+      - /url: https://www.shoppersstop.com/beauty-makeup-lips-lip-palettes-sets-/c-1245
+    - text: "|"
+    - link "Liquid Lipsticks":
+      - /url: https://www.shoppersstop.com/beauty-makeup-lips-liquid-lipsticks-/c-1249
+    - text: "|"
+    - link "Lip Primers":
+      - /url: https://www.shoppersstop.com/beauty-makeup-lips-lip-primers-/c-1265
+    - text: "|"
+    - link "Nails":
+      - /url: https://www.shoppersstop.com/beauty-makeup-nails/c-1065
+    - text: "|"
+    - link "Nail Polishes":
+      - /url: https://www.shoppersstop.com/beauty-makeup-nails-nail-polishes-/c-1277
+    - text: "|"
+    - link "Nail Art Kits":
+      - /url: https://www.shoppersstop.com/beauty-makeup-nails-nail-art-kits-/c-1296
+    - text: "|"
+    - link "Base and Top Coats":
+      - /url: https://www.shoppersstop.com/beauty-makeup-nails-base-top-coats-/c-1522
+    - text: "|"
+    - link "Nail Polish Removers":
+      - /url: https://www.shoppersstop.com/beauty-makeup-nails-nail-polish-removers-/c-1524
+    - text: "|"
+    - link "Makeup Tools and Brushes":
+      - /url: https://www.shoppersstop.com/beauty-makeup-tools-brushes/c-1073
+    - text: "|"
+    - link "Makeup Kits":
+      - /url: https://www.shoppersstop.com/beauty-makeup-makeup-kits/c-1077
+  - paragraph:
+    - strong: Popular Search In Skin:-
+    - link "Skin":
+      - /url: https://www.shoppersstop.com/beauty-skin/c-2067
+    - text: "|"
+    - link "Cleansers and Exfoliators":
+      - /url: https://www.shoppersstop.com/beauty-skin-cleansers-exfoliators/c-2068
+    - text: "|"
+    - link "Face Washes":
+      - /url: https://www.shoppersstop.com/beauty-skin-cleansers-exfoliators-face-washes-/c-2152
+    - text: "|"
+    - link "Scrubs and Exfoliators":
+      - /url: https://www.shoppersstop.com/beauty-skin-cleansers-exfoliators-scrubs-exfoliators-/c-2153
+    - text: "|"
+    - link "Facial Wipes":
+      - /url: https://www.shoppersstop.com/beauty-skin-cleansers-exfoliators-facial-wipes-/c-2154
+    - text: "|"
+    - link "Toners and Mists":
+      - /url: https://www.shoppersstop.com/beauty-skin-toners-mists/c-2069
+    - text: "|"
+    - link "Moisturizers":
+      - /url: https://www.shoppersstop.com/beauty-skin-moisturizers/c-2070
+    - text: "|"
+    - link "Face Moisturizers and Day Creams":
+      - /url: https://www.shoppersstop.com/beauty-skin-moisturizers-face-moisturizers-day-creams-/c-2159
+    - text: "|"
+    - link "Face Oils":
+      - /url: https://www.shoppersstop.com/beauty-skin-moisturizers-face-oils-/c-2161
+    - text: "|"
+    - link "Face Serums":
+      - /url: https://www.shoppersstop.com/beauty-skin-moisturizers-face-serums-/c-2162
+    - text: "|"
+    - link "Eye Care":
+      - /url: https://www.shoppersstop.com/beauty-skin-eye-care/c-2071
+    - text: "|"
+    - link "Lip Care":
+      - /url: https://www.shoppersstop.com/beauty-skin-lip-care/c-2072
+    - text: "|"
+    - link "Masks and Treatments":
+      - /url: https://www.shoppersstop.com/beauty-skin-masks-treatments/c-2073
+    - text: "|"
+    - link "Sun Care":
+      - /url: https://www.shoppersstop.com/beauty-skin-sun-care/c-2075
+    - text: "|"
+    - link "Kits and Combos":
+      - /url: https://www.shoppersstop.com/beauty-skin-kits-combos/c-2076
+  - paragraph:
+    - strong: Popular Search In Hair:-
+    - link "Hair":
+      - /url: https://www.shoppersstop.com/beauty-hair/c-2080
+    - text: "|"
+    - link "Shampoo and Conditioners":
+      - /url: https://www.shoppersstop.com/beauty-hair-shampoo-conditioners/c-2087
+    - text: "|"
+    - link "Hair Treatments":
+      - /url: https://www.shoppersstop.com/beauty-hair-hair-treatments/c-2088
+    - text: "|"
+    - link "Hair Masks":
+      - /url: https://www.shoppersstop.com/beauty-hair-hair-treatments-hair-masks-/c-2211
+    - text: "|"
+    - link "Hair Oils":
+      - /url: https://www.shoppersstop.com/beauty-hair-hair-treatments-hair-oils-/c-2212
+    - text: "|"
+    - link "Hair Serums":
+      - /url: https://www.shoppersstop.com/beauty-hair-hair-treatments-hair-serums-/c-2213
+    - text: "|"
+    - link "Scalp Treatments":
+      - /url: https://www.shoppersstop.com/beauty-hair-hair-treatments-scalp-treatments-/c-2214
+    - text: "|"
+    - link "Hair Styling":
+      - /url: https://www.shoppersstop.com/beauty-hair-hair-styling/c-2089
+    - text: "|"
+    - link "Tools and Accessories":
+      - /url: https://www.shoppersstop.com/beauty-hair-tools-accessories/c-2090
+    - text: "|"
+    - link "Hair Brushes and Combs":
+      - /url: https://www.shoppersstop.com/beauty-hair-tools-accessories-hair-brushes-combs-/c-2222
+    - text: "|"
+    - link "Hair Dryers":
+      - /url: https://www.shoppersstop.com/beauty-hair-tools-accessories-hair-dryers-/c-2223
+    - text: "|"
+    - link "Straighteners and Flat Irons":
+      - /url: https://www.shoppersstop.com/beauty-hair-tools-accessories-straighteners-flat-irons-/c-2224
+    - text: "|"
+    - link "Hair Multi Stylers":
+      - /url: https://www.shoppersstop.com/beauty-hair-tools-accessories-multi-stylers-/c-2226
+    - text: "|"
+    - link "Hair Accessories":
+      - /url: https://www.shoppersstop.com/beauty-hair-tools-accessories-hair-accessories-/c-2227
+  - paragraph:
+    - strong: Popular Search In Personal Care:-
+    - link "Personal Care":
+      - /url: https://www.shoppersstop.com/women-beauty-personal-care/c-1815
+    - text: "|"
+    - link "Bath and Shower":
+      - /url: https://www.shoppersstop.com/beauty-personal-care-bath-shower-body-washes-shower-gels/c-2252
+    - text: "|"
+    - link "Body Washes and Shower Gels":
+      - /url: https://www.shoppersstop.com/beauty-personal-care-bath-shower-body-washes-shower-gels-/c-2252
+    - text: "|"
+    - link "Body Scrubs and Exfoliators":
+      - /url: https://www.shoppersstop.com/beauty-personal-care-bath-shower-body-scrubs-exfoliators-/c-2253
+    - text: "|"
+    - link "Soaps":
+      - /url: https://www.shoppersstop.com/beauty-personal-care-bath-shower-soaps-/c-2254
+    - text: "|"
+    - link "Bath and Shower Sets":
+      - /url: https://www.shoppersstop.com/beauty-personal-care-bath-shower-bath-shower-sets-/c-2257
+    - text: "|"
+    - link "Body Care":
+      - /url: https://www.shoppersstop.com/beauty-personal-care-body-care/c-2096
+    - text: "|"
+    - link "Body Moisturizers":
+      - /url: https://www.shoppersstop.com/beauty-personal-care-body-care-body-moisturizers-/c-2258
+    - text: "|"
+    - link "Body Lotions and Body Oils":
+      - /url: https://www.shoppersstop.com/beauty-personal-care-body-care-body-lotions-body-oils-/c-2259
+    - text: "|"
+    - link "Hands and Feet":
+      - /url: https://www.shoppersstop.com/beauty-personal-care-hands-feet/c-2097
+    - text: "|"
+    - link "Handwashes":
+      - /url: https://www.shoppersstop.com/beauty-personal-care-hands-feet-handwashes-/c-2264
+    - text: "|"
+    - link "Hand Creams":
+      - /url: https://www.shoppersstop.com/beauty-personal-care-hands-feet-hand-creams-/c-2266
+    - text: "|"
+    - link "Feminine Hygiene":
+      - /url: https://www.shoppersstop.com/beauty-personal-care-feminine-hygiene/c-2099
+  - paragraph:
+    - strong: Popular Search In Fragrance:-
+    - link "Women Fragrances":
+      - /url: https://www.shoppersstop.com/women-beauty-fragrance/c-1816
+    - text: "|"
+    - link "Women EDTs":
+      - /url: https://www.shoppersstop.com/beauty-fragrance-women-edts-/c-2322
+    - text: "|"
+    - link "Women EDPs":
+      - /url: https://www.shoppersstop.com/beauty-fragrance-women-edps-/c-2323
+    - text: "|"
+    - link "Women Deodorants":
+      - /url: https://www.shoppersstop.com/beauty-fragrance-women-deodorants-/c-2324
+    - text: "|"
+    - link "Women Body Sprays":
+      - /url: https://www.shoppersstop.com/beauty-fragrance-women-body-sprays-/c-2325
+    - text: "|"
+    - link "Perfume Gift Sets for Women":
+      - /url: https://www.shoppersstop.com/beauty-fragrance-women-perfume-gift-sets-/c-2328
+    - text: "|"
+    - link "Men Fragrances":
+      - /url: https://www.shoppersstop.com/beauty-fragrance-men/c-2112
+    - text: "|"
+    - link "After-Shave Lotions":
+      - /url: https://www.shoppersstop.com/beauty-fragrance-men-after-shave-lotions-/c-2329
+    - text: "|"
+    - link "Colognes":
+      - /url: https://www.shoppersstop.com/beauty-fragrance-men-colognes-/c-2330
+    - text: "|"
+    - link "Men EDTs":
+      - /url: https://www.shoppersstop.com/beauty-fragrance-men-edts-/c-2331
+    - text: "|"
+    - link "Men EDPs":
+      - /url: https://www.shoppersstop.com/beauty-fragrance-men-edps-/c-2332
+    - text: "|"
+    - link "Men Deodorants":
+      - /url: https://www.shoppersstop.com/beauty-fragrance-men-deodorants-/c-2333
+    - text: "|"
+    - link "Men Body Sprays":
+      - /url: https://www.shoppersstop.com/beauty-fragrance-men-body-sprays-/c-2334
+    - text: "|"
+    - link "Men Perfume Gift Sets":
+      - /url: https://www.shoppersstop.com/beauty-fragrance-men-perfume-gift-sets-/c-2334
+    - text: "|"
+    - link "Unisex Fragrances":
+      - /url: https://www.shoppersstop.com/beauty-fragrance-unisex/c-2113
+    - text: "|"
+    - link "Unisex EDTs":
+      - /url: https://www.shoppersstop.com/beauty-fragrance-unisex-edts-/c-2336
+    - text: "|"
+    - link "Unisex EDPs":
+      - /url: https://www.shoppersstop.com/beauty-fragrance-unisex-edps-/c-2337
+    - text: "|"
+    - link "Unisex Deodorants":
+      - /url: https://www.shoppersstop.com/beauty-fragrance-unisex-deodorants-/c-2338
+    - text: "|"
+    - link "Unisex Body Sprays":
+      - /url: https://www.shoppersstop.com/beauty-fragrance-unisex-body-sprays-/c-2339
+    - text: "|"
+    - link "Unisex Perfume Gift Sets":
+      - /url: https://www.shoppersstop.com/beauty-fragrance-unisex-perfume-gift-sets-/c-2340
+  - paragraph:
+    - strong: Popular Search In Beauty & Hair Accessories:-
+    - link "Beauty and Hair Accessories":
+      - /url: https://www.shoppersstop.com/beauty-beauty-hair-accessories/c-2083
+    - text: "|"
+    - link "Brushes":
+      - /url: https://www.shoppersstop.com/beauty-beauty-hair-accessories-brushes/c-2123
+    - text: "|"
+    - link "Manicure And Pedicure":
+      - /url: https://www.shoppersstop.com/beauty-beauty-hair-accessories-manicure-and-pedicure/c-2124
+  - paragraph:
+    - strong: Popular Search In Mens Grooming:-
+    - link "Mens Grooming":
+      - /url: https://www.shoppersstop.com/beauty-mens-grooming/c-2084
+    - text: "|"
+    - link "Shaving Creams":
+      - /url: https://www.shoppersstop.com/beauty-mens-grooming-shaving-shaving-creams-/c-2449
+    - text: "|"
+    - link "Shaving Foams For Men":
+      - /url: https://www.shoppersstop.com/beauty-mens-grooming-shaving-shaving-foams-/c-2450
+    - text: "|"
+    - link "Shaving Gels":
+      - /url: https://www.shoppersstop.com/beauty-mens-grooming-shaving-shaving-gels-/c-2452
+    - text: "|"
+    - link "Pre and Post Shaves":
+      - /url: https://www.shoppersstop.com/beauty-mens-grooming-shaving-pre-post-shaves-/c-2453
+    - text: "|"
+    - link "Shaving Brushes":
+      - /url: https://www.shoppersstop.com/beauty-mens-grooming-shaving-shaving-brushes-/c-2456
+    - text: "|"
+    - link "Beard Care":
+      - /url: https://www.shoppersstop.com/beauty-mens-grooming-beard-care/c-2128
+    - text: "|"
+    - link "Skin Care For Men":
+      - /url: https://www.shoppersstop.com/beauty-mens-grooming-skin-care/c-2129
+    - text: "|"
+    - link "Men Hair Care":
+      - /url: https://www.shoppersstop.com/beauty-mens-grooming-hair-care/c-2130
+    - text: "|"
+    - link "Men Body Care":
+      - /url: https://www.shoppersstop.com/beauty-mens-grooming-body-care/c-2131
+    - text: "|"
+    - link "Men Fragrance":
+      - /url: https://www.shoppersstop.com/beauty-mens-grooming-fragrance/c-2132
+  - button "Read More"
+  - img "Shopper's Stop Logo"
+  - text: Reach out to Us
+  - img "+91 - 796-972-7777"
+  - text: +91 - 796-972-7777
+  - img "customercare@shoppersstop.com"
+  - link "customercare@shoppersstop.com":
+    - /url: mailto:customercare@shoppersstop.com
+  - text: Experience Shoppers Stop app on Mobile
+  - img "contact-icon"
+  - img "contact-icon"
+  - text: Top Categories
+  - link "Men":
+    - /url: /category/men
+  - link "Women":
+    - /url: /category/women
+  - link "Kids":
+    - /url: /category/kids
+  - link "Beauty":
+    - /url: /category/beauty
+  - link "Watches":
+    - /url: /category/watches
+  - link "Gift":
+    - /url: /category/gifts
+  - link "Home":
+    - /url: /category/Homestop
+  - link "Luxe":
+    - /url: /luxe
+  - link "Bargain":
+    - /url: /bargain
+  - text: Useful Links
+  - link "About Us":
+    - /url: /miscs/aboutus
+  - link "Contact Us":
+    - /url: /account/contactus
+  - link "Track Orders":
+    - /url: /account/orders
+  - link "Corporate Site":
+    - /url: https://corporate.shoppersstop.com/
+  - link "Store Locator":
+    - /url: /account/storesandevents
+  - link "Careers":
+    - /url: https://ss-people.darwinbox.in/ms/candidate/careers
+  - link "Help/FAQS":
+    - /url: /account/help
+  - link "First Citizen Club":
+    - /url: /account/firstcitizen
+  - link "First Citizen Policy":
+    - /url: /miscs/firstcitizenclubpolicy
+  - text: Our Policies
+  - link "Terms Of Use":
+    - /url: /miscs/Terms
+  - link "Privacy":
+    - /url: /miscs/privacy-policy
+  - link "Delivery Policy":
+    - /url: /miscs/delivery-policy
+  - link "Exchange & Return":
+    - /url: /miscs/exchange-return
+  - text: Pay Securely By
+  - img
+  - img
+  - img
+  - img
+  - text: Verified By
+  - 'img "For any queries, please write to us: customercare@ssbeauty.com"'
+  - img
+  - img
+  - img
+  - img "facebook logo"
+  - img "facebook logo"
+  - img "facebook logo"
+  - img "facebook logo"
+  - text: Copyright © 2026 shoppers stop. All Rights Reserved
+- text: Suggestions
+- strong: Shoes
+- text: Sports
+- strong: Shoes
+- text: ADIDAS Sports
+- strong: Shoes
+- text: Reebok Sports
+- strong: Shoes
+- text: Skechers Sports
+- strong: Shoes
+- text: Puma Sports
+- strong: Shoes
+- text: Skechers Casual
+- strong: Shoes
+- text: "& Loafers Louis Philippe Formal"
+- strong: Shoes
+- text: Asics Sports
+- strong: Shoes
+- text: Lotto Sports
+- strong: Shoes
+- text: Best Selling Categories Men Women Kids Beauty Home Luxe Bargains Popular Brands
+- img "Casio"
+- img "Titan"
+- img "Fossil"
+- img "MICHAEL KORS"
+- img "JOCKEY"
+- img "JACK & JONES"
+- img "Fratini"
+- img "LIFE"
+- img "SKECHERS"
+- img "ADIDAS"
+- img "PUMA"
+- text: Product Suggestion
+- link "Voge Textile Low Tops Lace Up Men's Sneakers ADIDAS Voge Textile Low Tops Lace Up Men's Sneakers ₹2999 ₹5999 50% Off":
+  - /url: /adidas-voge-textile-low-tops-lace-up-men-s-sneakers/p-FMADIU5076/colorChange/FMADIU5076_WHITE
+  - img "Voge Textile Low Tops Lace Up Men's Sneakers"
+  - paragraph: ADIDAS Voge Textile Low Tops Lace Up Men's Sneakers
+  - paragraph: ₹2999
+  - paragraph: ₹5999
+  - paragraph: 50% Off
+- link "Leather Low Tops Lace Up Men's Formal Shoes Louis Philippe Leather Low Tops Lace Up Men's Formal Shoes ₹4949 ₹5499 10% Off":
+  - /url: /louis-philippe-leather-low-tops-lace-up-men-s-formal-shoes/p-LPSCRGFL00157/colorChange/LPSCRGFL00157_BLACK
+  - img "Leather Low Tops Lace Up Men's Formal Shoes"
+  - paragraph: Louis Philippe Leather Low Tops Lace Up Men's Formal Shoes
+  - paragraph: ₹4949
+  - paragraph: ₹5499
+  - paragraph: 10% Off
+- link "Synthetic Buckle Women's Casual Wear Mules Lemon & Pepper Synthetic Buckle Women's Casual Wear Mules ₹3179 ₹5299 40% Off":
+  - /url: /lemon-pepper-synthetic-buckle-women-s-casual-wear-mules/p-A24FWLP116166/colorChange/A24FWLP116166_BEIGE
+  - img "Synthetic Buckle Women's Casual Wear Mules"
+  - paragraph: Lemon & Pepper Synthetic Buckle Women's Casual Wear Mules
+  - paragraph: ₹3179
+  - paragraph: ₹5299
+  - paragraph: 40% Off
+- link "Otis Derby Milled Leather Lace Up Men's Formal Shoes Bata Otis Derby Milled Leather Lace Up Men's Formal Shoes ₹1799":
+  - /url: /bata-otis-derby-milled-leather-lace-up-men-s-formal-shoes/p-A25FWBT8213352/colorChange/A25FWBT8213352_BLACK
+  - img "Otis Derby Milled Leather Lace Up Men's Formal Shoes"
+  - paragraph: Bata Otis Derby Milled Leather Lace Up Men's Formal Shoes
+  - paragraph: ₹1799
+- link "Bobs Moda Blended Slip-On Women's Sports Shoes Skechers Bobs Moda Blended Slip-On Women's Sports Shoes ₹5499":
+  - /url: /skechers-bobs-moda-blended-slip-on-women-s-sports-shoes/p-S26FWSK117732NA/colorChange/S26FWSK117732NA_BROWN
+  - img "Bobs Moda Blended Slip-On Women's Sports Shoes"
+  - paragraph: Skechers Bobs Moda Blended Slip-On Women's Sports Shoes
+  - paragraph: ₹5499
+- link "Cenik PU Lace Up Men's Casual Shoes U.S. Polo Assn. Cenik PU Lace Up Men's Casual Shoes ₹3599 ₹3999 10% Off":
+  - /url: /u-s-polo-assn-cenik-pu-lace-up-men-s-casual-shoes/p-FMUS2FD24896A02/colorChange/FMUS2FD24896A02_BEIGE
+  - img "Cenik PU Lace Up Men's Casual Shoes"
+  - paragraph: U.S. Polo Assn. Cenik PU Lace Up Men's Casual Shoes
+  - paragraph: ₹3599
+  - paragraph: ₹3999
+  - paragraph: 10% Off
+- alert
+```
+
+# Test source
+
+```ts
+  1  | 
+  2  | import {test,expect} from "@playwright/test";
+  3  | import { HomePage } from "../pages/HomePage";
+  4  | 
+  5  | test("Home Page", async ({ page }) => {
+  6  |   await page.goto('https://www.shoppersstop.com/');
+  7  |   await expect(page.getByRole('link', { name: 'logo', exact: true })).toBeVisible();
+  8  |   await page.getByRole('textbox', { name: 'Search' }).click();
+  9  |   await page.getByRole('textbox', { name: 'Search' }).fill('shoes');
+  10 |   await page.getByRole('textbox', { name: 'Search' }).press('Enter');
+> 11 |   await expect(page.getByRole('heading', { name: 'Shoes' })).toBeVisible();
+     |                                                              ^ Error: expect(locator).toBeVisible() failed
+  12 |   const page1Promise = page.waitForEvent('popup');
+  13 |   await page.getByTestId('product-card').first().click();
+  14 |   const page1 = await page1Promise;
+  15 | });
+  16 | 
+  17 | 
+```
