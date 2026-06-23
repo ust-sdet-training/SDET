@@ -11,7 +11,7 @@ export class HomePage{
     }
 
     async search(query: string ){
-        await this.searchBox().fill("Shirt");
+        await this.searchBox().fill(query);
         await this.searchBox().click();
         await this.page.getByText("Suggestions").waitFor({state: "visible"});
         await this.searchBox().press("Enter");
