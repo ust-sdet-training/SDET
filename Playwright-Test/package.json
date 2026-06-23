@@ -1,0 +1,19 @@
+{
+  "name": "sdet-playwright-ts",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:day1": "playwright test tests/day-01-app-launch.spec.ts",
+    "test:day2": "playwright test tests/login.spec.ts",
+    "test:api": "playwright test tests/api-smoke.spec.ts",
+    "test:headed": "playwright test --headed",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.11.3",
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.1",
+    "typescript": "^6.0.3"
+  }
+}

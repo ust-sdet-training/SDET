@@ -1,0 +1,116 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: trace-debug.spec.ts >> Week 1 Day 5 >> cart shows 5 items
+- Location: tests\trace-debug.spec.ts:4:9
+
+# Error details
+
+```
+Error: expect(locator).toHaveText(expected) failed
+
+Locator:  getByTestId('cart-count')
+Expected: "5"
+Received: "1"
+Timeout:  5000ms
+
+Call log:
+  - Expect "toHaveText" with timeout 5000ms
+  - waiting for getByTestId('cart-count')
+    14 × locator resolved to <strong data-testid="cart-count">1</strong>
+       - unexpected value "1"
+
+```
+
+```yaml
+- strong: "1"
+```
+
+# Test source
+
+```ts
+  1  | import { test, expect } from "@playwright/test";
+  2  | 
+  3  | test.describe("Week 1 Day 5", async () => {
+  4  |     test("cart shows 5 items", async ({page }) => {
+  5  |         await page.goto("/catalog");
+  6  |         await expect(page.getByRole("heading", {name: "Product Catalog"})).toBeVisible();
+  7  | 
+  8  |         await page.getByRole("link", {name: "View Running Shoes"}).click();
+  9  |         await expect(page).toHaveURL(/\/product\/running-shoes$/);
+  10 |         await expect(page.getByRole("heading", {name: "Running Shoes"})).toBeVisible();
+  11 |         await page.getByRole("button", {name: "Add to cart"}).click();
+  12 | 
+  13 |         await expect(page).toHaveURL(/\/cart$/);
+  14 |         await expect(page.getByRole("heading", {name: "Cart"}));
+> 15 |         await expect(page.getByTestId("cart-count")).toHaveText('5');
+     |                                                      ^ Error: expect(locator).toHaveText(expected) failed
+  16 | 
+  17 | 
+  18 | 
+  19 |     })
+  20 | 
+  21 |     test("fix the race", async ({page}) =>{
+  22 |         await page.goto("/debug-lab");
+  23 |         const response = page.waitForResponse(
+  24 |             (response) => response.url().includes("/debug/cart-total") && response.status() ===200
+  25 |         );
+  26 | 
+  27 |         await expect(page.getByRole("heading", {name: "Debug Lab"})).toBeVisible();
+  28 |         await expect(page.getByTestId("debug-status")).toHaveText("idle");
+  29 |         await page.getByRole("button", {name: "Refresh cart total"}).click();
+  30 |         
+  31 |         await response;
+  32 |         // await expect(page.locator('tbody tr').count()).toEqual('2');
+  33 |         // await expect(page.getByRole("table", {name: "Debug cart line items"})).toBeVisible();
+  34 |         // expect(page.getByTestId("debug-cart-total")).toBeVisible(); 
+  35 |         expect(page.getByTestId("debug-cart-total")).toHaveText('Rs. 9,197');
+  36 | 
+  37 | 
+  38 |     })
+  39 | 
+  40 |     // test("fix the race through catalog", async ({page}) =>{
+  41 |     //     await page.goto("/catalog");
+  42 |     //     await expect(page.getByRole("heading", {name: "Product Catalog"})).toBeVisible();
+  43 | 
+  44 |     //     await page.getByRole("link", {name: "View Running Shoes"}).click();
+  45 |     //     await expect(page).toHaveURL(/\/product\/running-shoes$/);
+  46 |     //     await expect(page.getByRole("heading", {name: "Running Shoes"})).toBeVisible();
+  47 |     //     await page.getByRole("button", {name: "Add to cart"}).click();
+  48 | 
+  49 |     //     await expect(page).toHaveURL(/\/cart$/);
+  50 |     //     await expect(page.getByRole("heading", {name: "Cart"}));
+  51 |     // })
+  52 | 
+  53 |     test("checkout", async ({ page }) =>{
+  54 |         await page.goto("/catalog");
+  55 |         const total = page.waitForResponse(
+  56 |             (r) => r.url().includes("/cart") && r.status() === 200
+  57 |         );
+  58 | 
+  59 |         await expect(page.getByRole("heading", {name: "Product Catalog"})).toBeVisible();
+  60 | 
+  61 |         await page.getByRole("link", {name: "View Running Shoes"}).click();
+  62 |         await expect(page).toHaveURL(/\/product\/running-shoes$/);
+  63 |         await expect(page.getByRole("heading", {name: "Running Shoes"})).toBeVisible();
+  64 |         await page.getByRole("button", {name: "Add to cart"}).click();
+  65 | 
+  66 |         // await total;
+  67 | 
+  68 |         // await expect(page).toHaveURL(/\/cart$/);
+  69 |         // await expect(page.getByRole("heading", {name: "Cart"}));
+  70 | 
+  71 |         const btn = page.getByRole("button", {name: "Proceed to checkout"});
+  72 |         await expect(btn).toBeEnabled();
+  73 |         await btn.click;
+  74 | 
+  75 |     })
+  76 | 
+  77 |     
+  78 | })
+```
