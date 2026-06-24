@@ -1,12 +1,12 @@
 import {expect,test as base} from "@playwright/test"
-import {ShopFlow} from "../flow/ShopFlow.ts"
+import {TestFlow} from "../flows/TestFlow.ts"
 export const test=base.extend<{
-    shop:ShopFlow;
+    stest:TestFlow;
     }>
     
 ({
-    shop:async ({page},use)=>{
-        await use (new ShopFlow(page))
+    stest:async ({page},use)=>{
+        await use (new TestFlow(page))
     }
 })
 export{expect} from "@playwright/test"
