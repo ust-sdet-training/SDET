@@ -16,11 +16,11 @@ export class HomePage {
         await this.search.press("Enter")
     }
 
-    async searchNonExisting(prod: string) {
-        await this.page.goto("/", {waitUntil: 'domcontentloaded'})
-        await expect(this.page).toHaveTitle(/Buy Cosmetics Products & Beauty Products/)
-        await expect(this.logo).toBeVisible()
-        await this.search.fill(prod)
-        await this.search.press("Enter")
-    }
+    // async searchNonExisting(prod: string) {
+    //     await this.page.goto("/", {waitUntil: 'domcontentloaded'})
+    //     await expect(this.page).toHaveTitle(/Buy Cosmetics Products & Beauty Products/)
+    //     await expect(this.logo).toBeVisible()
+    //     await this.search.fill(prod)
+    //     await this.search.press("Enter")
+    // }
 }

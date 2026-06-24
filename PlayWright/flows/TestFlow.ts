@@ -13,11 +13,11 @@ export class TestFlow {
 
     async positiveTest(prod: string) {
         await this.homePage.searchExisting(prod)
-        await this.productsPage.esistingProducts(prod)
+        await this.productsPage.existingProducts(prod)
     }
 
     async negativeTest(prod: string) {
-        await this.homePage.searchNonExisting(prod)
+        await this.homePage.searchExisting(prod)
         await this.productsPage.nonExistingProducts(prod)
     }
 }
