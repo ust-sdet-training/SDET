@@ -1,0 +1,23 @@
+{
+  "name": "sdet",
+  "version": "1.0.0",
+  "description": "Repository for SDET training batch",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ust-sdet-training/SDET.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ust-sdet-training/SDET/issues"
+  },
+  "homepage": "https://github.com/ust-sdet-training/SDET#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.0.0"
+  }
+}
