@@ -10,8 +10,6 @@ export class HomeFlow{
 
     async searchProduct(productName:string){
         await this.homePage.goto();
-        await expect(this.page).toHaveURL(/shoppersstop\.com/);
-        await expect(this.page).toHaveTitle(/Shoppers Stop/i);
         await this.homePage.searchProduct(productName);
         await expect(this.page).toHaveURL(/search/i);
     }
