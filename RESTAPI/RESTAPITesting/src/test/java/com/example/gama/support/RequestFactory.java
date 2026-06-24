@@ -17,7 +17,7 @@ public class RequestFactory {
 
     private static final String BASE_URL = System.getProperty(
             "baseUrl",
-            System.getenv().getOrDefault("BASE_URL", "https://petstore.swagger.io")
+            System.getenv().getOrDefault("BASE_URL", "https://petstore.swagger.io/")
     );
 
 
@@ -30,7 +30,7 @@ public class RequestFactory {
     public static RequestSpecification getapi(String key){
         return new RequestSpecBuilder()
                 .setBaseUri(BASE_URL)
-                .setBasePath("/#/store/getInventory")
+                .setBasePath("v2/swagger.json")
                 .setContentType(ContentType.JSON)
                 .addHeader("x-api-key",key)
                 .build();

@@ -12,7 +12,7 @@ import static io.restassured.RestAssured.given;
 public class Gate1Test {
 
 
-    private static final  String API_KEY = "api_key";
+    private static final  String API_KEY = "special-key";
 
     private static RequestSpecification request;
 
@@ -25,8 +25,10 @@ public class Gate1Test {
     @Test
     @DisplayName("Verifying Persisted Order")
     void validatingflow() {
-        given().spec(request)
-                .when().get("").then().statusCode(200);
+        given().spec(request).log().all()
+                .when().get("").then().log().all().statusCode(200);
+
+
 
     }
 }
