@@ -6,12 +6,13 @@ export class HomePage{
      private Search=()=>this.page.getByPlaceholder('Search');
 
      async goto(){
-        await this.page.goto('/');
+        await this.page.goto('https://www.shoppersstop.com/');
+        await this.page.waitForURL(/shoppersstop\.com/);
      }
 
      async searchProduct(productName:string){
-        const response = await this.page.waitForResponse(response => response.url().includes('/a.clarity.ms/collect') && response.status() === 204);
-        await this.Search().fill(productName);
+        const response = this.page.waitForResponse(response => response.url().includes('/collect') && response.status() === 204);
+         await this.Search().fill(productName);
         await this.Search().click();
         await this.Search().press('Enter');
         await response;
