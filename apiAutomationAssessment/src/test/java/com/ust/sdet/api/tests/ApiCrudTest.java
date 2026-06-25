@@ -168,7 +168,7 @@ public class ApiCrudTest {
     @Test
     @Order(5)
     @DisplayName("DELETE - Delete Booking")
-    void testDeletePet() {
+    void testDeleteBooking() {
 
         var response = given()
                 .spec(commonJsonRequest)
