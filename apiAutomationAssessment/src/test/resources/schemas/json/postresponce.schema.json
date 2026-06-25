@@ -1,0 +1,15 @@
+{
+    "$schema": "https://json-schema.org/draft-04/schema#",
+    "type":"object",
+    "required":["email","name","role"],
+    "properties": {
+        "email":{"type":"string"},
+        "name":{"type":"string"},
+        "role":{
+            "type":"string",
+            "enum": ["admin","user"]
+        }
+        
+    },
+    "additionalProperties": true
+}
