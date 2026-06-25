@@ -71,7 +71,7 @@ public class MainTest {
                 .get(Credentials.BASE_PATH);
 
         assertTrue(response.getStatusCode() == 200);
-        assertTrue(response.getBody().asString().startsWith("["));
+        assertNotNull(response.jsonPath().getList("bookingid"));
     }
 
     @Test
@@ -103,7 +103,7 @@ public class MainTest {
         if (response.getStatusCode() == 200) {
             BookingCreateResponse bookingResponse = response.as(BookingCreateResponse.class);
             assertTrue(bookingResponse.getBookingid() > 0);
-            assertEquals("Jim", bookingResponse.getBooking().getFirstname());
+            assertEquals("Jam", bookingResponse.getBooking().getFirstname());
         }
     }
 
@@ -116,13 +116,13 @@ public class MainTest {
 
         BookingRequest updatePayload = new BookingRequest();
         updatePayload.setFirstname("James");
-        updatePayload.setLastname("Brown");
-        updatePayload.setTotalprice(222);
+        updatePayload.setLastname("Joseph");
+        updatePayload.setTotalprice(111);
         updatePayload.setDepositpaid(true);
 
         BookingDates bookingDates = new BookingDates();
-        bookingDates.setCheckin("2020-01-01");
-        bookingDates.setCheckout("2020-01-10");
+        bookingDates.setCheckin("2025-03-20");
+        bookingDates.setCheckout("2025-04-10");
         updatePayload.setBookingdates(bookingDates);
         updatePayload.setAdditionalneeds("Dinner");
 
