@@ -13,7 +13,6 @@ import static io.restassured.RestAssured.given;
 
 public class SpecFactory {
 
-
     public static RequestSpecification authedTokenCreatedRequest =
             new RequestSpecBuilder()
                     .setBaseUri(BASE_URL)
