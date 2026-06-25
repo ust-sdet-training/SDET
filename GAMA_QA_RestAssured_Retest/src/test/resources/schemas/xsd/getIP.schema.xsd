@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/"
+        xmlns="http://schemas.microsoft.com/2003/10/Serialization/"
+        elementFormDefault="qualified">
+
+    <xs:element name="string">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="xs:string">
+                    <!-- Optional: enforce IP format -->
+                    <xs:attribute name="value" use="optional"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
