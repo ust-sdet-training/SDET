@@ -20,13 +20,13 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 
 @Tag("provider")
 @Provider("oms-provider")
-//@PactBroker(
-//        url = "http://127.0.0.1:9292"
-//)
+@PactBroker(
+        url = "http://127.0.0.1:9292"
+)
 @ExtendWith({
         PactVerificationInvocationContextProvider.class
 })
-@PactFolder("target/pacts")
+//@PactFolder("target/pacts")
 public class OmsProviderVerificationTest {
 
     @RegisterExtension
