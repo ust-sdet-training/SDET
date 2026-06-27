@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-        with:
-          ref: jamesy_week4_gate4
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -22,16 +20,21 @@ jobs:
           java-version: '22'
           cache: maven
 
+      - name: Install Pact CLI
+        run: |
+          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
+          echo "$HOME/pact/bin" >> $GITHUB_PATH
+
       - name: Start Pact Broker
         run: |
           docker compose -f resources/docker-compose.pact-broker.yml down -v
           docker compose -f resources/docker-compose.pact-broker.yml up -d --wait
 
-      - name: Run Consumer Pact Tests
+      - name: Run Consumer Tests
         run: |
-          mvn -pl storefront-web -am clean test -Dtest=CatalogConsumerPactTest
+          mvn -pl storefront-web clean test -Dtest=CatalogConsumerPactTest
 
-      - name: Publish Pact To Broker
+      - name: Publish Pact
         run: |
           pact-broker publish storefront-web/target/pacts \
             --consumer-app-version=${{ github.sha }} \
