@@ -13,7 +13,7 @@
     <properties>
 <!--        pactflow-->
         <pactbroker.url>https://hgh-46255aa4.pactflow.io</pactbroker.url>
-        <pactbroker.token>7ogUhMOhkXRQiFPRi3JpYg</pactbroker.token>
+        <pactbroker.token>ldsjypIgTwdcWKvFnRaVWQ</pactbroker.token>
 
         <maven.compiler.source>22</maven.compiler.source>
         <maven.compiler.target>22</maven.compiler.target>

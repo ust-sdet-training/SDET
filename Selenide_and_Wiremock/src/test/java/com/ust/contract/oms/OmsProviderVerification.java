@@ -21,7 +21,7 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 @Provider("oms-provider")
 @PactBroker(
         url = "${pactbroker.url}",
-        authentication = @PactBrokerAuth(token = "${pactbroker.token}")
+        authentication = @PactBrokerAuth(token = "ldsjypIgTwdcWKvFnRaVWQ")
 )
 public class OmsProviderVerification {
     @RegisterExtension
