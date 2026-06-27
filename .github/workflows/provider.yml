@@ -17,8 +17,17 @@ jobs:
           distribution: temurin
           java-version: 21
 
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+
+      - run: mvn -pl consumer test
+        working-directory: benchmark4
+
       - run: mvn -pl provider test
         working-directory: benchmark4
+
+      - run: gem install pact_broker-client
 
       - run: |
           pact-broker can-i-deploy \
