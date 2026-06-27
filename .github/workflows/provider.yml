@@ -2,7 +2,7 @@ name: Provider CI
 
 on:
   push:
-    branches: [main]
+    branches: [ragumaan_04_gate4]
   pull_request:
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: '22'
+          java-version: "22"
           cache: maven
 
       - name: Install Pact CLI

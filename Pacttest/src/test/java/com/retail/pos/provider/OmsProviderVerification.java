@@ -19,7 +19,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 @PactBroker(
         url = "http://127.0.0.1:9292"
 )
-@PactFolder("target/pacts")
+// @PactFolder("target/pacts")
 public class OmsProviderVerification {
     @RegisterExtension
     private static final WireMockExtension wireMock =
