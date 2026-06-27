@@ -24,8 +24,9 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
         authentication = @PactBrokerAuth(token = "ldsjypIgTwdcWKvFnRaVWQ")
 )
 public class OmsProviderVerification {
+
     @RegisterExtension
-    private static final WireMockExtension wireMock =
+    static WireMockExtension wireMock =
             WireMockExtension.newInstance()
                     .options(wireMockConfig().port(4010))
                     .build();
@@ -49,22 +50,32 @@ public class OmsProviderVerification {
     }
 
     @State("Order 123 exists")
-    void isOrderExists() {
+    void orderExists() {
+
         wireMock.stubFor(get(urlEqualTo("/order/123"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
                         .withBody("""
-                    {"orderId": 123, "status": "CONFIRMED", "total": 42.0}
-                """)));
+                        {
+                          "orderId":123,
+                          "status":"CONFIRMED",
+                          "total":42.0
+                        }
+                        """)));
     }
 
     @State("Order 203 not exists")
-    void isOrderMissing() {
+    void orderMissing() {
+
         wireMock.stubFor(get(urlEqualTo("/order/203"))
-                        .willReturn(aResponse()
-                                .withStatus(404)))
-                .withHeader("Content-Type", "application/json")
-                .withBody("{}")));
+                .willReturn(aResponse()
+                        .withStatus(404)
+                        .withHeader("Content-Type", "application/json")
+                        .withBody("""
+                        {
+                          "status":"Product not found"
+                        }
+                        """)));
     }
 }

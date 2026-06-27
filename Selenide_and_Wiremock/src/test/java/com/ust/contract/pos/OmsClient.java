@@ -7,14 +7,14 @@ import static io.restassured.RestAssured.given;
 
 public class OmsClient {
 
-    private String baseUrl;
+    private final String baseUrl;
 
-    public OmsClient(String baseUrl){
-        this.baseUrl=baseUrl;
+    public OmsClient(String baseUrl) {
+        this.baseUrl = baseUrl;
     }
 
     public Order get200(int id) {
-        return  given()
+        return given()
                 .baseUri(baseUrl)
                 .contentType(ContentType.JSON)
                 .get("/order/" + id)
@@ -24,7 +24,7 @@ public class OmsClient {
                 .as(Order.class);
     }
 
-    public Response get400(int id) {
+    public Response get404(int id) {
         return given()
                 .baseUri(baseUrl)
                 .contentType(ContentType.JSON)
@@ -35,5 +35,9 @@ public class OmsClient {
                 .response();
     }
 
-    public static record Order(int statusCode,int orderId,String status,double total){}
+    public static record Order(
+            int orderId,
+            String status,
+            double total
+    ) {}
 }
