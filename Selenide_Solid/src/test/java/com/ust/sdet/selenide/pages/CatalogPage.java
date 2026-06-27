@@ -3,17 +3,15 @@ package com.ust.sdet.selenide.pages;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import com.ust.sdet.selenide.pages.components.Header;
-import com.ust.sdet.selenide.pages.components.ProductCard;
+
+
 import com.ust.sdet.selenide.support.SelenideConfig;
 import com.ust.sdet.selenide.support.SelenideConfig.*;
 
-import java.util.List;
 
-import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Selenide.open;
+
 
 public class CatalogPage {
 
@@ -51,12 +49,6 @@ public class CatalogPage {
         resultCount.shouldNotHave(text("Searching products..."));
 
         return this;
-    }
-    public List<ProductCard> cards() {
-
-        return cards.stream()
-                .map(ProductCard::new)
-                .toList();
     }
 
     public ProductPage openFirstProduct() {

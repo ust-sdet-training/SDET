@@ -1,7 +1,6 @@
 package com.ust.sdet.selenide.pages;
 
 import com.codeborne.selenide.SelenideElement;
-import com.ust.sdet.selenide.pages.components.Header;
 import com.ust.sdet.selenide.support.SelenideConfig;
 
 import static com.codeborne.selenide.Condition.visible;
@@ -38,17 +37,4 @@ public class LoginPage {
         return this;
     }
 
-    public LoginPage logout() {
-        open(SelenideConfig.homeUrl());
-
-        title.shouldBe(visible);
-        signOut.click();
-
-        webdriver().shouldHave(urlContaining("/login"));
-        return this;
-    }
-
-    public Header header() {
-        return new Header();
-    }
 }

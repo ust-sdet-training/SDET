@@ -1,7 +1,7 @@
 package com.ust.sdet.selenide.pages;
 
 import com.codeborne.selenide.SelenideElement;
-import com.ust.sdet.selenide.pages.components.Header;
+//import com.ust.sdet.selenide.pages.components.Header;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
@@ -44,11 +44,5 @@ public class ProductPage {
 
     public boolean isAvailabilityBadgeDisplayed() {
         return availabilityBadge.isDisplayed();
-    }
-
-
-
-    public Header header() {
-        return new Header();
     }
 }
