@@ -13,9 +13,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-java@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 21
@@ -29,6 +31,7 @@ jobs:
       - name: Start Pact Broker
         run: |
           docker compose -f Week4_Gate4/ProviderConsumerPact/src/test/resources/docker-compose.pact-broker.yml up -d --wait
+
       - name: Run Provider Verification
         working-directory: Week4_Gate4/ProviderConsumerPact
         run: mvn clean test -Dtest=OmsProviderPactTest
