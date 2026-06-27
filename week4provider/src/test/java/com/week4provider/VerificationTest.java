@@ -1,0 +1,93 @@
+package com.week4provider;
+
+import au.com.dius.pact.provider.junit5.HttpTestTarget;
+import au.com.dius.pact.provider.junit5.PactVerificationContext;
+import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvider;
+import au.com.dius.pact.provider.junitsupport.Provider;
+import au.com.dius.pact.provider.junitsupport.State;
+import au.com.dius.pact.provider.junitsupport.loader.PactBroker;
+import au.com.dius.pact.provider.junitsupport.loader.PactBrokerAuth;
+import au.com.dius.pact.provider.junitsupport.loader.PactBrokerConsumerVersionSelectors;
+import au.com.dius.pact.provider.junitsupport.loader.SelectorBuilder;
+
+import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
+
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
+
+@Provider("retail-app")
+@PactBroker(
+        url = "${pact.broker.url}",
+        authentication = @PactBrokerAuth(token = "${pact.broker.token}")
+)
+
+public class VerificationTest {
+    @RegisterExtension
+    private static final WireMockExtension wireMock =
+        WireMockExtension.newInstance()
+            .options(wireMockConfig().port(4010))
+            .build();
+ 
+ 
+    @PactBrokerConsumerVersionSelectors
+    public static SelectorBuilder
+            consumerVersionSelectors() {
+        return new SelectorBuilder()
+                    .mainBranch()
+                    .deployedOrReleased();
+    }
+ 
+ 
+    @BeforeEach
+    void setup(PactVerificationContext context) {                                    
+        context.setTarget(new HttpTestTarget("127.0.0.1", 4010));
+    }
+ 
+    @TestTemplate
+    @ExtendWith(PactVerificationInvocationContextProvider.class)
+    void verify(PactVerificationContext context) {
+        context.verifyInteraction();
+    }
+
+
+    @State("Product 101 exists")
+    void isOrderExists() {
+        wireMock.stubFor(get(urlEqualTo("/product/101"))
+            .willReturn(aResponse()
+                .withStatus(200)
+                .withHeader("Content-Type", "application/json")
+                .withBody("""
+                    {"productId": 101, "name": "Water Bottle", "price": 2000.0}
+                """)));
+    }
+
+
+    @State("Creating a new order")
+    void createOrder() {
+        wireMock.stubFor(post(urlEqualTo("/orders/"))
+            .withHeader("Content-Type", matching("application/json(;.*)?"))
+            .willReturn(aResponse()
+                .withStatus(201)
+                .withHeader("Content-Type", "application/json")
+                .withBody("""
+                    {"statusCode": 201, "orderId": 101, "status": "CREATED", "total": 2000}
+                """)));
+    }
+
+    @State("SKU-9 has Stock")
+    void getInventory() {
+        wireMock.stubFor(get(urlEqualTo("/inventory/SKU-9"))
+            .willReturn(aResponse()
+                .withStatus(200)
+                .withHeader("Content-Type", "application/json")
+                .withBody("""
+                    {"sku": "SKU-9", "qty": 5}
+                """)));
+    }
+}

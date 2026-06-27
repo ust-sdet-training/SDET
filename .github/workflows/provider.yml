@@ -1,0 +1,57 @@
+name: Provided
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    environment: Pact
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 00. Checkout Code
+        uses: actions/checkout@v5
+
+      - name: 0. Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '22'
+          cache: 'maven'
+
+      - name: 0. Install Pact CLI
+        run: |
+          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
+          echo "$HOME/pact/bin" >> $GITHUB_PATH
+
+      
+      - name: 4. Run Provider Verification
+        working-directory: week4provider
+        run: |
+          mvn -Dtest=VerificationTest \
+              -Dgit.sha=${{ github.sha }} \
+              -Dpact.broker.url=${{ secrets.PACT_URL }} \
+              -Dpact.broker.token=${{ secrets.PACT_TOKEN }} \
+              test
+
+      - name: 5. Record provider deployment to production
+        working-directory: week4provider
+        run: |
+          pact-broker record-deployment \
+            --pacticipant retail-app \
+            --version ${{ github.sha }} \
+            --environment production \
+            --broker-base-url=${{ secrets.PACT_URL }} \
+            --broker-token=${{ secrets.PACT_TOKEN }}
+    
+      - name: 6. Can I deploy
+        working-directory: week4provider
+        env:
+            CONTRACT_VERSION: ${{ github.sha }} 
+        run: |
+          pact-broker can-i-deploy \
+          --pacticipant users-consumers \
+          --version $CONTRACT_VERSION \
+          --to-environment production \
+          --broker-base-url=${{ secrets.PACT_URL }} \
+          --broker-token=${{ secrets.PACT_TOKEN }}
+      
