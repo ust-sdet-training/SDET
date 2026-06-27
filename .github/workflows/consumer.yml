@@ -13,31 +13,35 @@ on:
 jobs:
   consumer-tests:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-java@v4
+    defaults:
+      run:
+        working-directory: .
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
           cache: maven
 
-      - name: Run consumer Pact tests
-        env:
-          PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL || 'https://qwq.pactflow.io' }}
-          PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN || 'DrLusdyyj6UlhPprN3cneQ' }}
-        run: mvn -pl pos test
+      - name: Verify Repository
+        run: |
+          pwd
+          ls -la
+          find . -name pom.xml
 
-      - name: Publish Pact to PactFlow
-        if: success()
-        env:
-          PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL || 'https://qwq.pactflow.io' }}
-          PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN || 'DrLusdyyj6UlhPprN3cneQ' }}
-        run: mvn -pl pos pact:publish
+      - name: Run Consumer Tests
+        run: mvn -f pom.xml -pl pos clean test
 
-      - name: Can I Deploy?
+      - name: Publish Pact
         if: success()
-        env:
-          PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL || 'https://qwq.pactflow.io' }}
-          PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN || 'DrLusdyyj6UlhPprN3cneQ' }}
-        run: mvn -pl pos pact:can-i-deploy
+        run: mvn -f pom.xml -pl pos pact:publish
+
+      - name: Can I Deploy
+        if: success()
+        run: mvn -f pom.xml -pl pos pact:can-i-deploy
