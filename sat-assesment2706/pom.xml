@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.assessment</groupId>
+    <artifactId>sat-assessment2706</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>oms</module>
+        <module>pos</module>
+        <module>retail-ui</module>
+    </modules>
+
+    <properties>
+        <java.version>17</java.version>
+
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <junit.version>5.12.2</junit.version>
+        <selenide.version>7.9.3</selenide.version>
+        <webdrivermanager.version>6.2.0</webdrivermanager.version>
+
+        <pact.version>4.6.17</pact.version>
+        <wiremock.version>3.13.1</wiremock.version>
+    </properties>
+
+</project>
