@@ -18,15 +18,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout Project
         uses: actions/checkout@v4
 
-      - name: Set up Java 22
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '22'
-          cache: maven
+
+      - name: Cache Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            maven-${{ runner.os }}
+
+      - name: Verify Java
+        run: java -version
+
+      - name: Verify Maven
+        working-directory: PactWithWireMock
+        run: mvn -version
 
       - name: Install Pact CLI
         run: |
@@ -34,13 +48,13 @@ jobs:
           echo "$HOME/pact/bin" >> $GITHUB_PATH
 
       - name: Run Provider Verification
-        working-directory: ./PactWithWireMock
+        working-directory: PactWithWireMock
         run: |
           mvn \
             -Dtest=OmsProviderVerification \
             -Dpact.verifier.publishResults=true \
-            -Dpact.provider.version=${{ github.sha }} \
-            -Dpact.provider.branch=${{ github.ref_name }} \
+            -Dpact.provider.version=${GITHUB_SHA::7} \
+            -Dpact.provider.branch=${GITHUB_REF_NAME} \
             -Dpact.broker.url=${{ secrets.SHAHBAZ_PACT_BROKER_BASE_URL }} \
             -Dpact.broker.token=${{ secrets.SHAHBAZ_PACT_BROKER_TOKEN }} \
             test
@@ -49,7 +63,7 @@ jobs:
         run: |
           pact-broker record-deployment \
             --pacticipant oms-provider \
-            --version=${{ github.sha }} \
+            --version=${GITHUB_SHA::7} \
             --environment=production \
             --broker-base-url=${{ secrets.SHAHBAZ_PACT_BROKER_BASE_URL }} \
             --broker-token=${{ secrets.SHAHBAZ_PACT_BROKER_TOKEN }}
@@ -58,7 +72,7 @@ jobs:
         run: |
           pact-broker can-i-deploy \
             --pacticipant pos-consumer \
-            --version=${{ github.sha }} \
+            --version=${GITHUB_SHA::7} \
             --to-environment=production \
             --broker-base-url=${{ secrets.SHAHBAZ_PACT_BROKER_BASE_URL }} \
             --broker-token=${{ secrets.SHAHBAZ_PACT_BROKER_TOKEN }}
@@ -67,7 +81,7 @@ jobs:
         run: |
           pact-broker can-i-deploy \
             --pacticipant oms-provider \
-            --version=${{ github.sha }} \
+            --version=${GITHUB_SHA::7} \
             --to-environment=production \
             --broker-base-url=${{ secrets.SHAHBAZ_PACT_BROKER_BASE_URL }} \
             --broker-token=${{ secrets.SHAHBAZ_PACT_BROKER_TOKEN }}
