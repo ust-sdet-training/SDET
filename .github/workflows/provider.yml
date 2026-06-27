@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          ref: jamesy_week4_gate4
 
       - name: Setup Java
         uses: actions/setup-java@v4
