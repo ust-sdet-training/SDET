@@ -28,8 +28,9 @@ jobs:
           echo "$HOME/pact/bin" >> "$GITHUB_PATH"
 
       - name: Run Consumer Tests
-        run: mvn -pl consumer test
-        working-directory: week4_assessment_pactflow
+        run: |
+          cd week4_assessment_pactflow
+          mvn -pl consumer test
 
       - name: Validate Pact Broker secrets
         run: |
@@ -40,7 +41,7 @@ jobs:
 
       - name: Publish Contracts to PactFlow
         run: |
-          pact-broker publish week4_assessment_pactflow/consumer/target/pacts \
+          pact-broker publish "$(pwd)/week4_assessment_pactflow/consumer/target/pacts" \
             --consumer-app-version="$GITHUB_SHA" \
             --branch=main \
             --broker-base-url="$PACT_BROKER_URL" \
@@ -48,6 +49,7 @@ jobs:
 
       - name: Can I Deploy (Consumer)
         run: |
+          ls -la week4_assessment_pactflow/consumer/target/pacts 2>/dev/null || echo "Pacts directory not found"
           pact-broker can-i-deploy \
             --pacticipant storefront-web \
             --version="$GITHUB_SHA" \
