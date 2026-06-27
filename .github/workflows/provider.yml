@@ -1,20 +1,14 @@
 name: Provider Verification
 
 on:
-
-  workflow_run:
-    workflows:
-      - Consumer Contract Test
-    types:
-      - completed
+  push:
+    branches:
+      - Chaithra-week04-gate4
 
   workflow_dispatch:
 
 jobs:
-
   provider:
-
-    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
 
     runs-on: ubuntu-latest
 
@@ -38,10 +32,9 @@ jobs:
       - name: Run Provider Verification
         working-directory: contractTesting
         run: |
-          mvn \
-            -Dtest=CatalogProviderVerificationTest \
-            -Dgit.sha=${{ github.sha }} \
-            test
+          mvn -Dtest=CatalogProviderVerificationTest \
+              -Dgit.sha=${{ github.sha }} \
+              test
 
       - name: Record Provider Deployment
         working-directory: contractTesting
