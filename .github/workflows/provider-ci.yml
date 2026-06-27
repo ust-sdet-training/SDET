@@ -44,7 +44,7 @@ jobs:
             --version=${{ github.sha }} \
             --environment production \
             --broker-base-url=https://hgh-46255aa4.pactflow.io \
-            --broker-token=7ogUhMOhkXRQiFPRi3JpYg
+            --broker-token=ldsjypIgTwdcWKvFnRaVWQ
 
       - name: Can I Deploy
         working-directory: Selenide_and_Wiremock
@@ -54,4 +54,4 @@ jobs:
             --version=${{ github.sha }} \
             --to-environment production \
             --broker-base-url=https://hgh-46255aa4.pactflow.io \
-            --broker-token=7ogUhMOhkXRQiFPRi3JpYg
+            --broker-token=ldsjypIgTwdcWKvFnRaVWQ
