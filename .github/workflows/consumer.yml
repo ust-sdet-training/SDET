@@ -2,7 +2,11 @@ name: Consumer Pact CI
 
 on:
   push:
+    branches:
+      - shahbaz_week04_gate4
   pull_request:
+    branches:
+      - shahbaz_week04_gate4
 
 jobs:
   consumer:
