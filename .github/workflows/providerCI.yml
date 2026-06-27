@@ -38,28 +38,29 @@ jobs:
             -Dtest=ProviderVerification \
             -Dpactbroker.url=https://rockstar.pactflow.io \
             -Dpactbroker.auth.token=xdlxxgO3kq-b9ps3ih_eKQ \
+            -Dpact.verifier.publishResults=true \
             -Dgit.sha=${GITHUB_SHA::7} \
             -Dgit.branch=${GITHUB_REF_NAME} \
             test
       
       - name: 2. Record provider deployment to production
-        working-directory: pact-week4
+        working-directory: week4provider
         run: |
           pact-broker record-deployment \
-            --pacticipant oms-provider \
+            --pacticipant provider \
             --version ${{ github.sha }} \
             --environment production \
-            --broker-base-url https://rockstar.pactflow.io/
-            --broker-token xdlxxgO3kq-b9ps3ih_eKQ 
-
+            --broker-base-url=https://rockstar.pactflow.io \
+            --broker-token=xdlxxgO3kq-b9ps3ih_eKQ
+    
       - name: 3. Can I deploy
-        working-directory: pact-week4
+        working-directory: week4provider
         env:
-          CONTRACT_VERSION: ${{ github.sha }}
+            CONTRACT_VERSION: ${{ github.sha }} 
         run: |
           pact-broker can-i-deploy \
-          --pacticipant pos-consumer \
+          --pacticipant consumer \
           --version $CONTRACT_VERSION \
           --to-environment production \
-          --broker-base-url https://rockstar.pactflow.io/
-          --broker-token xdlxxgO3kq-b9ps3ih_eKQ 
+          --broker-base-url=https://rockstar.pactflow.io \
+          --broker-token=xdlxxgO3kq-b9ps3ih_eKQ
