@@ -5,10 +5,7 @@ import au.com.dius.pact.provider.junit5.PactVerificationContext;
 import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvider;
 import au.com.dius.pact.provider.junitsupport.Provider;
 import au.com.dius.pact.provider.junitsupport.State;
-import au.com.dius.pact.provider.junitsupport.loader.PactBroker;
-import au.com.dius.pact.provider.junitsupport.loader.PactBrokerConsumerVersionSelectors;
-import au.com.dius.pact.provider.junitsupport.loader.PactFolder;
-import au.com.dius.pact.provider.junitsupport.loader.SelectorBuilder;
+import au.com.dius.pact.provider.junitsupport.loader.*;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
@@ -21,7 +18,8 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 @Provider("provider")
 //@PactFolder("target/pacts")
 @PactBroker(
-        url = "http://127.0.0.1:9292",
+        url = "https://rockstar.pactflow.io/",
+        authentication = @PactBrokerAuth(token = "xdlxxgO3kq-b9ps3ih_eKQ"),
         enablePendingPacts = "true",
         providerTags = "main",
         includeWipPactsSince = "2026-06-27"

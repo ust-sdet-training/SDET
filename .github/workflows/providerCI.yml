@@ -27,9 +27,6 @@ jobs:
         continue-on-error: true
         run: |
           mvn -Dtest=ProviderVerification \
-              -Dgit.sha=${{ github.sha }} \
-              -Dpactbroker.host=127.0.0.1 \
-              -Dpactbroker.port=9292 \
               test
 
       - name: 2. Record provider deployment to production
@@ -38,8 +35,8 @@ jobs:
           pact-broker record-deployment \
             --pacticipant provider \
             --version ${{ github.sha }} \
-            --environment production \
-            --broker-base-url http://127.0.0.1:9292
+            --environment env \
+            --broker-base-url https://rockstar.pactflow.io
 
       - name: 3. Can I deploy
                working-directory: pact-week4
@@ -49,5 +46,5 @@ jobs:
           pact-broker can-i-deploy \
           --pacticipant consumer \
           --version $CONTRACT_VERSION \
-          --to-environment production \
-          --broker-base-url http://127.0.0.1:9292
+          --to-environment env \
+          --broker-base-url https://rockstar.pactflow.io
