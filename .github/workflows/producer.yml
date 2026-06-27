@@ -3,10 +3,10 @@ name: Pact Provider
 on:
   push:
     branches:
-      - lahari_week4_gate4
+      - ajay_week04_gate04
   pull_request:
     branches:
-      - lahari_week4_gate4
+      - ajay_week04_gate04
 
 jobs:
   provider:
