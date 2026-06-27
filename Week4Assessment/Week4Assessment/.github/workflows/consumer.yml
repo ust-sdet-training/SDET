@@ -1,31 +1,28 @@
-name: Consumer Pipeline
+name: Consumer Contract
 
 on:
 push:
-pull_request:
+branches:
+  - jyothsna-week4-gate4
+workflow_dispatch:
 
 jobs:
-consumer-test:
+consumer:
+
 runs-on: ubuntu-latest
 
-
 steps:
-  - uses: actions/checkout@v4
+  - name: Checkout Code
+    uses: actions/checkout@v5
 
   - name: Setup Java
-    uses: actions/setup-java@v4
+    uses: actions/setup-java@v5
     with:
       distribution: temurin
       java-version: 17
+      cache: maven
 
-  - name: Run Consumer Tests
-    run: mvn test -pl consumer-storefront
-
-  - name: Publish Pact (Simulated)
-    run: echo "Pact published successfully"
-
-  - name: Can I Deploy
+  - name: Build Consumer Module
     run: |
-      echo "Consumer contract valid"
-      exit 0
+      mvn clean test -pl consumer-storefront
 
