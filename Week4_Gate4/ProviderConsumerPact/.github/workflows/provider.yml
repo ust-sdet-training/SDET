@@ -1,0 +1,56 @@
+name: Pact Provider
+
+on:
+  push:
+    branches:
+      - lahari_week4_gate4
+  pull_request:
+    branches:
+      - lahari_week4_gate4
+
+jobs:
+  provider-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: pact
+          POSTGRES_PASSWORD: pact
+          POSTGRES_DB: pact
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U pact -d pact"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+      broker:
+        image: pactfoundation/pact-broker:2.136.0-pactbroker2.117.1
+        ports:
+          - 9292:9292
+        env:
+          PACT_BROKER_PORT: 9292
+          PACT_BROKER_BASE_URL: http://localhost:9292
+          PACT_BROKER_DATABASE_URL: postgres://pact:pact@postgres/pact
+        options: >-
+          --health-cmd="wget -q -O /dev/null http://localhost:9292/diagnostic/status/heartbeat || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=20
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: Run Provider Verification
+        run: mvn clean test -Dtest=OmsProviderPactTest
