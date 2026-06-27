@@ -62,9 +62,9 @@ public class OmsProviderVerification {
     @State("Order 203 not exists")
     void isOrderMissing() {
         wireMock.stubFor(get(urlEqualTo("/order/203"))
-                .willReturn(aResponse()
-                        .withStatus(404)))
-                        .withHeader("Content-Type", "application/json")
-                        .withBody("{}")));
+                        .willReturn(aResponse()
+                                .withStatus(404)))
+                .withHeader("Content-Type", "application/json")
+                .withBody("{}")));
     }
 }
