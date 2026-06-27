@@ -29,17 +29,12 @@ jobs:
       # NOTE: If this is a separate pipeline execution on standard GitHub Actions,
       # a local 127.0.0.1 broker container will be completely empty unless
       # you are running everything inside a single monorepo orchestration step.
-      - name: 1. Start Pact Broker (Shared/Local Instance)
-        run: |
-          docker compose -f src/test/resources/docker-compose.pact-broker.yml down -v
-          docker compose -f src/test/resources/docker-compose.pact-broker.yml up -d --wait
 
       - name: 2. Run Provider Verification
         run: |
           mvn -Dtest=OmsProviderVerificationTest \
               -Dgit.sha=${{ github.sha }} \
-              -Dpactbroker.host=127.0.0.1 \
-              -Dpactbroker.port=9292 \
+              -Dpactbroker.host=https://sdf.pactflow.io
               test
 
       - name: 3. Can I Deploy (Gatekeeper)
@@ -50,7 +45,7 @@ jobs:
             --pacticipant oms-provider \
             --version $CONTRACT_VERSION \
             --to-environment production \
-            --broker-base-url http://127.0.0.1:9292
+            --broker-base-url 
 
       - name: 4. Record provider deployment to production
         if: success()
@@ -59,4 +54,4 @@ jobs:
             --pacticipant oms-provider \
             --version ${{ github.sha }} \
             --environment production \
-            --broker-base-url http://127.0.0.1:9292
+            --broker-base-url https://sdf.pactflow.io
