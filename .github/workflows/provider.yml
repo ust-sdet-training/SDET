@@ -1,42 +1,58 @@
 name: Provider Verification
 
+
 on:
-  workflow_dispatch:
+  push:
+  pull_request:
 
 jobs:
+
   provider:
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Project
-        uses: actions/checkout@v4
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
+      - name: Checkout Code
+        uses: actions/checkout@v5
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '22'
+          cache: maven
 
-      - name: Cache Maven
-        uses: actions/cache@v4
-        with:
-          path: ~/.m2/repository
-          key: maven-${{ runner.os }}-${{ hashFiles('Consumer_Provider/pom.xml') }}
-          restore-keys: |
-            maven-${{ runner.os }}
-
-      - name: Verify Java
-        run: java -version
-
-      - name: Verify Maven
-        working-directory: Consumer_Provider
-        run: mvn -version
+      - name: Install Pact CLI
+        run: |
+          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
+          echo "$HOME/pact/bin" >> $GITHUB_PATH
 
       - name: Run Provider Verification
-        working-directory: Consumer_Provider
+        working-directory: contractTesting
         run: |
-          mvn \
-            -Dtest=OmsProviderVerificationTest \
-            -Dgit.sha=${GITHUB_SHA::7} \
-            -Dgit.branch=${GITHUB_REF_NAME} \
-            test
+          mvn clean test \
+            -Dtest=omsProviderVerificationTest \
+            -Dpact.verifier.publishResults=true \
+            -Dpact.provider.version=${{ github.sha }} \
+            -Dpact.provider.branch=Chaithra-week04-gate4
+
+      - name: Can I Deploy
+        working-directory: contractTesting
+        run: |
+          pact-broker can-i-deploy \
+            --pacticipant storefront \
+            --version=${{ github.sha }} \
+            --to-environment production \
+            --broker-base-url=https://ust-13e329eb.pactflow.io \
+            --broker-token=8REhNPP6tSDxhBZShc80JQ
+
+      - name: Record Provider Deployment
+        working-directory: contractTesting
+        run: |
+          pact-broker record-deployment \
+            --pacticipant catalog-service \
+            --version=${{ github.sha }} \
+            --environment production \
+            --broker-base-url=https://ust-13e329eb.pactflow.io \
+            --broker-token=8REhNPP6tSDxhBZShc80JQ
