@@ -26,18 +26,18 @@ jobs:
           echo "$HOME/pact/bin" >> $GITHUB_PATH
 
       - name: Start Pact Broker
-        working-directory: storefront-web
+#        working-directory: storefront-web
         run: |
-          docker compose -f resources/docker-compose.pact-broker.yml down -v
-          docker compose -f resources/docker-compose.pact-broker.yml up -d --wait
+          docker compose -f ../resources/docker-compose.pact-broker.yml down -v
+          docker compose -f ../resources/docker-compose.pact-broker.yml up -d --wait
 
       - name: Run Consumer Pact Tests
-        working-directory: storefront-web
+#        working-directory: storefront-web
         run: |
           mvn -Dtest=CatalogConsumerPactTest test
 
       - name: Publish Pact To Broker
-        working-directory: storefront-web
+#        working-directory: storefront-web
         run: |
           pact-broker publish target/pacts \
             --consumer-app-version=${{ github.sha }} \
@@ -45,7 +45,7 @@ jobs:
             --broker-base-url=http://127.0.0.1:9292
 
       - name: Can I Deploy Consumer
-        working-directory: storefront-web
+#        working-directory: storefront-web
         run: |
           pact-broker can-i-deploy \
             --pacticipant storefront-web \
