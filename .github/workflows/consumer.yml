@@ -42,8 +42,8 @@ jobs:
 
       - name: Publish Pact to PactFlow
         env:
-          PREM_PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
-          PREM_PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
+          PREM_PACT_BROKER_BASE_URL: ${{ secrets.PREM_PACT_BROKER_BASE_URL }}
+          PREM_PACT_BROKER_TOKEN: ${{ secrets.PREM_PACT_BROKER_TOKEN }}
         run: |
           mvn au.com.dius.pact.provider:maven:publish \
             -Dpact.broker.url="${PREM_PACT_BROKER_BASE_URL}" \
