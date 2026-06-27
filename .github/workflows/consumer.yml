@@ -32,9 +32,6 @@ jobs:
 
       - name: Publish Pact
         working-directory: selenide-wiremock-gate4-bhumika
-        env:
-          PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
-          PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
         run: |
           mvn au.com.dius.pact.provider:maven:4.6.20:publish \
             -Dpact.broker.url=$PACT_BROKER_BASE_URL \
