@@ -28,7 +28,7 @@ jobs:
       - name: Start Pact Broker
         run: |
           docker compose -f Pacttest/src/test/java/resources/docker/docker-compose.pact-broker.yml down -v
-          docker compose -f src/test/java/resources/docker/docker-compose.pact-broker.yml up -d --wait
+          docker compose -f Pacttest/src/test/java/resources/docker/docker-compose.pact-broker.yml up -d --wait
 
       - name: Run Provider Verification
         working-directory: Pacttest
