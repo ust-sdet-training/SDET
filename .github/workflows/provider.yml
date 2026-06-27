@@ -31,8 +31,8 @@ jobs:
       # you are running everything inside a single monorepo orchestration step.
 
       - name: 2. Run Provider Verification
-              env:
-          SECURE_TOKEN: ${{ secrets.ARAVIND_PACT_TOKEN }}
+        env:
+        SECURE_TOKEN: ${{ secrets.ARAVIND_PACT_TOKEN }}
         run: |
           mvn -Dtest=OmsProviderVerificationTest \
               -Dgit.sha=${{ github.sha }} \
