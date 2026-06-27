@@ -1,0 +1,25 @@
+name: Consumer Contract
+
+on:
+  push:
+    branches:
+      - newjyothsna-week4-gate4
+  workflow_dispatch:
+
+jobs:
+  consumer:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v5
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+
+      - name: Build Consumer Module
+        run: mvn clean test -pl consumer-storefront
