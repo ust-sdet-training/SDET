@@ -64,7 +64,7 @@ public class OmsProviderVerification {
         wireMock.stubFor(get(urlEqualTo("/order/203"))
                 .willReturn(aResponse()
                         .withStatus(404)))
-                .withHeader("Content-Type", "application/json")
-                .withBody("{}")));
+                        .withHeader("Content-Type", "application/json")
+                        .withBody("{}")));
     }
 }
