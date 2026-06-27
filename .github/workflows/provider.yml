@@ -34,6 +34,7 @@ jobs:
           docker compose -f provider/src/test/resources/docker-compose.pact-broker.yml up -d --wait
 
       - name: Run Provider Verification
+        working-directory: provider
         run: |
           mvn \
             -Dtest=OmsProviderVerification \
@@ -45,6 +46,7 @@ jobs:
             test
 
       - name: Record Provider Deployment
+        working-directory: provider
         run: |
           pact-broker record-deployment \
             --pacticipant oms-provider \
