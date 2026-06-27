@@ -3,7 +3,7 @@ name: Consumer Pipeline
 on:
   push:
     branches:
-      -Chandana-week4-gate4
+      - Chandana-week4-gate4
 
 jobs:
   consumer:
