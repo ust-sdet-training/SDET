@@ -19,7 +19,7 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v5
         with:
-          distribution: "temurin"
+          distribution: 'temurin'
           java-version: '22'
           cache: maven
 
@@ -30,13 +30,13 @@ jobs:
 
       - name: Start Pact Broker
         run: |
-          docker compose -f src/test/resources/docker-compose.pact-broker.yml down -v
-          docker compose -f src/test/resources/docker-compose.pact-broker.yml up -d --wait
+          docker compose -f Week_4_MockAPI_Selenide_Assessment/provider_proj/src/test/resources/docker-compose.pact-broker.yml down -v
+          docker compose -f Week_4_MockAPI_Selenide_Assessment/provider_proj/src/test/resources/docker-compose.pact-broker.yml up -d --wait
 
       - name: Run Provider Verification
         run: |
           mvn \
-            -Dtest=OmsProviderVerificationTest \
+            -Dtest=OMSProviderVerification \
             -Dgit.sha=${{ github.sha }} \
             -Dpactbroker.host=127.0.0.1 \
             -Dpactbroker.port=9292 \
@@ -47,7 +47,7 @@ jobs:
       - name: Record Provider Deployment
         run: |
           pact-broker record-deployment \
-            --pacticipant OMS \
+            --pacticipant OMS-provider \
             --version=${{ github.sha }} \
             --environment production \
             --broker-base-url=http://127.0.0.1:9292
@@ -57,7 +57,7 @@ jobs:
           CONTRACT_VERSION: ${{ github.sha }}
         run: |
           pact-broker can-i-deploy \
-            --pacticipant POS \
+            --pacticipant POS-consumer \
             --version=$CONTRACT_VERSION \
             --to-environment production \
             --broker-base-url=http://127.0.0.1:9292

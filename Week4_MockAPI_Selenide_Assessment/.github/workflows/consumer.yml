@@ -16,7 +16,7 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v5
         with:
-          distribution: "temurin"
+          distribution: 'temurin'
           java-version: '22'
           cache: maven
 
@@ -27,12 +27,12 @@ jobs:
 
       - name: Start Pact Broker
         run: |
-          docker compose -f src/test/resources/docker-compose.pact-broker.yml down -v
-          docker compose -f src/test/resources/docker-compose.pact-broker.yml up -d --wait
+          docker compose -f Week_4_MockAPI_Selenide_Assessment/consumer_proj/src/test/resources/docker-compose.pact-broker.yml down -v
+          docker compose -f Week_4_MockAPI_Selenide_Assessment/consumer_proj/src/test/resources/docker-compose.pact-broker.yml up -d --wait
 
       - name: Run Consumer Pact Tests
         run: |
-          mvn -Dtest=PosOmsConsumerPactTest test
+          mvn -Dtest=PosConsumerVerification test
 
       - name: Publish Consumer Contracts
         run: |

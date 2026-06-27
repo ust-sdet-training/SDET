@@ -25,9 +25,9 @@ public class POSConsumerVerification {
 
 //    Pact 1
 @Pact(provider="OMS-Provider", consumer = "POS-Provider")
-    public V4Pact createAPactForNewOrder(PactDslWithProvider build){
+    public V4Pact createAPactForNewOrder(PactDslWithProvider builder){
 
-    return build
+    return builder
             .given("Create a New Order with ID 101")
             .uponReceiving("Create Order")
             .path("orders")
@@ -63,9 +63,9 @@ public class POSConsumerVerification {
 
 //    Pact 2
     @Pact(provider="OMS-Provider", consumer = "POS-Provider")
-    public V4Pact checkForExistingOrder(PactDslWithProvider build){
+    public V4Pact checkForExistingOrder(PactDslWithProvider builder){
 
-        return build
+        return builder
                 .given("Check the order with ID 101 exists")
                 .uponReceiving("Check Order Exists")
                 .path("orders/101")
@@ -95,6 +95,8 @@ public class POSConsumerVerification {
                 .body("category",equalTo("Mobiles"))
                 .body("stock",equalTo(100));
     }
+
+
 
 
 //    Pact 3
