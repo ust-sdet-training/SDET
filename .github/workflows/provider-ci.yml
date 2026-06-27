@@ -26,9 +26,10 @@ jobs:
         working-directory: Selenide_and_Wiremock
         continue-on-error: true
         run: |
-          mvn -Dtest=OmsProviderVerification test \
-              -Dpact.verifier.publishResults=true \
-              -Dpact.provider.version=${{ github.sha }}
+          mvn -Dtest=OmsProviderVerification \
+              -Dpactbroker.url=https://hgh-46255aa4.pactflow.io \
+              -Dpactbroker.token=7ogUhMOhkXRQiFPRi3JpYg \
+              test
 
       - name: 2. Record provider deployment to production
         working-directory: Selenide_and_Wiremock
@@ -36,7 +37,9 @@ jobs:
           pact-broker record-deployment \
             --pacticipant provider \
             --version ${{ github.sha }} \
-            --environment env 
+            --environment env \
+            --broker-base-url https://hgh-46255aa4.pactflow.io \
+            --broker-token 7ogUhMOhkXRQiFPRi3JpYg
 
       - name: 3. Can I deploy
         working-directory: Selenide_and_Wiremock
@@ -46,4 +49,6 @@ jobs:
           pact-broker can-i-deploy \
           --pacticipant consumer \
           --version $CONTRACT_VERSION \
-          --to-environment env
+          --to-environment env \
+          --broker-base-url https://hgh-46255aa4.pactflow.io \
+          --broker-token 7ogUhMOhkXRQiFPRi3JpYg

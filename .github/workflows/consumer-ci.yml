@@ -31,6 +31,6 @@ jobs:
         working-directory: Selenide_and_Wiremock
         run: |
           mvn pact:publish \
-          -Dpact.broker.url=https://rockstar.pactflow.io \
+          -Dpact.broker.url=https://hgh-46255aa4.pactflow.io \
           -Dpact.broker.token=xdlxxgO3kq-b9ps3ih_eKQ \
           -Dpact.consumer.version=1.0.0
