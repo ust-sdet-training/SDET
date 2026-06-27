@@ -196,6 +196,8 @@
                         <pact.verifier.publishResults>true</pact.verifier.publishResults>
                         <pact.provider.version>${git.sha}</pact.provider.version>
                         <pact.provider.branch>main</pact.provider.branch>
+                        <pactbroker.url>${pactbroker.url}</pactbroker.url>
+                        <pactbroker.token>${pactbroker.token}</pactbroker.token>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
