@@ -29,12 +29,15 @@ jobs:
         run: |
           docker compose -f src/test/resources/docker-compose.pact-broker.yml up -d --wait
 
+      - name: Verify Broker
+        run: |
+          curl http://127.0.0.1:9292
+
       - name: Run Provider Verification
         run: |
-          mvn \
+          mvn clean test \
           -Dtest=provider.FoodProviderVerification \
-          -Dgit.sha=${{ github.sha }} \
-          test
+          -Dgit.sha=${{ github.sha }}
 
       - name: Record Provider Deployment
         run: |
