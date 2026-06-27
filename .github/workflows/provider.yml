@@ -31,13 +31,15 @@ jobs:
       # you are running everything inside a single monorepo orchestration step.
 
       - name: 2. Run Provider Verification
+              env:
+          SECURE_TOKEN: ${{ secrets.ARAVIND_PACT_TOKEN }}
         run: |
           mvn -Dtest=OmsProviderVerificationTest \
               -Dgit.sha=${{ github.sha }} \
-              -Dpactbroker.host=https://sdf.pactflow.io
+              -Dpactbroker.host=https://sdf.pactflow.io \ 
               -Dgit.sha=${{ github.sha }} \
               -Dpact.broker.url=$SECURE_URL \
-              -Dpact.broker.token=$SECURE_TOKEN
+              -Dpact.broker.token=$SECURE_TOKEN \
               test
 
       - name: 3. Can I Deploy (Gatekeeper)

@@ -29,6 +29,8 @@ jobs:
 
 
       - name: 2. Run Consumer Tests
+        env:
+          SECURE_TOKEN: ${{ secrets.ARAVIND_PACT_TOKEN }}
         run: |
           mvn test -Dtest.tags=consumer -Dgit.sha=${{ github.sha }} \
               -Dpact.broker.url=$SECURE_URL \
