@@ -1,7 +1,9 @@
 name: Provider Verification
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - bhumika-week04-gate4
 
 jobs:
   provider:
