@@ -1,3 +1,14 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+target/
+allure-results/
+test-output/
+evidence/
+drivers/
+.idea/
+*.iml
+*.log
+.env
+secrets.*
+.DS_Store
