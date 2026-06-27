@@ -30,7 +30,7 @@ public class POSConsumerVerification {
     return builder
             .given("Create a New Order with ID 101")
             .uponReceiving("Create Order")
-            .path("orders")
+            .path("/orders")
             .method("POST")
             .willRespondWith()
             .status(201)
@@ -68,7 +68,7 @@ public class POSConsumerVerification {
         return builder
                 .given("Check the order with ID 101 exists")
                 .uponReceiving("Check Order Exists")
-                .path("orders/101")
+                .path("/orders/101")
                 .method("GET")
                 .willRespondWith()
                 .status(200)

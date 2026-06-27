@@ -1,0 +1,201 @@
+{
+  "consumer": {
+    "name": "POS-Provider"
+  },
+  "interactions": [
+    {
+      "comments": {
+        "testname": "com.ust.sdet.POS.POSConsumerVerification.verifyExistingOrder(MockServer)",
+        "text": [
+
+        ]
+      },
+      "description": "Check Order Exists",
+      "key": "a8beae04",
+      "pending": false,
+      "providerStates": [
+        {
+          "name": "Check the order with ID 101 exists"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/orders/101"
+      },
+      "response": {
+        "body": {
+          "content": {
+            "category": "Mobiles",
+            "id": 101,
+            "product_name": "Samsung s26",
+            "stock": 100
+          },
+          "contentType": "application/json; charset=UTF-8",
+          "encoded": false
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json; charset=UTF-8"
+          ]
+        },
+        "matchingRules": {
+          "body": {
+            "$.category": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$.product_name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.stock": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            }
+          },
+          "header": {
+            "Content-Type": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "application/json(;\\s?charset=[\\w\\-]+)?"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      },
+      "transport": "http",
+      "type": "Synchronous/HTTP"
+    },
+    {
+      "comments": {
+        "testname": "com.ust.sdet.POS.POSConsumerVerification.verifyCreatedOrder(MockServer)",
+        "text": [
+
+        ]
+      },
+      "description": "Create Order",
+      "key": "cfeb942c",
+      "pending": false,
+      "providerStates": [
+        {
+          "name": "Create a New Order with ID 101"
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "path": "/orders"
+      },
+      "response": {
+        "body": {
+          "content": {
+            "category": "Mobiles",
+            "id": 101,
+            "product_name": "Samsung s26",
+            "status": "CREATED",
+            "stock": 100
+          },
+          "contentType": "application/json; charset=UTF-8",
+          "encoded": false
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json; charset=UTF-8"
+          ]
+        },
+        "matchingRules": {
+          "body": {
+            "$.category": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$.product_name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.status": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.stock": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            }
+          },
+          "header": {
+            "Content-Type": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "application/json(;\\s?charset=[\\w\\-]+)?"
+                }
+              ]
+            }
+          }
+        },
+        "status": 201
+      },
+      "transport": "http",
+      "type": "Synchronous/HTTP"
+    }
+  ],
+  "metadata": {
+    "pact-jvm": {
+      "version": "4.6.20"
+    },
+    "pactSpecification": {
+      "version": "4.0"
+    }
+  },
+  "provider": {
+    "name": "OMS-Provider"
+  }
+}
