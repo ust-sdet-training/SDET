@@ -35,11 +35,7 @@ jobs:
 
       - name: Run Provider Verification
 #        working-directory: catalog-service
-        run: |
-          mvn \
-          -Dtest=CatalogProviderVerificationTest \
-          -Dpact.verifier.publishResults=true \
-          test
+        run: mvn clean test -Dtest=CatalogProviderVerificationTest -Dpact.verifier.publishResults=true
 
       - name: Record Provider Deployment
 #        working-directory: catalog-service

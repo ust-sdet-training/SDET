@@ -36,7 +36,7 @@ jobs:
       - name: Run Consumer Pact Tests
 #        working-directory: storefront-web
         run: |
-          mvn -Dtest=CatalogConsumerPactTest test
+          mvn clean test -Dtest=CatalogConsumerPactTest test
 
       - name: Publish Pact To Broker
 #        working-directory: storefront-web
