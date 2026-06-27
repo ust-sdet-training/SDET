@@ -40,4 +40,3 @@ jobs:
         if: always()
         run: |
           docker compose -f Pact-week4-gate4/src/test/resources/docker-compose.pact-broker.yml down
-``
