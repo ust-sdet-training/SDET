@@ -20,7 +20,10 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 
 
 @Provider("oms-provider")
-
+@PactBroker(url = "http://localhost:9292",
+enablePendingPacts = "true",
+providerTags = "main",
+includeWipPactsSince = "2026-06-26")
 
 @PactFolder("target/pacts")
 public class OmsProviderVerification {
@@ -77,7 +80,7 @@ public class OmsProviderVerification {
                         .withHeader("Content-Type", "application/json")
                         .withBody("""
             {"statuscode": 201, "orderId":1,
-             "status":"SUCCESSFULL", "total":100}
+             "status":"SUCCESSFULL", "total":100.0}
         """)));
     }
 
