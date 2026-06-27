@@ -3,45 +3,58 @@ name: Consumer Pact Pipeline
 on:
   push:
     paths:
-      - 'pos/**'
+      - 'sat-assesment2706/pos/**'
       - '.github/workflows/consumer.yml'
   pull_request:
     paths:
-      - 'pos/**'
+      - 'sat-assesment2706/pos/**'
       - '.github/workflows/consumer.yml'
 
 jobs:
   consumer-tests:
+    environment: Pact
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: .
-
     steps:
-      - name: Checkout
+      - name: 0. Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Java
+      - name: 0. Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
           cache: maven
 
-      - name: Verify Repository
+      - name: 1. Install Pact CLI
+        run: |
+          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
+          echo "$HOME/pact/bin" >> $GITHUB_PATH
+
+      - name: 2. Show Repository Structure
         run: |
           pwd
           ls -la
-          find . -name pom.xml
+          find . -maxdepth 4 -type f -name "pom.xml"
 
-      - name: Run Consumer Tests
-        run: mvn -f pom.xml -pl pos clean test
+      - name: 3. Run Consumer Tests
+        run: mvn -f sat-assesment2706/pom.xml -pl pos test
 
-      - name: Publish Pact
+      - name: 4. Publish Pacts to Broker
         if: success()
-        run: mvn -f pom.xml -pl pos pact:publish
+        run: |
+          pact-broker publish sat-assesment2706/pos/target/pacts \
+            --consumer-app-version=${{ github.sha }} \
+            --branch=main \
+            --broker-base-url=https://qwq.pactflow.io \
+            --broker-token=DrLusdyyj6UlhPprN3cneQ
 
-      - name: Can I Deploy
+      - name: 5. Can I Deploy
         if: success()
-        run: mvn -f pom.xml -pl pos pact:can-i-deploy
+        run: |
+          pact-broker can-i-deploy \
+            --pacticipant=pos \
+            --version=${{ github.sha }} \
+            --to-environment=production \
+            --broker-base-url=https://qwq.pactflow.io \
+            --broker-token=DrLusdyyj6UlhPprN3cneQ
