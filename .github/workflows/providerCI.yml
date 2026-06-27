@@ -46,9 +46,9 @@ jobs:
         working-directory: pact-week4
         run: |
           pact-broker record-deployment \
-            --pacticipant provider \
+            --pacticipant oms-provider \
             --version ${{ github.sha }} \
-            --environment env \
+            --environment production \
             --broker-base-url https://rockstar.pactflow.io/
             --broker-token xdlxxgO3kq-b9ps3ih_eKQ 
 
@@ -58,8 +58,8 @@ jobs:
           CONTRACT_VERSION: ${{ github.sha }}
         run: |
           pact-broker can-i-deploy \
-          --pacticipant consumer \
+          --pacticipant pos-consumer \
           --version $CONTRACT_VERSION \
-          --to-environment env \
+          --to-environment production \
           --broker-base-url https://rockstar.pactflow.io/
           --broker-token xdlxxgO3kq-b9ps3ih_eKQ 
