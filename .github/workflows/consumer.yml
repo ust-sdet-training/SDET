@@ -1,9 +1,9 @@
 name: Consumer Contract Test
 
+
 on:
   push:
-    branches:
-      - hemanth-week04-gate4
+  pull_request:
 
 jobs:
   consumer:
