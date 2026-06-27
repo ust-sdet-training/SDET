@@ -35,7 +35,7 @@ jobs:
         working-directory: pact-week4
         run: |
           mvn \
-            -Dtest=CatalogServiceProviderTest \
+            -Dtest=ProviderVerificationTest \
             -Dpactbroker.url=https://rockstar.pactflow.io \
             -Dpactbroker.auth.token=xdlxxgO3kq-b9ps3ih_eKQ \
             -Dgit.sha=${GITHUB_SHA::7} \
