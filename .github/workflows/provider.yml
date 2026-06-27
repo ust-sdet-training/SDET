@@ -43,6 +43,7 @@ jobs:
           fi
 
       - name: Can I Deploy (Provider)
+        working-directory: benchmark4
         run: |
           pact-broker can-i-deploy \
             --pacticipant catalog-service \

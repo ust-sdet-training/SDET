@@ -39,6 +39,7 @@ jobs:
           fi
 
       - name: Publish Contracts to PactFlow
+        working-directory: benchmark4
         run: |
           pact-broker publish benchmark4/consumer/target/pacts \
             --consumer-app-version="$GITHUB_SHA" \
@@ -47,6 +48,7 @@ jobs:
             --broker-token="$PACT_BROKER_TOKEN"
 
       - name: Can I Deploy (Consumer)
+        working-directory: benchmark4
         run: |
           pact-broker can-i-deploy \
             --pacticipant storefront-web \
