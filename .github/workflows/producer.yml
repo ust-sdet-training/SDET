@@ -33,8 +33,8 @@ jobs:
           docker compose -f Pact-week4-gate4/src/test/resources/docker-compose.pact-broker.yml up -d --wait
 
       - name: Run Provider Verification
-        working-directory: Pact-week4-gate4
-        run: mvn clean test -Dtest=OmsProviderPactTest
+        working-directory: Pact-week4-gate4 
+        run: mvn clean test -Dtest=OmsProviderVerification
 
       - name: Stop Pact Broker
         if: always()
