@@ -27,6 +27,11 @@ jobs:
         continue-on-error: true
         run: |
           mvn -Dtest=ProviderVerification \
+              --pacticipant provider \
+            --version ${{ github.sha }} \
+            --environment env \
+            --broker-base-url https://rockstar.pactflow.io \
+            --broker-token xdlxxgO3kq-b9ps3ih_eK
               test
 
       - name: 2. Record provider deployment to production
@@ -37,7 +42,7 @@ jobs:
             --version ${{ github.sha }} \
             --environment env \
             --broker-base-url https://rockstar.pactflow.io
-            --broker-token x7Br8nQOTpiD2z6UglYRRw
+            --broker-token xdlxxgO3kq-b9ps3ih_eKQ
 
       - name: 3. Can I deploy
         working-directory: pact-week4
@@ -49,4 +54,4 @@ jobs:
           --version $CONTRACT_VERSION \
           --to-environment env \
           --broker-base-url https://rockstar.pactflow.io
-          --broker-token x7Br8nQOTpiD2z6UglYRRw
+          --broker-token xdlxxgO3kq-b9ps3ih_eKQ
