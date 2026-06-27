@@ -23,14 +23,14 @@ jobs:
           echo "$HOME/pact/bin" >> $GITHUB_PATH
 
       - name: 1. Run Provider Verification
-               working-directory: pact-week4
+        working-directory: pact-week4
         continue-on-error: true
         run: |
           mvn -Dtest=ProviderVerification \
               test
 
       - name: 2. Record provider deployment to production
-               working-directory: pact-week4
+        working-directory: pact-week4
         run: |
           pact-broker record-deployment \
             --pacticipant provider \
@@ -39,7 +39,7 @@ jobs:
             --broker-base-url https://rockstar.pactflow.io
 
       - name: 3. Can I deploy
-               working-directory: pact-week4
+        working-directory: pact-week4
         env:
           CONTRACT_VERSION: ${{ github.sha }}
         run: |

@@ -23,12 +23,12 @@ jobs:
           echo "$HOME/pact/bin" >> $GITHUB_PATH
 
       - name: 2. Run Consumer Tests & Publish Contracts
-               working-directory: pact-week4
+        working-directory: pact-week4
         run: |
           mvn -Dtest=ConsumerPactTest test
 
       - name: 3. Consumer Publish Contracts to the Borker
-               working-directory: pact-week4
+        working-directory: pact-week4
         run: |
           mvn pact:publish \
           -Dpact.broker.url=https://rockstar.pactflow.io \
