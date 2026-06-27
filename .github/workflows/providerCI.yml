@@ -1,4 +1,4 @@
-name: consumerCI
+name: providerCI
 
 on: [push, pull_request]
 
@@ -44,7 +44,7 @@ jobs:
             test
       
       - name: 2. Record provider deployment to production
-        working-directory: week4provider
+        working-directory: pact-week4
         run: |
           pact-broker record-deployment \
             --pacticipant provider \
@@ -54,7 +54,7 @@ jobs:
             --broker-token=xdlxxgO3kq-b9ps3ih_eKQ
     
       - name: 3. Can I deploy
-        working-directory: week4provider
+        working-directory: pact-week4
         env:
             CONTRACT_VERSION: ${{ github.sha }} 
         run: |
