@@ -1,14 +1,9 @@
 name: Provider Pact CI
 
 on:
-  workflow_run:
-    workflows:
-      - Consumer Pact CI
+  push:
     branches:
       - shahbaz_week04_gate4
-    types:
-      - completed
-  workflow_dispatch:
 
 jobs:
   provider:
