@@ -17,7 +17,6 @@
         <networknt.schema.version>1.5.9</networknt.schema.version>
         <postgresql.version>42.7.7</postgresql.version>
         <pact.version>4.6.20</pact.version>
-        <pact.broker.url>http://localhost:9292</pact.broker.url>
         <pact.publish.consumer.version>${project.version}</pact.publish.consumer.version>
         <pact.publish.consumer.branchName>local</pact.publish.consumer.branchName>
         <git.sha>local</git.sha>
@@ -29,7 +28,6 @@
         <junit.version>5.14.4</junit.version>
         <maven.surefire.version>3.5.6</maven.surefire.version>
 
-        <pactbroker.auth.token></pactbroker.auth.token>
 
     </properties>
 
@@ -167,7 +165,6 @@
                         <pact_do_not_track>true</pact_do_not_track>
                         <pact.verifier.publishResults>${pact.verifier.publishResults}</pact.verifier.publishResults>
                         <pactBrokerUrl>${pact.broker.url}</pactBrokerUrl>
-                        <pactBrokerToken>${pactbroker.auth.token}</pactBrokerToken>
                         <pact.provider.version>${git.sha}</pact.provider.version>
                         <pact.provider.branch>${pact.provider.branch}</pact.provider.branch>
                     </systemPropertyVariables>
