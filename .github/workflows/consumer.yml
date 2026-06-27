@@ -18,6 +18,7 @@ jobs:
           java-version: 21
 
       - run: mvn -pl consumer test
+        working-directory: benchmark4
 
       - run: |
           pact-broker publish pacts \
