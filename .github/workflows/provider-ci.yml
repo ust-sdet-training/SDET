@@ -1,54 +1,57 @@
 name: provider-ci
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - ManiPrasad-week04-gate4
+
+  workflow_dispatch:
 
 jobs:
-  build:
+  provider:
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: 00. Checkout Code
+
+      - name: Checkout Code
         uses: actions/checkout@v5
 
-      - name: 0. Set up Java
+      - name: Set up Java
         uses: actions/setup-java@v5
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '22'
-          cache: 'maven'
+          cache: maven
 
-      - name: 0. Install Pact CLI
+      - name: Install Pact CLI
         run: |
           curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
           echo "$HOME/pact/bin" >> $GITHUB_PATH
 
-      - name: 1. Run Provider Verification
+      - name: Run Provider Verification
         working-directory: Selenide_and_Wiremock
-        continue-on-error: true
         run: |
           mvn -Dtest=OmsProviderVerification \
-              -Dpactbroker.url=https://hgh-46255aa4.pactflow.io \
-              -Dpactbroker.token=7ogUhMOhkXRQiFPRi3JpYg \
+              -Dgit.sha=${{ github.sha }} \
               test
 
-      - name: 2. Record provider deployment to production
+      - name: Record Provider Deployment
         working-directory: Selenide_and_Wiremock
         run: |
           pact-broker record-deployment \
-            --pacticipant provider \
-            --version ${{ github.sha }} \
-            --environment env \
-            --broker-base-url https://hgh-46255aa4.pactflow.io \
-            --broker-token 7ogUhMOhkXRQiFPRi3JpYg
+            --pacticipant catalog-service \
+            --version=${{ github.sha }} \
+            --environment production \
+            --broker-base-url=https://hgh-46255aa4.pactflow.io \
+            --broker-token=7ogUhMOhkXRQiFPRi3JpYg
 
-      - name: 3. Can I deploy
+      - name: Can I Deploy
         working-directory: Selenide_and_Wiremock
-        env:
-          CONTRACT_VERSION: ${{ github.sha }}
         run: |
           pact-broker can-i-deploy \
-          --pacticipant consumer \
-          --version $CONTRACT_VERSION \
-          --to-environment env \
-          --broker-base-url https://hgh-46255aa4.pactflow.io \
-          --broker-token 7ogUhMOhkXRQiFPRi3JpYg
+            --pacticipant storefront \
+            --version=${{ github.sha }} \
+            --to-environment production \
+            --broker-base-url=https://hgh-46255aa4.pactflow.io \
+            --broker-token=7ogUhMOhkXRQiFPRi3JpYg
