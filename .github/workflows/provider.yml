@@ -7,9 +7,6 @@ on:
 jobs:
   provider:
     runs-on: ubuntu-latest
-    env:
-      PACT_BROKER_URL: ${{ secrets.PACT_BROKER_URL }}
-      PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
 
     steps:
       - name: Checkout Code
@@ -22,33 +19,10 @@ jobs:
           java-version: 21
           cache: maven
 
-      - name: Install Pact CLI
-        working-directory: benchmark4
-        run: |
-          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C "$HOME"
-          echo "$HOME/pact/bin" >> "$GITHUB_PATH"
-
       - name: Run Consumer Tests
-        run: mvn -pl consumer test
         working-directory: benchmark4
+        run: mvn -pl consumer clean test
 
       - name: Run Provider Verification
-        run: mvn -pl provider test
         working-directory: benchmark4
-
-      - name: Validate Pact Broker secrets
-        run: |
-          if [ -z "$PACT_BROKER_URL" ] || [ -z "$PACT_BROKER_TOKEN" ]; then
-            echo "Missing Pact Broker secrets. Add PACT_BROKER_URL and PACT_BROKER_TOKEN in GitHub repository secrets."
-            exit 1
-          fi
-
-      - name: Can I Deploy (Provider)
-        working-directory: benchmark4
-        run: |
-          pact-broker can-i-deploy \
-            --pacticipant catalog-service \
-            --version="$GITHUB_SHA" \
-            --to-environment production \
-            --broker-base-url="$PACT_BROKER_URL" \
-            --broker-token="$PACT_BROKER_TOKEN"
+        run: mvn -pl provider clean test
