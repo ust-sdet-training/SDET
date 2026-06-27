@@ -1,0 +1,35 @@
+name: Consumer Contract
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  consumer:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 22
+
+      - name: Run Consumer Test
+        run: |
+          mvn -Dtest=ConsumerTest test
+
+      - name: Publish Pact to PactFlow
+        env:
+          PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
+          PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
+        run: |
+          mvn au.com.dius.pact.provider:maven:publish \
+            -Dpact.broker.url="${PACT_BROKER_BASE_URL}" \
+            -Dpactbroker.auth.token="${PACT_BROKER_TOKEN}" \
+            -Dgit.sha=${GITHUB_SHA::7} \
+            -Dgit.branch=${GITHUB_REF_NAME}
