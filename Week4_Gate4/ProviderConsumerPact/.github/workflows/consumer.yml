@@ -1,12 +1,12 @@
 name: Pact Consumer
-
-on:
-  push:
-    branches:
-      - lahari_week4_gate4
-  pull_request:
-    branches:
-      - lahari_week4_gate4
+#
+#on:
+#  push:
+#    branches:
+#      - lahari_week4_gate4
+#  pull_request:
+#    branches:
+#      - lahari_week4_gate4
 
 jobs:
   consumer-test:
