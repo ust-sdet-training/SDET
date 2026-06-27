@@ -37,8 +37,7 @@ public class OmsProviderVerification {
 
     @PactBrokerConsumerVersionSelectors
     public static SelectorBuilder consumerVersionSelectors() {
-        return new SelectorBuilder()
-                .mainBranch();
+        return new SelectorBuilder();
     }
 
     @BeforeEach
