@@ -18,7 +18,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 @Provider("oms-provider")
 @PactBroker(
-        url = "http://127.0.0.1:9292"
+        url = "${PACT_BROKER_BASE_URL:http://127.0.0.1:9292}"
 )
 //@PactFolder("target/pacts") // to run in local
 public class OmsProviderPactTest {
