@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout
         uses: actions/checkout@v5
 
       - name: Setup Java
@@ -19,7 +19,13 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-          cache: maven
 
-      - name: Build Consumer Module
+      - name: Debug
+        run: |
+          pwd
+          ls
+          ls Week4Assessment
+
+      - name: Run Consumer
+        working-directory: Week4Assessment
         run: mvn clean test -pl consumer-storefront
