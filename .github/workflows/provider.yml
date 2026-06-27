@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '22'
+          java-version: "22"
           cache: maven
 
       - name: Install Pact CLI
@@ -30,11 +30,35 @@ jobs:
 
       - name: Start Pact Broker
         run: |
+          docker compose -f Week4_Gate4/ProviderConsumerPact/src/test/resources/docker-compose.pact-broker.yml down -v
           docker compose -f Week4_Gate4/ProviderConsumerPact/src/test/resources/docker-compose.pact-broker.yml up -d --wait
 
       - name: Run Provider Verification
         working-directory: Week4_Gate4/ProviderConsumerPact
-        run: mvn clean test -Dtest=OmsProviderPactTest
+        run: |
+          mvn -Dtest=OmsProviderPactTest \
+              -Dgit.sha=${{ github.sha }} \
+              -Dpactbroker.host=127.0.0.1 \
+              -Dpactbroker.port=9292 \
+              test
+
+      - name: Record Provider Deployment
+        working-directory: Week4_Gate4/ProviderConsumerPact
+        run: |
+          pact-broker record-deployment \
+            --pacticipant oms-provider \
+            --version=${{ github.sha }} \
+            --environment production \
+            --broker-base-url=http://127.0.0.1:9292
+
+      - name: Can I Deploy
+        working-directory: Week4_Gate4/ProviderConsumerPact
+        run: |
+          pact-broker can-i-deploy \
+            --pacticipant oms-provider \
+            --version=${{ github.sha }} \
+            --to-environment production \
+            --broker-base-url=http://127.0.0.1:9292
 
       - name: Stop Pact Broker
         if: always()
