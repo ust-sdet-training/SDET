@@ -1,0 +1,53 @@
+name: Consumer Contract Test
+on:
+  push:
+    branches:
+      - premchand-week04-gate4
+
+jobs:
+  consumer:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '22'
+
+      - name: Cache Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            maven-${{ runner.os }}
+
+      - name: Verify Java
+        run: java -version
+
+      - name: Verify Maven
+        working-directory: APIGate4
+        run: mvn -version
+
+      - name: Run Consumer Tests
+        working-directory: APIGate4
+        run: mvn -Dtest=CatalogServiceConsumerTest test
+
+      - name: Show Generated Pact Files
+        run: |
+          ls -R target
+
+      - name: Publish Pact to PactFlow
+        env:
+          PREM_PACT_BROKER_BASE_URL: ${{ secrets.PREM_PACT_BROKER_BASE_URL }}
+          PREM_PACT_BROKER_TOKEN: ${{ secrets.PREM_PACT_BROKER_TOKEN }}
+        run: |
+          mvn au.com.dius.pact.provider:maven:publish \
+            -Dpact.broker.url="${PREM_PACT_BROKER_BASE_URL}" \
+            -Dpact.broker.token="${PREM_PACT_BROKER_TOKEN}" \
+            -Dpact.consumer.version=${GITHUB_SHA::7} \
+            -Dpact.tag=${GITHUB_REF_NAME}
