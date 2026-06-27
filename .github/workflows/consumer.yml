@@ -1,4 +1,4 @@
-name: Consumer Contract Test
+name: consumer
 
 on: [push, pull_request]
 
@@ -23,14 +23,14 @@ jobs:
           echo "$HOME/pact/bin" >> $GITHUB_PATH
 
       - name: 2. Run Consumer Tests & Publish Contracts
-        working-directory: pact-week4
+        working-directory: Selenide_and_Wiremock
         run: |
-          mvn -Dtest=ConsumerPactTest test
+          mvn -Dtest=PosOmsConsumerPactTest test
 
-      - name: 3. Consumer Publish Contracts to the Borker
-        working-directory: pact-week4
+      - name: 3. Consumer Publish Contracts to the Broker
+        working-directory: Selenide_and_Wiremock
         run: |
           mvn pact:publish \
-          -Dpact.broker.url=https://rockstar.pactflow.io \
-          -Dpact.broker.token=xdlxxgO3kq-b9ps3ih_eKQ \
+          -Dpact.broker.url=https://ust-13e329eb.pactflow.io \
+          -Dpact.broker.token=8REhNPP6tSDxhBZShc80JQ \
           -Dpact.consumer.version=1.0.0

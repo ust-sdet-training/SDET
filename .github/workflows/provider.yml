@@ -1,4 +1,4 @@
-name: Provider Verification
+name: provider-ci
 
 on: [push, pull_request]
 
@@ -23,35 +23,27 @@ jobs:
           echo "$HOME/pact/bin" >> $GITHUB_PATH
 
       - name: 1. Run Provider Verification
-        working-directory: pact-week4
+        working-directory: Selenide_and_Wiremock
         continue-on-error: true
         run: |
-          mvn -Dtest=ProviderVerification \
-              --pacticipant provider \
-            --version ${{ github.sha }} \
-            --environment env \
-            --broker-base-url https://rockstar.pactflow.io \
-            --broker-token xdlxxgO3kq-b9ps3ih_eK
-              test
+          mvn -Dtest=OmsProviderVerification test \
+              -Dpact.verifier.publishResults=true \
+              -Dpact.provider.version=${{ github.sha }}
 
       - name: 2. Record provider deployment to production
-        working-directory: pact-week4
+        working-directory: Selenide_and_Wiremock
         run: |
           pact-broker record-deployment \
             --pacticipant provider \
             --version ${{ github.sha }} \
-            --environment env \
-            --broker-base-url https://ust-13e329eb.pactflow.io
-            --broker-token 8REhNPP6tSDxhBZShc80JQ
+            --environment env 
 
       - name: 3. Can I deploy
-        working-directory: pact-week4
+        working-directory: Selenide_and_Wiremock
         env:
           CONTRACT_VERSION: ${{ github.sha }}
         run: |
           pact-broker can-i-deploy \
           --pacticipant consumer \
           --version $CONTRACT_VERSION \
-          --to-environment env \
-          --broker-base-url https://ust-13e329eb.pactflow.io
-          --broker-token 8REhNPP6tSDxhBZShc80JQ
+          --to-environment env
