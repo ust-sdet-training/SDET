@@ -26,31 +26,26 @@ jobs:
             echo "$HOME/pact-cli/bin" >> $GITHUB_PATH
           fi
 
-      # NOTE: If this is a separate pipeline execution on standard GitHub Actions,
-      # a local 127.0.0.1 broker container will be completely empty unless
-      # you are running everything inside a single monorepo orchestration step.
-
       - name: 2. Run Provider Verification
         env:
-        SECURE_TOKEN: ${{ secrets.ARAVIND_PACT_TOKEN }}
+          # Fixed Indentation here!
+          SECURE_TOKEN: ${{ secrets.ARAVIND_PACT_TOKEN }}
         run: |
-          mvn -Dtest=OmsProviderVerificationTest \
+          mvn test \
+              -Dtest=OmsProviderVerificationTest \
               -Dgit.sha=${{ github.sha }} \
-              -Dpactbroker.host=https://sdf.pactflow.io \ 
-              -Dgit.sha=${{ github.sha }} \
-              -Dpact.broker.url=$SECURE_URL \
-              -Dpact.broker.token=$SECURE_TOKEN \
-              test
+              -Dpactbroker.host=sdf.pactflow.io \
+              -Dpactbroker.scheme=https \
+              -Dpactbroker.auth.token=$SECURE_TOKEN
 
       - name: 3. Can I Deploy (Gatekeeper)
-        env:
-          CONTRACT_VERSION: ${{ github.sha }}
         run: |
           pact-broker can-i-deploy \
             --pacticipant oms-provider \
-            --version $CONTRACT_VERSION \
+            --version ${{ github.sha }} \
             --to-environment production \
-            --broker-base-url 
+            --broker-base-url=https://sdf.pactflow.io \
+            --broker-token=${{ secrets.ARAVIND_PACT_TOKEN }}
 
       - name: 4. Record provider deployment to production
         if: success()
@@ -59,5 +54,5 @@ jobs:
             --pacticipant oms-provider \
             --version ${{ github.sha }} \
             --environment production \
-            --broker-base-url=${{ARAVIND_PACT_BROKER_URL}}\
-            --broker-token=${{ARAVIND_PACT_TOKEN}}
+            --broker-base-url=https://sdf.pactflow.io \
+            --broker-token=${{ secrets.ARAVIND_PACT_TOKEN }}
