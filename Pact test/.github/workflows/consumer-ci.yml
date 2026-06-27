@@ -1,0 +1,36 @@
+name: consumerCI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 00. Checkout Code
+        uses: actions/checkout@v5
+
+      - name: 0. Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '22'
+          cache: 'maven'
+
+      - name: 0. Install Pact CLI
+        run: |
+          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
+          echo "$HOME/pact/bin" >> $GITHUB_PATH
+
+      - name: 2. Run Consumer Tests & Publish Contracts
+        working-directory: pact-week4
+        run: |
+          mvn -Dtest=ConsumerPactTest test
+
+      - name: 3. Consumer Publish Contracts to the Borker
+        working-directory: pact-week4
+        run: |
+          mvn pact:publish \
+          -Dpact.broker.url=https://rockstar.pactflow.io \
+          -Dpact.broker.token=xdlxxgO3kq-b9ps3ih_eKQ \
+          -Dpact.consumer.version=1.0.0
