@@ -2,48 +2,51 @@ name: Provider Pipeline
 
 on:
   push:
+  pull_request:
 
 jobs:
   provider:
-
     runs-on: ubuntu-latest
     env:
-      PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
-      PACT_BROKER_USERNAME: ${{ secrets.PACT_BROKER_USERNAME }}
-      PACT_BROKER_PASSWORD: ${{ secrets.PACT_BROKER_PASSWORD }}
+      PACT_BROKER_URL: ${{ secrets.PACT_BROKER_URL }}
+      PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
 
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-java@v4
+      - name: Set up Java
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 21
+          cache: maven
 
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.2'
+      - name: Install Pact CLI
+        run: |
+          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C "$HOME"
+          echo "$HOME/pact/bin" >> "$GITHUB_PATH"
 
-      - run: mvn -pl consumer test
+      - name: Run Consumer Tests
+        run: mvn -pl consumer test
         working-directory: benchmark4
 
-      - run: mvn -pl provider test
+      - name: Run Provider Verification
+        run: mvn -pl provider test
         working-directory: benchmark4
-
-      - run: gem install pact_broker-client
 
       - name: Validate Pact Broker secrets
         run: |
-          if [ -z "$PACT_BROKER_BASE_URL" ] || [ -z "$PACT_BROKER_USERNAME" ] || [ -z "$PACT_BROKER_PASSWORD" ]; then
-            echo "Missing Pact Broker secrets. Add PACT_BROKER_BASE_URL, PACT_BROKER_USERNAME, and PACT_BROKER_PASSWORD in GitHub repository secrets."
+          if [ -z "$PACT_BROKER_URL" ] || [ -z "$PACT_BROKER_TOKEN" ]; then
+            echo "Missing Pact Broker secrets. Add PACT_BROKER_URL and PACT_BROKER_TOKEN in GitHub repository secrets."
             exit 1
           fi
 
-      - run: |
+      - name: Can I Deploy (Provider)
+        run: |
           pact-broker can-i-deploy \
-          --pacticipant catalog-service \
-          --version "$GITHUB_SHA" \
-          --broker-base-url "$PACT_BROKER_BASE_URL" \
-          --broker-username "$PACT_BROKER_USERNAME" \
-          --broker-password "$PACT_BROKER_PASSWORD"
+            --pacticipant catalog-service \
+            --version="$GITHUB_SHA" \
+            --to-environment production \
+            --broker-base-url="$PACT_BROKER_URL" \
+            --broker-token="$PACT_BROKER_TOKEN"
