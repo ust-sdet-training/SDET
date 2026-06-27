@@ -34,7 +34,7 @@ jobs:
         working-directory: selenide-wiremock-gate4-bhumika
         run: |
           mvn au.com.dius.pact.provider:maven:4.6.20:publish \
-            -Dpact.broker.url=$PACT_BROKER_BASE_URL \
-            -Dpact.broker.token=$PACT_BROKER_TOKEN \
+            -Dpact.broker.url=https://jjjj-73df0332.pactflow.io \
+            -Dpact.broker.token=Mxt5U4qwYAmkJRK0hNY3wQ \
             -Dgit.sha=${GITHUB_SHA::7} \
             -Dgit.branch=${GITHUB_REF_NAME}
