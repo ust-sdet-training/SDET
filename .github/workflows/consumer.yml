@@ -34,6 +34,7 @@ jobs:
         run: mvn -version
 
       - name: Run Consumer Tests
+        working-directory: APIGate4
         run: mvn -Dtest=CatalogServiceConsumerTest test
 
       - name: Show Generated Pact Files

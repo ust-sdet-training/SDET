@@ -35,6 +35,7 @@ jobs:
         run: mvn -version
 
       - name: Run Provider Verification
+        working-directory: APIGate4
         run: |
           mvn \
             -Dtest=CatalogServiceProviderTest \
