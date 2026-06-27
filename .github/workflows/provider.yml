@@ -1,23 +1,21 @@
 name: Provider Verification
 
 on:
-  workflow_run:
-    workflows: ["Consumer Contract"]
-    types:
-      - completed
+  push:
+    branches:
+      - kavya_week4_gate4
 
   workflow_dispatch:
 
 jobs:
-
   provider:
-
-    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
-
     runs-on: ubuntu-latest
 
-    steps:
+    defaults:
+      run:
+        working-directory: pact/pact
 
+    steps:
       - name: Checkout
         uses: actions/checkout@v5
 
@@ -35,9 +33,10 @@ jobs:
 
       - name: Start Pact Broker
         run: |
-          docker compose -f src/test/resources/docker-compose.pact-broker.yml up -d --wait
+          docker compose -f pact/pact/src/test/resources/docker-compose.pact-broker.yml up -d --wait
 
       - name: Verify Provider
+        working-directory: pact/pact
         run: |
           mvn clean test \
             -Dtest=OmsProviderPactTest \
