@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/orders"
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "id": 9999,
+     "message": "Item Not Found"
+    }
+  }
+}
