@@ -33,6 +33,13 @@ jobs:
 
       - run: gem install pact_broker-client
 
+      - name: Validate Pact Broker secrets
+        run: |
+          if [ -z "$PACT_BROKER_BASE_URL" ] || [ -z "$PACT_BROKER_USERNAME" ] || [ -z "$PACT_BROKER_PASSWORD" ]; then
+            echo "Missing Pact Broker secrets. Add PACT_BROKER_BASE_URL, PACT_BROKER_USERNAME, and PACT_BROKER_PASSWORD in GitHub repository secrets."
+            exit 1
+          fi
+
       - run: |
           pact-broker can-i-deploy \
           --pacticipant catalog-service \
