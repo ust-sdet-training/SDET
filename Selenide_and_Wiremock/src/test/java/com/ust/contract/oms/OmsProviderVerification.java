@@ -63,6 +63,8 @@ public class OmsProviderVerification {
     void isOrderMissing() {
         wireMock.stubFor(get(urlEqualTo("/order/203"))
                 .willReturn(aResponse()
-                        .withStatus(404)));
+                        .withStatus(404)))
+                .withHeader("Content-Type", "application/json")
+                .withBody("{}")));
     }
 }
