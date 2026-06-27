@@ -12,7 +12,7 @@ public class AvailabilityTest extends BaseTest{
     public void availability() {
         CatalogPage catalogPage = new CatalogPage();
         catalogPage.openCatalog();
-        catalogPage.search("trave");
+        catalogPage.search("sho");
         catalogPage.quickViewHover();
         ProductPage productPage = catalogPage.openProduct();
         productPage.verifyPage("In stock");
