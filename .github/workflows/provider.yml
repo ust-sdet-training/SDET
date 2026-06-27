@@ -58,3 +58,16 @@ jobs:
               -Dpact.broker.token="${PACT_BROKER_TOKEN}" \
               -Dpacticipant=catalog-provider \
               -DpacticipantVersion=${GITHUB_SHA::7}
+
+      - name: Record Provider Deployment
+        if: success()
+        env:
+            PACT_BROKER_BASE_URL: ${{ secrets.PREM_PACT_BROKER_BASE_URL }}
+            PACT_BROKER_TOKEN: ${{ secrets.PREM_PACT_BROKER_TOKEN }}
+        run: |
+            mvn au.com.dius.pact.provider:maven:record-deployment \
+              -Dpact.broker.url="${PACT_BROKER_BASE_URL}" \
+              -Dpact.broker.token="${PACT_BROKER_TOKEN}" \
+              -Dpacticipant=catalog-provider \
+              -DpacticipantVersion=${GITHUB_SHA::7} \
+              -Denvironment=production
