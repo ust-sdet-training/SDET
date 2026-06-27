@@ -28,6 +28,6 @@ jobs:
 
       - name: Start Pact Broker
         run: |
-          docker compose -f ProviderConsumerPact/src/test/resources/docker-compose.pact-broker.yml up -d --wait
+          docker compose -f Week4_Gate4/ProviderConsumerPact/src/test/resources/docker-compose.pact-broker.yml up -d --wait
       - name: Run Consumer Tests
         run: mvn clean test -Dtest=PosOmsConsumerPactTest
