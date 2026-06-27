@@ -27,11 +27,8 @@ jobs:
         continue-on-error: true
         run: |
           mvn -Dtest=ProviderVerification \
-              --pacticipant provider \
-            --version ${{ github.sha }} \
-            --environment env \
-            --broker-base-url https://rockstar.pactflow.io \
-            --broker-token xdlxxgO3kq-b9ps3ih_eKQ
+              -Dpact.broker.url=https://rockstar.pactflow.io \
+              -Dpact.broker.token=xdlxxgO3kq-b9ps3ih_eKQ \
               test
 
       - name: 2. Record provider deployment to production
