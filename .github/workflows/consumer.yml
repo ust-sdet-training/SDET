@@ -8,10 +8,6 @@ jobs:
   consumer:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./PactWithWireMock
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -23,10 +19,17 @@ jobs:
           java-version: '22'
           cache: maven
 
+      - name: Install Pact CLI
+        run: |
+          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
+          echo "$HOME/pact/bin" >> $GITHUB_PATH
+
       - name: Run Consumer Pact Tests
+        working-directory: ./PactWithWireMock
         run: mvn -Dtest=PosOmsConsumerPactTest test
 
       - name: Publish Consumer Pacts
+        working-directory: ./PactWithWireMock
         run: |
           pact-broker publish target/pacts \
             --consumer-app-version=${{ github.sha }} \
