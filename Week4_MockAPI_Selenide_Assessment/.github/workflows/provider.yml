@@ -30,8 +30,8 @@ jobs:
 
       - name: Start Pact Broker
         run: |
-          docker compose -f Week_4_MockAPI_Selenide_Assessment/provider_proj/src/test/resources/docker-compose.pact-broker.yml down -v
-          docker compose -f Week_4_MockAPI_Selenide_Assessment/provider_proj/src/test/resources/docker-compose.pact-broker.yml up -d --wait
+          docker compose -f Week4_MockAPI_Selenide_Assessment/provider_proj/src/test/resources/docker-compose.pact-broker.yml down -v
+          docker compose -f Week4_MockAPI_Selenide_Assessment/provider_proj/src/test/resources/docker-compose.pact-broker.yml up -d --wait
 
       - name: Run Provider Verification
         run: |
