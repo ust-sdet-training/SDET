@@ -24,8 +24,8 @@ jobs:
  
       - name: 3. Start Pact Broker
         run: |
-          docker compose -f docker-compose.pact-broker.yml down -v
-          docker compose -f docker-compose.pact-broker.yml up -d --wait
+          docker compose -f Week4_Gate4/docker-compose.pact-broker.yml down -v
+          docker compose -f Week4_Gate4/docker-compose.pact-broker.yml up -d --wait
  
       - name: 4. Run Consumer Tests & Publish Contracts
         run: |
