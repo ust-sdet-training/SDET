@@ -30,7 +30,9 @@ jobs:
 
       - name: 2. Run Consumer Tests
         run: |
-          mvn test -Dtest.tags=consumer
+          mvn test -Dtest.tags=consumer -Dgit.sha=${{ github.sha }} \
+              -Dpact.broker.url=$SECURE_URL \
+              -Dpact.broker.token=$SECURE_TOKEN
 
       - name: 3. Consumer Publish Contracts to the Broker
         run: |

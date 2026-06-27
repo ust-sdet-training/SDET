@@ -29,6 +29,8 @@
         <junit.version>5.14.4</junit.version>
         <maven.surefire.version>3.5.6</maven.surefire.version>
 
+        <pactbroker.auth.token></pactbroker.auth.token>
+
     </properties>
 
 
@@ -164,6 +166,8 @@
                     <systemPropertyVariables>
                         <pact_do_not_track>true</pact_do_not_track>
                         <pact.verifier.publishResults>${pact.verifier.publishResults}</pact.verifier.publishResults>
+                        <pactBrokerUrl>${pact.broker.url}</pactBrokerUrl>
+                        <pactBrokerToken>${pactbroker.auth.token}</pactBrokerToken>
                         <pact.provider.version>${git.sha}</pact.provider.version>
                         <pact.provider.branch>${pact.provider.branch}</pact.provider.branch>
                     </systemPropertyVariables>

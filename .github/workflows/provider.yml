@@ -35,6 +35,9 @@ jobs:
           mvn -Dtest=OmsProviderVerificationTest \
               -Dgit.sha=${{ github.sha }} \
               -Dpactbroker.host=https://sdf.pactflow.io
+              -Dgit.sha=${{ github.sha }} \
+              -Dpact.broker.url=$SECURE_URL \
+              -Dpact.broker.token=$SECURE_TOKEN
               test
 
       - name: 3. Can I Deploy (Gatekeeper)
