@@ -1,0 +1,96 @@
+{
+  "consumer": {
+    "name": "POS-Consumer"
+  },
+  "interactions": [
+    {
+      "comments": {
+        "testname": "com.ust.sdet.POS.POSConsumerVerification.verifyInventory(MockServer)",
+        "text": [
+
+        ]
+      },
+      "description": "Check Inventory",
+      "key": "1644d1f8",
+      "pending": false,
+      "providerStates": [
+        {
+          "name": "Check the inventory for Mobile"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/inventory/Mobiles"
+      },
+      "response": {
+        "body": {
+          "content": {
+            "address": "India",
+            "mobile": "Samsung",
+            "stock": 60
+          },
+          "contentType": "application/json; charset=UTF-8",
+          "encoded": false
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json; charset=UTF-8"
+          ]
+        },
+        "matchingRules": {
+          "body": {
+            "$.address": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.mobile": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.stock": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            }
+          },
+          "header": {
+            "Content-Type": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "application/json(;\\s?charset=[\\w\\-]+)?"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      },
+      "transport": "http",
+      "type": "Synchronous/HTTP"
+    }
+  ],
+  "metadata": {
+    "pact-jvm": {
+      "version": "4.6.20"
+    },
+    "pactSpecification": {
+      "version": "4.0"
+    }
+  },
+  "provider": {
+    "name": "OMS-Provider"
+  }
+}
