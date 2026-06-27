@@ -15,9 +15,14 @@ public class BaseTest {
             Configuration.browserSize = "1920x1080";
 
             Configuration.timeout = 10000;
-            System.setProperty("chromeoptions.args",
-                "--no-sandbox,--disable-dev-shm-usage,--headless=new,--disable-gpu");
+            ChromeOptions options = new ChromeOptions();
 
+        options.addArguments("--no-sandbox");
+        options.addArguments("--headless=new");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
+
+        Configuration.browserCapabilities = options;
 
 
 
