@@ -20,10 +20,12 @@ jobs:
           java-version: 22
 
       - name: Run Consumer Test
+        working-directory: selenide-wiremock-gate4-bhumika
         run: |
           mvn -Dtest=ConsumerTest test
 
       - name: Publish Pact to PactFlow
+        working-directory: selenide-wiremock-gate4-bhumika
         env:
           PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
           PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
