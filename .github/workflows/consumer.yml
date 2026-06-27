@@ -39,11 +39,14 @@ jobs:
                http://127.0.0.1:9292/diagnostic/status/heartbeat
 
       - name: Run Consumer Pact Tests
+        working-directory: rishika-week04-gate4
         run: |
+          
           mvn clean test \
           -Dtest=PosOmsConsumerPactTest
 
       - name: Publish Pact Contracts
+        working-directory: rishika-week04-gate4
         run: |
           pact-broker publish target/pacts \
             --broker-base-url=http://127.0.0.1:9292 \
@@ -51,6 +54,7 @@ jobs:
             --branch=main
 
       - name: Stop Broker
+        working-directory: rishika-week04-gate4
         if: always()
         run: |
           docker compose -f rishika-week04-gate4/src/test/resources/docker-compose.pact-broker.yml down -v

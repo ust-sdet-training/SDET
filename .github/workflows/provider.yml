@@ -1,7 +1,9 @@
 name: Provider Pipeline
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - rishika-week04-gate4
 
 jobs:
   provider:
@@ -37,6 +39,7 @@ jobs:
                http://127.0.0.1:9292/diagnostic/status/heartbeat
 
       - name: Run Provider Verification
+        working-directory: rishika-week04-gate4
         run: |
           mvn test \
             -Dtest=OmsProviderVerification \
