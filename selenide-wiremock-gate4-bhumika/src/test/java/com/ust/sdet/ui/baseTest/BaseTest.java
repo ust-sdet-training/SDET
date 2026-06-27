@@ -15,17 +15,7 @@ public class BaseTest {
             Configuration.browserSize = "1920x1080";
 
             Configuration.timeout = 10000;
-            Configuration.browserCapabilities.setCapability(
-                "goog:chromeOptions",
-                java.util.Map.of(
-                        "args", java.util.List.of(
-                                "--no-sandbox",
-                                "--headless=new",
-                                "--disable-dev-shm-usage",
-                                "--disable-gpu"
-                        )
-                )
-        );
+        
 
 
 
