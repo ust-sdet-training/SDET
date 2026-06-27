@@ -41,6 +41,19 @@ jobs:
             -Dtest=CatalogServiceProviderTest \
             -Dpactbroker.url=https://usta.pactflow.io \
             -Dpactbroker.auth.token=gywhJeyrwNnWZ-xHgMnT7g \
+            -Dpact.verifier.publishResults=true \
             -Dgit.sha=${GITHUB_SHA::7} \
             -Dgit.branch=${GITHUB_REF_NAME} \
             test
+
+      - name: Can I Deploy
+        if: success()
+        env:
+            PACT_BROKER_BASE_URL: ${{ secrets.PREM_PACT_BROKER_BASE_URL }}
+            PACT_BROKER_TOKEN: ${{ secrets.PREM_PACT_BROKER_TOKEN }}
+        run: |
+            mvn au.com.dius.pact.provider:maven:can-i-deploy \
+              -Dpact.broker.url="${PACT_BROKER_BASE_URL}" \
+              -Dpact.broker.token="${PACT_BROKER_TOKEN}" \
+              -Dpacticipant=catalog-provider \
+              -DpacticipantVersion=${GITHUB_SHA::7}
