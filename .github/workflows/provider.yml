@@ -5,9 +5,8 @@ on:
     branches:
       - Chaithra-week04-gate4
 
-  workflow_dispatch:
-
 jobs:
+
   provider:
 
     runs-on: ubuntu-latest
@@ -32,19 +31,11 @@ jobs:
       - name: Run Provider Verification
         working-directory: contractTesting
         run: |
-          mvn -Dtest=CatalogProviderVerificationTest \
-              -Dgit.sha=${{ github.sha }} \
-              test
-
-      - name: Record Provider Deployment
-        working-directory: contractTesting
-        run: |
-          pact-broker record-deployment \
-            --pacticipant catalog-service \
-            --version=${{ github.sha }} \
-            --environment production \
-            --broker-base-url=https://google-1139fa5e.pactflow.io \
-            --broker-token=tQHRoEj1RITfBdg8AUIJJw
+          mvn clean test \
+            -Dtest=CatalogProviderVerificationTest \
+            -Dpact.verifier.publishResults=true \
+            -Dpact.provider.version=${{ github.sha }} \
+            -Dpact.provider.branch=Chaithra-week04-gate4
 
       - name: Can I Deploy
         working-directory: contractTesting
@@ -53,5 +44,15 @@ jobs:
             --pacticipant storefront \
             --version=${{ github.sha }} \
             --to-environment production \
+            --broker-base-url=https://google-1139fa5e.pactflow.io \
+            --broker-token=tQHRoEj1RITfBdg8AUIJJw
+
+      - name: Record Provider Deployment
+        working-directory: contractTesting
+        run: |
+          pact-broker record-deployment \
+            --pacticipant catalog-service \
+            --version=${{ github.sha }} \
+            --environment production \
             --broker-base-url=https://google-1139fa5e.pactflow.io \
             --broker-token=tQHRoEj1RITfBdg8AUIJJw
