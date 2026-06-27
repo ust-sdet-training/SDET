@@ -31,6 +31,7 @@ jobs:
           docker compose -f src/test/java/resources/docker/docker-compose.pact-broker.yml up -d --wait
 
       - name: Run Provider Verification
+        working-directory: Pacttest
         run: |
           mvn -Dtest=OmsProviderVerification \
               -Dgit.sha=${{ github.sha }} \
@@ -39,6 +40,7 @@ jobs:
               test
 
       - name: Record Provider Deployment
+        working-directory: Pacttest
         run: |
           pact-broker record-deployment \
             --pacticipant oms-provider \
@@ -47,6 +49,7 @@ jobs:
             --broker-base-url=http://127.0.0.1:9292
 
       - name: Can I Deploy
+       working-directory: Pacttest
         run: |
           pact-broker can-i-deploy \
             --pacticipant oms-provider \

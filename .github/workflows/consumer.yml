@@ -31,10 +31,12 @@ jobs:
           docker compose -f Pacttest/src/test/java/resources/docker/docker-compose.pact-broker.yml up -d --wait
 
       - name: Run Consumer Pact Tests
+        working-directory: Pacttest
         run: |
           mvn -Dtest=PosOmsConsumerPactTest test
 
       - name: Publish Contracts
+        working-directory: Pacttest
         run: |
           pact-broker publish target/pacts \
             --consumer-app-version=${{ github.sha }} \
