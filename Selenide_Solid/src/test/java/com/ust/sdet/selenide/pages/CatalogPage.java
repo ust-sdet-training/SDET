@@ -35,23 +35,14 @@ public class CatalogPage {
     public ElementsCollection categories() {
         return productCategory;
     }
-
-    public CatalogPage openItem(){
-        $$(".product-card .button.primary").first().click();
-        return this;
-    }
-
-
     public CatalogPage() {
     }
-
     public CatalogPage open() {
         Selenide.open(SelenideConfig.catalogUrl());
         search.shouldBe(visible);
         resultCount.shouldBe(visible);
         return this;
     }
-
     public CatalogPage searchFor(String query) {
 
         search.clear();
@@ -61,51 +52,11 @@ public class CatalogPage {
 
         return this;
     }
-
-    public CatalogPage searchFor(String query, String expectedResultCount) {
-
-        searchFor(query);
-
-        resultCount.shouldHave(exactText(expectedResultCount));
-
-        return this;
-    }
-
-    public CatalogPage sortBy(String visibleText) {
-
-        sort.selectOption(visibleText);
-
-        cards.shouldHave(sizeGreaterThan(0));
-
-        return this;
-    }
-
     public List<ProductCard> cards() {
 
         return cards.stream()
                 .map(ProductCard::new)
                 .toList();
-    }
-
-    public List<String> titles() {
-
-        return cards()
-                .stream()
-                .map(ProductCard::title)
-                .toList();
-    }
-
-    public List<Integer> prices() {
-
-        return cards()
-                .stream()
-                .map(ProductCard::price)
-                .toList();
-    }
-
-    public String emptySearchMessage() {
-
-        return emptySearch.shouldBe(visible).text();
     }
 
     public ProductPage openFirstProduct() {
@@ -114,8 +65,4 @@ public class CatalogPage {
         return new ProductPage();
     }
 
-    public Header header() {
-
-        return new Header();
-    }
 }
