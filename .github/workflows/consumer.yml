@@ -27,8 +27,16 @@ jobs:
           fi
 
       - name: 2. Run Consumer Tests
+        env:
+          # Injects the secret safely from GitHub Actions into the shell execution
+          SECURE_TOKEN: ${{ secrets.ARAVIND_PACT_TOKEN }}
         run: |
-          mvn test -Dtest.tags=consumer -Dgit.sha=${{ github.sha }}
+          mvn clean test \
+              -Dtest.tags=consumer \
+              -Dgit.sha=${{ github.sha }} \
+              -Dpactbroker.host=sdf.pactflow.io \
+              -Dpactbroker.scheme=https \
+              -Dpactbroker.auth.token=$SECURE_TOKEN
 
       - name: 3. Consumer Publish Contracts to the Broker
         run: |

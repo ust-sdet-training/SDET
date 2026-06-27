@@ -26,6 +26,9 @@
         <selenium.version>4.45.0</selenium.version>
         <selenide.version>7.16.2</selenide.version>
         <junit.version>5.14.4</junit.version>
+        <pactbroker.url>https://sdf.pactflow.io</pactbroker.url>
+        <pactbroker.auth.token>85NnKjFbhXlAK3cdZ2bhRw</pactbroker.auth.token>
+
         <maven.surefire.version>3.5.6</maven.surefire.version>
 
 
@@ -164,8 +167,9 @@
                     <systemPropertyVariables>
                         <pact_do_not_track>true</pact_do_not_track>
                         <pact.verifier.publishResults>${pact.verifier.publishResults}</pact.verifier.publishResults>
-                        <pactBrokerUrl>${pact.broker.url}</pactBrokerUrl>
                         <pact.provider.version>${git.sha}</pact.provider.version>
+                        <pactbroker.url>${pactbroker.url}</pactbroker.url>
+                        <pactbroker.auth.token>${pactbroker.auth.token}</pactbroker.auth.token>
                         <pact.provider.branch>${pact.provider.branch}</pact.provider.branch>
                     </systemPropertyVariables>
                 </configuration>
@@ -176,7 +180,7 @@
                 <version>${pact.version}</version>
                 <configuration>
                     <pactDirectory>${project.build.directory}</pactDirectory>
-                    <pactBrokerUrl>${pact.broker.url}</pactBrokerUrl>
+                    <pactBrokerUrl>${pactbroker.url}</pactBrokerUrl>
                     <projectVersion>${pact.publish.consumer.branchName}</projectVersion>
                     <branchName>${pact.publish.consumer.branchName}</branchName>
                     <tags>
