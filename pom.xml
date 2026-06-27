@@ -11,7 +11,7 @@
     <modules>
         <module>storefront-web</module>
         <module>catalog-service</module>
-        <module>retail-ui</module>
+        <module>Selenide</module>
     </modules>
 
     <properties>
