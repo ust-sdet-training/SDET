@@ -39,8 +39,9 @@ jobs:
         run: |
           mvn \
             -Dtest=OmsProviderVerification \
-            -Dpactbroker.url=${{ secrets.SHAHBAZ_PACT_BROKER_BASE_URL }} \
-            -Dpactbroker.auth.token=${{ secrets.SHAHBAZ_PACT_BROKER_TOKEN }} \
-            -Dgit.sha=${GITHUB_SHA::7} \
-            -Dgit.branch=${GITHUB_REF_NAME} \
+            -Dpact.broker.url=${{ secrets.SHAHBAZ_PACT_BROKER_BASE_URL }} \
+            -Dpact.broker.token=${{ secrets.SHAHBAZ_PACT_BROKER_TOKEN }} \
+            -Dpact.verifier.publishResults=true \
+            -Dpact.provider.version=${GITHUB_SHA::7} \
+            -Dpact.provider.branch=${GITHUB_REF_NAME} \
             test
