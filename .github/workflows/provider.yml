@@ -20,6 +20,7 @@ jobs:
           java-version: 22
 
       - name: Run Provider Verification
+        working-directory: selenide-wiremock-gate4-bhumika
         env:
         PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
         PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
