@@ -62,4 +62,4 @@ jobs:
       - name: Stop Broker
         if: always()
         run: |
-          docker compose -f src/test/resources/docker/docker-compose.pact-broker.yml down -v
+          docker compose -f src/test/resources/docker-compose.pact-broker.yml down -v
