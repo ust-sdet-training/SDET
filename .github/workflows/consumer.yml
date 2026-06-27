@@ -26,13 +26,13 @@ jobs:
         run: |
           mvn clean test -Dtest=ConsumerTest
 
-      - name: Publish Pact to PactFlow
+      - name: Publish Pact
         working-directory: selenide-wiremock-gate4-bhumika
         env:
           PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
           PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
         run: |
-          mvn au.com.dius.pact.provider:maven:publish \
+          mvn clean test pact:publish \
             -Dpact.broker.url=$PACT_BROKER_BASE_URL \
             -Dpact.broker.token=$PACT_BROKER_TOKEN \
             -Dgit.sha=${GITHUB_SHA::7} \
