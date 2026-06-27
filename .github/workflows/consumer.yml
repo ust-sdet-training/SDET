@@ -39,7 +39,7 @@ jobs:
           mvn -Dtest=PosOmsConsumerPactTest test
 
       - name: Publish Contracts to PactFlow
-        working-directory: contractTesting
+        working-directory: consumer
         run: |
           pact-broker publish target/pacts \
             --consumer-app-version=${{ github.sha }} \
