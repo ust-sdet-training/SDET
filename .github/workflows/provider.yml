@@ -37,6 +37,8 @@ jobs:
         run: |
           mvn \
             -Dtest=OmsProviderVerificationTest \
+            -Dpactbroker.url=https://ust-41e288e5.pactflow.io \
+            -Dpactbroker.auth.token=4hh48xDG8KouNB-GpsGAbQ \
             -Dgit.sha=${GITHUB_SHA::7} \
             -Dgit.branch=${GITHUB_REF_NAME} \
             test
