@@ -11,7 +11,7 @@ public class BaseTest {
             Configuration.baseUrl = "http://localhost:5173";
 
             Configuration.browser = "chrome";
-
+            Configuration.headless = true;
             Configuration.browserSize = "1920x1080";
 
             Configuration.timeout = 10000;
