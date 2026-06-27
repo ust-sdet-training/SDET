@@ -9,44 +9,37 @@
     <version>1.0-SNAPSHOT</version>
 
 
-    <properties>
-        <maven.compiler.source>22</maven.compiler.source>
-        <maven.compiler.target>22</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jackson.version>2.20.0</jackson.version>
-        <networknt.schema.version>1.5.9</networknt.schema.version>
-        <postgresql.version>42.7.7</postgresql.version>
-        <wiremock.version>3.13.2</wiremock.version>
-        <selenide.version>7.16.2</selenide.version>
+   <properties>
+    <maven.compiler.source>22</maven.compiler.source>
+    <maven.compiler.target>22</maven.compiler.target>
 
-        <pact.version>4.6.20</pact.version>
-        <pact.broker.url>
-            https://jjjj-73df0332.pactflow.io
-        </pact.broker.url>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <pact.broker.token>
-            Mxt5U4qwYAmkJRK0hNY3wQ
-        </pact.broker.token>
+    <jackson.version>2.20.0</jackson.version>
+    <networknt.schema.version>1.5.9</networknt.schema.version>
+    <postgresql.version>42.7.7</postgresql.version>
+    <wiremock.version>3.13.2</wiremock.version>
+    <selenide.version>7.16.2</selenide.version>
+    <selenium.version>4.45.0</selenium.version>
 
-        <pact.publish.consumer.version>
-            ${project.version}
-        </pact.publish.consumer.version>
+    <pact.version>4.6.20</pact.version>
 
-        <pact.publish.consumer.branchName>
-            main
-        </pact.publish.consumer.branchName>
+    <pact.broker.url>https://jjjj-73df0332.pactflow.io</pact.broker.url>
 
-        <git.sha>local</git.sha>
-        <git.branch>main</git.branch>
+    <pact.broker.token>${env.PACT_BROKER_TOKEN}</pact.broker.token>
 
-        <pact.verifier.publishResults>true</pact.verifier.publishResults>
-        <selenium.version>4.45.0</selenium.version>
-        <selenide.version>7.16.2</selenide.version>
-        <pact.verifier.publishResults>false</pact.verifier.publishResults>
-        <pact.provider.branch>local</pact.provider.branch>
+    <pact.publish.consumer.version>${project.version}</pact.publish.consumer.version>
 
-    </properties>
+    <pact.publish.consumer.branchName>main</pact.publish.consumer.branchName>
 
+    <git.sha>local</git.sha>
+
+    <git.branch>main</git.branch>
+
+    <pact.verifier.publishResults>false</pact.verifier.publishResults>
+
+    <pact.provider.branch>main</pact.provider.branch>
+</properties>
 
     <dependencies>
         <!-- Source: https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
