@@ -28,7 +28,6 @@ jobs:
 
       - name: Start Pact Broker
         run: |
-          docker compose -f src/test/resources/docker-compose.pact-broker.yml up -d --wait
-
+          docker compose -f ProviderConsumerPact/src/test/resources/docker-compose.pact-broker.yml up -d --wait
       - name: Run Provider Verification
         run: mvn clean test -Dtest=OmsProviderPactTest
