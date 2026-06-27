@@ -1,47 +1,47 @@
-name: Consumer Aravind CI
+name: Consumer Contract Test
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - aravind-week04-gate4
 
 jobs:
-  build:
+  consumer:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 00. Checkout Code
-        uses: actions/checkout@v5
+      - name: Checkout Project
+        uses: actions/checkout@v4
 
-      - name: 0. Set up Java
-        uses: actions/setup-java@v5
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '22'
-          cache: 'maven'
 
-      - name: 0. Install Pact CLI
+      - name: Cache Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ runner.os }}-${{ hashFiles('pom.xml') }}
+          restore-keys: |
+            maven-${{ runner.os }}
+
+      - name: Verify Java
+        run: java -version
+
+      - name: Verify Maven
+        run: mvn -version
+
+      - name: Run Consumer Tests
+        run: mvn clean test
+
+      - name: Show Generated Pact Files
         run: |
-          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
-          if [ -d "$HOME/pact" ]; then
-            echo "$HOME/pact/bin" >> $GITHUB_PATH
-          else
-            echo "$HOME/pact-cli/bin" >> $GITHUB_PATH
-          fi
+          ls -R target
 
-      - name: 2. Run Consumer Tests
-        env:
-          # Injects the secret safely from GitHub Actions into the shell execution
-          SECURE_TOKEN: ${{ secrets.ARAVIND_PACT_TOKEN }}
-        run: |
-          mvn clean test \
-              -Dtest.tags=consumer \
-              -Dgit.sha=${{ github.sha }} \
-              -Dpactbroker.host=sdf.pactflow.io \
-              -Dpactbroker.scheme=https \
-              -Dpactbroker.auth.token=$SECURE_TOKEN
-
-      - name: 3. Consumer Publish Contracts to the Broker
+      - name: Publish Pact to Broker
         run: |
           mvn au.com.dius.pact.provider:maven:publish \
-            -Dpactbroker.url= https://sdf.pactflow.io\
-            -Dpactbroker.auth.token=85NnKjFbhXlAK3cdZ2bhRw \
             -Dgit.sha=${GITHUB_SHA::7} \
             -Dgit.branch=${GITHUB_REF_NAME}
