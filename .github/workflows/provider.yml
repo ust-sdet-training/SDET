@@ -8,6 +8,7 @@ jobs:
 
     steps:
       - name: Checkout Code
+
         uses: actions/checkout@v5
 
       - name: Set up Java
@@ -23,6 +24,7 @@ jobs:
           echo "$HOME/pact/bin" >> $GITHUB_PATH
 
       - name: Run Provider Verification
+        working-directory: Pact_CI_Assessment
         env:
           PACT_BROKER_URL: ${{ secrets.PACT_BROKER_URL }}
           PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
@@ -36,6 +38,7 @@ jobs:
               test
 
       - name: Mark Provider as Deployed
+        working-directory: Pact_CI_Assessment
         env:
           PACT_BROKER_URL: ${{ secrets.PACT_BROKER_URL }}
           PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
@@ -48,6 +51,7 @@ jobs:
             --broker-token=$PACT_BROKER_TOKEN
 
       - name: Can I Deploy (Provider)
+        working-directory: Pact_CI_Assessment
         env:
           PACT_BROKER_URL: ${{ secrets.PACT_BROKER_URL }}
           PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}

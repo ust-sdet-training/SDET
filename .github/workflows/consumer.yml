@@ -25,10 +25,12 @@ jobs:
 
 
       - name: Run Consumer Tests
+        working-directory: Pact_CI_Assessment
         run: |
           mvn -Dtest=PosOmsConsumerPactTest test
 
       - name: Publish Contracts to PactFlow
+        working-directory: Pact_CI_Assessment
         env:
           PACT_BROKER_URL: ${{ secrets.PACT_BROKER_URL }}
           PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
@@ -40,6 +42,7 @@ jobs:
             --broker-token=$PACT_BROKER_TOKEN
 
       - name: Can I Deploy (Consumer)
+        working-directory: Pact_CI_Assessment
         env:
           PACT_BROKER_URL: ${{ secrets.PACT_BROKER_URL }}
           PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
