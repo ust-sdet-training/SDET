@@ -26,7 +26,6 @@ jobs:
           echo "$HOME/pact/bin" >> $GITHUB_PATH
 
       - name: Start Pact Broker
-        working-directory: rishika-week04-gate4
         run: |
           docker compose -f rishika-week04-gate4/src/test/resources/docker-compose.pact-broker.yml down -v || true
           docker compose -f rishika-week04-gate4/src/test/resources/docker-compose.pact-broker.yml up -d --wait
