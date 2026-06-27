@@ -33,7 +33,7 @@ jobs:
 
       - name: Start Pact Broker
         run: |
-          docker compose -f pact/pact/src/test/resources/docker-compose.pact-broker.yml up -d --wait
+          docker compose -f src/test/resources/docker-compose.pact-broker.yml up -d --wait
 
       - name: Verify Provider
         working-directory: pact/pact
