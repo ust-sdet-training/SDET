@@ -1,4 +1,4 @@
-package com.ust.sdet.support;
+package com.ust.sdet.selenide.support;
 
 import java.io.IOException;
 import java.nio.file.Files;
