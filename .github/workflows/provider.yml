@@ -34,4 +34,4 @@ jobs:
 
       - name: Run Provider Verification
         working-directory: Week4_Gate4/ProviderConsumerPact
-        run: mvn clean test -Dtest=OmsProviderPactTest
+        run: mvn -e clean test -Dtest=OmsProviderPactTest
