@@ -34,8 +34,8 @@ jobs:
 
       - name: 03. Start Pact Broker
         run: |
-          docker compose -f omsProviderProj/src/test/resources/docker-compose.pact-broker.yml down -v
-          docker compose -f omsProviderProj/src/test/resources/docker-compose.pact-broker.yml up -d --wait
+          docker compose -f Week04_PactsAndSelenide/posConsumerProj/src/test/resources/docker-compose.pact-broker.yml down -v
+          docker compose -f Week04_PactsAndSelenide/posConsumerProj/src/test/resources/docker-compose.pact-broker.yml up -d --wait
 
       - name: 04. Generate Consumer Pact
         run: |
