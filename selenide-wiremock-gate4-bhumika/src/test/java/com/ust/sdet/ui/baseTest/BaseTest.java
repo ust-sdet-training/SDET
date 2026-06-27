@@ -1,6 +1,7 @@
 package com.ust.sdet.ui.baseTest;
 
 import com.codeborne.selenide.Configuration;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.BeforeMethod;
 
 public class BaseTest {
