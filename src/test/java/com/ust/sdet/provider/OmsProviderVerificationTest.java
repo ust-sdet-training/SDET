@@ -7,6 +7,7 @@ import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvide
 import au.com.dius.pact.provider.junitsupport.Provider;
 import au.com.dius.pact.provider.junitsupport.State;
 import au.com.dius.pact.provider.junitsupport.loader.PactBroker;
+import au.com.dius.pact.provider.junitsupport.loader.PactBrokerAuth;
 import au.com.dius.pact.provider.junitsupport.loader.PactFolder;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
@@ -21,7 +22,8 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 @Tag("provider")
 @Provider("oms-provider")
 @PactBroker(
-        url = "http://127.0.0.1:9292"
+        url = "${pact.broker.url}",
+        authentication = @PactBrokerAuth(token = "${pact.broker.token}")
 )
 @ExtendWith({
         PactVerificationInvocationContextProvider.class
