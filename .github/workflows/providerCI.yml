@@ -31,6 +31,11 @@ jobs:
         working-directory: pact-week4
         run: mvn -version
 
+      - name: Install Pact CLI
+        run: |
+          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
+          echo "$HOME/pact/bin" >> $GITHUB_PATH
+
       - name: Run Provider Verification
         working-directory: pact-week4
         run: |
@@ -43,11 +48,10 @@ jobs:
             -Dgit.branch=${GITHUB_REF_NAME} \
             test
 
-      - name: 5. Record provider deployment to production
-        working-directory: pact-week4
+      - name: Record provider deployment to production
         run: |
           pact-broker record-deployment \
-            --pacticipant oms-provider \
+            --pacticipant provider \
             --version ${{ github.sha }} \
             --environment production \
             --broker-base-url https://rockstar.pactflow.io \
@@ -60,5 +64,5 @@ jobs:
             mvn au.com.dius.pact.provider:maven:can-i-deploy \
               -Dpact.broker.url=https://rockstar.pactflow.io \
               -Dpact.broker.token=xdlxxgO3kq-b9ps3ih_eKQ \
-              -Dpacticipant=provider \
+              -Dpacticipant=consumer \
               -DpacticipantVersion=${GITHUB_SHA::7}
