@@ -1,4 +1,4 @@
-name: consumerCI
+name: consumer-ci
 
 on: [push, pull_request]
 

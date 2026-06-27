@@ -1,4 +1,4 @@
-name: providerCI
+name: provider-ci
 
 on: [push, pull_request]
 
