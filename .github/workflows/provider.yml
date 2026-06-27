@@ -54,4 +54,5 @@ jobs:
             --pacticipant oms-provider \
             --version ${{ github.sha }} \
             --environment production \
-            --broker-base-url https://sdf.pactflow.io
+            --broker-base-url=${{ARAVIND_PACT_BROKER_URL}}
+            --broker-token=${{ARAVIND_PACT_TOKEN}}
