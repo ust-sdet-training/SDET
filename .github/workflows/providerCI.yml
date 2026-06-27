@@ -27,8 +27,12 @@ jobs:
         continue-on-error: true
         run: |
           mvn -Dtest=ProviderVerification \
-              -Dpact.broker.url=https://rockstar.pactflow.io \
-              -Dpact.broker.token=x7Br8nQOTpiD2z6UglYRRw \
+              -Dgit.sha=${{ github.sha }} \
+              -Dpact.broker.url=https://rockstar.pactflow.io/ \
+              -Dpact.broker.token=xdlxxgO3kq-b9ps3ih_eKQ \
+              -Dpact.broker.enable-pending-pacts=true \
+              -Dpact.broker.provider-tags=main \
+              -Dpact.broker.include-wip-pacts-since=2026-06-27 \
               test
 
       - name: 2. Record provider deployment to production
@@ -38,8 +42,8 @@ jobs:
             --pacticipant provider \
             --version ${{ github.sha }} \
             --environment env \
-            --broker-base-url https://rockstar.pactflow.io
-            --broker-token x7Br8nQOTpiD2z6UglYRRw
+            --broker-base-url https://rockstar.pactflow.io/
+            --broker-token xdlxxgO3kq-b9ps3ih_eKQ 
 
       - name: 3. Can I deploy
         working-directory: pact-week4
@@ -50,5 +54,5 @@ jobs:
           --pacticipant consumer \
           --version $CONTRACT_VERSION \
           --to-environment env \
-          --broker-base-url https://rockstar.pactflow.io
-          --broker-token x7Br8nQOTpiD2z6UglYRRw
+          --broker-base-url https://rockstar.pactflow.io/
+          --broker-token xdlxxgO3kq-b9ps3ih_eKQ 
