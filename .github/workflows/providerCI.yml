@@ -1,58 +1,43 @@
-name: providerCI
+name: consumerCI
 
 on: [push, pull_request]
 
 jobs:
-  build:
+  provider:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 00. Checkout Code
-        uses: actions/checkout@v5
+      - name: Checkout Project
+        uses: actions/checkout@v4
 
-      - name: 0. Set up Java
-        uses: actions/setup-java@v5
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '22'
-          cache: 'maven'
 
-      - name: 0. Install Pact CLI
-        run: |
-          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
-          echo "$HOME/pact/bin" >> $GITHUB_PATH
+      - name: Cache Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            maven-${{ runner.os }}
 
-      - name: 1. Run Provider Verification
+      - name: Verify Java
+        run: java -version
+
+      - name: Verify Maven
         working-directory: pact-week4
-        continue-on-error: true
-        run: |
-          mvn -Dtest=ProviderVerification \
-              -Dgit.sha=${{ github.sha }} \
-              -Dpact.broker.url=https://rockstar.pactflow.io/ \
-              -Dpact.broker.token=xdlxxgO3kq-b9ps3ih_eKQ \
-              -Dpact.broker.enable-pending-pacts=true \
-              -Dpact.broker.provider-tags=main \
-              -Dpact.broker.include-wip-pacts-since=2026-06-27 \
-              test
+        run: mvn -version
 
-      - name: 2. Record provider deployment to production
+      - name: Run Provider Verification
         working-directory: pact-week4
         run: |
-          pact-broker record-deployment \
-            --pacticipant provider \
-            --version ${{ github.sha }} \
-            --environment env \
-            --broker-base-url https://rockstar.pactflow.io/
-            --broker-token xdlxxgO3kq-b9ps3ih_eKQ 
-
-      - name: 3. Can I deploy
-        working-directory: pact-week4
-        env:
-          CONTRACT_VERSION: ${{ github.sha }}
-        run: |
-          pact-broker can-i-deploy \
-          --pacticipant consumer \
-          --version $CONTRACT_VERSION \
-          --to-environment env \
-          --broker-base-url https://rockstar.pactflow.io/
-          --broker-token xdlxxgO3kq-b9ps3ih_eKQ 
+          mvn \
+            -Dtest=CatalogServiceProviderTest \
+            -Dpactbroker.url=https://rockstar.pactflow.io \
+            -Dpactbroker.auth.token=xdlxxgO3kq-b9ps3ih_eKQ \
+            -Dgit.sha=${GITHUB_SHA::7} \
+            -Dgit.branch=${GITHUB_REF_NAME} \
+            test
