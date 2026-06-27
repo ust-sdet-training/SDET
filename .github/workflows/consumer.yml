@@ -1,0 +1,44 @@
+name: Consumer Contract Test
+
+on:
+  push:
+    branches:
+      - Chaithra-week04-gate4
+
+  workflow_dispatch:
+
+jobs:
+  consumer:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v5
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '22'
+          cache: maven
+
+      - name: Install Pact CLI
+        run: |
+          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
+          echo "$HOME/pact/bin" >> $GITHUB_PATH
+
+      - name: Run Consumer Tests
+        working-directory: contractTesting
+        run: |
+          mvn -Dtest=CatalogConsumerPactTest test
+
+      - name: Publish Contracts to PactFlow
+        working-directory: contractTesting
+        run: |
+          pact-broker publish target/pacts \
+            --consumer-app-version=${{ github.sha }} \
+            --branch=${{ github.ref_name }} \
+            --broker-base-url=https://google-1139fa5e.pactflow.io \
+            --broker-token=tQHRoEj1RITfBdg8AUIJJw

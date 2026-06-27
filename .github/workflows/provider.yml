@@ -1,0 +1,64 @@
+name: Provider Verification
+
+on:
+
+  workflow_run:
+    workflows:
+      - Consumer Contract Test
+    types:
+      - completed
+
+  workflow_dispatch:
+
+jobs:
+
+  provider:
+
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v5
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '22'
+          cache: maven
+
+      - name: Install Pact CLI
+        run: |
+          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
+          echo "$HOME/pact/bin" >> $GITHUB_PATH
+
+      - name: Run Provider Verification
+        working-directory: contractTesting
+        run: |
+          mvn \
+            -Dtest=CatalogProviderVerificationTest \
+            -Dgit.sha=${{ github.sha }} \
+            test
+
+      - name: Record Provider Deployment
+        working-directory: contractTesting
+        run: |
+          pact-broker record-deployment \
+            --pacticipant catalog-service \
+            --version=${{ github.sha }} \
+            --environment production \
+            --broker-base-url=https://google-1139fa5e.pactflow.io \
+            --broker-token=tQHRoEj1RITfBdg8AUIJJw
+
+      - name: Can I Deploy
+        working-directory: contractTesting
+        run: |
+          pact-broker can-i-deploy \
+            --pacticipant storefront \
+            --version=${{ github.sha }} \
+            --to-environment production \
+            --broker-base-url=https://google-1139fa5e.pactflow.io \
+            --broker-token=tQHRoEj1RITfBdg8AUIJJw
