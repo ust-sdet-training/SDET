@@ -1,36 +1,51 @@
-name: consumer
+name: Consumer Contract Test
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - hemanth-week04-gate4
 
 jobs:
-  build:
+  consumer:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 00. Checkout Code
-        uses: actions/checkout@v5
+      - name: Checkout Project
+        uses: actions/checkout@v4
 
-      - name: 0. Set up Java
-        uses: actions/setup-java@v5
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '22'
-          cache: 'maven'
 
-      - name: 0. Install Pact CLI
-        run: |
-          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
-          echo "$HOME/pact/bin" >> $GITHUB_PATH
+      - name: Cache Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ runner.os }}-${{ hashFiles('Consumer_Provider/pom.xml') }}
+          restore-keys: |
+            maven-${{ runner.os }}
 
-      - name: 2. Run Consumer Tests & Publish Contracts
-        working-directory: Selenide_and_Wiremock
-        run: |
-          mvn -Dtest=PosOmsConsumerPactTest test
+      - name: Verify Java
+        run: java -version
 
-      - name: 3. Consumer Publish Contracts to the Broker
-        working-directory: Selenide_and_Wiremock
+      - name: Verify Maven
+        working-directory: Consumer_Provider
+        run: mvn -version
+
+      - name: Run Consumer Tests
+        working-directory: Consumer_Provider
+        run: mvn -Dtest=PosOmsConsumerPactTest test
+
+      - name: Show Generated Pact Files
+        working-directory: Consumer_Provider
         run: |
-          mvn pact:publish \
-          -Dpact.broker.url=https://ust-13e329eb.pactflow.io \
-          -Dpact.broker.token=8REhNPP6tSDxhBZShc80JQ \
-          -Dpact.consumer.version=1.0.0
+          ls -R target
+
+      - name: Publish Pact to Broker
+        working-directory: Consumer_Provider
+        run: |
+          mvn au.com.dius.pact.provider:maven:publish \
+            -Dgit.sha=${GITHUB_SHA::7} \
+            -Dgit.branch=${GITHUB_REF_NAME}

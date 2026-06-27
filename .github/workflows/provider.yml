@@ -1,49 +1,42 @@
-name: provider-ci
+name: Provider Verification
 
-on: [push, pull_request]
+on:
+  workflow_dispatch:
 
 jobs:
-  build:
+  provider:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 00. Checkout Code
-        uses: actions/checkout@v5
+      - name: Checkout Project
+        uses: actions/checkout@v4
 
-      - name: 0. Set up Java
-        uses: actions/setup-java@v5
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '22'
-          cache: 'maven'
 
-      - name: 0. Install Pact CLI
-        run: |
-          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
-          echo "$HOME/pact/bin" >> $GITHUB_PATH
+      - name: Cache Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ runner.os }}-${{ hashFiles('Consumer_Provider/pom.xml') }}
+          restore-keys: |
+            maven-${{ runner.os }}
 
-      - name: 1. Run Provider Verification
-        working-directory: Selenide_and_Wiremock
-        continue-on-error: true
-        run: |
-          mvn -Dtest=OmsProviderVerification test \
-              -Dpact.verifier.publishResults=true \
-              -Dpact.provider.version=${{ github.sha }}
+      - name: Verify Java
+        run: java -version
 
-      - name: 2. Record provider deployment to production
-        working-directory: Selenide_and_Wiremock
-        run: |
-          pact-broker record-deployment \
-            --pacticipant provider \
-            --version ${{ github.sha }} \
-            --environment env 
+      - name: Verify Maven
+        working-directory: Consumer_Provider
+        run: mvn -version
 
-      - name: 3. Can I deploy
-        working-directory: Selenide_and_Wiremock
-        env:
-          CONTRACT_VERSION: ${{ github.sha }}
+      - name: Run Provider Verification
+        working-directory: Consumer_Provider
         run: |
-          pact-broker can-i-deploy \
-          --pacticipant consumer \
-          --version $CONTRACT_VERSION \
-          --to-environment env
+          mvn \
+            -Dtest=OmsProviderVerificationTest \
+            -Dgit.sha=${GITHUB_SHA::7} \
+            -Dgit.branch=${GITHUB_REF_NAME} \
+            test
