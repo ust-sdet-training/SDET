@@ -26,7 +26,7 @@
 
     <pact.broker.url>https://jjjj-73df0332.pactflow.io</pact.broker.url>
 
-    <pact.broker.token>${env.PACT_BROKER_TOKEN}</pact.broker.token>
+    <pact.broker.token>Mxt5U4qwYAmkJRK0hNY3wQ</pact.broker.token>
 
     <pact.publish.consumer.version>${project.version}</pact.publish.consumer.version>
 
