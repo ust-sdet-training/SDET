@@ -35,7 +35,7 @@ jobs:
             -Dtest=omsProviderVerificationTest \
             -Dpact.verifier.publishResults=true \
             -Dpact.provider.version=${{ github.sha }} \
-            -Dpact.provider.branch=Chaithra-week04-gate4
+            -Dpact.provider.branch=hemanth-week4-gate4
 
       - name: Can I Deploy
         working-directory: week4Gate4
@@ -45,7 +45,7 @@ jobs:
             --version=${{ github.sha }} \
             --to-environment production \
             --broker-base-url=https://ust-13e329eb.pactflow.io \
-            --broker-token=8REhNPP6tSDxhBZShc80JQ
+            --broker-token=ADdW3SoVeegXeRlYjOg8IA
 
       - name: Record Provider Deployment
         working-directory: week4Gate4
@@ -55,4 +55,4 @@ jobs:
             --version=${{ github.sha }} \
             --environment production \
             --broker-base-url=https://ust-13e329eb.pactflow.io \
-            --broker-token=8REhNPP6tSDxhBZShc80JQ
+            --broker-token=ADdW3SoVeegXeRlYjOg8IA
