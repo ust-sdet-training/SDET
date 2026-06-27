@@ -7,9 +7,6 @@ on:
 
 jobs:
   provider:
-    if: >
-      github.event_name == 'workflow_dispatch' ||
-      github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
 
     steps:
@@ -37,46 +34,13 @@ jobs:
         working-directory: PactWithWireMock
         run: mvn -version
 
-      - name: Install Pact CLI
-        run: |
-          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
-          echo "$HOME/pact/bin" >> $GITHUB_PATH
-
       - name: Run Provider Verification
         working-directory: PactWithWireMock
         run: |
           mvn \
             -Dtest=OmsProviderVerification \
-            -Dpact.verifier.publishResults=true \
-            -Dpact.provider.version=${GITHUB_SHA::7} \
-            -Dpact.provider.branch=${GITHUB_REF_NAME} \
-            -Dpact.broker.url=${{ secrets.SHAHBAZ_PACT_BROKER_BASE_URL }} \
-            -Dpact.broker.token=${{ secrets.SHAHBAZ_PACT_BROKER_TOKEN }} \
+            -Dpactbroker.url=${{ secrets.SHAHBAZ_PACT_BROKER_BASE_URL }} \
+            -Dpactbroker.auth.token=${{ secrets.SHAHBAZ_PACT_BROKER_TOKEN }} \
+            -Dgit.sha=${GITHUB_SHA::7} \
+            -Dgit.branch=${GITHUB_REF_NAME} \
             test
-
-      - name: Record Provider Deployment
-        run: |
-          pact-broker record-deployment \
-            --pacticipant oms-provider \
-            --version=${GITHUB_SHA::7} \
-            --environment=production \
-            --broker-base-url=${{ secrets.SHAHBAZ_PACT_BROKER_BASE_URL }} \
-            --broker-token=${{ secrets.SHAHBAZ_PACT_BROKER_TOKEN }}
-
-      - name: Can I Deploy Consumer
-        run: |
-          pact-broker can-i-deploy \
-            --pacticipant pos-consumer \
-            --version=${GITHUB_SHA::7} \
-            --to-environment=production \
-            --broker-base-url=${{ secrets.SHAHBAZ_PACT_BROKER_BASE_URL }} \
-            --broker-token=${{ secrets.SHAHBAZ_PACT_BROKER_TOKEN }}
-
-      - name: Can I Deploy Provider
-        run: |
-          pact-broker can-i-deploy \
-            --pacticipant oms-provider \
-            --version=${GITHUB_SHA::7} \
-            --to-environment=production \
-            --broker-base-url=${{ secrets.SHAHBAZ_PACT_BROKER_BASE_URL }} \
-            --broker-token=${{ secrets.SHAHBAZ_PACT_BROKER_TOKEN }}
