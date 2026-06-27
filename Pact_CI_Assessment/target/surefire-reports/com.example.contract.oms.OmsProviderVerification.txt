@@ -1,0 +1,9 @@
+-------------------------------------------------------------------------------
+Test set: com.example.contract.oms.OmsProviderVerification
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 1.069 s <<< FAILURE! -- in com.example.contract.oms.OmsProviderVerification
+com.example.contract.oms.OmsProviderVerification.verify(PactVerificationContext) -- Time elapsed: 1.057 s <<< ERROR!
+org.junit.platform.commons.PreconditionViolationException: You must register at least one TestTemplateInvocationContextProvider that supports @TestTemplate method [void com.example.contract.oms.OmsProviderVerification.verify(au.com.dius.pact.provider.junit5.PactVerificationContext)]
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+	at java.base/java.util.ArrayList.forEach(Unknown Source)
+

@@ -1,0 +1,7 @@
+com\example\contract\oms\OmsProviderVerification.class
+com\example\contract\pos\OmsClient.class
+com\example\contract\pos\PosOmsConsumerPactTest.class
+com\example\contract\pos\OmsClient$Order.class
+com\example\contract\pos\OmsClient$InvalidOrder.class
+com\example\config\TestEnvironment.class
+com\example\tests\wiremock.class

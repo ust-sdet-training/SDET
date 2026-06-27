@@ -1,0 +1,156 @@
+{
+  "consumer": {
+    "name": "pos-consumer"
+  },
+  "interactions": [
+    {
+      "comments": {
+        "testname": "com.example.contract.pos.PosOmsConsumerPactTest.testGetOrder(MockServer)",
+        "text": [
+
+        ]
+      },
+      "description": "a request for order 123",
+      "key": "9220b087",
+      "pending": false,
+      "providerStates": [
+        {
+          "name": "Order 123 exists"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/orders/123"
+      },
+      "response": {
+        "body": {
+          "content": {
+            "id": 123,
+            "status": "CONFIRMED",
+            "total": 12.0
+          },
+          "contentType": "application/json",
+          "encoded": false
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "matchingRules": {
+          "body": {
+            "$.id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$.status": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.total": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "number"
+                }
+              ]
+            }
+          },
+          "header": {
+            "Content-Type": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "application/json(;.*)?"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      },
+      "transport": "http",
+      "type": "Synchronous/HTTP"
+    },
+    {
+      "comments": {
+        "testname": "com.example.contract.pos.PosOmsConsumerPactTest.testInvalidGetOrder(MockServer)",
+        "text": [
+
+        ]
+      },
+      "description": "a Request of getting an 9999",
+      "key": "9bcb12f8",
+      "pending": false,
+      "providerStates": [
+        {
+          "name": "Order 9999 does not exists"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/orders/9999"
+      },
+      "response": {
+        "body": {
+          "content": {
+            "message": "Item Not Found"
+          },
+          "contentType": "application/json",
+          "encoded": false
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "matchingRules": {
+          "body": {
+            "$.message": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          },
+          "header": {
+            "Content-Type": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "application/json(;.*)?"
+                }
+              ]
+            }
+          }
+        },
+        "status": 404
+      },
+      "transport": "http",
+      "type": "Synchronous/HTTP"
+    }
+  ],
+  "metadata": {
+    "pact-jvm": {
+      "version": "4.6.20"
+    },
+    "pactSpecification": {
+      "version": "4.0"
+    }
+  },
+  "provider": {
+    "name": "oms-provider"
+  }
+}
