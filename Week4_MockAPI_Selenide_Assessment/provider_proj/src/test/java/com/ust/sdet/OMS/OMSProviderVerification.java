@@ -17,12 +17,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 
-@Provider("OMS-provider")
-//@PactFolder("target/pacts")
-@PactBroker(
-        host = "127.0.0.1",
-        port = "9292"
-)
+@Provider("OMS-Provider")
+@PactFolder("Week4_MockAPI_Selenide_Assessment/consumer_proj/target/pacts")
+//@PactBroker(
+//        host = "127.0.0.1",
+//        port = "9292"
+//)
 public class OMSProviderVerification {
 
 

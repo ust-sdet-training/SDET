@@ -24,7 +24,7 @@ public class POSConsumerVerification {
 
 
 //    Pact 1
-@Pact(provider="OMS-Provider", consumer = "POS-Provider")
+@Pact(provider="OMS-Provider", consumer = "POS-Consumer")
     public V4Pact createAPactForNewOrder(PactDslWithProvider builder){
 
     return builder
@@ -62,7 +62,7 @@ public class POSConsumerVerification {
 
 
 //    Pact 2
-    @Pact(provider="OMS-Provider", consumer = "POS-Provider")
+    @Pact(provider="OMS-Provider", consumer = "POS-Consumer")
     public V4Pact checkForExistingOrder(PactDslWithProvider builder){
 
         return builder

@@ -47,7 +47,7 @@ jobs:
       - name: Record Provider Deployment
         run: |
           pact-broker record-deployment \
-            --pacticipant OMS-provider \
+            --pacticipant OMS-Provider \
             --version=${{ github.sha }} \
             --environment production \
             --broker-base-url=http://127.0.0.1:9292
@@ -57,7 +57,7 @@ jobs:
           CONTRACT_VERSION: ${{ github.sha }}
         run: |
           pact-broker can-i-deploy \
-            --pacticipant POS-consumer \
+            --pacticipant POS-Consumer \
             --version=$CONTRACT_VERSION \
             --to-environment production \
             --broker-base-url=http://127.0.0.1:9292
