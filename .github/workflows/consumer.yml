@@ -28,8 +28,8 @@ jobs:
 
       - name: Start Pact Broker
         run: |
-          docker compose -f src/test/resources/docker-compose.pact-broker.yml down -v || true
-          docker compose -f src/test/resources/docker-compose.pact-broker.yml up -d --wait
+          docker compose -f rishika-week04-gate4/src/test/resources/docker-compose.pact-broker.yml down -v || true
+          docker compose -f rishika-week04-gate4/src/test/resources/docker-compose.pact-broker.yml up -d --wait
 
       - name: Verify Broker
         run: |
@@ -53,4 +53,4 @@ jobs:
       - name: Stop Broker
         if: always()
         run: |
-          docker compose -f src/test/resources/docker-compose.pact-broker.yml down -v
+          docker compose -f rishika-week04-gate4/src/test/resources/docker-compose.pact-broker.yml down -v
