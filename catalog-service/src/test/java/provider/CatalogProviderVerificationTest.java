@@ -9,7 +9,7 @@ import au.com.dius.pact.provider.junitsupport.loader.PactBroker;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 
-import config.PactProviderConfig;
+import config.ProviderConfig;
 import state.CatalogProviderStates;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +24,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 public class CatalogProviderVerificationTest {
 
     @RegisterExtension
-    static final WireMockExtension wireMock = PactProviderConfig.WIRE_MOCK;
+    static final WireMockExtension wireMock = ProviderConfig.WIRE_MOCK;
     private final CatalogProviderStates states = new CatalogProviderStates(wireMock);
 
     @BeforeEach

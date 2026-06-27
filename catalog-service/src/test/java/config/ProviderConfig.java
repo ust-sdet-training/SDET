@@ -4,9 +4,9 @@ import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 
-public final class PactProviderConfig {
+public final class ProviderConfig {
 
-    private PactProviderConfig() {
+    private ProviderConfig() {
     }
 
     public static final WireMockExtension WIRE_MOCK =
