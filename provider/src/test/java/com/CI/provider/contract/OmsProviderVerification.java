@@ -24,7 +24,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 @Provider("oms-provider")
 @PactFolder("/consumer/target/pacts")
 @PactBroker(
-        url = "http://127.0.0.1:9292"
+        url = "https://ust-7b418c1b.pactflow.io"
 )
 public class OmsProviderVerification {
     @RegisterExtension
