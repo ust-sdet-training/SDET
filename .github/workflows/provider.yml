@@ -29,11 +29,11 @@ jobs:
 
       - name: Run Consumer Tests
         run: mvn -pl consumer test
-        working-directory: benchmark4
+        working-directory: week4_assessment_pactflow
 
       - name: Run Provider Verification
         run: mvn -pl provider test
-        working-directory: benchmark4
+        working-directory: week4_assessment_pactflow
 
       - name: Validate Pact Broker secrets
         run: |

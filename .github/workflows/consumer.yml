@@ -29,7 +29,7 @@ jobs:
 
       - name: Run Consumer Tests
         run: mvn -pl consumer test
-        working-directory: benchmark4
+        working-directory: week4_assessment_pactflow
 
       - name: Validate Pact Broker secrets
         run: |
@@ -40,7 +40,7 @@ jobs:
 
       - name: Publish Contracts to PactFlow
         run: |
-          pact-broker publish benchmark4/consumer/target/pacts \
+          pact-broker publish week4_assessment_pactflow/consumer/target/pacts \
             --consumer-app-version="$GITHUB_SHA" \
             --branch=main \
             --broker-base-url="$PACT_BROKER_URL" \
