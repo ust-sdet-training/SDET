@@ -29,8 +29,8 @@ jobs:
         run: |
           mvn -Dtest=VerificationTest \
               -Dgit.sha=${{ github.sha }} \
-              -Dpact.broker.url=${{ secrets.PACT_URL }} \
-              -Dpact.broker.token=${{ secrets.PACT_TOKEN }} \
+              -Dpact.broker.url=https://ali-3e5f8672.pactflow.io \
+              -Dpact.broker.token=26XPxC824gIJ8ttYfZeHGQ \
               test
 
       - name: 5. Record provider deployment to production
@@ -40,8 +40,8 @@ jobs:
             --pacticipant retail-app \
             --version ${{ github.sha }} \
             --environment production \
-            --broker-base-url=${{ secrets.PACT_URL }} \
-            --broker-token=${{ secrets.PACT_TOKEN }}
+            --broker-base-url=https://ali-3e5f8672.pactflow.io \
+            --broker-token=26XPxC824gIJ8ttYfZeHGQ
     
       - name: 6. Can I deploy
         working-directory: week4provider
@@ -52,6 +52,6 @@ jobs:
           --pacticipant users-consumers \
           --version $CONTRACT_VERSION \
           --to-environment production \
-          --broker-base-url=${{ secrets.PACT_URL }} \
-          --broker-token=${{ secrets.PACT_TOKEN }}
+          --broker-base-url=https://ali-3e5f8672.pactflow.io \
+          --broker-token=26XPxC824gIJ8ttYfZeHGQ
       
