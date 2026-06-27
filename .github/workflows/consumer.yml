@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          ref: jamesy_week4_gate4
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -28,8 +30,8 @@ jobs:
       - name: Start Pact Broker
 #        working-directory: storefront-web
         run: |
-          docker compose -f ../resources/docker-compose.pact-broker.yml down -v
-          docker compose -f ../resources/docker-compose.pact-broker.yml up -d --wait
+          docker compose -f resources/docker-compose.pact-broker.yml down -v
+          docker compose -f resources/docker-compose.pact-broker.yml up -d --wait
 
       - name: Run Consumer Pact Tests
 #        working-directory: storefront-web
