@@ -22,32 +22,23 @@ jobs:
           java-version: '22'
           cache: maven
 
-      - name: Install Pact CLI
-        run: |
-          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
-          echo "$HOME/pact/bin" >> $GITHUB_PATH
-
       - name: Start Pact Broker
-#        working-directory: storefront-web
         run: |
           docker compose -f resources/docker-compose.pact-broker.yml down -v
           docker compose -f resources/docker-compose.pact-broker.yml up -d --wait
 
       - name: Run Consumer Pact Tests
-#        working-directory: storefront-web
         run: |
-          mvn clean test -Dtest=CatalogConsumerPactTest test
+          mvn -pl storefront-web -am clean test -Dtest=CatalogConsumerPactTest
 
       - name: Publish Pact To Broker
-#        working-directory: storefront-web
         run: |
-          pact-broker publish target/pacts \
+          pact-broker publish storefront-web/target/pacts \
             --consumer-app-version=${{ github.sha }} \
             --branch=main \
             --broker-base-url=http://127.0.0.1:9292
 
       - name: Can I Deploy Consumer
-#        working-directory: storefront-web
         run: |
           pact-broker can-i-deploy \
             --pacticipant storefront-web \
