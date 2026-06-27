@@ -3,7 +3,7 @@ name: Consumer Contract
 on:
 push:
 branches:
-  - jyothsna-week4-gate4
+  - newjyothsna-week4-gate4
 workflow_dispatch:
 
 jobs:
