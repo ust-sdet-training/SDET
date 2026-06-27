@@ -31,6 +31,7 @@ jobs:
         run: java -version
 
       - name: Verify Maven
+        working-directory: APIGate4
         run: mvn -version
 
       - name: Run Provider Verification
