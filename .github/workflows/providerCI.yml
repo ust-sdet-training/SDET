@@ -31,7 +31,7 @@ jobs:
             --version ${{ github.sha }} \
             --environment env \
             --broker-base-url https://rockstar.pactflow.io \
-            --broker-token xdlxxgO3kq-b9ps3ih_eK
+            --broker-token xdlxxgO3kq-b9ps3ih_eKQ
               test
 
       - name: 2. Record provider deployment to production
