@@ -47,8 +47,9 @@
         <!-- Pact -->
         <pact.version>4.6.20</pact.version>
 <!--        <pact.broker.url>http://localhost:9292</pact.broker.url>-->
-        <pactbroker.url>https://hgh-46255aa4.pactflow.io</pactbroker.url>
-        <pactbroker.token>8REhNPP6tSDxhBZShc80JQ</pactbroker.token>
+        <pact.broker.url>https://hgh-46255aa4.pactflow.io</pact.broker.url>
+        <pactbroker.auth.token>8REhNPP6tSDxhBZShc80JQ</pactbroker.auth.token>
+
 
         <git.sha>local</git.sha>
         <git.branch>main</git.branch>
@@ -293,6 +294,7 @@
 
                     <pactDirectory>${project.build.directory}/pacts</pactDirectory>
                     <pactBrokerUrl>${pact.broker.url}</pactBrokerUrl>
+                    <pactBrokerToken>${pactbroker.auth.token}</pactBrokerToken>
 
                     <projectVersion>${pact.publish.consumer.version}</projectVersion>
                     <branchName>${pact.publish.consumer.branchName}</branchName>
