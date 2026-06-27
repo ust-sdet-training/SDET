@@ -9,6 +9,7 @@ import static com.codeborne.selenide.Selenide.open;
 public class ProductPage {
     private static final SelenideElement NAME = $("[data-test = 'detail-name']");
     private static final SelenideElement ADD = $("[data-test = 'add-to-cart']");
+    private static final SelenideElement AVAILABILITY = $("[data-testid = 'availability-badge']");
 
     public ProductPage() {
         NAME.shouldBe(visible);
@@ -16,6 +17,10 @@ public class ProductPage {
 
     public String name() {
         return NAME.getText();
+    }
+
+    public String availability() {
+        return AVAILABILITY.getText();
     }
 
     public CartPage addToCart() {

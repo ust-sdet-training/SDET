@@ -24,13 +24,14 @@ public class PositiveTest {
 
     @Test
     @DisplayName("Availability of product")
-    void checkAvailabiltyOfProduct() {
+    void checkAvailabilityOfProduct() {
         CatalogPage catalog = new CatalogPage();
         catalog.open().searchFor("headphones")
                 .titles().shouldHave(sizeGreaterThan(0));
 
         ProductPage productPage = catalog.openItem();
         assertTrue(productPage.name().toLowerCase().contains("headphones"));
+        assertTrue(productPage.availability().toLowerCase().contains("in stock"));
     }
 
     @Test
