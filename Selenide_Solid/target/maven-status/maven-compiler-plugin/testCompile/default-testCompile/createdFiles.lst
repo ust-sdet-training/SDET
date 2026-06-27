@@ -1,0 +1,10 @@
+com\ust\sdet\selenide\pages\components\Header.class
+com\ust\sdet\selenide\pages\components\Login.class
+com\ust\sdet\selenide\pages\ProductPage.class
+com\ust\sdet\selenide\support\SelenideConfig.class
+com\ust\sdet\selenide\pages\CatalogPage.class
+com\ust\sdet\selenide\tests\ProductAvailabilityBadgeTest.class
+com\ust\sdet\selenide\pages\components\CartBadge.class
+com\ust\sdet\selenide\pages\components\ProductCard.class
+com\ust\sdet\selenide\pages\LoginPage.class
+com\ust\sdet\selenide\support\TestEnvironment.class

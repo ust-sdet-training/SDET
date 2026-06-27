@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.ust.sdet.selenide.tests.ProductAvailabilityBadgeTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.422 s -- in com.ust.sdet.selenide.tests.ProductAvailabilityBadgeTest
