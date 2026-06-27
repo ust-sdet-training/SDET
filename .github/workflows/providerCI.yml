@@ -43,6 +43,16 @@ jobs:
             -Dgit.branch=${GITHUB_REF_NAME} \
             test
 
+      - name: 5. Record provider deployment to production
+        working-directory: pact-week4
+        run: |
+          pact-broker record-deployment \
+            --pacticipant oms-provider \
+            --version ${{ github.sha }} \
+            --environment production \
+            --broker-base-url https://rockstar.pactflow.io \
+            --broker-token xdlxxgO3kq-b9ps3ih_eKQ 
+
       - name: Can I Deploy
         working-directory: pact-week4
 
