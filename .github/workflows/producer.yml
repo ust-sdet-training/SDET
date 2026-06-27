@@ -3,10 +3,10 @@ name: Pact Provider
 on:
   push:
     branches:
-      - ajay_week4_gate4
+      - lahari_week4_gate4
   pull_request:
     branches:
-      - ajay_week4_gate4
+      - lahari_week4_gate4
 
 jobs:
   provider:
@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '22'
+          java-version: 22
           cache: maven
 
       - name: Install Pact CLI

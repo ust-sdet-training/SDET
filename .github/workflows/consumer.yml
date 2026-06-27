@@ -1,15 +1,15 @@
-name: Pact Consumer
+name: Pact Provider
 
 on:
   push:
     branches:
-      - ajay_week4_gate4
+      - lahari_week4_gate4
   pull_request:
     branches:
-      - ajay_week4_gate4
+      - lahari_week4_gate4
 
 jobs:
-  consumer:
+  provider:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,12 +32,11 @@ jobs:
         run: |
           docker compose -f Pact-week4-gate4/src/test/resources/docker-compose.pact-broker.yml up -d --wait
 
-      - name: Run Consumer Pact Tests
+      - name: Run Provider Verification
         working-directory: Pact-week4-gate4
-        run: mvn clean test -Dtest=PosOmsConsumerPactTest
+        run: mvn clean test -Dtest=OmsProviderPactTest
 
-      - name: Upload Pact Files
-        uses: actions/upload-artifact@v4
-        with:
-          name: pact-files
-          path: Pact-week4-gate4/target/pacts
+      - name: Stop Pact Broker
+        if: always()
+        run: |
+          docker compose -f Pact-week4-gate4/src/test/resources/docker-compose.pact-broker.yml down
