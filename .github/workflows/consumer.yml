@@ -21,10 +21,14 @@ jobs:
           distribution: temurin
           java-version: 22
 
+      - name: Install Google Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
       - name: Run Consumer Test
         working-directory: selenide-wiremock-gate4-bhumika
-        run: |
-          mvn clean test -Dtest=ConsumerTest
+        run: mvn clean test -Dtest=ConsumerTest
 
       - name: Publish Pact
         working-directory: selenide-wiremock-gate4-bhumika
@@ -32,7 +36,7 @@ jobs:
           PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
           PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
         run: |
-          mvn clean test au.com.dius.pact.provider:maven:publish \
+          mvn au.com.dius.pact.provider:maven:4.6.20:publish \
             -Dpact.broker.url=$PACT_BROKER_BASE_URL \
             -Dpact.broker.token=$PACT_BROKER_TOKEN \
             -Dgit.sha=${GITHUB_SHA::7} \
