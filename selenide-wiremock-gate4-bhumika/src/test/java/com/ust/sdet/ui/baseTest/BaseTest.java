@@ -1,7 +1,6 @@
 package com.ust.sdet.ui.baseTest;
 
 import com.codeborne.selenide.Configuration;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.BeforeMethod;
 
 public class BaseTest {
@@ -16,14 +15,17 @@ public class BaseTest {
             Configuration.browserSize = "1920x1080";
 
             Configuration.timeout = 10000;
-            ChromeOptions options = new ChromeOptions();
-
-        options.addArguments("--no-sandbox");
-        options.addArguments("--headless=new");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--disable-gpu");
-
-        Configuration.browserCapabilities = options;
+            Configuration.browserCapabilities.setCapability(
+                "goog:chromeOptions",
+                java.util.Map.of(
+                        "args", java.util.List.of(
+                                "--no-sandbox",
+                                "--headless=new",
+                                "--disable-dev-shm-usage",
+                                "--disable-gpu"
+                        )
+                )
+        );
 
 
 
