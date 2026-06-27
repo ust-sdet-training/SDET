@@ -50,5 +50,5 @@ jobs:
             mvn au.com.dius.pact.provider:maven:can-i-deploy \
               -Dpact.broker.url=https://rockstar.pactflow.io \
               -Dpact.broker.token=xdlxxgO3kq-b9ps3ih_eKQ \
-              -Dpacticipant=consumer \
+              -Dpacticipant=provider \
               -DpacticipantVersion=${GITHUB_SHA::7}
