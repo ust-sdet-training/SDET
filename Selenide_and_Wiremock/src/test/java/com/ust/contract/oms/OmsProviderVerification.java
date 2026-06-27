@@ -20,7 +20,7 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 
 @Provider("oms-provider")
 @PactBroker(
-        url = "${pactbroker.url}",
+        url = "https://hgh-46255aa4.pactflow.io",
         authentication = @PactBrokerAuth(token = "ldsjypIgTwdcWKvFnRaVWQ")
 )
 public class OmsProviderVerification {
@@ -31,8 +31,7 @@ public class OmsProviderVerification {
                     .build();
 
     @PactBrokerConsumerVersionSelectors
-    public static SelectorBuilder
-    consumerVersionSelectors() {
+    public static SelectorBuilder consumerVersionSelectors() {
         return new SelectorBuilder()
                 .mainBranch()
                 .deployedOrReleased();
