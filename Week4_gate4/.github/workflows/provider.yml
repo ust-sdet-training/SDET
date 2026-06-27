@@ -44,10 +44,10 @@ jobs:
           --environment production \
           --broker-base-url=http://127.0.0.1:9292
 
-#      - name: Can I Deploy Provider
-#        run: |
-#          pact-broker can-i-deploy \
-#          --pacticipant food-provider \
-#          --version=${{ github.sha }} \
-#          --to-environment production \
-#          --broker-base-url=http://127.0.0.1:9292
+      - name: Can I Deploy Provider
+        run: |
+          pact-broker can-i-deploy \
+          --pacticipant food-provider \
+          --version=${{ github.sha }} \
+          --to-environment production \
+          --broker-base-url=http://127.0.0.1:9292
