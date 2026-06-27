@@ -1,4 +1,4 @@
-name: Provided
+name: Provider
 
 on: [push, pull_request]
 
