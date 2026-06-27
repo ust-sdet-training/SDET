@@ -32,7 +32,7 @@ jobs:
           PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
           PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
         run: |
-          mvn clean test pact:publish \
+          mvn clean test au.com.dius.pact.provider:maven:publish \
             -Dpact.broker.url=$PACT_BROKER_BASE_URL \
             -Dpact.broker.token=$PACT_BROKER_TOKEN \
             -Dgit.sha=${GITHUB_SHA::7} \
