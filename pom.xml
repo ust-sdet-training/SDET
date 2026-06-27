@@ -1,6 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>Week4_Test</groupId>
@@ -17,16 +18,21 @@
     <properties>
         <maven.compiler.release>22</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.jupiter.version>5.10.2</junit.jupiter.version>
-        <rest.assured.version>5.4.0</rest.assured.version>
-        <pact.version>4.6.17</pact.version>
-        <wiremock.version>3.9.1</wiremock.version>
-        <selenide.version>7.4.2</selenide.version>
+
+        <junit.jupiter.version>5.11.4</junit.jupiter.version>
+        <rest.assured.version>6.0.0</rest.assured.version>
+
+        <pact.version>4.6.20</pact.version>
+        <wiremock.version>3.13.2</wiremock.version>
+
+        <selenide.version>7.16.2</selenide.version>
+        <slf4j.version>2.0.17</slf4j.version>
     </properties>
 
     <build>
         <pluginManagement>
             <plugins>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -35,15 +41,18 @@
                         <release>${maven.compiler.release}</release>
                     </configuration>
                 </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.2.5</version>
+                    <version>3.5.6</version>
                     <configuration>
                         <useModulePath>false</useModulePath>
                     </configuration>
                 </plugin>
+
             </plugins>
         </pluginManagement>
     </build>
+
 </project>
