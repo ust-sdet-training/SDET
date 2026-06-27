@@ -30,4 +30,5 @@ jobs:
         run: |
           docker compose -f Week4_Gate4/ProviderConsumerPact/src/test/resources/docker-compose.pact-broker.yml up -d --wait
       - name: Run Provider Verification
-        run: mvn clean test -Dtest=OmsProviderPactTest
+  working-directory: ProviderConsumerPact
+  run: mvn clean test -Dtest=OmsProviderPactTest
