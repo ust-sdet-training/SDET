@@ -41,5 +41,7 @@ jobs:
       - name: 3. Consumer Publish Contracts to the Broker
         run: |
           mvn au.com.dius.pact.provider:maven:publish \
+            -Dpactbroker.url= https://sdf.pactflow.io\
+            -Dpactbroker.auth.token=85NnKjFbhXlAK3cdZ2bhRw \
             -Dgit.sha=${GITHUB_SHA::7} \
             -Dgit.branch=${GITHUB_REF_NAME}
