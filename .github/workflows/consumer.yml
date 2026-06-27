@@ -2,7 +2,7 @@ name: Consumer Contract Test
 on:
   push:
     branches:
-      - main
+      - premchand-week04-gate4
 
 jobs:
   consumer:
