@@ -37,7 +37,7 @@ jobs:
             --version ${{ github.sha }} \
             --environment env \
             --broker-base-url https://rockstar.pactflow.io
-            --broker-token xdlxxgO3kq-b9ps3ih_eKQ
+            --broker-token x7Br8nQOTpiD2z6UglYRRw
 
       - name: 3. Can I deploy
         working-directory: pact-week4
@@ -49,4 +49,4 @@ jobs:
           --version $CONTRACT_VERSION \
           --to-environment env \
           --broker-base-url https://rockstar.pactflow.io
-          --broker-token xdlxxgO3kq-b9ps3ih_eKQ
+          --broker-token x7Br8nQOTpiD2z6UglYRRw
