@@ -3,18 +3,21 @@ name: Provider CI
 on:
   push:
     paths:
-      - "posConsumerProj/**"
-      - "omsProviderProj/**"
+      - "Week04_PactsAndSelenide/posConsumerProj/**"
+      - "Week04_PactsAndSelenide/omsProviderProj/**"
       - ".github/workflows/provider.yml"
   pull_request:
     paths:
-      - "posConsumerProj/**"
-      - "omsProviderProj/**"
+      - "Week04_PactsAndSelenide/posConsumerProj/**"
+      - "Week04_PactsAndSelenide/omsProviderProj/**"
       - ".github/workflows/provider.yml"
 
 jobs:
   provider:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Week04_PactsAndSelenide
 
     steps:
       - name: 00. Checkout Code
@@ -34,36 +37,42 @@ jobs:
 
       - name: 03. Start Pact Broker
         run: |
-          docker compose -f Week04_PactsAndSelenide/posConsumerProj/src/test/resources/docker-compose.pact-broker.yml down -v
-          docker compose -f Week04_PactsAndSelenide/posConsumerProj/src/test/resources/docker-compose.pact-broker.yml up -d --wait
+          docker compose -f posConsumerProj/src/test/resources/docker-compose.pact-broker.yml down -v
+          docker compose -f posConsumerProj/src/test/resources/docker-compose.pact-broker.yml up -d --wait
 
       - name: 04. Generate Consumer Pact
         run: |
-          mvn -pl omsProviderProj -Dtest=OmsProviderVerificationTest test
+          mvn -pl posConsumerProj -Dtest=PosConsumerPactTest test
 
-      - name: 05. Run Provider Verification
+      - name: 05. Publish Contracts to Broker
+        run: |
+          pact-broker publish target/pacts \
+            --consumer-app-version=${{ github.sha }} \
+            --branch=main \
+            --broker-base-url=http://127.0.0.1:9292
+
+      - name: 06. Run Provider Verification
         run: |
           mvn -pl omsProviderProj \
             -Dtest=OmsProviderVerificationTest \
             -Dgit.sha=${{ github.sha }} \
-            -Dpactbroker.host=127.0.0.1 \
-            -Dpactbroker.port=9292 \
+            -Dpact.provider.branch=main \
             test
 
-      - name: 06. Record Provider Deployment
+      - name: 07. Record Provider Deployment
         run: |
           pact-broker record-deployment \
-            --pacticipant omsProviderProj \
+            --pacticipant oms-provider \
             --version ${{ github.sha }} \
             --environment production \
             --broker-base-url http://127.0.0.1:9292
 
-      - name: 07. Can I Deploy
+      - name: 08. Can I Deploy
         env:
           CONTRACT_VERSION: ${{ github.sha }}
         run: |
           pact-broker can-i-deploy \
-            --pacticipant posConsumerProj \
+            --pacticipant pos-consumer \
             --version $CONTRACT_VERSION \
             --to-environment production \
             --broker-base-url http://127.0.0.1:9292
