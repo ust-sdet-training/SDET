@@ -1,0 +1,77 @@
+Code Review and Summary Report
+
+Overview
+This workspace contains two Java-based test automation projects that work together to validate both service contracts and user-facing behavior.
+
+Project 1: PactContracts_UI_Regression
+Purpose
+This project is focused on contract testing between a consumer application and a provider service. It uses Pact to define the expected HTTP interactions and verifies that the provider keeps honoring them.
+
+Detailed workflow
+1. The consumer test describes a contract for a catalog request.
+2. The contract defines the method, path, headers, and expected response body.
+3. A mock server is created to simulate the provider response.
+4. The consumer client sends the request to the mock server.
+5. The response is parsed and checked against the expected values.
+6. The provider verification step then confirms that the real provider implementation satisfies the same contract.
+
+Main scenarios covered
+- Fetching an order by SKU
+- Creating a new order
+- Handling a request for a non-existent order
+- Handling a temporary provider outage
+
+Key files and responsibilities
+- PactContracts_UI_Regression/src/test/java/ust/gama/sdet/Gate4/PactContract/contracts/store/StoreFrontWebPactTest.java
+  Defines Pact interactions for successful GET and POST operations.
+- PactContracts_UI_Regression/src/test/java/ust/gama/sdet/Gate4/PactContract/contracts/store/StoreFrontWebNegativePactTest.java
+  Covers negative scenarios such as 404 Not Found for missing orders.
+- PactContracts_UI_Regression/src/test/java/ust/gama/sdet/Gate4/PactContract/contracts/catalog/catalogServiceVerification.java
+  Verifies the provider behavior by stubbing responses with WireMock.
+- PactContracts_UI_Regression/src/test/java/ust/gama/sdet/Gate4/PactContract/contracts/store/StoreFront.java
+  Sends HTTP requests with RestAssured and converts responses into simple Java objects.
+
+Observed behavior
+- The consumer expects a GET request to /catalog/sku/{id} to return order details.
+- The consumer expects a POST request to /catalog/orders to create an order and return a 201 response.
+- The tests also check how the system behaves when the order is missing or the service is unavailable.
+
+Project 2: Selenid_ProductPage
+Purpose
+This project automates browser-based UI checks for a product page and cart experience. It validates the user journey from opening a product page to adding the product to the cart.
+
+Detailed workflow
+1. The test setup applies browser and URL configuration.
+2. The browser opens the product page for the running-shoes item.
+3. The page is checked to confirm that the product is visible and has the expected stock badge.
+4. The test clicks the add-to-cart button.
+5. The cart count is validated to confirm that the cart updates correctly.
+
+Key files and responsibilities
+- Selenid_ProductPage/src/test/java/ust/gama/sdet/Gate4/selenide/tests/AvailabiltyBadgeTest.java
+  Contains the main UI scenarios for stock visibility, add-to-cart, and cart count verification.
+- Selenid_ProductPage/src/test/java/ust/gama/sdet/Gate4/selenide/helper/Config.java
+  Provides default URLs and configuration values.
+- Selenid_ProductPage/src/test/java/ust/gama/sdet/Gate4/selenide/helper/TestConfig.java
+  Sets up browser details such as browser type, size, and headless mode.
+- Selenid_ProductPage/src/test/java/ust/gama/sdet/Gate4/selenide/pages/ProductPage.java
+  Encapsulates the interactions required to open the product page and add the item to the cart.
+- Selenid_ProductPage/src/test/java/ust/gama/sdet/Gate4/selenide/pages/CartPage.java
+  Checks that the cart badge updates to the expected number.
+
+Observed behavior
+- The test flow assumes the application is available at http://localhost:5173.
+- The UI uses selectors such as detail-name, availability-badge, add-to-cart, and cart-count.
+- The expected user journey is: open product page, verify stock, add to cart, and verify the cart count.
+
+Overall Summary
+These two projects cover different but complementary testing layers.
+- Pact testing validates backend contracts and API behavior.
+- Selenide testing validates the front-end user experience in the browser.
+
+Together, they provide a strong automation foundation for regression testing, contract validation, and UI verification.
+
+Notes
+- The Selenide tests depend on a locally running web application.
+- The Pact tests depend on a local broker and WireMock stubs for provider verification.
+- Some naming inconsistencies remain, such as AvailabiltyBadgeTest instead of AvailabilityBadgeTest.

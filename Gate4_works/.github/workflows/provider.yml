@@ -1,54 +1,47 @@
-name: Pact Provider
+name: catalog-service
  
-on: [push,pull_request]
- 
- 
+on: [push, pull_request]
+
 jobs:
-  provider-test:
+  provider-verification:
     runs-on: ubuntu-latest
- 
-    services:
-      postgres:
-        image: postgres:16-alpine
-        env:
-          POSTGRES_USER: pact
-          POSTGRES_PASSWORD: pact
-          POSTGRES_DB: pact
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd="pg_isready -U pact -d pact"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=10
- 
-      broker:
-        image: pactfoundation/pact-broker:2.136.0-pactbroker2.117.1
-        ports:
-          - 9292:9292
-        env:
-          PACT_BROKER_PORT: 9292
-          PACT_BROKER_BASE_URL: http://localhost:9292
-          PACT_BROKER_DATABASE_URL: postgres://pact:pact@postgres/pact
-        options: >-
-          --health-cmd="wget -q -O /dev/null http://localhost:9292/diagnostic/status/heartbeat || exit 1"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=20
- 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
- 
+      - name: Checkout Code
+        uses: actions/checkout@v5
       - name: Setup Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: 21
+          java-version: '22'
           cache: maven
- 
+      - name: Install Pact CLI
+        run: |
+          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
+          echo "$HOME/pact/bin" >> $GITHUB_PATH
+      - name: Start Pact Broker
+        run: |
+          docker compose -f PactContracts_UI_Regression\src\test\resources\docker\docker-compose-pact-broker.yml down -v
+          docker compose -f PactContracts_UI_Regression\src\test\resources\docker\docker-compose-pact-broker.yml up -d --wait
       - name: Run Provider Verification
-        run: mvn clean test -Dtest=StoreFrontWebPactTest.java
+        run: |
+          mvn \
+          -Dtest=catalogServiceVerification \
+          -Dpact.verifier.publishResults=true \
+          test
+      - name: Record Provider Deployment
+        run: |
+          pact-broker record-deployment \
+            --pacticipant catalog-service \
+            --version ${{ github.sha }} \
+            --environment production \
+            --broker-base-url=http://127.0.0.1:9292
+      - name: Can I Deploy Provider
+        run: |
+          pact-broker can-i-deploy \
+            --pacticipant catalog-service \
+            --version ${{ github.sha }} \
+            --to-environment production \
+            --broker-base-url=http://127.0.0.1:9292
+ 
 
-      - name: Publish Verification Results
-        run: mvn pact:publish -Dpact.verifier.publishResults=true -Dpact.broker.url=http://localhost:9292
+ 
