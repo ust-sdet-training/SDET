@@ -40,7 +40,7 @@ jobs:
         working-directory: Selenide_and_Wiremock
         run: |
           pact-broker record-deployment \
-            --pacticipant catalog-service \
+            --pacticipant oms-provider \
             --version=${{ github.sha }} \
             --environment production \
             --broker-base-url=https://hgh-46255aa4.pactflow.io \
@@ -50,7 +50,7 @@ jobs:
         working-directory: Selenide_and_Wiremock
         run: |
           pact-broker can-i-deploy \
-            --pacticipant storefront \
+            --pacticipant oms-provider \
             --version=${{ github.sha }} \
             --to-environment production \
             --broker-base-url=https://hgh-46255aa4.pactflow.io \

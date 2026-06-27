@@ -33,7 +33,7 @@ public class OmsProviderVerification {
     @PactBrokerConsumerVersionSelectors
     public static SelectorBuilder consumerVersionSelectors() {
         return new SelectorBuilder()
-                .mainBranch()
+                .branch("ManiPrasad-week04-gate4")
                 .deployedOrReleased();
     }
 
