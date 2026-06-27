@@ -1,0 +1,6 @@
+tests\SelenideProductTest.class
+pages\ProductPage.class
+config\SelenideConfig.class
+pages\CatalogPage.class
+tests\SelenideCatalogTest.class
+pages\CartPage.class
