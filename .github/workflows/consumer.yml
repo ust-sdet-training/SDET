@@ -12,7 +12,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: "pact/pact [wiremock]"
+        working-directory: pact/pact
 
     steps:
       - name: Checkout
