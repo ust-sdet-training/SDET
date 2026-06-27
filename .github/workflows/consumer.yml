@@ -8,11 +8,13 @@ on:
 
 jobs:
   consumer:
-
     runs-on: ubuntu-latest
 
-    steps:
+    defaults:
+      run:
+        working-directory: "pact/pact [wiremock]"
 
+    steps:
       - name: Checkout
         uses: actions/checkout@v5
 
