@@ -1,5 +1,5 @@
-name: providerCI
-#
+name: consumerCI
+
 on: [push, pull_request]
 
 jobs:
@@ -23,18 +23,12 @@ jobs:
           key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             maven-${{ runner.os }}
-
       - name: Verify Java
         run: java -version
 
       - name: Verify Maven
         working-directory: pact-week4
         run: mvn -version
-
-      - name: Install Pact CLI
-        run: |
-          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
-          echo "$HOME/pact/bin" >> $GITHUB_PATH
 
       - name: Run Provider Verification
         working-directory: pact-week4
@@ -47,23 +41,24 @@ jobs:
             -Dgit.sha=${GITHUB_SHA::7} \
             -Dgit.branch=${GITHUB_REF_NAME} \
             test
-
-      - name: Record provider deployment to production
-        working-directory: pact-week4
+      - name: Install Pact CLI
         run: |
-          pact-broker record-deployment \
-            --pacticipant provider \
-            --version ${{ github.sha }} \
-            --environment production \
-            --broker-base-url https://rockstar.pactflow.io \
-            --broker-token xdlxxgO3kq-b9ps3ih_eKQ 
-
+            curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
+            echo "$HOME/pact/bin" >> $GITHUB_PATH
+      - name: Record Provider Deployment to Production
+        run: |
+                pact-broker record-deployment \
+                  --broker-base-url="https://rockstar.pactflow.io" \
+                  --broker-token="xdlxxgO3kq-b9ps3ih_eKQ" \
+                  --pacticipant=provider \
+                  --version=${GITHUB_SHA::7} \
+                  --environment=production
       - name: Can I Deploy
         working-directory: pact-week4
-
         run: |
             mvn au.com.dius.pact.provider:maven:can-i-deploy \
               -Dpact.broker.url=https://rockstar.pactflow.io \
               -Dpact.broker.token=xdlxxgO3kq-b9ps3ih_eKQ \
               -Dpacticipant=provider \
               -DpacticipantVersion=${GITHUB_SHA::7}
+      
