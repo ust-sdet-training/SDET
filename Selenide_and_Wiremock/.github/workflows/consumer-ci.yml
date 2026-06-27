@@ -1,54 +1,77 @@
-name: Consumer CI
+name: Consumer Contract Test
 
 on:
   push:
-    branches: [ "ManiPrasad-week04-gate4" ]
-
-  pull_request:
-    branches: [ "main" ]
-
-env:
-  PACT_BROKER_URL: "https://hgh-46255aa4.pactflow.io"
-  PACT_BROKER_TOKEN: "7ogUhMOhkXRQiFPRi3JpYg"
-  CONSUMER_VERSION: ${{ github.sha }}
+    branches:
+      - ManiPrasad-week04-gate4
 
 jobs:
-  consumer-build:
+  consumer:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+
+      - name: Checkout Project
         uses: actions/checkout@v4
 
-      - name: Set up Java
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '22'
-          cache: 'maven'
 
-      - name: Install Pact CLI
+      - name: Cache Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            maven-${{ runner.os }}
+
+      - name: Verify Java
+        working-directory: Selenide_and_Wiremock
+        run: java -version
+
+      - name: Verify Maven
+        working-directory: Selenide_and_Wiremock
+        run: mvn -version
+
+      - name: Start Pact Broker
+        working-directory: Selenide_and_Wiremock
         run: |
-          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
-          echo "$HOME/pact/bin" >> $GITHUB_PATH
+          docker compose -f src/test/resources/docker-compose.pact-broker.yml up -d
 
-      - name: Run Consumer Tests & Generate Contracts
+      - name: Show Running Containers\
+        working-directory: Selenide_and_Wiremock
+        run: docker ps
+
+      - name: Wait for Pact Broker
+        working-directory: Selenide_and_Wiremock
+        run: |
+          for i in {1..30}; do
+            if curl -f http://localhost:9292/diagnostic/status/heartbeat; then
+              echo "Pact Broker is ready"
+              exit 0
+            fi
+            echo "Waiting for Pact Broker..."
+            sleep 5
+          done
+          echo "Pact Broker failed to start"
+          exit 1
+
+      - name: Run Consumer Tests
+        working-directory: Selenide_and_Wiremock
         run: mvn -Dtest=PosOmsConsumerPactTest test
 
-      - name: Publish Contracts to the Broker
-        run: |
-          pact-broker publish target/pacts \
-            --consumer-app-version=$CONSUMER_VERSION \
-            --branch=${{ github.ref_name }} \
-            --broker-base-url=$PACT_BROKER_URL \
-            --broker-token=$PACT_BROKER_TOKEN
 
-      - name: Can I Deploy (Consumer)
-
+      - name: Show Generated Pact Files
+        working-directory: Selenide_and_Wiremock
         run: |
-          pact-broker can-i-deploy \
-            --pacticipant pos-consumer \
-            --version $CONSUMER_VERSION \
-            --to-environment production \
-            --broker-base-url $PACT_BROKER_URL \
-            --broker-token $PACT_BROKER_TOKEN
+          ls -R target
+
+      - name: Publish Pact to Broker
+        working-directory: Selenide_and_Wiremock
+        run: |
+          mvn au.com.dius.pact.provider:maven:publish \
+            -Dgit.sha=${GITHUB_SHA::7} \
+            -Dgit.branch=${GITHUB_REF_NAME}

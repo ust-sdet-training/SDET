@@ -1,66 +1,52 @@
-name: Provider CI
+name: Provider Verification
 
 on:
-  push:
-    branches: [ "ManiPrasad-week04-gate4" ]
-  pull_request:
-    branches: [ "main" ]
-
-  repository_dispatch:
-    types:
-      - contract_requiring_verification
-
-env:
-
-  PACT_BROKER_URL: "https://hgh-46255aa4.pactflow.io"
-  PACT_BROKER_TOKEN: "7ogUhMOhkXRQiFPRi3JpYg"
-  PROVIDER_VERSION: ${{ github.sha }}
+  workflow_dispatch:
 
 jobs:
-  provider-build:
+  provider:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 00. Checkout Code
+
+      - name: Checkout Project
         uses: actions/checkout@v4
 
-      - name: 0. Set up Java
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '22'
-          cache: 'maven'
 
-      - name: 0. Install Pact CLI
+      - name: Cache Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            maven-${{ runner.os }}
+
+      - name: Start Pact Broker
+        working-directory: Selenide_and_Wiremock
         run: |
-          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
-          echo "$HOME/pact/bin" >> $GITHUB_PATH
+          docker compose -f src/test/resources/docker-compose.pact-broker.yml up -d
+
+      - name: Wait for Broker
+        working-directory: Selenide_and_Wiremock
+        run: |
+          for i in {1..30}; do
+            if curl -f http://localhost:9292/diagnostic/status/heartbeat; then
+              exit 0
+            fi
+            sleep 5
+          done
+          exit 1
 
       - name: Run Provider Verification
+        working-directory: Selenide_and_Wiremock
         run: |
-          mvn -Dtest=OmsProviderVerification \
-              -Dgit.sha=$PROVIDER_VERSION \
-              -Dpactbroker.host=$PACT_BROKER_URL \
-              -Dpactbroker.token=$PACT_BROKER_TOKEN \
-              test
-
-      - name: Can I Deploy (Provider)
-
-        run: |
-          pact-broker can-i-deploy \
-            --pacticipant oms-provider \
-            --version $PROVIDER_VERSION \
-            --to-environment production \
-            --broker-base-url $PACT_BROKER_URL \
-            --broker-token $PACT_BROKER_TOKEN
-
-      - name: Record Provider Deployment to Production
-
-#        if: github.ref == 'refs/heads/main'
-        run: |
-          pact-broker record-deployment \
-            --pacticipant oms-provider \
-            --version $PROVIDER_VERSION \
-            --environment production \
-            --broker-base-url $PACT_BROKER_URL \
-            --broker-token $PACT_BROKER_TOKEN
+          mvn \
+            -Dtest=OmsProviderVerification \
+            -Dgit.sha=${GITHUB_SHA::7} \
+            -Dgit.branch=${GITHUB_REF_NAME} \
+            test
