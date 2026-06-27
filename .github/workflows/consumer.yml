@@ -30,12 +30,12 @@ jobs:
           echo "$HOME/pact/bin" >> $GITHUB_PATH
 
       - name: Run Consumer Tests
-        working-directory: contractTesting
+        working-directory: week4Gate4
         run: |
           mvn -Dtest=PosOmsConsumerPactTest test
 
       - name: Publish Contracts to PactFlow
-        working-directory: contractTesting
+        working-directory: week4Gate4
         run: |
           pact-broker publish target/pacts \
             --consumer-app-version=${{ github.sha }} \

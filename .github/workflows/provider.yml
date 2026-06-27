@@ -29,7 +29,7 @@ jobs:
           echo "$HOME/pact/bin" >> $GITHUB_PATH
 
       - name: Run Provider Verification
-        working-directory: contractTesting
+        working-directory: week4Gate4
         run: |
           mvn clean test \
             -Dtest=omsProviderVerificationTest \
@@ -38,7 +38,7 @@ jobs:
             -Dpact.provider.branch=Chaithra-week04-gate4
 
       - name: Can I Deploy
-        working-directory: contractTesting
+        working-directory: week4Gate4
         run: |
           pact-broker can-i-deploy \
             --pacticipant storefront \
@@ -48,7 +48,7 @@ jobs:
             --broker-token=8REhNPP6tSDxhBZShc80JQ
 
       - name: Record Provider Deployment
-        working-directory: contractTesting
+        working-directory: week4Gate4
         run: |
           pact-broker record-deployment \
             --pacticipant catalog-service \
