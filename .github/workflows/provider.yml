@@ -21,7 +21,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.m2/repository
-          key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+          key: maven-${{ runner.os }}-${{ hashFiles('Consumer_Provider/pom.xml') }}
           restore-keys: |
             maven-${{ runner.os }}
 
@@ -29,9 +29,11 @@ jobs:
         run: java -version
 
       - name: Verify Maven
+        working-directory: Consumer_Provider
         run: mvn -version
 
       - name: Run Provider Verification
+        working-directory: Consumer_Provider
         run: |
           mvn \
             -Dtest=OmsProviderVerificationTest \
