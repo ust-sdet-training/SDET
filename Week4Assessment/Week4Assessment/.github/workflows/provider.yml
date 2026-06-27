@@ -1,0 +1,21 @@
+name: Provider Pipeline
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  provider-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Run Provider Tests
+        run: mvn test -pl provider-catalog

@@ -1,0 +1,21 @@
+name: Consumer Pipeline
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  consumer-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Run Consumer Tests
+        run: mvn test -pl consumer-storefront
