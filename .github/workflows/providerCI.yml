@@ -49,6 +49,7 @@ jobs:
             test
 
       - name: Record provider deployment to production
+        working-directory: pact-week4
         run: |
           pact-broker record-deployment \
             --pacticipant provider \
