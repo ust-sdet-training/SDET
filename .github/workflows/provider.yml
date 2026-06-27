@@ -1,0 +1,63 @@
+name: Provider Verification
+
+on:
+  workflow_run:
+    workflows: ["Consumer Contract"]
+    types:
+      - completed
+
+jobs:
+  provider-verification:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: Provider Verification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v5
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '22'
+          cache: maven
+
+      - name: Install Pact CLI
+        run: |
+          curl -fsSL https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v2.4.5/pact-2.4.5-linux-x86_64.tar.gz | tar xz -C $HOME
+          echo "$HOME/pact/bin" >> $GITHUB_PATH
+
+      - name: Start Pact Broker
+        run: |
+          docker compose -f provider/src/test/resources/docker-compose.pact-broker.yml down -v
+          docker compose -f provider/src/test/resources/docker-compose.pact-broker.yml up -d --wait
+
+      - name: Run Provider Verification
+        run: |
+          mvn \
+            -Dtest=OmsProviderVerification \
+            -Dgit.sha=${{ github.sha }} \
+            -Dpactbroker.host=127.0.0.1 \
+            -Dpactbroker.port=9292 \
+            -Dpact.verifier.publishResults=true \
+            -Dpact.provider.version=${{ github.sha }} \
+            test
+
+      - name: Record Provider Deployment
+        run: |
+          pact-broker record-deployment \
+            --pacticipant oms-provider \
+            --version=${{ github.sha }} \
+            --environment production \
+            --broker-base-url=http://127.0.0.1:9292
+
+      - name: Can I Deploy
+        env:
+          CONTRACT_VERSION: ${{ github.sha }}
+        run: |
+          pact-broker can-i-deploy \
+            --pacticipant pos-consumer \
+            --version=$CONTRACT_VERSION \
+            --to-environment production \
+            --broker-base-url=http://127.0.0.1:9292
