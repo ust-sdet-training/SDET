@@ -26,8 +26,8 @@ jobs:
         run: |
           mvn clean test \
             -Dtest=ProviderVerificationTest \
-            -Dpact.broker.url=$PACT_BROKER_BASE_URL \
-            -Dpact.broker.token=$PACT_BROKER_TOKEN \
+            -Dpact.broker.url=https://jjjj-73df0332.pactflow.io \
+            -Dpact.broker.token=Mxt5U4qwYAmkJRK0hNY3wQ \
             -Dpact.verifier.publishResults=true \
             -Dpact.provider.version=${GITHUB_SHA::7} \
             -Dgit.branch=${GITHUB_REF_NAME}
