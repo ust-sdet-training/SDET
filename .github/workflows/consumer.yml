@@ -3,7 +3,7 @@ name: Consumer Contract
 on:
   push:
     branches:
-      - main
+      - kavya_week4_gate4
   workflow_dispatch:
 
 jobs:
