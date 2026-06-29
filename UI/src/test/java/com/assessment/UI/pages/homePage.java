@@ -6,8 +6,8 @@ import org.openqa.selenium.Keys;
 
 public class homePage extends basePage {
 
-    // Replace with actual locator
-    private By searchBox = By.cssSelector("desktop-searchBar");
+
+    private By searchBox = By.cssSelector(".desktop-searchBar");
 
     public void searchProduct(String product) {
 
