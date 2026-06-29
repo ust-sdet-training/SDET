@@ -10,10 +10,6 @@ public class CartPage extends BasePage {
         driver.get(Config.baseUrl() + "/cart");
     }
 
-//    public int lineCount() {
-//        return elements(LINES).size();
-//    }
-
     public String total() {
         return text(TOTAL);
     }

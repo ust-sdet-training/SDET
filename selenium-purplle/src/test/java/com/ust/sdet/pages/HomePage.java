@@ -13,9 +13,8 @@ import java.io.IOException;
 import java.util.List;
 
 public class HomePage extends BasePage {
-    private static final WebElement SEARCH_CLICK = (WebElement) By.cssSelector("input[placeholder='What are you looking for?']");
-    private static final By SEARCH = By.cssSelector("input[placeholder='What are you looking for?']");
-    private static final By RESULT_COUNT = By.cssSelector("[data-test='catalog-result-count']");
+    private static final By SEARCH_CLICK = By.cssSelector("input[placeholder='What are you looking for?']");
+    private static final By SEARCH = By.className("search-pop");
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -23,20 +22,14 @@ public class HomePage extends BasePage {
 
     public HomePage open() {
         driver.get(Config.baseUrl());
-        visible(SEARCH);
-        //wait.until(ExpectedConditions.visibilityOfElementLocated(RESULT_COUNT));
         return this;
     }
 
     public ProductListPage searchFor(String query) {
-        new Actions(driver).click(SEARCH_CLICK).click().perform();
-        click(SEARCH);
+        click(SEARCH_CLICK);
+        visible(SEARCH);
+        type(SEARCH, query, Keys.ENTER);
         return new ProductListPage(driver);
     }
 
-    public HomePage searchFor(String query, String expectedResultCount) {
-        searchFor(query);
-        wait.until(ExpectedConditions.textToBe(RESULT_COUNT, expectedResultCount));
-        return this;
-    }
 }
