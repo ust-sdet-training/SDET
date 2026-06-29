@@ -1,5 +1,6 @@
 package tests;
 
+import org.openqa.selenium.WebElement;
 import support.Config;
 
 import org.junit.jupiter.api.AfterEach;
@@ -14,7 +15,6 @@ import org.openqa.selenium.WebDriver;
 
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 
 import support.DriverFactory;
 
@@ -46,20 +46,26 @@ class RedBusTest {
     private static final By DESTINATION_LOCATION = By.id("destinput");
     private static final By SEARCH_BUTTON = By.xpath("//button[contains(.,'Search') or contains(.,'SEARCH')]");
 //    private static final By Search = By.className("icon-search");
+//    private static final By SEATS = By.cssSelector("[aria-label=\"View seats for Punchiry Travels and Holidays\"]");
 
     @Test
     @DisplayName("Seat Selection")
     void seat_selection(){
-        wait.until(ExpectedConditions.visibilityOfElementLocated(SOURCE_LOCATION));
-        driver.findElement(SOURCE_LOCATION).sendKeys("Trivandrum");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(DESTINATION_LOCATION));
-        driver.findElement(DESTINATION_LOCATION).sendKeys("Bangalore");
-        driver.findElement(DESTINATION_LOCATION).sendKeys(Keys.ENTER);
-        wait.until(ExpectedConditions.elementToBeClickable(SEARCH_BUTTON));
+        WebElement source =
+                wait.until(ExpectedConditions.elementToBeClickable(SOURCE_LOCATION));
+        source.clear();
+        source.sendKeys("Trivandrum");
+        source.sendKeys(Keys.ARROW_DOWN);
+        source.sendKeys(Keys.ENTER);
+        WebElement destination =
+                wait.until(ExpectedConditions.elementToBeClickable(DESTINATION_LOCATION));
+        destination.clear();
+        destination.sendKeys("Bangalore");
+        destination.sendKeys(Keys.ARROW_DOWN);
+        destination.sendKeys(Keys.ENTER);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(SEARCH_BUTTON));
         driver.findElement(SEARCH_BUTTON).click();
-
-//        driver.get("https://www.redbus.in/bus-tickets/thiruvananthapuram-to-bangalore?fromCityName=Trivandrum&fromCityId=71425&srcCountry=IND&fromCityType=CITY&toCityName=Bangalore&toCityId=122&destCountry=undefined&toCityType=CITY&onward=05-Jul-2026&doj=05-Jul-2026&ref=home");
-//        driver.findElement(By.id("51938766")).click();
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(SEATS));
 
 
     }
