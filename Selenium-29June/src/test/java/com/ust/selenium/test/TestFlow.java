@@ -18,11 +18,8 @@ public class TestFlow {
     private static final By FROM = By.id("srcinput");
     private static final By TO = By.id("destinput");
 
-    private static final By SEARCHBUTTON =
-            By.cssSelector(
-                    ".primaryButton___5380e6.searchButtonWrapper___48550e");
-    private static final By FIRST_BUS =
-            By.cssSelector(".rtcCardWrap___ed4236");
+    private static final By SEARCHBUTTON =By.cssSelector(".primaryButton___5380e6.searchButtonWrapper___48550e");
+    private static final By FIRST_BUS =By.cssSelector(".rtcCardWrap___ed4236");
 
     private WebDriver driver;
     private WebDriverWait wait;
@@ -32,10 +29,7 @@ public class TestFlow {
 
         driver = DriverFactory.createChromeDriver();
 
-        wait = new WebDriverWait(
-                driver,
-                Duration.ofSeconds(10)
-        );
+        wait = new WebDriverWait( driver, Duration.ofSeconds(10));
 
         driver.get(Config.baseUrl());
     }
@@ -51,25 +45,12 @@ public class TestFlow {
     @Test
     void testFlow() {
 
-        driver.findElement(FROM)
-                .sendKeys("Bangalore");
+        driver.findElement(FROM).sendKeys("Bangalore");
+        driver.findElement(FROM).sendKeys(Keys.ARROW_DOWN, Keys.ENTER);
+        driver.findElement(TO).sendKeys("Mysore");
+        driver.findElement(TO).sendKeys(Keys.ARROW_DOWN, Keys.ENTER);
 
-        driver.findElement(FROM)
-                .sendKeys(Keys.ARROW_DOWN, Keys.ENTER);
-
-        driver.findElement(TO)
-                .sendKeys("Mysore");
-
-        driver.findElement(TO)
-                .sendKeys(Keys.ARROW_DOWN, Keys.ENTER);
-
-        wait.until(
-                ExpectedConditions.elementToBeClickable(
-                        SEARCHBUTTON
-                )
-        ).click();
-        wait.until(
-                ExpectedConditions.elementToBeClickable(FIRST_BUS)
-        ).click();
+        wait.until(ExpectedConditions.elementToBeClickable(  SEARCHBUTTON)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(FIRST_BUS) ).click();
     }
 }
