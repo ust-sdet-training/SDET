@@ -10,12 +10,10 @@ public class HomePage extends BasePage {
         super(driver);
     }
 
+
     private final By searchBox = By.id("twotabsearchtextbox");
     private final By searchButton = By.id("nav-search-submit-button");
 
-    public void open() {
-        driver.get("https://www.amazon.in/");
-    }
 
     public void searchProduct(String product) {
 

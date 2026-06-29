@@ -15,6 +15,7 @@ public class cartManagmentTest {
     public void setup() {
 
         driver = DriverFactory.getDriver();
+        driver.get("https://www.amazon.in/");
 
     }
 
@@ -34,7 +35,7 @@ public class cartManagmentTest {
         ProductPage product = new ProductPage(driver);
         CartPage cart = new CartPage(driver);
 
-        home.open();
+//        home.open();
 
         home.searchProduct("USB Keyboard");
 
