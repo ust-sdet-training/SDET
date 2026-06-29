@@ -23,15 +23,17 @@ public class GetUserTest extends BaseTest {
                 .spec(requestSpec)
                 .queryParam("userId", USER_ID)
                 .when()
-                .get("/posts/{userId}", USER_ID)
+                .get("/posts")
                 .then()
                 .spec(AllSpec.successResponse())
                 .extract()
                 .response();
 
-        User userIdLoop= response.jsonPath().getObject("", User.class);
-        assertEquals(USER_ID, userIdLoop.userId(), "User ID should match the requested userId");
-        assertFalse(userIdLoop.toString().isEmpty(), "Response should not be empty");
+        List<Integer> users = response.jsonPath().getList("userId");
+        assertFalse(users.isEmpty(), "Response should not be empty");
+        for (Integer user : users) {
+            assertEquals(USER_ID, user, "User ID should match");
+        }
        assertEquals(200, response.getStatusCode(), "Status code should be 200");
         
 
