@@ -1,11 +1,5 @@
 package tests;
 
-//import com.ust.sdet.pages.CartPage;
-//import com.ust.sdet.pages.CatalogPage;
-//import com.ust.sdet.pages.ProductPage;
-//import com.ust.sdet.pages.components.ProductCard;
-//import com.ust.sdet.support.Config;
-
 import support.Config;
 
 import org.junit.jupiter.api.AfterEach;
@@ -16,23 +10,16 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
+
 
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import io.cucumber.java.hu.De;
+
 import support.DriverFactory;
 
 import java.time.Duration;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RedBusTest {
 
