@@ -1,0 +1,6 @@
+com\selenium\page\BasePage.class
+com\selenium\support\Config.class
+com\selenium\page\HomePage.class
+com\selenium\Test\Tested.class
+com\selenium\page\ResultPage.class
+com\selenium\support\DriverFactory.class
