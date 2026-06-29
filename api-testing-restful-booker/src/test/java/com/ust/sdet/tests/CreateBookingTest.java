@@ -31,27 +31,27 @@ public class CreateBookingTest {
                 .spec(commonResSpec())
                 .body("token", notNullValue());
     }
-//
-//    @Test
-//    void test() {
-//        var data = Map.of(
-//                "firstname", "test",
-//                "lastname", "data",
-//                "totalprice", 111,
-//                "depositpaid", true,
-//                "bookingdates", Map.of(
-//                        "checkin", "2018-01-01",
-//                        "checkout", "2019-01-01"),
-//                "additionalneeds", "Breakfast");
-//        given()
-//                .log().all()
-//                .spec(authReqSpec(TOKEN))
-//                .body(data)
-//                .when().post()
-//                .then()
-//                .log().all()
-//                .spec(commonResSpec());
-//    }
+
+    @Test
+    void test() {
+        var data = Map.of(
+                "firstname", "test",
+                "lastname", "data",
+                "totalprice", 111,
+                "depositpaid", true,
+                "bookingdates", Map.of(
+                        "checkin", "2018-01-01",
+                        "checkout", "2019-01-01"),
+                "additionalneeds", "Breakfast");
+        given()
+                .log().all()
+                .spec(authReqSpec(TOKEN))
+                .body(data)
+                .when().post()
+                .then()
+                .log().all()
+                .spec(commonResSpec());
+    }
 
     @Test
     @DisplayName("TC_2: Not found")
@@ -64,58 +64,58 @@ public class CreateBookingTest {
                 .statusCode(404);
     }
 
-//    @Test
-//    @DisplayName("TC_3: Creating -> updating -> verify updated data")
-//    void testCase() {
-//        var data = Map.of(
-//                "firstname", "test",
-//                "lastname", "data",
-//                "totalprice", 111,
-//                "depositpaid", true,
-//                "bookingdates", Map.of(
-//                    "checkin", "2018-01-01",
-//                    "checkout", "2019-01-01"),
-//                "additionalneeds", "Breakfast");
-//        //CREATE
-//        Response createResponse = given()
-//                .spec(authReqSpec(TOKEN))
-//                .body(data)
-//                .when().post()
-//                .then()
-//                .log().all()
-//                .spec(commonResSpec())
-//                .extract().response();
-//
-//        //UPDATE
-//        var dataModified = Map.of(
-//                "firstname", "test",
-//                "lastname", "modified",
-//                "totalprice", 100,
-//                "depositpaid", true,
-//                "bookingdates", Map.of(
-//                        "checkin", "2018-01-01",
-//                        "checkout", "2019-01-01"),
-//                "additionalneeds", "Dinner");
-//
-//        System.out.println(createResponse.asPrettyString());
-//
-//        Response updateResponse = given()
-//                .spec(authReqSpec(TOKEN))
-//                .body(dataModified)
-//                .when().put("/{bookingid}", createResponse.jsonPath().getLong("bookingid"))
-//                .then()
-//                .spec(commonResSpec())
-//                .extract().response();
-//
-//        //GET
-//        Response getResponse = given()
-//                .spec(authReqSpec(TOKEN))
-//                .when().get("/{bookingid}", createResponse.jsonPath().getLong("bookingid"))
-//                .then()
-//                .spec(commonResSpec())
-//                .extract().response();
-//        System.out.println(getResponse.asPrettyString());
-//    }
+    @Test
+    @DisplayName("TC_3: Creating -> updating -> verify updated data")
+    void testCase() {
+        var data = Map.of(
+                "firstname", "test",
+                "lastname", "data",
+                "totalprice", 111,
+                "depositpaid", true,
+                "bookingdates", Map.of(
+                    "checkin", "2018-01-01",
+                    "checkout", "2019-01-01"),
+                "additionalneeds", "Breakfast");
+        //CREATE
+        Response createResponse = given()
+                .spec(authReqSpec(TOKEN))
+                .body(data)
+                .when().post()
+                .then()
+                .log().all()
+                .spec(commonResSpec())
+                .extract().response();
+
+        //UPDATE
+        var dataModified = Map.of(
+                "firstname", "test",
+                "lastname", "modified",
+                "totalprice", 100,
+                "depositpaid", true,
+                "bookingdates", Map.of(
+                        "checkin", "2018-01-01",
+                        "checkout", "2019-01-01"),
+                "additionalneeds", "Dinner");
+
+        System.out.println(createResponse.asPrettyString());
+
+        Response updateResponse = given()
+                .spec(authReqSpec(TOKEN))
+                .body(dataModified)
+                .when().put("/{bookingid}", createResponse.jsonPath().getLong("bookingid"))
+                .then()
+                .spec(commonResSpec())
+                .extract().response();
+
+        //GET
+        Response getResponse = given()
+                .spec(authReqSpec(TOKEN))
+                .when().get("/{bookingid}", createResponse.jsonPath().getLong("bookingid"))
+                .then()
+                .spec(commonResSpec())
+                .extract().response();
+        System.out.println(getResponse.asPrettyString());
+    }
 
 
 }
