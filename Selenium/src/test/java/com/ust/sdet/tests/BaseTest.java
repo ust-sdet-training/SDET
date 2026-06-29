@@ -32,6 +32,7 @@ public class BaseTest {
         homePage.open();
         homePage.search("Chennai", "2026-07-15", "2026-07-18");
         searchResultsPage.verifyPage();
-        searchResultsPage.filterByProperty();
+        searchResultsPage.filterByProperty("Hotels");
+        searchResultsPage.verifyPropertyType("Hotels");
     }
 }
