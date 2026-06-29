@@ -5,11 +5,14 @@ import org.openqa.selenium.By;
 
 public class productPage extends basePage {
 
-    private By productName = By.cssSelector(".results-base li.product-base:first-child");
 
-    private By wishlistButton = By.cssSelector("li.product-base:first-child .product-wishlistContainer button");
+    private By productName = By.cssSelector("h1.pdp-title");
 
-    private By loginPopup = By.cssSelector(".myntraweb-splash-loginModal-layout");
+
+    private By wishlistButton = By.cssSelector("div.pdp-add-to-wishlist");
+
+
+    private By loginPopup = By.cssSelector(".signInContainer");
 
     public String getProductName() {
         return getText(productName);
@@ -22,5 +25,4 @@ public class productPage extends basePage {
     public boolean isLoginPopupDisplayed() {
         return isDisplayed(loginPopup);
     }
-
 }
