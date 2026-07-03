@@ -9,7 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 
-public class apiTest {
+public class ApiTest {
 
     @Test
     @DisplayName("M1: As a QA Engineer, I want to create a new post and verify the response.")

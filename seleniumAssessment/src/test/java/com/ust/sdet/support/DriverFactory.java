@@ -17,11 +17,24 @@ private DriverFactory(){}
 
     public static WebDriver createChromeDriver(){
         ChromeOptions options = new ChromeOptions();
+
+        options.addArguments("--disable-blink-features=AutomationControlled");
+        options.addArguments("--start-maximized");
+        options.addArguments("--disable-notifications");
+        options.addArguments("--disable-popup-blocking");
+        options.addArguments(
+                "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
+                        "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+        );
         Map<String, Object> prefs = new HashMap<>();
 
         prefs.put("credentials_enable_service", false);
         prefs.put("profile.password_manager_enabled", false);
         prefs.put("profile.password_manager_leak_detection", false);
+        prefs.put("profile.default_content_setting_values.notifications", 2);
+        prefs.put("profile.default_content_setting_values.geolocation", 2);
+        prefs.put("profile.default_content_setting_values.media_stream_mic", 2);
+
         options.setExperimentalOption("prefs", prefs);
         if(Config.headless())
         {

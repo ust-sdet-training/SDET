@@ -16,12 +16,9 @@ public class SpecFactory {
                     .addHeader("Content-Type","application/json")
                     .build();
 
-
     public static ResponseSpecification jsonCreateResponse =
             new ResponseSpecBuilder()
                     .expectContentType(ContentType.JSON)
                     .expectStatusCode(201)
                     .build();
-
-
 }
