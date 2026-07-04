@@ -21,6 +21,12 @@ flakyDemo("Intentionally flaky example", () => {
     log.info("Captured cart total text", { cartTotalText });
     evidence.cartTotalText = cartTotalText;
 
+    // Flaky approach: uses a short timeout that may fail.
+    // await expect(page.getByTestId("debug-cart-total")).toContainText("Rs. 9,197" , {
+    //   timeout: 620
+    // });
+
+    // Stable approach: relies on Playwright's built-in auto-waiting.
     await expect(page.getByTestId("debug-cart-total")).toContainText("Rs. 9,197");
   });
  
@@ -31,6 +37,10 @@ flakyDemo("Intentionally flaky example", () => {
  
     // Navigate to a product using a fragile position-based selector.
     log.info("Clicking the travel backpack product link");
+    // Flaky approach: uses a short timeout that may fail.
+    // await page.locator(".product-grid article:nth-child(2) a").click();
+
+    // Stable approach: relies on Playwright's built-in auto-waiting.
     await page.getByRole("link", {name: "View Travel Backpack"}).click();
  
     // Assert that the expected product page is visible.
