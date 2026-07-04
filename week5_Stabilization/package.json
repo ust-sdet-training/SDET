@@ -1,0 +1,22 @@
+{
+  "name": "week5_stabilization",
+  "version": "1.0.0",
+  "description": "Week 5 gate stabilization suite for the SDET retail app",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "report": "playwright show-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.1.0"
+  },
+  "dependencies": {
+    "winston": "^3.9.0"
+  }
+}
