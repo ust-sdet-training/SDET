@@ -68,7 +68,52 @@ test.describe('Gate 5 — Returns & Refund Testing', () => {
     log.info("Verified full refund in backend ledger and Returns page");
 });
 
+ test('should verify prorates tax and balances shares', async ({ request, page, log, evidence }) => {
+        log.info("create order for tax");
+        const order = await createOrder(request);
+        evidence.order = order;
 
+        const orderId = order.id;
+
+        log.info("Opening Returns page", { orderId });
+        await openReturnsPage(page, orderId);
+        await expect(page.getByTestId('refunded-TEE')).toHaveText('0');
+        
+        log.info("Submitting partial refund");
+        const refundResponse = await refundOrder(request, orderId, 1, generateIdempotencyKey());
+        expect(refundResponse.ok()).toBeTruthy();
+
+        const refund = await refundResponse.json();
+        evidence.refund = refund;
+
+        // Balancing invariant: tax shares must sum to the ORDER's total tax (4995),
+        // not to themselves — this is the actual check that catches a money leak.
+        const taxSum = refund.taxShares.reduce((sum: number, tax: number) => sum + tax, 0);
+        expect(taxSum).toBe(order.taxPaise);
+        log.info("Verified balancing invariant on tax shares", {
+            taxShares: refund.taxShares,
+            orderTaxPaise: order.taxPaise,
+        });
+
+        const ledger = await getLedger(request, orderId);
+        evidence.ledger = ledger;
+
+        await page.reload();
+        await expect(page.getByTestId('refunded-TEE')).toHaveText('1');
+
+        await expect(page.getByTestId('refund-total')).toHaveText(
+            `₹${(refund.amountPaise / 100).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+        );
+        log.info("Verified UI shows prorated refund total");
+
+        expect(ledger.status).toBe('PARTIALLY_REFUNDED');
+        expect(ledger.refundCount).toBe(1);
+        log.info("Verified partial refund prorated correctly", {
+            lineAmountPaise: refund.lineAmountPaise,
+            taxPaise: refund.taxPaise,
+            remainingBalance: ledger.refundableBalancePaise,
+        });
+    });
 test.describe('Refund Eligibility Validation - Data Driven Tests', () => {
 
     // list of scenarios we want to check - one test gets generated per row
