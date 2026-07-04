@@ -12,52 +12,54 @@ test.describe('Gate 5 — Returns & Refund Testing', () => {
 
   test('Should process a complete refund and verify refund status, ledger and UI', async ({ request, page, log, evidence }) => {
 
-    // Create a new order that will be used for refund testing.
+    // make a new order to test with
     log.info("Creating a new order for full refund validation");
-    const order = await createOrder(request);
+    const testOrder = await createOrder(request);
 
-    // Store the order details as evidence for reporting.
-    evidence.order = order;
+    // keep this for the report
+    evidence.order = testOrder;
 
-    const orderId = order.id;
+    const oId = testOrder.id;
 
-    // Refund all purchased items from the order.
+    // refunding all 3 units on the order
     log.info("Submitting full refund request");
-    const refundResponse = await refundOrder(
+    const rawRefundResp = await refundOrder(
         request,
-        orderId,
+        oId,
         3,
         generateIdempotencyKey("full-refund")
     );
 
-    // Verify that the refund request was successful.
-    expect(refundResponse.ok()).toBeTruthy();
+    // should be a 200-ish response, not an error
+    expect(rawRefundResp.ok()).toBeTruthy();
 
-    // Save the refund response for evidence.
-    const refund = await refundResponse.json();
-    evidence.refund = refund;
+    // need the body before we can check anything in it
+    const refundJson = await rawRefundResp.json();
+    evidence.refund = refundJson;
 
-    // Retrieve the updated ledger after the refund.
-    // Ledger stores refund status, remaining balance and refund history.
-    const ledger = await getLedger(request, orderId);
-    evidence.ledger = ledger;
+    // pulling the ledger fresh so we see the real backend state
+    const ledgerNow = await getLedger(request, oId);
+    evidence.ledger = ledgerNow;
 
     log.info("Refund completed successfully", {
-        refundStatus: ledger.status,
+        refundStatus: ledgerNow.status,
     });
 
-    // Verify backend refund details.
-    expect(ledger.status).toBe("REFUNDED");
-    expect(ledger.refundableBalancePaise).toBe(0);
-    expect(ledger.refundCount).toBe(1);
-    expect(ledger.lastRefund.amountPaise).toBe(refund.amountPaise);
+    // status should flip to REFUNDED
+    expect(ledgerNow.status).toBe("REFUNDED");
+    // nothing left to refund
+    expect(ledgerNow.refundableBalancePaise).toBe(0);
+    // only one refund should exist
+    expect(ledgerNow.refundCount).toBe(1);
+    // ledger and API response should agree on the amount
+    expect(ledgerNow.lastRefund.amountPaise).toBe(refundJson.amountPaise);
 
-    // Open the Returns page to verify what the user sees.
-    await openReturnsPage(page, orderId);
+    // now go check the actual page
+    await openReturnsPage(page, oId);
 
-    // Verify the refunded amount displayed on the UI.
+    // paise to rupees, then format the way the UI shows it
     await expect(page.getByTestId("refund-total")).toHaveText(
-        `₹${(refund.amountPaise / 100).toLocaleString("en-IN", {
+        `₹${(refundJson.amountPaise / 100).toLocaleString("en-IN", {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
         })}`
@@ -69,15 +71,14 @@ test.describe('Gate 5 — Returns & Refund Testing', () => {
 
 test.describe('Refund Eligibility Validation - Data Driven Tests', () => {
 
-    // Each object represents one business scenario.
-    // The expected verdict is verified against the API response.
-    const testCases = [
+    // list of scenarios we want to check - one test gets generated per row
+    const ruleSet = [
 
         {
             name: 'Should approve refund for a valid return request',
             seedOptions: {},
             sku: 'TEE',
-            qty: 1,
+            qty: 2,
             expectedVerdict: 'APPROVED',
         },
 
@@ -85,13 +86,13 @@ test.describe('Refund Eligibility Validation - Data Driven Tests', () => {
             name: 'Should reject refund when requested quantity exceeds purchased quantity',
             seedOptions: {},
             sku: 'TEE',
-            qty: 4,
+            qty: 5,
             expectedVerdict: 'OVER_REFUND',
         },
 
         {
             name: 'Should reject refund after the return window has expired',
-            seedOptions: { purchaseDaysAgo: 45 },
+            seedOptions: { purchaseDaysAgo: 60 },
             sku: 'TEE',
             qty: 1,
             expectedVerdict: 'OUT_OF_WINDOW',
@@ -101,7 +102,7 @@ test.describe('Refund Eligibility Validation - Data Driven Tests', () => {
             name: 'Should reject refund for final sale items',
             seedOptions: { finalSale: true },
             sku: 'TEE',
-            qty: 1,
+            qty: 2,
             expectedVerdict: 'FINAL_SALE',
         },
 
@@ -109,47 +110,43 @@ test.describe('Refund Eligibility Validation - Data Driven Tests', () => {
             name: 'Should reject refund for non-returnable products',
             seedOptions: { returnable: false },
             sku: 'TEE',
-            qty: 1,
+            qty: 2,
             expectedVerdict: 'NON_RETURNABLE',
         },
     ];
 
-    // Run the same validation for every test scenario.
-    for (const tc of testCases) {
+    // loop through the list above, one test per entry
+    for (const row of ruleSet) {
 
-        test(tc.name, async ({ request, log, evidence }) => {
+        test(row.name, async ({ request, log, evidence }) => {
 
-            // Create a new order based on the current scenario.
+            // set up the order however this scenario needs it
             log.info("Creating order for eligibility validation", {
-                scenario: tc.name,
+                scenario: row.name,
             });
 
-            const order = await createOrder(request, tc.seedOptions);
+            const rowOrder = await createOrder(request, row.seedOptions);
 
-            // Save order details for evidence.
-            evidence.order = order;
+            evidence.order = rowOrder;
 
-            // Check whether the refund is allowed.
+            // just checking, not actually refunding yet
             log.info("Checking refund eligibility");
 
-            const result = await checkRefund(
+            const verdictObj = await checkRefund(
                 request,
-                order.id,
-                tc.sku,
-                tc.qty
+                rowOrder.id,
+                row.sku,
+                row.qty
             );
 
-            // Save API response for reporting.
-            evidence.refundCheck = result;
+            evidence.refundCheck = verdictObj;
 
-            // Expected business rule rejection.
-            // These are valid application behaviours,
-            // not test failures.
-            if (result.verdict !== "APPROVED") {
+            // just want the logs to make sense when someone reads them later
+            if (verdictObj.verdict !== "APPROVED") {
 
                 log.warn("Refund request rejected by business rule", {
-                    expected: tc.expectedVerdict,
-                    actual: result.verdict,
+                    expected: row.expectedVerdict,
+                    actual: verdictObj.verdict,
                 });
 
             } else {
@@ -158,8 +155,8 @@ test.describe('Refund Eligibility Validation - Data Driven Tests', () => {
 
             }
 
-            // Verify the returned verdict.
-            expect(result.verdict).toBe(tc.expectedVerdict);
+            // this is the actual check we care about
+            expect(verdictObj.verdict).toBe(row.expectedVerdict);
 
             log.info("Eligibility validation completed successfully");
 
@@ -176,125 +173,116 @@ test('Should verify refund behavior with and without idempotency key', async ({
 }) => {
 
 
-    // Scenario : Refund requests without an idempotency key.
-    // Every request is treated as a new request, so two refunds
-    // should be created.
-
+    // first part - no key at all this time
     log.info("Creating order to validate refund requests without idempotency key");
 
-    const orderWithoutKey = await createOrder(request);
-    evidence.orderWithoutKey = orderWithoutKey;
+    const oA = await createOrder(request);
+    evidence.orderWithoutKey = oA;
 
-    const orderWithoutKeyId = orderWithoutKey.id;
+    const oAId = oA.id;
 
-    // Submit the first refund request.
     log.info("Submitting first refund request");
 
-    const refundResponse1 = await refundOrder(
+    const respA1 = await refundOrder(
         request,
-        orderWithoutKeyId,
+        oAId,
         1
     );
 
-    expect(refundResponse1.ok()).toBeTruthy();
+    expect(respA1.ok()).toBeTruthy();
 
-    const refund1 = await refundResponse1.json();
+    const jsonA1 = await respA1.json();
 
-    // Submit the same refund request again without an idempotency key.
+    // same call again, still no key
     log.info("Submitting second refund request without idempotency key");
 
-    const refundResponse2 = await refundOrder(
+    const respA2 = await refundOrder(
         request,
-        orderWithoutKeyId,
+        oAId,
         1
     );
 
-    expect(refundResponse2.ok()).toBeTruthy();
+    expect(respA2.ok()).toBeTruthy();
 
-    const refund2 = await refundResponse2.json();
+    const jsonA2 = await respA2.json();
 
-    // Verify both requests created different refunds.
-    expect(refund1.refundId).not.toBe(refund2.refundId);
+    // these two ids should be different since nothing tied them together
+    expect(jsonA1.refundId).not.toBe(jsonA2.refundId);
 
     log.warn("Duplicate refund requests created separate refund records because no idempotency key was provided");
 
-    // Capture the ledger after both refunds.
-    const ledgerWithoutKey = await getLedger(request, orderWithoutKeyId);
-    evidence.ledgerWithoutKey = ledgerWithoutKey;
+    const ledgerA = await getLedger(request, oAId);
+    evidence.ledgerWithoutKey = ledgerA;
 
-    expect(ledgerWithoutKey.refundCount).toBe(2);
+    // two separate refunds should show up here
+    expect(ledgerA.refundCount).toBe(2);
 
     log.info("Verified two refund records were created");
 
-    // Extra validation.
-    if (ledgerWithoutKey.refundCount !== 2) {
+    // just in case something's off, log it clearly
+    if (ledgerA.refundCount !== 2) {
         log.error("Unexpected refund count for requests without idempotency key", {
-            refundCount: ledgerWithoutKey.refundCount,
+            refundCount: ledgerA.refundCount,
         });
     }
 
-    // Scenario : Refund requests with the same idempotency key.
-    // Duplicate requests should return the same refund instead of
-    // creating a new one.
-
-
+    // second part - same key sent twice on purpose this time
     log.info("Creating order to validate idempotency");
 
-    const orderWithKey = await createOrder(request);
-    evidence.orderWithKey = orderWithKey;
+    const oB = await createOrder(request);
+    evidence.orderWithKey = oB;
 
-    const orderWithKeyId = orderWithKey.id;
+    const oBId = oB.id;
 
-    // Generate one idempotency key.
-    // This key will be reused for both requests.
-    const idempotencyKey = generateIdempotencyKey();
+    // one key, used for both calls below
+    const keyValue = generateIdempotencyKey();
 
     log.info("Submitting first refund request with idempotency key");
 
-    const firstRefundResponse = await refundOrder(
+    const respB1 = await refundOrder(
         request,
-        orderWithKeyId,
+        oBId,
         1,
-        idempotencyKey
+        keyValue
     );
 
-    expect(firstRefundResponse.ok()).toBeTruthy();
+    expect(respB1.ok()).toBeTruthy();
 
-    const firstRefund = await firstRefundResponse.json();
+    const jsonB1 = await respB1.json();
 
-    // Submit the same request again using the same key.
+    // sending the exact same thing again with the same key
     log.info("Submitting duplicate refund request with the same idempotency key");
 
-    const secondRefundResponse = await refundOrder(
+    const respB2 = await refundOrder(
         request,
-        orderWithKeyId,
+        oBId,
         1,
-        idempotencyKey
+        keyValue
     );
 
-    expect(secondRefundResponse.ok()).toBeTruthy();
+    expect(respB2.ok()).toBeTruthy();
 
-    const replayRefund = await secondRefundResponse.json();
+    const jsonB2 = await respB2.json();
 
-    // Verify the backend replayed the previous refund.
-    expect(replayRefund.refundId).toBe(firstRefund.refundId);
-    expect(replayRefund.amountPaise).toBe(firstRefund.amountPaise);
+    // should be the same refund both times, not two different ones
+    expect(jsonB2.refundId).toBe(jsonB1.refundId);
+    expect(jsonB2.amountPaise).toBe(jsonB1.amountPaise);
 
     log.warn("Duplicate refund request was replayed instead of creating another refund");
 
-    // Retrieve the final ledger.
-    const ledgerWithKey = await getLedger(request, orderWithKeyId);
-    evidence.ledgerWithKey = ledgerWithKey;
+    const ledgerB = await getLedger(request, oBId);
+    evidence.ledgerWithKey = ledgerB;
 
-    expect(ledgerWithKey.status).toBe("PARTIALLY_REFUNDED");
-    expect(ledgerWithKey.refundCount).toBe(1);
+    // still just a partial refund on this one
+    expect(ledgerB.status).toBe("PARTIALLY_REFUNDED");
+    // and only one refund, even though we sent the request twice
+    expect(ledgerB.refundCount).toBe(1);
 
     log.info("Verified only one refund exists after duplicate request");
 
-    // Extra validation.
-    if (ledgerWithKey.refundCount !== 1) {
+    if (ledgerB.refundCount !== 1) {
         log.error("Idempotency validation failed", {
-            refundCount: ledgerWithKey.refundCount,
+            refundCount: ledgerB.refundCount,
         });
     }
 
@@ -308,69 +296,63 @@ test('Should verify refund behavior with and without idempotency key', async ({
     evidence,
 }, testInfo) => {
 
-    // Create a new order for evidence collection.
     log.info("Creating a new order");
 
-    const order = await createOrder(request);
-    evidence.order = order;
+    const evOrder = await createOrder(request);
+    evidence.order = evOrder;
 
-    const orderId = order.id;
+    const evOrderId = evOrder.id;
 
-    // Capture ledger before refund.
+    // snapshot before we touch anything
     log.info("Capturing ledger before refund");
 
-    const ledgerBefore = await getLedger(request, orderId);
-    evidence.ledgerBefore = ledgerBefore;
+    const snapBefore = await getLedger(request, evOrderId);
+    evidence.ledgerBefore = snapBefore;
 
-    // Warn because this snapshot will be used for comparison later.
     log.warn("Ledger snapshot captured before refund");
 
-    // Submit refund request.
     log.info("Submitting refund request");
 
-    const refundResponse = await refundOrder(
+    const evResp = await refundOrder(
         request,
-        orderId,
+        evOrderId,
         1,
         generateIdempotencyKey("evidence")
     );
 
-    expect(refundResponse.ok()).toBeTruthy();
+    expect(evResp.ok()).toBeTruthy();
 
-    // Store refund response.
-    const refund = await refundResponse.json();
-    evidence.refund = refund;
+    const evRefundJson = await evResp.json();
+    evidence.refund = evRefundJson;
 
     log.info("Refund completed successfully");
 
-    // Capture ledger after refund.
+    // and snapshot again after, so we can compare
     log.info("Capturing ledger after refund");
 
-    const ledgerAfter = await getLedger(request, orderId);
-    evidence.ledgerAfter = ledgerAfter;
+    const snapAfter = await getLedger(request, evOrderId);
+    evidence.ledgerAfter = snapAfter;
 
-    // Warn because this ledger will be compared with the previous one.
     log.warn("Ledger updated after refund transaction");
 
-    // Open Returns page.
     log.info("Opening Returns page");
 
-    await openReturnsPage(page, orderId);
+    await openReturnsPage(page, evOrderId);
 
-    // Verify refunded item count.
+    // checking what's actually shown on the page
     await expect(page.getByTestId("refunded-TEE")).toHaveText("1");
 
     log.info("Verified refunded item count on UI");
 
-    // Create evidence package.
-    const evidencePack = {
+    // putting everything together so it's easy to review later
+    const packToAttach = {
         order: evidence.order,
         refund: evidence.refund,
         ledgerBefore: evidence.ledgerBefore,
         ledgerAfter: evidence.ledgerAfter,
     };
 
-    // Warn if any evidence is missing.
+    // just double checking nothing's missing before we attach it
     if (
         !evidence.order ||
         !evidence.refund ||
@@ -380,31 +362,29 @@ test('Should verify refund behavior with and without idempotency key', async ({
         log.warn("Evidence package is incomplete");
     }
 
-    // Attach JSON evidence.
+    // this shows up in the html report
     await testInfo.attach("refund-evidence-pack.json", {
-        body: JSON.stringify(evidencePack, null, 2),
+        body: JSON.stringify(packToAttach, null, 2),
         contentType: "application/json",
     });
 
     log.info("Evidence JSON attached");
 
-    // Capture screenshot of the final UI.
-    const screenshotPath = testInfo.outputPath("refund-final-state.png");
+    // grabbing a screenshot too, for proof
+    const shotPath = testInfo.outputPath("refund-final-state.png");
 
     await page.screenshot({
-        path: screenshotPath,
+        path: shotPath,
         fullPage: true,
     });
 
-    // Attach screenshot.
     await testInfo.attach("refund-final-state.png", {
-        path: screenshotPath,
+        path: shotPath,
         contentType: "image/png",
     });
 
     log.info("Final screenshot attached");
 
-    // Final reminder that all evidence has been collected.
     log.warn("Evidence collection completed. Review attachments before closing the test.");
 });
 
