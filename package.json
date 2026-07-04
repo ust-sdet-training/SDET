@@ -1,0 +1,31 @@
+{
+  "name": "sdet",
+  "version": "1.0.0",
+  "description": "Repository for SDET training batch",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:ci": "npx playwright test --reporter=html",
+    "test:trace": "npx playwright test --config=playwrightw5d3.config.ts",
+    "run:offline": "npx playwright test tests/alltests.spec.ts",
+    "run:refund": "npx playwright test tests/partial_refund.spec.ts tests/evaluation.spec.ts",
+    "evidence:collect": "node scripts/collect-evidence.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ust-sdet-training/SDET.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ust-sdet-training/SDET/issues"
+  },
+  "homepage": "https://github.com/ust-sdet-training/SDET#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.1.0",
+    "winston": "^3.9.0"
+  }
+}
