@@ -174,43 +174,52 @@ test.describe('Week 5 - Gate 5 Resilient POS Behaviour', () => {
     log.info('Delayed request completed successfully');
   });
 
-  test('Should process queue successfully using mocked backend response', async ({
-    page,
-    log,
-    evidence,
-  }) => {
+test('Should process queue successfully using mocked backend response', async ({
+  page,
+  log,
+  evidence,
+}) => {
 
-    // Replace the actual backend with mocked data.
-    await page.route('**/api/sales', async route => {
+  // Intercept the sales API and return a mocked response.
+  // This avoids calling the real backend during the test.
+  await page.route('**/api/sales', async route => {
 
-      const fakeResponse = {
-        id: 'sale-001',
-        status: 'accepted',
-      };
+    // Create a custom mocked response.
+    const mockSaleResponse = {
+      saleId: `SALE-${Date.now()}`,
+      orderNumber: 'ORD-1001',
+      status: 'completed',
+      message: 'Sale processed successfully',
+      syncedAt: new Date().toISOString(),
+    };
 
-      evidence.cartResponse = fakeResponse;
+    // Save the mocked response for evidence.
+    evidence.cartResponse = mockSaleResponse;
 
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify(fakeResponse),
-      });
-
-      log.info('Mock response returned');
+    // Return the mocked response.
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(mockSaleResponse),
     });
 
-    await page.goto('/pos');
-
-    await page.getByRole('button', {
-      name: 'Queue sale',
-    }).click();
-
-    await expect(page.getByTestId('outbox-count'))
-      .toHaveText('0');
-
-
-    log.info('Mock response verified');
+    log.info('Mock API response returned successfully');
   });
+
+  // Open the POS application.
+  await page.goto('/pos');
+
+  // Queue a sale.
+  await page.getByRole('button', {
+    name: 'Queue sale',
+  }).click();
+
+  // Verify the queue becomes empty after successful sync.
+  await expect(page.getByTestId('outbox-count'))
+    .toHaveText('0');
+
+  log.info('Mock response verified');
+});
 
   test('Should eventually sync queued sale under slow network conditions', async ({
     page,
