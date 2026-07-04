@@ -1,0 +1,38 @@
+export const testCases = [
+  {
+        name: 'Full return',
+        qty: 4,
+        expectedVerdict: 'APPROVED',
+        expectedstatus:'REFUNDED',
+        checkExpectedStatus:'APPROVED',
+        sku: 'TEE',
+        unitprice: 33300,
+        pname: "Training Tee",
+        taxpaisa:4995,
+        refundqty:4,      
+  },
+  {
+        name: 'Partial return',
+        qty: 4,
+        expectedVerdict: 'APPROVED',
+        expectedstatus:'PARTIALLY_REFUNDED',
+        checkExpectedStatus:'APPROVED',
+        sku: 'TEE',
+        unitprice: 33300,
+        pname: "Training Tee",
+        taxpaisa:4995,
+        refundqty:2,
+  },
+  {
+        name: 'Over refund',
+        qty: 4,
+        expectedVerdict: 'APPROVED',
+        expectedstatus:'PARTIALLY_REFUNDED',
+        checkExpectedStatus:'OVER_REFUND',
+        sku: 'TEE',
+        unitprice: 33300,
+        pname: "Training Tee",
+        taxpaisa:4995,
+        refundqty:5,
+  }
+];

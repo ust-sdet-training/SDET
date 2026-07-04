@@ -1,0 +1,65 @@
+<testsuites id="" name="" tests="7" failures="0" skipped="0" errors="0" time="10.507027">
+<testsuite name="assesmentTest.spec.ts" timestamp="2026-07-04T12:02:42.226Z" hostname="chromium" tests="4" failures="0" skipped="0" time="5.558" errors="0">
+<testcase name="Week5 Playwright Test › Login flacky" classname="assesmentTest.spec.ts" time="2.629">
+<system-out>
+<![CDATA[[INFO] 2026-07-04T12:02:43.702Z - Assesment Test 1: Login Flacky Started running
+[INFO] 2026-07-04T12:02:44.208Z - Login Page Loaded
+[INFO] 2026-07-04T12:02:44.262Z - Email entered
+[INFO] 2026-07-04T12:02:44.294Z - Password entered
+[INFO] 2026-07-04T12:02:45.245Z - Click action happened
+]]>
+</system-out>
+</testcase>
+<testcase name="Week5 Playwright Test › Cart total off by a paisa - Failing Example" classname="assesmentTest.spec.ts" time="0.861">
+<system-out>
+<![CDATA[[INFO] 2026-07-04T12:02:46.267Z - order added
+[INFO] 2026-07-04T12:02:46.277Z - refund added
+[INFO] 2026-07-04T12:02:46.281Z - Cart paisa matches with the fund sended
+]]>
+</system-out>
+</testcase>
+<testcase name="Week5 Playwright Test › Scenario 3: Sync test hangs on WebKit" classname="assesmentTest.spec.ts" time="1.301">
+<system-out>
+<![CDATA[[INFO] 2026-07-04T12:02:47.546Z - POS page opened
+[INFO] 2026-07-04T12:02:47.549Z - Network is configered to offline
+[INFO] 2026-07-04T12:02:47.583Z - Network Banner shown OFFLINE
+[INFO] 2026-07-04T12:02:47.591Z - Network Status using navigator.Online shown OFFILNE
+[INFO] 2026-07-04T12:02:47.594Z - Network is configered to Online
+[INFO] 2026-07-04T12:02:47.606Z - Network Status using navigator.Online shown ONLINE
+[INFO] 2026-07-04T12:02:47.617Z - Network Banner shown ONLINE
+]]>
+</system-out>
+</testcase>
+<testcase name="Week5 Playwright Test › Scenario 4: Refund posts twice" classname="assesmentTest.spec.ts" time="0.767">
+<system-out>
+<![CDATA[[INFO] 2026-07-04T12:02:48.367Z - order added
+[INFO] 2026-07-04T12:02:48.371Z - first refund added
+[INFO] 2026-07-04T12:02:48.375Z - second refund added
+[INFO] 2026-07-04T12:02:48.375Z - first refund is created and have 201 status code
+[INFO] 2026-07-04T12:02:48.376Z - second refund is returned 200 not created
+[INFO] 2026-07-04T12:02:48.384Z - Refund only added one time check
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="fullflowTest.spec.ts" timestamp="2026-07-04T12:02:42.226Z" hostname="chromium" tests="3" failures="0" skipped="0" time="2.266" errors="0">
+<testcase name="contains all the tests of day5 code › Full return: Checking the full flow" classname="fullflowTest.spec.ts" time="0.718">
+<system-out>
+<![CDATA[[INFO] 2026-07-04T12:02:49.150Z - Placed a order
+]]>
+</system-out>
+</testcase>
+<testcase name="contains all the tests of day5 code › Partial return: Checking the full flow" classname="fullflowTest.spec.ts" time="0.761">
+<system-out>
+<![CDATA[[INFO] 2026-07-04T12:02:49.892Z - Placed a order
+]]>
+</system-out>
+</testcase>
+<testcase name="contains all the tests of day5 code › Over refund: Checking the full flow" classname="fullflowTest.spec.ts" time="0.787">
+<system-out>
+<![CDATA[[INFO] 2026-07-04T12:02:50.667Z - Placed a order
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>

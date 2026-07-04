@@ -1,0 +1,34 @@
+
+# Node modules
+node_modules/
+
+# Playwright test results
+test-results/
+playwright-report/
+blob-report/
+
+# Playwright traces, screenshots, videos
+test-results/**/*.png
+test-results/**/*.jpg
+test-results/**/*.jpeg
+test-results/**/*.webm
+test-results/**/*.zip
+
+# Environment files
+.env
+.env.*
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
