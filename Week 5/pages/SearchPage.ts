@@ -26,25 +26,4 @@ export class SearchPage{
         await res;
     }
 
-
-
-    // async filter(){
-
-    // }
-
-    // async add_cart(){
-    //     const cartRes = this.page.waitForResponse(
-    //         (r) => r.url().includes('/cart') && r.status() === 200
-    //     );
-
-        //const cartRes = this.page.waitForResponse(
-        //     (r) => r.url().includes('/cart') && 
-        //      r.request().methods() === 'POST' && [200, 201].includes(r.status())
-        // );
-
-    //     await this.addBtn().click();
-    //     await cartRes;
-
-    // }
-
 }
