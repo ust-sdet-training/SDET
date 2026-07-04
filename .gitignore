@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+Week05_Playwright_advanced/node_modules/
+
+# Playwright output
+playwright-report/
+test-results/
+blob-report/
+Week05_Playwright_advanced/playwright-report/
+Week05_Playwright_advanced/test-results/
+Week05_Playwright_advanced/blob-report/
+
+# Local environment
+.env
+.env.*
+
+# Logs
+*.log
+npm-debug.log*
