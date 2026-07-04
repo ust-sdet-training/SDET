@@ -341,4 +341,51 @@ test("Partial refund idempotent", async ({request,evidence,}) => {
     expect(ledger.refundedAmountPaise).toBe(firstBody.amountPaise);
 });
 
+// Tests that refunding more items than purchased is rejected
+
+test("Over refund rejected", async ({ request, evidence }) => {
+
+    const order = await seedOrder(request, {
+        taxPaise: 180000,
+        lines: [
+            {
+                sku: "SHOE101",
+                name: "Running Shoes",
+                unitPaise: 450000,
+                qty: 4
+            }
+        ]
+    });
+
+    evidence["seed-order"] = order;
+
+    const beforeLedger = await orderLedger(request, order.id);
+    evidence["ledger-before"] = beforeLedger;
+
+    const response = await refund(request,order.id,
+        [
+            {
+                sku: "SHOE101",
+                qty: 5
+            }
+        ],
+        crypto.randomUUID()
+    );
+
+    expect(response.status()).toBe(422);
+
+    const body = await response.json();
+    evidence["over-refund"] = body;
+
+    expect(body.reason).toBe("OVER_REFUND");
+    expect(body.verdict).toBe("OVER_REFUND");
+
+    const afterLedger = await orderLedger(request, order.id);
+    evidence["ledger-after"] = afterLedger;
+
+    expect(afterLedger.refundCount).toBe(beforeLedger.refundCount);
+    expect(afterLedger.refundableBalancePaise).toBe(beforeLedger.refundableBalancePaise);
+    expect(afterLedger.refundedAmountPaise).toBe(beforeLedger.refundedAmountPaise);
+});
+
 
