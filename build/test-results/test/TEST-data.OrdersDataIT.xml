@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="data.OrdersDataIT" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-07-08T16:18:55.098Z" hostname="5CG2223YFP" time="0.503">
+  <properties/>
+  <testcase name="countsOnlyThisTestsOrders()" classname="data.OrdersDataIT" time="0.148"/>
+  <testcase name="flywaySeedsReferenceDataButNoOrders()" classname="data.OrdersDataIT" time="0.111"/>
+  <testcase name="factoryPersistsBuilderData()" classname="data.OrdersDataIT" time="0.114"/>
+  <testcase name="resetMakesTestsIndependent()" classname="data.OrdersDataIT" time="0.127"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Jul 08, 2026 9:48:54 PM org.flywaydb.core.FlywayExecutor execute
+INFO: Database: jdbc:mysql://localhost:3306/retail_test?useSSL=false&allowPublicKeyRetrieval=true (MySQL 8.0)
+Jul 08, 2026 9:48:54 PM org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory allAppliedMigrations
+INFO: Schema history table `retail_test`.`flyway_schema_history` does not exist yet
+Jul 08, 2026 9:48:54 PM org.flywaydb.core.internal.command.DbValidate validate
+INFO: Successfully validated 2 migrations (execution time 00:00.026s)
+Jul 08, 2026 9:48:54 PM org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory create
+INFO: Creating Schema History table `retail_test`.`flyway_schema_history` ...
+Jul 08, 2026 9:48:54 PM org.flywaydb.core.internal.command.DbMigrate migrateGroup
+INFO: Current version of schema `retail_test`: << Empty Schema >>
+Jul 08, 2026 9:48:54 PM org.flywaydb.core.internal.command.DbMigrate doMigrateGroup
+INFO: Migrating schema `retail_test` to version "1 - schema"
+Jul 08, 2026 9:48:55 PM org.flywaydb.core.internal.command.DbMigrate doMigrateGroup
+INFO: Migrating schema `retail_test` to version "2 - seed reference data"
+Jul 08, 2026 9:48:55 PM org.flywaydb.core.internal.command.DbMigrate logSummary
+INFO: Successfully applied 2 migrations to schema `retail_test`, now at version v2 (execution time 00:00.110s)
+]]></system-err>
+</testsuite>
