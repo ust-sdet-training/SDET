@@ -3,11 +3,11 @@ name: MySQL Builder Tests
 on:
   push:
     branches:
-      - main
+      - Chaithra-week06-day3
 
   pull_request:
     branches:
-      - main
+      - Chaithra-week06-day3
 
 jobs:
 
