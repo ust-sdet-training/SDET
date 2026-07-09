@@ -9,6 +9,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.postgresql.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
+import java.time.Duration;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static com.example.Selenium.data.OrderBuilder.anOrder;
@@ -16,10 +18,11 @@ import static com.example.Selenium.data.OrderBuilder.anOrder;
 @Testcontainers(disabledWithoutDocker = true)
 public class OrdersDataIT {
     @Container
-    static PostgreSQLContainer postgres=new PostgreSQLContainer(DockerImageName.parse("postgres:16-alpine"))
+    static PostgreSQLContainer postgres = new PostgreSQLContainer(DockerImageName.parse("postgres:16-alpine"))
             .withDatabaseName("retail_test")
             .withUsername("trainer")
-            .withPassword("trainer");
+            .withPassword("trainer")
+            .withStartupTimeout(Duration.ofMinutes(2));
 
     static OrderRepository repository;
     static OrderFactory factory;
