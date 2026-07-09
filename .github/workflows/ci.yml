@@ -1,6 +1,9 @@
 name: Test Environment
  
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - vikram-week6-d3assignment
  
 jobs:
   build:
