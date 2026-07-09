@@ -44,6 +44,6 @@ jobs:
       - name: Run Tests
         run: ./gradlew test
         env:
-          ORG_GRADLE_PROJECT_dbUrl: jdbc:mysql://localhost:3306/retail_test
+          ORG_GRADLE_PROJECT_dbUrl: jdbc:mysql://127.0.0.1:3306/retail_test
           ORG_GRADLE_PROJECT_dbUser: root
-          ORG_GRADLE_PROJECT_dbPassword: root
+          ORG_GRADLE_PROJECT_dbPassword: mani6264
