@@ -39,9 +39,11 @@ jobs:
           cache: gradle
 
       - name: Make Gradle executable
+        working-directory: gradle
         run: chmod +x gradlew
 
       - name: Run Tests
+        working-directory: gradle
         run: ./gradlew test
         env:
           ORG_GRADLE_PROJECT_dbUrl: jdbc:mysql://127.0.0.1:3306/retail_test
