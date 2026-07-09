@@ -1,39 +1,28 @@
-name: Gradle CI
-
-on:
-  push:
-    paths:
-      - 'gradleproject/**'
-      - '.github/workflows/ci.yml'
-  pull_request:
-    paths:
-      - 'gradleproject/**'
-      - '.github/workflows/ci.yml'
-
+name: Test Environment
+ 
+on: [push, pull_request]
+ 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: gradleproject
-
+ 
     steps:
-      - name: Checkout code
+      - name: 1. Checkout Code
         uses: actions/checkout@v5
-
-      - name: Set up JDK 21
+ 
+      - name: 2. Set up Java
         uses: actions/setup-java@v5
         with:
-          distribution: temurin
-          java-version: '21'
-          cache: gradle
-
-      - name: Grant execute permission to Gradle wrapper
+          distribution: 'temurin'
+          java-version: '22'
+          cache: 'maven'
+   
+      - name: 3. Grant execute permission
+        working-directory: gradleproject
         run: chmod +x gradlew
-
-      - name: Run OrdersDataIT in CI
-        env:
-          TESTCONTAINERS_RYUK_DISABLED: true
-        run: ./gradlew --no-daemon clean test --tests 'com.example.Selenium.data.OrdersDataIT'
+ 
+     
+      - name: 4. Run Tests
+        working-directory: gradleproject
+        run: ./gradlew test --tests "com.example.Selenium.data.OrdersDataIT"
  
