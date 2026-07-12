@@ -28,15 +28,15 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Generate Gradle Wrapper
-        working-directory: Assessment_week6
+        working-directory: Assessment_Week6
         run: gradle wrapper
 
       - name: Grant execute permission
-        working-directory: Assessment_week6
+        working-directory: Assessment_Week6
         run: chmod +x gradlew
 
       - name: Run Tests
-        working-directory: Assessment_week6
+        working-directory: Assessment_Week6
         run: ./gradlew test
 
       - name: Checkout gh-pages branch
@@ -51,7 +51,7 @@ jobs:
         if: always()
         uses: simple-elf/allure-report-action@master
         with:
-          allure_results: Assessment_week6/build/allure-results
+          allure_results: Assessment_Week6/build/allure-results
           allure_report: allure-report
           gh_pages: gh-pages
           allure_history: allure-history
