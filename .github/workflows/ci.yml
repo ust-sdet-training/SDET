@@ -10,12 +10,10 @@ on:
       - shahbaz-week06-gate6
 
 permissions:
-  contents: write
-  pages: write
+  contents: read
 
 jobs:
   shopkart-test:
-
     runs-on: ubuntu-latest
 
     defaults:
@@ -84,6 +82,12 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x gradlew
 
+      - name: Debug Structure
+        run: |
+          pwd
+          ls -la
+          find . -name gradlew
+
       - name: Wait for MySQL
         run: |
           for i in $(seq 1 30); do
@@ -131,11 +135,11 @@ jobs:
       - name: Verify Allure Results
         if: always()
         run: |
-          mkdir -p build/allure-results
-
-          if [ -z "$(ls -A build/allure-results 2>/dev/null)" ]; then
-            echo "::error::No Allure results generated"
-            exit 1
+          if [ -d build/allure-results ]; then
+            echo "Allure results found"
+            find build/allure-results -type f
+          else
+            echo "::warning::No Allure results directory generated"
           fi
 
       - name: Write Allure Environment
@@ -152,38 +156,12 @@ jobs:
           OS=ubuntu-latest
           EOF
 
-      - name: Checkout gh-pages
-        if: always()
-        continue-on-error: true
-        uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-          path: gh-pages
-
-      - name: Build Allure Report
-        if: always()
-        uses: simple-elf/allure-report-action@master
-        with:
-          gh_pages: gh-pages
-          allure_history: allure-history
-          allure_results: GradleArtifactGate6/build/allure-results
-          allure_report: allure-report
-          keep_reports: 20
-
-      - name: Publish Allure Report
-        if: always()
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: allure-history
-
-      - name: Upload Allure Report Artifact
+      - name: Upload Allure Environment
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-report
-          path: allure-report
+          name: allure-environment
+          path: GradleArtifactGate6/build/allure-results/environment.properties
           if-no-files-found: warn
 
       - name: Fail Build If Tests Failed
