@@ -1,0 +1,18 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="12.010152">
+<testsuite name="booking.spec.ts" timestamp="2026-07-17T09:56:23.966Z" hostname="Google Chrome" tests="1" failures="0" skipped="0" time="5.937" errors="0">
+<testcase name="TripStack Flight Booking › Book Flight Successfully" classname="booking.spec.ts" time="5.937">
+<system-out>
+<![CDATA[Available : 134
+Selected Index : 131
+PNR : TS-1015-0011
+
+[[ATTACHMENT|..\test-results\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\test-finished-1.png]]
+
+[[ATTACHMENT|..\test-results\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\video.webm]]
+
+[[ATTACHMENT|..\test-results\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\trace.zip]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>

@@ -1,31 +1,8 @@
-# Environment
-.env
-.env.*
-
-# Node
-node_modules/
 
 # Playwright
-playwright-report/
-test-results/
-blob-report/
-
-# Reports
-reports/
-coverage/
-
-# Allure
-allure-results/
-allure-report/
-
-# Logs
-*.log
-
-# IDE
-.vscode/
-.idea/
-*.iml
-
-# OS
-.DS_Store
-Thumbs.db
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/

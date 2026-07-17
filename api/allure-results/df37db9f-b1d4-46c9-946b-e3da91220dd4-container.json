@@ -1,0 +1,1 @@
+{"uuid":"df37db9f-b1d4-46c9-946b-e3da91220dd4","name":"MultiCityBookingLifecycleTest","children":["1cb9b1ce-244e-4152-9b38-a076e3143219"],"befores":[{"name":"login","status":"passed","stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1784290827665,"stop":1784290830800}],"afters":[],"start":1784290827613,"stop":1784290837199}
