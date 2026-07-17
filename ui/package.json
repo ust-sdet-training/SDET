@@ -1,0 +1,24 @@
+{
+  "name": "deleteit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "show-trace": "npx playwright show-trace",
+    "show-report": "npx playwright show-report",
+    "artifact-index": "node ./scripts/build-artifact-index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/mcp": "^0.0.78",
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.1.1",
+    "dotenv": "^17.4.2",
+    "winston": "^3.10.0"
+  }
+}
