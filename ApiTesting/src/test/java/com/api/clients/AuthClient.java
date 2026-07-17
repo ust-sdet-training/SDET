@@ -1,6 +1,7 @@
 package com.api.clients;
 
 import com.api.data.Secrets;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
 import java.util.Map;
@@ -25,13 +26,6 @@ public class AuthClient {
         return loginSpec(body);
     }
 
-    public Response loginAsAdmin() {
-        Map<String, String> body = Map.of(
 
-                "email", Secrets.get("ADMIN_EMAIL"),
-                "password", Secrets.get("ADMIN_PASSWORD")
-        );
-        return loginSpec(body);
 
-    }
 }
