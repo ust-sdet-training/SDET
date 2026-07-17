@@ -1,5 +1,6 @@
 import { expect, Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
+import { logger } from "../utils/Logger";
 
 
 export class BookingConfirmationPage extends BasePage {
@@ -18,10 +19,12 @@ export class BookingConfirmationPage extends BasePage {
     }
 
     async getPNRNumber() {
+        logger.info("[BookingConfirmationPage] Reading booking reference number");
         return await this.pnrNumber.textContent();
     }
 
     async clickViewMyTrip() {
+        logger.info("[BookingConfirmationPage] Opening My Trips page");
         await this.viewMyTripButton.click();
         await expect(this.page).toHaveURL(/\/my-trips/);
 

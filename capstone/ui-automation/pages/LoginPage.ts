@@ -1,5 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
+import { logger } from "../utils/Logger";
 
 export class LoginPage extends BasePage {
 
@@ -19,11 +20,12 @@ export class LoginPage extends BasePage {
     }
 
     async login(email: string, password: string) {
-
-        await this.click(this.loginLink);
-        await this.fill(this.emailTextbox, email);
-        await this.fill(this.passwordTextbox, password);
-        await this.click(this.signInButton);
+        logger.info("[LoginPage] Starting login flow");
+        await this.click(this.loginLink, "Login link");
+        await this.fill(this.emailTextbox, email, "email");
+        await this.fill(this.passwordTextbox, password, "password");
+        await this.click(this.signInButton, "Sign in button");
+        logger.info("[LoginPage] Login submitted");
     }
 
 }

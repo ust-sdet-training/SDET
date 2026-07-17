@@ -1,5 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
+import { logger } from "../utils/Logger";
 
 export class HomePage extends BasePage {
 
@@ -18,13 +19,12 @@ export class HomePage extends BasePage {
     }
 
     async searchFlight(from: string, to: string, date: string) {
-
-    await this.fill(this.fromTextbox, from);
-    await this.page.getByRole("option").first().click();
-    await this.fill(this.toTextbox, to);
-    await this.page.getByRole("option").first().click();
-    await this.fill(this.dateTextbox, date);
-    await this.click(this.searchButton);
-
-}
+        logger.info("[HomePage] Searching for a flight");
+        await this.fill(this.fromTextbox, from, "departure city");
+        await this.page.getByRole("option").first().click();
+        await this.fill(this.toTextbox, to, "destination city");
+        await this.page.getByRole("option").first().click();
+        await this.fill(this.dateTextbox, date, "travel date");
+        await this.click(this.searchButton, "Search button");
+    }
 }

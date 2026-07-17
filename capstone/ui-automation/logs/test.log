@@ -1,0 +1,33 @@
+2026-07-17T16:20:08.187Z [INFO] [LoginPage] Starting login flow
+2026-07-17T16:20:08.192Z [INFO] [LoginPage] Clicking Login link
+2026-07-17T16:20:08.476Z [INFO] [LoginPage] Filling email
+2026-07-17T16:20:08.501Z [INFO] [LoginPage] Filling password
+2026-07-17T16:20:08.513Z [INFO] [LoginPage] Clicking Sign in button
+2026-07-17T16:20:09.086Z [INFO] [LoginPage] Login submitted
+2026-07-17T16:20:09.087Z [INFO] [HomePage] Searching for a flight
+2026-07-17T16:20:09.088Z [INFO] [HomePage] Filling departure city
+2026-07-17T16:20:09.182Z [INFO] [HomePage] Filling destination city
+2026-07-17T16:20:09.232Z [INFO] [HomePage] Filling travel date
+2026-07-17T16:20:09.243Z [INFO] [HomePage] Clicking Search button
+2026-07-17T16:20:09.460Z [INFO] [SearchResultPage] Verifying search results
+2026-07-17T16:20:09.516Z [INFO] [SearchResultPage] Booking flight at index 0
+2026-07-17T16:20:09.806Z [INFO] [SeatSelectionPage] Selecting seat 2C
+2026-07-17T16:20:09.897Z [INFO] [SeatSelectionPage] Continuing to passenger details
+2026-07-17T16:20:09.897Z [INFO] [SeatSelectionPage] Clicking Continue button
+2026-07-17T16:20:10.178Z [INFO] [PassengerPage] Filling passenger details
+2026-07-17T16:20:10.178Z [INFO] [PassengerPage] Filling first name
+2026-07-17T16:20:10.224Z [INFO] [PassengerPage] Filling last name
+2026-07-17T16:20:10.241Z [INFO] [PassengerPage] Filling age
+2026-07-17T16:20:10.274Z [INFO] [PassengerPage] Filling email
+2026-07-17T16:20:10.287Z [INFO] [PassengerPage] Filling phone number
+2026-07-17T16:20:10.306Z [INFO] [PassengerPage] Continuing to payment
+2026-07-17T16:20:10.306Z [INFO] [PassengerPage] Clicking Continue button
+2026-07-17T16:20:10.683Z [INFO] [PaymentPage] Entering payment details
+2026-07-17T16:20:10.683Z [INFO] [PaymentPage] Filling card holder name
+2026-07-17T16:20:10.728Z [INFO] [PaymentPage] Filling card number
+2026-07-17T16:20:10.744Z [INFO] [PaymentPage] Filling expiry date
+2026-07-17T16:20:10.770Z [INFO] [PaymentPage] Filling CVV
+2026-07-17T16:20:10.790Z [INFO] [PaymentPage] Submitting payment
+2026-07-17T16:20:10.791Z [INFO] [PaymentPage] Clicking Pay button
+2026-07-17T16:20:11.252Z [INFO] [BookingConfirmationPage] Reading booking reference number
+2026-07-17T16:20:11.290Z [INFO] [BookingConfirmationPage] Opening My Trips page

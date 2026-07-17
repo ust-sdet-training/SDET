@@ -1,5 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
+import { logger } from "../utils/Logger";
 
 export class SeatSelectionPage extends BasePage {
 
@@ -14,6 +15,7 @@ export class SeatSelectionPage extends BasePage {
     }
 
     async selectAvailableSeat() {
+        logger.info("[SeatSelectionPage] Selecting first available seat");
         const availableSeat = this.page
             .locator('[aria-label*="available"]')
             .first();
@@ -21,13 +23,15 @@ export class SeatSelectionPage extends BasePage {
     }
 
     async selectSeat(seatNumber: string) {
+        logger.info(`[SeatSelectionPage] Selecting seat ${seatNumber}`);
         await this.page
             .getByLabel(new RegExp(`Seat\\s+${seatNumber}.*available`))
             .click();
     }
 
     async continueBooking() {
-        await this.click(this.continueButton);
+        logger.info("[SeatSelectionPage] Continuing to passenger details");
+        await this.click(this.continueButton, "Continue button");
     }
 
 }

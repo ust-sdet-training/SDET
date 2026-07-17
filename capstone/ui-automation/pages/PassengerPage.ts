@@ -1,5 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
+import { logger } from "../utils/Logger";
 
 export class PassengerPage extends BasePage {
 
@@ -31,24 +32,20 @@ export class PassengerPage extends BasePage {
         email: string;
         phoneNumber: string;
     }) {
-
-        await this.fill(this.firstNameTextbox, passenger.firstName);
-
-        await this.fill(this.lastNameTextbox, passenger.lastName);
-
-        await this.fill(this.ageTextbox, passenger.age.toString());
-
+        logger.info("[PassengerPage] Filling passenger details");
+        await this.fill(this.firstNameTextbox, passenger.firstName, "first name");
+        await this.fill(this.lastNameTextbox, passenger.lastName, "last name");
+        await this.fill(this.ageTextbox, passenger.age.toString(), "age");
         await this.genderDropdown.selectOption({
             label: passenger.gender
         });
-
-        await this.fill(this.emailTextbox, passenger.email);
-
-        await this.fill(this.phoneTextbox, passenger.phoneNumber);
+        await this.fill(this.emailTextbox, passenger.email, "email");
+        await this.fill(this.phoneTextbox, passenger.phoneNumber, "phone number");
     }
 
     async continueBooking() {
-        await this.click(this.continueButton);
+        logger.info("[PassengerPage] Continuing to payment");
+        await this.click(this.continueButton, "Continue button");
     }
 
 }

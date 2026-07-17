@@ -1,5 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
+import { logger } from "../utils/Logger";
 
 
 export class PaymentPage extends BasePage {
@@ -25,15 +26,17 @@ export class PaymentPage extends BasePage {
 
 
     async enterPaymentDetails(payment: {cardHolderName: string; cardNumber: string; expiryDate: string; cvv: string;}) {
-        await this.fill(this.cardHolderNameTextbox,payment.cardHolderName);
-        await this.fill(this.cardNumberTextbox, payment.cardNumber);
-        await this.fill(this.expiryTextbox,payment.expiryDate);
-        await this.fill(this.cvvTextbox,payment.cvv);
+        logger.info("[PaymentPage] Entering payment details");
+        await this.fill(this.cardHolderNameTextbox,payment.cardHolderName, "card holder name");
+        await this.fill(this.cardNumberTextbox, payment.cardNumber, "card number");
+        await this.fill(this.expiryTextbox,payment.expiryDate, "expiry date");
+        await this.fill(this.cvvTextbox,payment.cvv, "CVV");
 
     }
 
     async completePayment() {
-        await this.click(this.payButton);
+        logger.info("[PaymentPage] Submitting payment");
+        await this.click(this.payButton, "Pay button");
     }
 
 }
