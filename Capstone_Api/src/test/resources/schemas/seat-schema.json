@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+
+  "type": "object",
+
+  "required": [
+    "busId",
+    "operator",
+    "layout",
+    "decks"
+  ],
+
+  "properties": {
+
+    "busId": {
+      "type": "string"
+    },
+
+    "operator": {
+      "type": "string"
+    },
+
+    "layout": {
+      "type": "string"
+    },
+
+    "decks": {
+
+      "type": "object",
+
+      "required": [
+        "lower",
+        "upper"
+      ],
+
+      "properties": {
+
+        "lower": {
+          "type": "array"
+        },
+
+        "upper": {
+          "type": "array"
+        }
+
+      }
+
+    }
+
+  }
+
+}

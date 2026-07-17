@@ -1,0 +1,54 @@
+{
+  "$schema":"https://json-schema.org/draft-07/schema#",
+  "type":"object",
+
+  "required":[
+    "id",
+    "empId",
+    "journeyType",
+    "inventoryId",
+    "state",
+    "seatIds",
+    "amountPaise",
+    "refundable"
+  ],
+
+  "properties":{
+
+    "id":{
+      "type":"string"
+    },
+
+    "empId":{
+      "type":"string"
+    },
+
+    "journeyType":{
+      "type":"string"
+    },
+
+    "inventoryId":{
+      "type":"string"
+    },
+
+    "state":{
+      "type":"string"
+    },
+
+    "seatIds":{
+      "type":"array"
+    },
+
+    "amountPaise":{
+      "type":"integer"
+    },
+
+    "refundable":{
+      "type":"boolean"
+    },
+
+    "holdExpiresAt":{
+      "type":"string"
+    }
+  }
+}

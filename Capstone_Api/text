@@ -1,0 +1,209 @@
+# SDET Capstone — Participant Preparation Guide
+
+**Week 7 · Days 5 & 6 · Final Capstone**
+
+This guide tells you **what to prepare** and **how the two days will run**. It is an
+outline on purpose — the live site, the exact scenarios, and your individual
+injected conditions are given to you on the day. Prepare the *skills*, not a script.
+
+---
+
+## 1. What the capstone is
+
+You have spent seven weeks building automation skills in separate suites. In the
+final two days you **assemble them into one integrated, production-grade quality
+gate** that runs in CI against a **live, cloud-hosted travel-booking site** — and
+you **prove it still holds when the site is deliberately broken underneath you.**
+
+- **Day 5 — Build & integrate.** A full day of individual engineering. Goal by end
+  of day: one integrated suite running green in CI, resilience built in, evidence
+  assembled, and a demo dry-run completed.
+- **Day 6 — Live gate.** You demo your suite live while real faults, a real
+  performance regression, and a real DOM change are injected into the running
+  site. Every diagnosis and explanation is **your own** — there is no AI in the loop
+  and nothing is rehearsed on a happy path.
+
+**This is individual work.** Everyone does the same engineering against a different
+booking scenario and a different set of injected conditions.
+
+---
+
+## 2. What you will build
+
+**One integrated suite, two projects, one repository, one pipeline** covering the
+full stack:
+
+| Layer | You automate | Concern |
+|---|---|---|
+| Web UI | the booking journeys | UI end-to-end, locators |
+| REST API | the same journeys as an API | request/response contracts |
+| Database | the data the API wrote | data-integrity / ownership assertions |
+| Resilience | behaviour under injected faults | detect + diagnose + recover |
+| Performance | a baseline + threshold | catch and explain a regression |
+| Security | access-control + a scan gate | authorization negatives, scanner findings |
+
+All of it wired together by a **single CI pipeline** that gates the merge and
+publishes the evidence.
+
+---
+
+## 3. Tools & technologies to be comfortable with
+
+Be fluent with these **before** Day 5 — you will not have time to learn a tool on
+the day.
+
+**Core automation**
+- **Playwright (TypeScript)** — UI automation: role-first locators, auto-waiting,
+  multi-browser projects, traces, page objects / reusable components.
+- **RestAssured (Java)** — REST API automation: request specs, response validation,
+  JSON assertions, auth headers.
+- **JDBC (Java)** — database validation (your Week-2 skill): connecting, querying,
+  asserting rows against what the API did.
+- **JUnit 5** — the Java test runner (lifecycle, tags, parameterised tests).
+
+**Build, CI & evidence**
+- **Maven *or* Gradle** — your choice for the Java project — and **npm / Node** for
+  the TypeScript project. Use whichever Java build tool you're most comfortable with;
+  just make sure your CI job builds and runs it cleanly.
+- **GitHub Actions** — one workflow, two jobs (UI + API), parallel tagged runs,
+  gates, and artifacts.
+- **Allure** — reporting (history, categories, attachments) uploaded as CI evidence.
+- **Playwright traces** — captured and uploaded for debugging evidence.
+
+**Specialist gates**
+- **A load-testing tool** — k6 / JMeter / Gatling — for a performance baseline and a
+  threshold gate.
+- **OWASP ZAP** — a baseline security scan wired as a build gate.
+- **WireMock / mocking concepts** (Week-4 skill) — understand how a fault-injectable
+  dependency behaves, so you can reason about what your resilience tests observe.
+
+**Foundations**
+- **Git / GitHub** — branching, PRs, branch protection.
+- **A secrets store / environment configuration** — resolving credentials at runtime.
+
+---
+
+## 4. Topics & skills that are covered (and graded)
+
+Your work is scored across these dimensions. Prepare each one deliberately.
+
+1. **Framework structure & quality** — both projects layered; thin tests; nothing
+   hardcoded; locators and endpoints centralised. *(Reviewed first, weighted highest.)*
+2. **Locator strategy** — semantic **role/label-first** locators; a **dynamic,
+   relative, parameterised XPath** only where structure is the sole anchor. No
+   absolute paths, positional indexes, or generated-class selectors.
+3. **Integration completeness** — UI + API + DB against one live site, in one pipeline.
+4. **Resilience under injected fault** — your suite **detects** the failure, you
+   **diagnose the root cause**, and you show a circuit breaker opening and recovering.
+5. **Performance** — a baseline, a threshold gate, and you **explain the anomaly** and
+   verify it against a distributed trace.
+6. **Security** — a scan gate plus **authorization / access-control negatives**.
+7. **Secret test-data handling** — classify public vs secret data; resolve secrets at
+   runtime; mask them everywhere; never in the repo, the reports, or the demo.
+8. **CI pipeline** — two-job workflow, parallel tagged tests, security & performance
+   gates, evidence as artifacts, merge blocked unless green.
+9. **Locator resilience to a live DOM change** — when the page structure is changed on
+   Day 6, well-built locators keep passing; any brittle one you diagnose and fix live.
+10. **Coverage analysis + individual viva** — a traceability matrix by hand, and an
+    honest judgement on where the risk is and what you would *not* automate.
+
+---
+
+## 5. How to prepare — a checklist by skill area
+
+**Locators**
+- Default to role/label/text; understand *why* those are stable.
+- Know when structure forces a relative dynamic XPath, and how to keep it robust
+  (anchor on stable text/attributes; shallow axis hops; parameterise the variable bits).
+- Practise the failure mode: a class rename, a re-ordered node, a renamed attribute, a
+  new wrapper, a tag change — which of your locators survive, and which break?
+
+**Test design from a state machine**
+- Practise deriving a test set from a lifecycle/state model: valid transitions give the
+  happy paths, **invalid transitions give the high-value negatives** (each with a
+  specific expected outcome you assert).
+
+**API + DB**
+- RestAssured: build requests, assert status + body; carry auth.
+- JDBC: after an API action, assert the database reflects it — including a **data
+  ownership / isolation** boundary (one user must not see another user's data).
+
+**Resilience**
+- Understand retries, timeouts, and **circuit-breaker** behaviour.
+- Practise **diagnosing** a downstream fault (decline vs error vs timeout vs
+  connection loss vs slow) — not just seeing a red test.
+
+**Performance**
+- Establish a baseline, set a threshold that fails the build on breach, and be able to
+  **read a trace** to say *where* the latency came from.
+
+**Security**
+- Run a baseline scan and understand common findings.
+- Write access-control negatives: a user reaching another user's resource is rejected;
+  a low-privilege user attempting a privileged action is rejected; expired / tampered
+  credentials are rejected.
+
+**Secrets discipline**
+- Classify what is public test data vs secret. Resolve secrets from env / a store.
+- Mask in logs, reports, and attachments. Keep them out of the repo **and** the
+  recording — a secret shown once in a shared recording must be rotated.
+
+**CI**
+- A workflow that installs, lints/compiles, runs **tagged tests in parallel**, gates on
+  security & performance, uploads Allure + traces as artifacts, and **blocks the merge**
+  unless everything is green.
+
+**Evidence**
+- Allure history & categories; traces; a baseline / before-after; and a **traceability
+  matrix** mapping tests to the journeys and negatives.
+
+**Demo discipline** *(graded on Day 6)*
+- A ~10-minute walkthrough. Nothing secret on screen — masked fields, cleared console,
+  no network tab on camera, reports opened only after redaction. **Record a dry-run and
+  watch it back** for leaks.
+
+---
+
+## 6. How Day 6 runs (what to expect)
+
+- Individual demos in parallel tracks, roughly 20 minutes each (demo + individual viva).
+- During your slot, your assigned conditions are **injected live** into the running
+  site for *your* session only — a downstream fault, a performance regression, and a
+  structural DOM change.
+- You **detect, diagnose, and explain** each one live. There is no AI and no scripted
+  happy path; your reasoning is what is assessed.
+- You will also be asked the judgement questions: **where would you not automate, and
+  why did you locate it that way?**
+
+---
+
+## 7. What "done" looks like
+
+By the end of Day 5 you should have:
+
+- [ ] One repo, two projects, one CI pipeline — green.
+- [ ] UI + API + DB coverage of the booking journeys and their key negatives.
+- [ ] Role-first locators, with a centralised module for the few dynamic-XPath cases.
+- [ ] Resilience, performance, and security tests integrated and gated.
+- [ ] Secrets resolved off-repo and masked everywhere.
+- [ ] Allure + traces uploaded as CI artifacts; a traceability / coverage matrix.
+- [ ] Locators built to survive a structural change (your resilience insurance).
+- [ ] A recorded, secret-safe demo dry-run.
+
+---
+
+## 8. Suggested run-up (the week before)
+
+1. **Rebuild your foundations** — refresh Week-2 (API + JDBC), Week-3 (UI), Week-4
+   (contracts/mocking), Week-5 (stable, evidence-backed UI suites).
+2. **Stand up a skeleton repo** — two projects, one pipeline, green on a trivial test.
+   Get the CI plumbing working *before* the day.
+3. **Drill locators** — write both a robust and a brittle locator for the same element
+   and prove to yourself which survives a structural change.
+4. **Practise a full slice** — one journey end-to-end across UI + API + DB, with one
+   negative, one resilience assertion, and evidence uploaded.
+5. **Practise the demo** — 10 minutes, secret-safe, recorded and reviewed.
+
+> The tools are the easy part. The marks are in **the right locator for each element,
+> a clean layered framework, and being able to diagnose and explain what broke** — so
+> practise the judgement, not just the code.

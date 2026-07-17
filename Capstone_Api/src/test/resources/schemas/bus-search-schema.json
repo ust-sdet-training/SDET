@@ -1,0 +1,29 @@
+{
+  "type":"object",
+
+  "required":[
+    "from",
+    "to",
+    "count",
+    "buses"
+  ],
+
+  "properties":{
+
+    "from":{
+      "type":"string"
+    },
+
+    "to":{
+      "type":"string"
+    },
+
+    "count":{
+      "type":"integer"
+    },
+
+    "buses":{
+      "type":"array"
+    }
+  }
+}
