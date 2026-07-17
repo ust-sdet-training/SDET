@@ -495,3 +495,38 @@
 [INFO] 2026-07-17 15:12:32 - Clicking element
 [INFO] 2026-07-17 15:12:32 - Verifying booking confirmation page
 [INFO] 2026-07-17 15:12:32 - test finished {"status":"passed"}
+[INFO] 2026-07-17 20:09:26 - test started
+[INFO] 2026-07-17 20:09:26 - Opening Home Page
+[INFO] 2026-07-17 20:09:26 - Opening url: /
+[INFO] 2026-07-17 20:09:27 - Opening Login Page
+[INFO] 2026-07-17 20:09:27 - Clicking element
+[INFO] 2026-07-17 20:09:28 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-17 20:09:28 - Entering value: Password@123
+[INFO] 2026-07-17 20:09:28 - Clicking element
+[INFO] 2026-07-17 20:09:28 - Searching for Flight
+[INFO] 2026-07-17 20:09:28 - Entering value: CCU
+[INFO] 2026-07-17 20:09:28 - Entering value: BOM
+[INFO] 2026-07-17 20:09:28 - Entering value: 2026-08-10
+[INFO] 2026-07-17 20:09:28 - Clicking element
+[INFO] 2026-07-17 20:09:28 - Verifying flight results are displayed
+[INFO] 2026-07-17 20:09:29 - Number of flight cards: 8
+[INFO] 2026-07-17 20:09:29 - Clicking Book button
+[INFO] 2026-07-17 20:09:29 - Clicking element
+[INFO] 2026-07-17 20:09:29 - Selected seat: 6E
+[INFO] 2026-07-17 20:09:29 - Clicking element
+[INFO] 2026-07-17 20:09:29 - Filling passenger details
+[INFO] 2026-07-17 20:09:29 - Entering value: Mani
+[INFO] 2026-07-17 20:09:29 - Entering value: Prasad
+[INFO] 2026-07-17 20:09:29 - Entering value: 25
+[INFO] 2026-07-17 20:09:29 - Entering value: mani@example.com
+[INFO] 2026-07-17 20:09:29 - Proceeding to payment
+[INFO] 2026-07-17 20:09:29 - Clicking element
+[INFO] 2026-07-17 20:09:30 - Entering payment details
+[INFO] 2026-07-17 20:09:30 - Entering value: Mani Prasad
+[INFO] 2026-07-17 20:09:30 - Entering value: 3647848312340967
+[INFO] 2026-07-17 20:09:30 - Entering value: 23/30
+[INFO] 2026-07-17 20:09:30 - Entering value: 454
+[INFO] 2026-07-17 20:09:30 - Clicking Pay button
+[INFO] 2026-07-17 20:09:30 - Clicking element
+[INFO] 2026-07-17 20:09:30 - Verifying booking confirmation page
+[INFO] 2026-07-17 20:09:30 - test finished {"status":"passed"}

@@ -7,7 +7,8 @@ public record BookingRecord(
         String journeyType,
         String inventoryId,
         String state,
-        Integer amountPaise,
+        String seatIds,
+        Long amountPaise,
         boolean refundable
 ) {
 }
