@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": ["flight_id", "layout", "cols", "total", "available", "rows"],
+  "properties": {
+    "flight_id": { "type": "string" },
+    "layout": { "type": "string", "enum": ["cabin"] },
+    "cols": { "type": "array", "items": { "type": "string" } },
+    "total": { "type": "integer", "minimum": 0 },
+    "available": { "type": "integer", "minimum": 0 },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["row", "exit_row", "seats"],
+        "properties": {
+          "row": { "type": "integer" },
+          "exit_row": { "type": "boolean" },
+          "seats": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["seat_id", "row", "col", "occupied"],
+              "properties": {
+                "seat_id": { "type": "string" },
+                "row": { "type": "integer" },
+                "col": { "type": "string" },
+                "window": { "type": "boolean" },
+                "aisle": { "type": "boolean" },
+                "middle": { "type": "boolean" },
+                "exit_row": { "type": "boolean" },
+                "occupied": { "type": "boolean" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

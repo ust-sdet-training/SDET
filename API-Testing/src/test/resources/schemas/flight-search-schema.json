@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": ["from", "to", "count", "flights"],
+  "properties": {
+    "from": { "type": "string" },
+    "to": { "type": "string" },
+    "date": { "type": ["string", "null"] },
+    "pax": { "type": "integer", "minimum": 1 },
+    "class": { "type": "string", "enum": ["economy", "business"] },
+    "count": { "type": "integer", "minimum": 0 },
+    "flights": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "airline_code", "airline_name", "flight_no", "origin", "dest", "dep_time", "arr_time", "base_fare_paise", "tax_paise", "total_paise", "fare_display"],
+        "properties": {
+          "id": { "type": "string" },
+          "airline_code": { "type": "string" },
+          "airline_name": { "type": "string" },
+          "flight_no": { "type": "string" },
+          "origin": { "type": "string" },
+          "dest": { "type": "string" },
+          "dep_time": { "type": "string" },
+          "arr_time": { "type": "string" },
+          "base_fare_paise": { "type": "integer" },
+          "tax_paise": { "type": "integer" },
+          "total_paise": { "type": "integer" },
+          "fare_display": { "type": "string" }
+        }
+      }
+    }
+  }
+}

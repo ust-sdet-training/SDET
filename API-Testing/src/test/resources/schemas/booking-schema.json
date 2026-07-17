@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": ["id", "pnr", "empId", "journeyType", "inventoryId", "state", "seatIds", "amountPaise", "refundable", "holdExpiresAt"],
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "pnr": { "type": ["string", "null"] },
+    "empId": { "type": "string" },
+    "journeyType": { "type": "string", "enum": ["flight", "bus"] },
+    "inventoryId": { "type": "string" },
+    "state": { "type": "string", "enum": ["SEARCHED", "SELECTED", "HELD", "PAYMENT_PENDING", "CONFIRMED", "CANCELLED", "REFUNDED"] },
+    "seatIds": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "amountPaise": { "type": ["integer", "null"] },
+    "refundable": { "type": "boolean" },
+    "holdExpiresAt": { "type": ["string", "null"], "format": "date-time" }
+  }
+}
