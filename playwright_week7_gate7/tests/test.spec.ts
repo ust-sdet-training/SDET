@@ -3,7 +3,7 @@ import {environment} from '../config/environment'
 
 test.describe("SHOPKART", ()=>{
 
-    test("Flight Search",async({login,flight, search, available, log, evidence})=>{
+    test("Flight Search",async({login,flight, search, available,seat, pass, book,pay,confirm, log, evidence})=>{
 
         log.info("Flight Search test started");
 
@@ -24,6 +24,15 @@ test.describe("SHOPKART", ()=>{
         
         log.info("Checking the Flights available");
         await available.available()
+
+        await seat.seat('1A')
+
+        await pass.passengerselect(environment.firstname,environment.lastname,"23","Male",environment.email,environment.number)
+
+
+        await pay.pay(environment.cardname,environment.cardnumber,environment.expiry,environment.cvv)
+
+        await confirm.confirm()
 
 
         log.info("FLight Search Complete");

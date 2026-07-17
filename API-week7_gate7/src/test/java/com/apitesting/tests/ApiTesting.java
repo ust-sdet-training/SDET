@@ -1,24 +1,17 @@
 package com.apitesting.tests;
 
 import com.apitesting.config.Config;
-import com.apitesting.support.DBConnection;
-import com.apitesting.support.DataBase;
 import com.apitesting.support.Report;
 import com.apitesting.support.builders.ApiSpecBuilders;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.sql.Connection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 public class ApiTesting {
 
         public static String tokenGenerate() {
@@ -88,24 +81,7 @@ public class ApiTesting {
         Report.info("Response", res.asPrettyString());
     }
 
-//    @Test
-//    void verifyContainer() {
-//
-//        System.out.println(DataBase.mysql.getJdbcUrl());
-//        System.out.println(DataBase.mysql.getUsername());
-//        assertNotNull(DataBase.mysql.getJdbcUrl());
-//        assertNotNull(DataBase.mysql.getUsername());
-//
-//    }
-//
-//        @Test
-//        void verifyDatabaseConnection() throws Exception {
-//
-//            Connection con = DBConnection.getConnection();
-//
-//            assertNotNull(con);
-//            assertTrue(con.isValid(5));
-//        }
+
 
 
 
