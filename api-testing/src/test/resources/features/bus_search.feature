@@ -1,5 +1,4 @@
 @smoke
-@ui
 @api
 Feature: Bus search
 

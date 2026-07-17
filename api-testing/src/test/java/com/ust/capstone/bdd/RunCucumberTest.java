@@ -12,8 +12,8 @@ import static io.cucumber.junit.platform.engine.Constants.PLUGIN_PROPERTY_NAME;
 
 @Suite
 @IncludeEngines("cucumber")
+@SelectClasspathResource("features/login.feature")
 @SelectClasspathResource("features/bus_search.feature")
-
 @ConfigurationParameter(
         key = GLUE_PROPERTY_NAME,
         value = "com.ust.capstone.stepdefs"

@@ -6,6 +6,8 @@ import com.ust.capstone.api.model.LoginResponse;
 import com.ust.capstone.data.TestUsers;
 import com.ust.capstone.data.secret.Secrets;
 import com.ust.capstone.bdd.WorldContext;
+import io.cucumber.java.PendingException;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -60,6 +62,11 @@ public class LoginSteps {
                 TestUsers.BOB_EMAIL,
                 Secrets.get("TRIPSTACK_BOB_PASSWORD")
         );
+    }
+
+    @And("the token is tampered")
+    public void theTokenIsTampered() {
+
     }
 
     private record Credentials(String email, String password) {
