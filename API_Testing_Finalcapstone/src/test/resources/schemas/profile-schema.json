@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["empId", "email"],
+  "properties": {
+    "empId": { "type": "string" },
+    "email": { "type": "string" },
+    "role": { "type": "string" },
+    "displayName": { "type": "string" }
+  },
+  "additionalProperties": true
+}

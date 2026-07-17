@@ -29,7 +29,7 @@ From
 To
 Departure date
 ‹
-August 2026
+July 2026
 ›
 Sun
 Mon
@@ -70,7 +70,7 @@ Sat
 30
 31
 
-Selected: Tuesday, 11 August 2026
+Selected: none
 
 Passengers
 −

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["token", "empId"],
+  "properties": {
+    "token": { "type": "string" },
+    "empId": { "type": "string" },
+    "email": { "type": "string" },
+    "role": { "type": "string" },
+    "displayName": { "type": "string" }
+  },
+  "additionalProperties": true
+}

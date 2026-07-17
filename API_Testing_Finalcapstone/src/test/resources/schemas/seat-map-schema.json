@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["flight_id", "rows"],
+  "properties": {
+    "flight_id": { "type": "string" },
+    "layout": { "type": "string" },
+    "cols": { "type": "array" },
+    "total": { "type": "integer" },
+    "available": { "type": "integer" },
+    "rows": { "type": "array" }
+  },
+  "additionalProperties": true
+}

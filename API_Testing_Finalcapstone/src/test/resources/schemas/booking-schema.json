@@ -1,10 +1,21 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
-  "required": ["status", "message"],
+  "required": ["id", "state", "journeyType", "inventoryId", "seatIds", "refundable"],
   "properties": {
-    "status": { "type": "string" },
-    "message": { "type": "string" }
+    "id": { "type": "string" },
+    "pnr": { "type": ["string", "null"] },
+    "empId": { "type": "string" },
+    "journeyType": { "type": "string" },
+    "inventoryId": { "type": "string" },
+    "state": { "type": "string" },
+    "seatIds": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "amountPaise": { "type": "integer" },
+    "refundable": { "type": "boolean" },
+    "holdExpiresAt": { "type": "string" }
   },
-  "additionalProperties": false
+  "additionalProperties": true
 }

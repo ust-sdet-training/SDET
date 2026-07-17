@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["from", "to", "date", "pax", "class", "count", "flights"],
+  "properties": {
+    "from": { "type": "string" },
+    "to": { "type": "string" },
+    "date": { "type": "string" },
+    "pax": { "type": "integer" },
+    "class": { "type": "string" },
+    "count": { "type": "integer" },
+    "flights": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": { "type": "string" }
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

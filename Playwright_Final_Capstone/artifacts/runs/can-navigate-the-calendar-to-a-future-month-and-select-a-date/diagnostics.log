@@ -1,4 +1,4 @@
 Test: can navigate the calendar to a future month and select a date
-Status: passed
-Finished at: 2026-07-17T11:31:35.590Z
+Status: timedOut
+Finished at: 2026-07-17T16:41:36.939Z
 Base URL: https://tripstack.doomple.com/
