@@ -7,7 +7,6 @@ export class BusListPage{
         //await expect(this.page.getByRole('heading', { name: 'Product Catalog' })).toBeVisible();
     }
 
-    resultCount = () => this.page.getByTestId('catalog-result-count');
     
     async selectBus(busName: string): Promise<void> {
           await this.page.getByLabel(busName).getByRole('button', { name: 'Select Seats' }).click();

@@ -7,8 +7,10 @@ import { HomePage } from "../../main/ui/pages/HomePage";
 import { LoginPage } from "../../main/ui/pages/LoginPage";
 import { PaymentPage } from "../../main/ui/pages/PaymentPage";
 import { testUsers } from "../fixtures/test-users";
+import { secrets } from "../../main/utils/secrets";
 
-export class BookFlow{
+export class BookFlow {
+    private selectedSeat!: string;
     readonly bookingPage: BookingPage;
     readonly busDetailPage: BusDetailPage;
     readonly busListPage: BusListPage;
@@ -29,27 +31,19 @@ export class BookFlow{
     loginSuccessFlow = async () => {
         await this.loginPage.goto();
         await this.loginPage.login(testUsers.user.email, testUsers.user.password);
-
-        // await expect(this.page).toHaveURL(/\/home/);
-        // await expect.soft(this.page.getByRole('heading', {name: `Welcome, ${testUsers.customer.displayName}`})).toBeVisible();
-        // await expect.soft(this.page.getByRole('button', { name: 'Sign out' }));
     }
 
-    // loginFailureFlow = async () => {
-    //     await this.loginPage.goto();
-    //     await this.loginPage.login(testUsers.invalid.email, testUsers.invalid.password);
 
-    //     await expect.soft(this.page).toHaveURL(/\/login/);
-    //     await expect.soft(this.page.getByTestId('login-error')).toBeVisible();
-    // }
-
-    travellerDetails = async (email: string, phone: string) => {
-        await this.bookingPage.travellerDetails(email, phone);
+    selectSeat = async (): Promise<void> => {
+        this.selectedSeat =
+            await this.busDetailPage.selectSeat();
     };
 
-    selectSeat = async () => {
-        await this.busDetailPage.selectSeat();
-    }
+
+    travellerDetails = async (email: string, phone: string,) => {
+        await this.bookingPage.travellerDetails(this.selectedSeat, email, phone);
+    };
+
 
     selectBus = async (busName: string) => {
         await this.busListPage.selectBus(busName);
@@ -64,6 +58,9 @@ export class BookFlow{
     }
 
     payment = async () => {
-        await this.paymentPage.payment();
+        const CARD_NUMBER = secrets.get("CARD_NUMBER");
+        const CARD_EXPIRY = secrets.get('CARD_EXPIRY');
+        const CARD_CVV = secrets.get("CARD_CVV");
+        await this.paymentPage.payment(CARD_NUMBER, CARD_EXPIRY, CARD_CVV);
     }
 }

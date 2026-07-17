@@ -1,16 +1,19 @@
-import { expect, Page } from "@playwright/test";
+import { Page } from "@playwright/test";
 
-export class BusDetailPage{
-    constructor(private readonly page: Page) {}  
-    async goto() {
-        await this.page.goto('/');
-        //await expect(this.page.getByRole('heading', { name: 'Product Catalog' })).toBeVisible();
-    }
+export class BusDetailPage {
+  constructor(private readonly page: Page) {}
 
-    resultCount = () => this.page.getByTestId('catalog-result-count');
-    
-    async selectSeat(): Promise<void> {
-        await this.page.getByRole('button', { name: 'Seat L3 available' }).click();
-        await this.page.getByRole('button', { name: 'Continue to passenger details'}).click();    
-    }
+  async selectSeat(): Promise<string> {
+    const seatNumber = "L3";
+
+    await this.page
+      .getByRole("button", { name: `Seat ${seatNumber} available` })
+      .click();
+
+    await this.page
+      .getByRole("button", { name: "Continue to passenger details" })
+      .click();
+
+    return seatNumber;
+  }
 }

@@ -1,23 +1,18 @@
 import { expect, Page } from "@playwright/test";
+import { secrets } from "../../utils/secrets";
 
 export class PaymentPage{
     constructor(private readonly page: Page) {}  
     async goto() {
         await this.page.goto('/');
-        //await expect(this.page.getByRole('heading', { name: 'Product Catalog' })).toBeVisible();
     }
 
-    resultCount = () => this.page.getByTestId('catalog-result-count');
     
-    async payment(): Promise<void> {
-        await this.page.getByRole('textbox', { name: 'Name on card' }).click();
+    async payment(CARD_NUMBER: string, CARD_EXPIRY: string, CARD_CVV: string): Promise<void> {
         await this.page.getByRole('textbox', { name: 'Name on card' }).fill('Bob Tedd');
-        await this.page.getByRole('textbox', { name: 'Card number' }).click();
-        await this.page.getByRole('textbox', { name: 'Card number' }).fill('1234567890123456');
-        await this.page.getByRole('textbox', { name: 'Expiry' }).click();
-        await this.page.getByRole('textbox', { name: 'Expiry' }).fill('12/28');
-        await this.page.getByRole('textbox', { name: 'CVV' }).click();
-        await this.page.getByRole('textbox', { name: 'CVV' }).fill('244');
+        await this.page.getByRole('textbox', { name: 'Card number' }).fill(CARD_NUMBER);
+        await this.page.getByRole('textbox', { name: 'Expiry' }).fill(CARD_EXPIRY || '');
+        await this.page.getByRole('textbox', { name: 'CVV' }).fill(CARD_CVV || '');
         await this.page.getByRole('button', { name: 'Pay ₹' }).click();  
     }
 }

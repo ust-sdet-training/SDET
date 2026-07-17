@@ -4,10 +4,8 @@ export class HomePage{
     constructor(private readonly page: Page) {}  
     async goto() {
         await this.page.goto('/');
-        //await expect(this.page.getByRole('heading', { name: 'Product Catalog' })).toBeVisible();
     }
 
-    resultCount = () => this.page.getByTestId('catalog-result-count');
     
     async search(from: string, to: string, date: string): Promise<void> {
         await this.page.getByRole('tab', { name: 'Buses' }).click();

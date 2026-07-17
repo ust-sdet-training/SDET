@@ -1,0 +1,31 @@
+[
+  {
+    "name": "Assertion Failures",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*AssertionFailedError.*"
+  },
+  {
+    "name": "UI Automation Issues",
+    "matchedStatuses": ["broken"],
+    "messageRegex": ".*(NoSuchElementException|StaleElementReferenceException|TimeoutException).*"
+  },
+  {
+    "name": "Database Issues",
+    "matchedStatuses": ["broken"],
+    "messageRegex": ".*(SQLException|PSQLException|Flyway).*"
+  },
+  {
+    "name": "Configuration Issues",
+    "matchedStatuses": ["broken"],
+    "messageRegex": ".*(IllegalStateException|IllegalArgumentException).*"
+  },
+  {
+    "name": "Infrastructure Issues",
+    "matchedStatuses": ["broken"],
+    "messageRegex": ".*(ContainerLaunchException|Docker|connection refused|connection reset).*"
+  },
+  {
+    "name": "Other Failures",
+    "matchedStatuses": ["broken"]
+  }
+]
