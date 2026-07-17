@@ -1,0 +1,24 @@
+
+# Playwright
+node_modules/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+playwright/.auth/
+.env
+.env.*
+!.env.example
+allure-results/
+allure-report/
+coverage/
+screenshots/
+videos/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.tmp
+*.temp
+*.bak
+*.swp
