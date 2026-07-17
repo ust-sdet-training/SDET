@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "flight_id",
+    "layout",
+    "available",
+    "rows"
+  ],
+  "properties": {
+    "flight_id": {
+      "type": "string"
+    },
+    "layout": {
+      "type": "string"
+    },
+    "available": {
+      "type": "integer"
+    },
+    "rows": {
+      "type": "array"
+    }
+  }
+}
