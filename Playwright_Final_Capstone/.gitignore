@@ -3,3 +3,12 @@ playwright-report/
 test-results/
 blob-report/
 .env
+artifacts/
+playwright-report/
+test-results/
+blob-report/
+*.zip
+*.webm
+*.png
+*.jpg
+``
