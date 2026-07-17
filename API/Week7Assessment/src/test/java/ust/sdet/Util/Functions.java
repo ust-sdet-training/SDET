@@ -1,5 +1,6 @@
 package ust.sdet.Util;
 
+import io.restassured.response.Response;
 import ust.sdet.Data.TestDataBuilder;
 import ust.sdet.SpecFactory.ConfigSpec;
 
@@ -21,6 +22,20 @@ public class Functions {
                 .extract()
                 .response()
                 .path("token");
+    }
+
+    public Response searchFlight(){
+        return given()
+                .spec(configSpec.setHeaders())
+                .body(testDataBuilder.buildLoginPayload("Carol"))
+                .queryParam("from","BLR")
+                .queryParam("to","GOI")
+                .queryParam("date","2026-07-17")
+                .when()
+                .get("/flights")
+                .then()
+                .extract()
+                .response();
     }
 
 }

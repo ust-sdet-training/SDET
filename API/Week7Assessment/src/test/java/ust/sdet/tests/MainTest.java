@@ -1,6 +1,7 @@
 package ust.sdet.tests;
 
 import io.cucumber.java.eo.Se;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import ust.sdet.Data.TestDataBuilder;
 import ust.sdet.SpecFactory.ConfigSpec;
@@ -29,7 +30,9 @@ public class MainTest {
 
         String token = utilFunctions.getToken();
 
+        Response response = utilFunctions.searchFlight();
 
+        System.out.println(response.asPrettyString());
 
     }
 
