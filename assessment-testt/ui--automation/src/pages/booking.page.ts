@@ -30,6 +30,24 @@ export class BookingPage {
     await this.searchButton.click();
   }
 
+  // Use the visible datepicker to select a date (simulates real user interaction)
+  async chooseBusRouteWithDatePicker(from: string, to: string, date: string) {
+    await this.busTab.click();
+    await this.fromInput.click();
+    await this.fromInput.fill(from);
+    await this.page.getByRole("option", { name: `Goa GOI` }).click();
+    await this.toInput.click();
+    await this.page.getByRole("option", { name: `Bengaluru BLR` }).click();
+
+    await this.dateInput.click();
+    const day = String(new Date(date).getDate());
+
+    const dayButton = this.page.getByRole("button", { name: day }).first();
+    await dayButton.click();
+
+    await this.searchButton.click();
+  }
+
   async selectBus() {
     await this.page
       .getByLabel("Orange Tours")

@@ -1,0 +1,7 @@
+Step | Result | Details
+--- | --- | ---
+Payment | Completed | Completed payment form and clicked pay
+Navigation | Completed | Reached My Trips view after booking
+PNR | Verified | Found PNR: TS-1024-0017
+My Trips | Ownership | Verified 17 booking(s) belong to TS-1024-
+Cancellation | Completed | Booking TS-1024-0017 marked REFUNDED

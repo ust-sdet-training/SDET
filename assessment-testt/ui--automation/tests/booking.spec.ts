@@ -62,6 +62,57 @@ test("E24 end-to-end bus booking and PNR validation", async ({
     `Verified ${pnrValues.length} booking(s) belong to ${expectedPnrPrefix}`,
   );
 
+  // Cancel the first booking so the test can be re-run cleanly
+  const cancelButton = page.getByRole("button", { name: "Cancel" }).first();
+  await cancelButton.click();
+
+  // Try common confirmation buttons in the cancellation modal
+  const confirmButtons = [
+    page.getByRole("button", { name: "Confirm" }),
+    page.getByRole("button", { name: "Yes" }),
+    page.getByRole("button", { name: /Yes, cancel/i }),
+    page.getByRole("button", {
+      name: /Confirm Cancellation|Cancel Booking|Confirm Cancel/i,
+    }),
+  ];
+
+  let cancelled = false;
+  for (const btn of confirmButtons) {
+    try {
+      if (await btn.isVisible()) {
+        await btn.click();
+        cancelled = true;
+        break;
+      }
+    } catch (e) {
+      // ignore and try next
+    }
+  }
+
+  if (!cancelled) {
+    page.on("dialog", (d) => d.accept());
+  }
+
+  if (pnrText) {
+    const pnrTrim = pnrText.trim();
+    const pnrLocator = page.locator(`text=${pnrTrim}`).first();
+    try {
+      await expect(pnrLocator).not.toBeVisible({ timeout: 10000 });
+      logger.info("Cancellation", "Completed", `Cancelled booking ${pnrTrim}`);
+    } catch (e) {
+      const bookingCard = page.locator(`:has-text("${pnrTrim}")`).first();
+      const refundedBadge = bookingCard
+        .getByText("REFUNDED", { exact: false })
+        .first();
+      await expect(refundedBadge).toBeVisible({ timeout: 10000 });
+      logger.info(
+        "Cancellation",
+        "Completed",
+        `Booking ${pnrTrim} marked REFUNDED`,
+      );
+    }
+  }
+
   await test.info().attach("booking-diagnosis", {
     body: Buffer.from(logger.getTable(), "utf-8"),
     contentType: "text/markdown",
