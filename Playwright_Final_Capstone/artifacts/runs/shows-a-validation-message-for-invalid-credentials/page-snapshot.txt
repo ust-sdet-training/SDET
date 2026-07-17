@@ -1,0 +1,18 @@
+TripStack
+Flights
+Buses
+Log in
+Sign in to TripStack
+
+Book flights and buses, pick your seat, get a PNR.
+
+Invalid email or password.
+
+Email
+Password
+Sign in
+
+Demo login — dave@tripstack.test / Password@123
+
+© TripStack — a demo travel marketplace for SDET training.
+Flights · Buses · Seat selection · Secure checkout

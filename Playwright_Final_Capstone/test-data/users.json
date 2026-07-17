@@ -1,0 +1,3 @@
+{
+  "description": "Credentials are intentionally resolved from environment variables at runtime."
+}

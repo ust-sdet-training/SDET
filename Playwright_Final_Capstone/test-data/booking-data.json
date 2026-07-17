@@ -1,0 +1,9 @@
+{
+  "origin": "MAA",
+  "destination": "HYD",
+  "daysToTravel": 25,
+  "cabinClass": "business",
+  "flightName": "Vistara UK-174",
+  "seat": "12B",
+  "seatPosition": "middle"
+}
