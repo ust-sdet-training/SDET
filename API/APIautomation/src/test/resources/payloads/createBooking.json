@@ -1,0 +1,6 @@
+{
+  "journeyType": "bus",
+  "inventoryId": "BUS-IXCBLR-1",
+  "seatIds": ["L3"],
+  "refundable": true
+}

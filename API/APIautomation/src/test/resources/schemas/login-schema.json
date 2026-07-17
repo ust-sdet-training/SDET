@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "token": {
+      "type": "string"
+    },
+    "empId": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
+    },
+    "displayName": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "token",
+    "empId",
+    "role",
+    "displayName"
+  ]
+}

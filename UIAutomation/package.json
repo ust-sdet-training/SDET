@@ -1,0 +1,15 @@
+{
+  "name": "ui-automation",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "headed": "playwright test --headed",
+    "debug": "playwright test --debug",
+    "report": "playwright show-report",
+    "smoke": "playwright test --grep @smoke",
+    "regression": "playwright test --grep @regression",
+    "security": "playwright test tests/security",
+    "resilience": "playwright test tests/resilience"
+  }
+}
