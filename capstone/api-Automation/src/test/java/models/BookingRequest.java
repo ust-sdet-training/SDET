@@ -1,39 +1,46 @@
 package models;
 
+import java.util.List;
 
 public class BookingRequest {
 
-
-    private String flightId;
-    private String passengerId;
-    private String seatNumber;
-
+    private String journeyType;
+    private String inventoryId;
+    private List<String> seatIds;
+    private boolean refundable;
+    private int holdTtlSec;
 
     public BookingRequest(
-            String flightId,
-            String passengerId,
-            String seatNumber
-    ){
-
-        this.flightId=flightId;
-        this.passengerId=passengerId;
-        this.seatNumber=seatNumber;
-
+            String journeyType,
+            String inventoryId,
+            List<String> seatIds,
+            boolean refundable,
+            int holdTtlSec
+    ) {
+        this.journeyType = journeyType;
+        this.inventoryId = inventoryId;
+        this.seatIds = seatIds;
+        this.refundable = refundable;
+        this.holdTtlSec = holdTtlSec;
     }
 
-
-    public String getFlightId(){
-        return flightId;
+    public String getJourneyType() {
+        return journeyType;
     }
 
-
-    public String getPassengerId(){
-        return passengerId;
+    public String getInventoryId() {
+        return inventoryId;
     }
 
-
-    public String getSeatNumber(){
-        return seatNumber;
+    public List<String> getSeatIds() {
+        return seatIds;
     }
 
+    public boolean isRefundable() {
+        return refundable;
+    }
+
+    public int getHoldTtlSec() {
+        return holdTtlSec;
+    }
 }

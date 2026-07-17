@@ -16,6 +16,7 @@ public class AuthClient {
                 given()
                         .spec(RequestSpec.request())
                         .log().all()
+
                         .body(
                                 """
                                 {
@@ -23,8 +24,8 @@ public class AuthClient {
                                   "password": "%s"
                                 }
                                 """.formatted(
-                                        ConfigReader.get("auth.email"),
-                                        ConfigReader.get("auth.password")
+                                        ConfigReader.get("email"),
+                                        ConfigReader.get("password")
                                 )
                         )
                         .when()

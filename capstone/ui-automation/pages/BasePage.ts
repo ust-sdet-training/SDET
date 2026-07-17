@@ -1,10 +1,12 @@
 import { Locator, Page } from "@playwright/test";
+import { logger } from "../utils/Logger";
 
 export class BasePage {
 
     constructor(protected page: Page) {}
 
     async navigate(url: string) {
+        logger.info(`Navigating to ${url}`);
         await this.page.goto(url);
     }
 

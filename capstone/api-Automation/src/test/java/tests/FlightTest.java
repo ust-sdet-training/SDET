@@ -36,8 +36,6 @@ public class FlightTest {
         Response response =
                 flightClient.searchFlights(token);
 
-
-
         assertEquals(
                 200,
                 response.statusCode()

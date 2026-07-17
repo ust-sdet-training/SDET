@@ -1,11 +1,21 @@
 package utils;
 
+import clients.AuthClient;
+
 public class TokenManager {
+
     private static String token;
-    public static void setToken(String value){
-        token=value;
-    }
-    public static String getToken(){
+
+    public static String getToken() {
+
+        if (token == null) {
+            token = new AuthClient().login();
+        }
+
         return token;
+    }
+
+    public static void setToken(String token) {
+        TokenManager.token = token;
     }
 }

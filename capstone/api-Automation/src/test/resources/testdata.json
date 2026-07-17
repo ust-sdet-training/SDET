@@ -1,7 +1,11 @@
 {
-  "booking":{
-    "flightId":"FL123",
-    "passengerId":"PASS001",
-    "seatNumber":"12A"
+  "booking": {
+    "journeyType": "flight",
+    "inventoryId": "FL-DELBLR-51",
+    "seatIds": [
+      "15A"
+    ],
+    "refundable": true,
+    "holdTtlSec": 120
   }
 }

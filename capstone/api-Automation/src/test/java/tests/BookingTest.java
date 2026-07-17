@@ -15,6 +15,8 @@ import utils.JsonReader;
 import utils.TokenManager;
 
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -23,7 +25,7 @@ public class BookingTest {
 
 
     @Test
-    void bookingTest(){
+    void bookingTest() {
 
         JsonNode data =
                 JsonReader.getData("booking");
@@ -31,33 +33,23 @@ public class BookingTest {
 
         BookingRequest request =
                 new BookingRequest(
-                        data.get("flightId").asText(),
-                        data.get("passengerId").asText(),
-                        data.get("seatNumber").asText()
+                        data.get("journeyType").asText(),
+                        data.get("inventoryId").asText(),
+                        List.of(data.get("seatIds").get(0).asText()),
+                        data.get("refundable").asBoolean(),
+                        data.get("holdTtlSec").asInt()
                 );
 
 
-        Response response =
-                new BookingClient()
-                        .createBooking(
-                                TokenManager.getToken(),
-                                request
-                        );
+        Response response = new BookingClient()
+                .createBooking(TokenManager.getToken(), request);
 
+        assertEquals(201, response.statusCode());
 
-        assertEquals(
-                201,
-                response.statusCode()
-        );
-
-
-        String pnr =
-                response.jsonPath()
-                        .getString("pnr");
-
-
-        assertNotNull(pnr);
-
+        assertNotNull(response.jsonPath().getString("id"));
+        assertEquals("HELD", response.jsonPath().getString("state"));
+        assertEquals("flight", response.jsonPath().getString("journeyType"));
+        assertNull(response.jsonPath().getString("pnr"));
     }
 
 }
