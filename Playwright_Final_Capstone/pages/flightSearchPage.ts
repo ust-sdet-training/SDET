@@ -1,6 +1,6 @@
 import { Page } from '@playwright/test';
 import type { FlightSearchCriteria } from '../types/booking';
-import { dateAfterDays } from '../utils/dateUtils';
+import { getFutureDate } from '../utils/dateUtils';
 
 export class FlightSearchPage {
   constructor(private readonly page: Page) {}
@@ -10,10 +10,11 @@ export class FlightSearchPage {
   private readonly toBox = () => this.page.getByRole('combobox', { name: /^to/i });
   private readonly fromOption = (city: string) => this.page.getByRole('option').filter({ hasText: new RegExp(city, 'i') }).first();
   private readonly toOption = (city: string) => this.page.getByRole('option').filter({ hasText: new RegExp(city, 'i') }).first();
-  private readonly departureField = () => this.page.getByRole('button', { name: /departure date/i }).first();
+  private readonly departureCalendar = () => this.page.getByRole('grid', { name: /^departure date$/i });
   private readonly nextMonthButton = () => this.page.getByRole('button', { name: /next month/i }).first();
   private readonly previousMonthButton = () => this.page.getByRole('button', { name: /previous month/i }).first();
-  private readonly departureDayButton = (day: string) => this.page.getByRole('button', { name: new RegExp(`^${day}$`) }).first();
+  private readonly departureDayButton = (dateLabel: string) =>
+    this.departureCalendar().getByRole('button', { name: dateLabel, exact: true });
   private readonly cabinSelect = () => this.page.getByRole('combobox', { name: /cabin class/i }).first();
   private readonly searchButton = () => this.page.getByRole('button', { name: /search flights/i }).first();
   private readonly dateReadout = () => this.page.getByText(/selected/i).first();
@@ -35,27 +36,25 @@ export class FlightSearchPage {
   }
 
   async selectDepartureDate(daysToTravel: number): Promise<void> {
-    const travelDate = dateAfterDays(daysToTravel);
-    const targetMonth = `${travelDate.toLocaleString('en-US', { month: 'long' })} ${travelDate.getFullYear()}`;
-    const travelDay = String(travelDate.getDate());
+    const travelDate = getFutureDate(daysToTravel);
+    const dateLabel = new Intl.DateTimeFormat('en-GB', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(travelDate);
 
-    await this.departureField().click().catch(() => undefined);
-
-    for (let attempt = 0; attempt < 12; attempt += 1) {
-      const calendarTitle = await this.page.locator('#cal-month').textContent().catch(() => '');
-      if (calendarTitle?.trim() === targetMonth) {
-        break;
-      }
-
+    for (let attempt = 0; attempt < 12 && !(await this.departureDayButton(dateLabel).isVisible()); attempt += 1) {
       await this.nextMonthButton().click();
     }
 
-    await this.departureDayButton(travelDay).click().catch(() => undefined);
+    await this.departureDayButton(dateLabel).click();
   }
 
   async selectDateByLabel(label: string): Promise<void> {
-    await this.departureField().click().catch(() => undefined);
-    await this.page.getByRole('button', { name: label }).click().catch(() => undefined);
+    await this.departureCalendar()
+      .getByRole('button', { name: new RegExp(`^${label}(?:\\s+\\d{4})?$`) })
+      .click();
   }
 
   async selectCabin(cabinClass: string): Promise<void> {

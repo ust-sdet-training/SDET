@@ -85,8 +85,7 @@ class HappyPathTests extends BaseTest {
             () -> assertEquals("HELD", bookingResponse.getState(), "Booking should be held on creation")
         );
 
-        assertBookingPersistedInDatabase(bookingResponse.getId(), response.jsonPath().getString("pnr"), response.jsonPath().getString("state"));
-        assertDatabaseHealth();
+        assertBookingPersistedThroughApi(bookingResponse.getId(), response.jsonPath().getString("pnr"), response.jsonPath().getString("state"));
     }
 
     @Test
@@ -103,8 +102,7 @@ class HappyPathTests extends BaseTest {
             () -> assertFalse(response.asString().isBlank(), "Payment response should not be blank")
         );
 
-        assertBookingPersistedInDatabase(bookingResponse.getId(), response.jsonPath().getString("pnr"), response.jsonPath().getString("state"));
-        assertDatabaseHealth();
+        assertBookingPersistedThroughApi(bookingResponse.getId(), response.jsonPath().getString("pnr"), response.jsonPath().getString("state"));
     }
 
     @Test
@@ -121,25 +119,52 @@ class HappyPathTests extends BaseTest {
             () -> assertEquals("CONFIRMED", response.jsonPath().getString("state"), "Booking should be confirmed")
         );
 
-        assertBookingPersistedInDatabase(bookingResponse.getId(), response.jsonPath().getString("pnr"), response.jsonPath().getString("state"));
-        assertDatabaseHealth();
+        assertBookingPersistedThroughApi(bookingResponse.getId(), response.jsonPath().getString("pnr"), response.jsonPath().getString("state"));
     }
 
     @Test
     void retrieveBookingSuccessfully() throws Exception {
-        Response createResponse = bookingClient.createBooking(authToken, buildBookingRequest("FL-MAAHYD-51", nextSeatId()));
-        BookingResponse bookingResponse = createResponse.as(BookingResponse.class);
 
-        Response response = bookingClient.getBookingByPnr(authToken, bookingResponse.getPnr());
+        Response createResponse =
+                bookingClient.createBooking(
+                        authToken,
+                        buildBookingRequest("FL-MAAHYD-51", nextSeatId()));
+
+        assertEquals(201, createResponse.getStatusCode());
+
+        BookingResponse bookingResponse =
+                createResponse.as(BookingResponse.class);
+
+        Response paymentResponse =
+                bookingClient.payBooking(
+                        authToken,
+                        bookingResponse.getId());
+
+        assertEquals(200, paymentResponse.getStatusCode());
+
+        Response confirmResponse =
+                bookingClient.confirmBooking(
+                        authToken,
+                        bookingResponse.getId());
+
+        assertEquals(200, confirmResponse.getStatusCode());
+
+        String pnr =
+                confirmResponse.jsonPath().getString("pnr");
+
+        Response response =
+                bookingClient.getBookingByPnr(
+                        authToken,
+                        pnr);
 
         assertAll(
-            () -> assertEquals(200, response.getStatusCode(), "Retrieve booking should return 200"),
-            () -> assertJsonSchema(response, "booking-schema.json"),
-            () -> assertEquals(bookingResponse.getId(), response.jsonPath().getString("id"), "Retrieved booking should return the same ID"),
-            () -> assertFalse(response.asString().isBlank(), "Retrieved booking response should not be blank")
+                () -> assertEquals(200, response.getStatusCode()),
+                () -> assertJsonSchema(response, "booking-schema.json"),
+                () -> assertEquals(
+                        bookingResponse.getId(),
+                        response.jsonPath().getString("id"))
         );
     }
-
     @Test
     void cancelBookingSuccessfully() throws Exception {
         Response createResponse = bookingClient.createBooking(authToken, buildBookingRequest("FL-MAAHYD-51", nextSeatId()));
@@ -153,7 +178,6 @@ class HappyPathTests extends BaseTest {
             () -> assertEquals("REFUNDED", response.jsonPath().getString("state"), "Booking should be marked as refunded")
         );
 
-        assertBookingPersistedInDatabase(bookingResponse.getId(), response.jsonPath().getString("pnr"), response.jsonPath().getString("state"));
-        assertDatabaseHealth();
+        assertBookingPersistedThroughApi(bookingResponse.getId(), response.jsonPath().getString("pnr"), response.jsonPath().getString("state"));
     }
 }

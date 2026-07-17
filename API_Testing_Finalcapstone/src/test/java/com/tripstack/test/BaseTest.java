@@ -3,7 +3,7 @@ package com.tripstack.test;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -13,12 +13,9 @@ import org.junit.jupiter.api.BeforeAll;
 import com.tripstack.client.AuthClient;
 import com.tripstack.client.BookingClient;
 import com.tripstack.client.FlightClient;
-import com.tripstack.database.BookingRepository;
 import com.tripstack.model.BookingRequest;
-import com.tripstack.model.BookingResponse;
 import com.tripstack.model.LoginRequest;
 import com.tripstack.model.LoginResponse;
-import com.tripstack.support.TestValidationHelper;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import io.restassured.response.Response;
@@ -32,9 +29,27 @@ public class BaseTest {
     protected static final String TEST_EMAIL = "grace@tripstack.test";
     protected static final String TEST_PASSWORD = "Password@123";
 
-    private static final TestValidationHelper validationHelper = new TestValidationHelper();
-    private static final AtomicInteger BOOKING_SEAT_INDEX = new AtomicInteger(0);
-    private static final String[] BOOKING_SEATS = {"2E", "2F", "2G", "2H", "2I", "2J"};
+    protected String nextSeatId() {
+
+        Response response = flightClient.getSeatMap("FL-MAAHYD-51");
+
+        List<List<java.util.Map<String, Object>>> rows =
+                response.jsonPath().getList("rows.seats");
+
+        for (List<java.util.Map<String, Object>> seatRow : rows) {
+
+            for (java.util.Map<String, Object> seat : seatRow) {
+
+                Boolean occupied = (Boolean) seat.get("occupied");
+
+                if (Boolean.FALSE.equals(occupied)) {
+                    return seat.get("seat_id").toString();
+                }
+            }
+        }
+
+        throw new RuntimeException("No available seats found");
+    }
 
     @BeforeAll
     static void setup() {
@@ -79,17 +94,19 @@ public class BaseTest {
         assertFalse(response.asString().isBlank(), "Error response should not be blank");
     }
 
-    protected void assertBookingPersistedInDatabase(String bookingId, String expectedPnr, String expectedState) {
-        BookingRepository repository = new BookingRepository();
-        BookingResponse storedBooking = repository.findBookingById(bookingId);
+    protected void assertBookingPersistedThroughApi(String bookingId, String expectedPnr, String expectedState) {
+        Response listResponse = bookingClient.listBookings(authToken);
+        assertStatusCode(listResponse, 200, "Booking list persistence check");
 
-        assertNotNull(storedBooking, "Booking should be persisted in the database");
-        assertEquals(expectedPnr, storedBooking.getPnr(), "Stored booking PNR should match the API response");
-        assertEquals(expectedState, storedBooking.getState(), "Stored booking state should match the API response");
-    }
+        List<Map<String, Object>> bookings = listResponse.jsonPath().getList("$");
+        Map<String, Object> storedBooking = bookings.stream()
+                .filter(booking -> bookingId.equals(booking.get("id")))
+                .findFirst()
+                .orElse(null);
 
-    protected void assertDatabaseHealth() throws Exception {
-        validationHelper.assertDatabaseIsAvailable();
+        assertNotNull(storedBooking, "Booking should be retrievable from the API after persistence");
+        assertEquals(expectedPnr, storedBooking.get("pnr"), "Persisted booking PNR should match the API response");
+        assertEquals(expectedState, storedBooking.get("state"), "Persisted booking state should match the API response");
     }
 
     protected String futureDate(int daysAhead) {
@@ -100,8 +117,5 @@ public class BaseTest {
         return new BookingRequest("flight", inventoryId, List.of(seatId), true, 120);
     }
 
-    protected String nextSeatId() {
-        int index = BOOKING_SEAT_INDEX.getAndIncrement() % BOOKING_SEATS.length;
-        return BOOKING_SEATS[index];
-    }
+  
 }

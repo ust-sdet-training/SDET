@@ -1,8 +1,20 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "required": ["status"],
+  "required": [
+    "id",
+    "pnr",
+    "state"
+  ],
   "properties": {
-    "status": { "type": "string" }
+    "id": {
+      "type": "string"
+    },
+    "pnr": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    }
   }
 }

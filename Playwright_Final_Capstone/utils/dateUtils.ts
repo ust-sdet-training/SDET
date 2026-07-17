@@ -1,16 +1,26 @@
-/** Returns a new date offset by the requested number of days. */
-export const dateAfterDays = (days: number, from = new Date()): Date => {
-  const date = new Date(from);
-  date.setDate(date.getDate() + days);
-  return date;
+export const getFutureDate = (
+  daysToAdd: number,
+  startDate: Date = new Date(),
+): Date => {
+  const futureDate = new Date(startDate);
+
+  futureDate.setDate(
+    futureDate.getDate() + daysToAdd,
+  );
+
+  return futureDate;
 };
 
-/** Formats a date as YYYY-MM-DD for API requests or input[type=date]. */
-export const toIsoDate = (date: Date): string => date.toISOString().slice(0, 10);
+export const formatAsIsoDate = (
+  date: Date,
+): string => {
+  return date.toISOString().split('T')[0];
+};
 
-/** Matches TripStack's accessible calendar label, for example "Sunday 16 August". */
-export const toTripStackCalendarLabel = (date: Date): string =>
-  new Intl.DateTimeFormat('en-GB', {
+export const formatForTripStackCalendar = (
+  date: Date,
+): string => {
+  return new Intl.DateTimeFormat('en-GB', {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
@@ -18,3 +28,9 @@ export const toTripStackCalendarLabel = (date: Date): string =>
   })
     .format(date)
     .replace(/, /g, ' ');
+};
+
+// Backward-compatible names used by existing page objects.
+export const dateAfterDays = getFutureDate;
+export const toIsoDate = formatAsIsoDate;
+export const toTripStackCalendarLabel = formatForTripStackCalendar;

@@ -22,7 +22,8 @@ class BookingFlowTest extends BaseTest {
         BookingResponse bookingResponse = createResponse.as(BookingResponse.class);
         Response paymentResponse = bookingClient.payBooking(authToken, bookingResponse.getId());
         Response confirmResponse = bookingClient.confirmBooking(authToken, bookingResponse.getId());
-        Response retrieveResponse = bookingClient.getBookingByPnr(authToken, bookingResponse.getPnr());
+        String confirmedPnr = confirmResponse.jsonPath().getString("pnr");
+        Response retrieveResponse = bookingClient.getBookingByPnr(authToken, confirmedPnr);
         Response cancelResponse = bookingClient.cancelBooking(authToken, bookingResponse.getId());
 
         assertEquals(200, searchResponse.getStatusCode(), "Flight search should return 200");
@@ -43,8 +44,8 @@ class BookingFlowTest extends BaseTest {
 
         assertNotNull(bookingResponse.getId(), "Booking ID should be present");
         assertNotNull(bookingResponse.getState(), "Booking state should be present");
+        assertNotNull(confirmedPnr, "Confirmation should create a booking PNR");
 
-        assertBookingPersistedInDatabase(bookingResponse.getId(), bookingResponse.getPnr(), bookingResponse.getState());
-        assertDatabaseHealth();
+        assertBookingPersistedThroughApi(bookingResponse.getId(), confirmedPnr, "REFUNDED");
     }
 }

@@ -1,6 +1,7 @@
 import { test as base, expect } from '@playwright/test';
 import type { BookingData, CardDetails, Credentials, PassengerDetails } from '../types/booking';
-import { capturePageSnapshot, writeDiagnostics } from '../utils/artifacts';
+import { capturePageSnapshot, writeDiagnostics, writeStructuredTestLog } from '../utils/artifacts';
+import { createTestLogger, type TestLogger } from '../utils/logger';
 import { BookingConfirmationPage } from '../pages/bookingConfirmationPage';
 import { FlightResultsPage } from '../pages/flightResultsPage';
 import { FlightSearchPage } from '../pages/flightSearchPage';
@@ -82,6 +83,7 @@ export const test = base.extend<{
   passengerData: PassengerDetails;
   paymentData: CardDetails;
   appPages: AppPages;
+  testLog: TestLogger;
 }>({
   page: async ({ page }, use) => {
     await use(page);
@@ -116,6 +118,14 @@ export const test = base.extend<{
       confirmation: new BookingConfirmationPage(page),
       myTrips: new MyTripsPage(page),
     });
+  },
+  testLog: async ({}, use, testInfo) => {
+    const testLog = createTestLogger(testInfo);
+    testLog.start('Test started');
+    await use(testLog);
+    testLog.complete('Test finished', { status: testInfo.status });
+    const logPath = await writeStructuredTestLog(testInfo, testLog.entries());
+    await testInfo.attach('structured-test-log', { path: logPath, contentType: 'application/x-ndjson' });
   },
 });
 
