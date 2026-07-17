@@ -1,0 +1,7 @@
+{
+  "booking":{
+    "flightId":"FL123",
+    "passengerId":"PASS001",
+    "seatNumber":"12A"
+  }
+}
