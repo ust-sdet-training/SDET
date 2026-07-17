@@ -6,4 +6,5 @@ public final class TestUsers {
     }
 
     public static final String BOB_EMAIL = "bob@tripstack.test";
+    public static final String DAVE_EMAIL = "dave@tripstack.test";
 }

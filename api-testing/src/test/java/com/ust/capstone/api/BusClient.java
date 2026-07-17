@@ -2,8 +2,6 @@ package com.ust.capstone.api;
 
 import io.restassured.response.Response;
 
-import java.util.Arrays;
-import java.util.List;
 
 import static com.ust.capstone.api.ApiSpec.requestSpec;
 import static io.restassured.RestAssured.given;

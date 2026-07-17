@@ -1,4 +1,4 @@
-package com.ust.capstone.reporting;
+package com.ust.capstone.tests;
 
 import io.qameta.allure.*;
 import org.junit.jupiter.api.Test;

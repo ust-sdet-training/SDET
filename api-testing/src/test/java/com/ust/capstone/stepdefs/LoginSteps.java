@@ -18,7 +18,6 @@ import static org.junit.Assert.assertEquals;
 public class LoginSteps {
 
     private final WorldContext context;
-    private final AuthClient authClient = new AuthClient();
 
     public LoginSteps(WorldContext context) {
         this.context = context;
@@ -35,7 +34,7 @@ public class LoginSteps {
         Credentials credentials = credentialsFor(user);
 
         // API Login
-        Response response = authClient.login(
+        Response response = AuthClient.login(
                 credentials.email(),
                 credentials.password()
         );
@@ -58,17 +57,28 @@ public class LoginSteps {
     }
 
     private Credentials credentialsFor(String user) {
-        return new Credentials(
-                TestUsers.BOB_EMAIL,
-                Secrets.get("TRIPSTACK_BOB_PASSWORD")
-        );
+        return switch (user.toLowerCase()) {
+            case "bob" -> new Credentials(
+                    TestUsers.BOB_EMAIL,
+                    Secrets.get("TRIPSTACK_BOB_PASSWORD")
+            );
+
+            case "dave" -> new Credentials(
+                    TestUsers.DAVE_EMAIL,
+                    Secrets.get("TRIPSTACK_BOB_PASSWORD")
+            );
+            default -> throw new IllegalArgumentException(
+                    "Unknown user: " + user
+            );
+
+        };
+    }
+
+    private record Credentials(String email, String password) {
     }
 
     @And("the token is tampered")
     public void theTokenIsTampered() {
 
-    }
-
-    private record Credentials(String email, String password) {
     }
 }

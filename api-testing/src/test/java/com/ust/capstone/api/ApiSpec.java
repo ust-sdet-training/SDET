@@ -12,17 +12,19 @@ public final class ApiSpec {
     private ApiSpec() {
     }
 
-    public static RequestSpecification requestSpec() {
+    public static RequestSpecification authedSpec(String token) {
 
         return new RequestSpecBuilder()
                 .setBaseUri(AppConfig.BASE_URL)
                 .setBasePath("/api")
                 .setContentType(ContentType.JSON)
                 .setAccept(ContentType.JSON)
+                .addHeader("Authorization","Bearer " + token)
                 .build();
     }
 
-    public static RequestSpecification authSpec() {
+    public static RequestSpecification requestSpec() {
+
         return new RequestSpecBuilder()
                 .setBaseUri(AppConfig.BASE_URL)
                 .setBasePath("/api")
