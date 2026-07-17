@@ -1,0 +1,20 @@
+[
+{
+  "name": "Flaky tests",
+  "matchedStatuses": ["failed","broken","skipped"],
+  "messageRegex": ".*(timeout|stale element|connection reset).*",
+  "flaky": true
+},
+{
+  "name": "Test defects (broken)",
+  "matchedStatuses": ["broken"]
+},
+{
+  "name": "Product defects",
+  "matchedStatuses": ["failed"]
+},
+{
+    "name": "Test Skipped",
+    "matchedStatuses": ["skipped"]
+}
+]

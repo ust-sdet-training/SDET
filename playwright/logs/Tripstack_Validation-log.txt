@@ -1,0 +1,23 @@
+[INFO - 18:39:06] Test Started {null
+[INFO - 18:39:06] Logging in {null
+[INFO - 18:39:08] Login successful {null
+[INFO - 18:39:08] Selecting route: CCU -> DEL {null
+[INFO - 18:39:08] Route selected {null
+[INFO - 18:39:08] Booking for 12 day(s) {null
+[INFO - 18:39:08] Travel date selected {null
+[INFO - 18:39:08] Searching buses... {null
+[INFO - 18:39:08] Bus search completed {null
+[INFO - 18:39:08] Opening seater bus listing page {null
+[INFO - 18:39:08] Bus listing page opened {null
+[INFO - 18:39:08] Selecting seat on S2 deck {null
+[INFO - 18:39:08] Seat selected {null
+[INFO - 18:39:08] Navigating to passenger details page {null
+[INFO - 18:39:08] Passenger details page opened {null
+[INFO - 18:39:08] Entering passenger details for HEIDI HEIDI {null
+[INFO - 18:39:09] Passenger details entered successfully {null
+[INFO - 18:39:09] Processing payment with card  {null
+[INFO - 18:39:09] Payment submitted {null
+[INFO - 18:39:09] Validating booking status... {null
+[INFO - 18:39:09] Booking Status: CONFIRMED {null
+[INFO - 18:39:09] Booking confirmed successfully {null
+[INFO - 18:39:09] Test passed {null
