@@ -65,3 +65,5 @@ bin/
 Thumbs.db
 Desktop.ini
 scripts/
+gradlew
+gradlew.bat
