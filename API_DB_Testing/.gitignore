@@ -1,39 +1,97 @@
+# ==========================
+# Maven
+# ==========================
 target/
 !.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-.kotlin
 
-### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
-*.iws
+# ==========================
+# Environment Files
+# ==========================
+.env
+.env.*
+!.env.example
+
+# ==========================
+# Logs
+# ==========================
+*.log
+logs/
+allure.log
+
+# ==========================
+# Allure
+# ==========================
+allure-results/
+allure-report/
+
+# ==========================
+# IntelliJ IDEA
+# ==========================
+.idea/
 *.iml
+*.iws
 *.ipr
+out/
 
-### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
+# ==========================
+# Eclipse
+# ==========================
 .project
-.settings
+.classpath
+.settings/
+.factorypath
+.apt_generated/
 .springBeans
-.sts4-cache
+.sts4-cache/
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+# ==========================
+# NetBeans
+# ==========================
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
 
-### VS Code ###
+# ==========================
+# VS Code
+# ==========================
 .vscode/
 
-### Mac OS ###
+# ==========================
+# OS Files
+# ==========================
 .DS_Store
+Thumbs.db
+
+# ==========================
+# Java
+# ==========================
+*.class
+
+# ==========================
+# Temporary Files
+# ==========================
+*.tmp
+*.temp
+*.swp
+*.swo
+*.bak
+
+# ==========================
+# Test Reports
+# ==========================
+surefire-reports/
+failsafe-reports/
+
+# ==========================
+# Coverage
+# ==========================
+coverage/
+jacoco.exec
+site/
+
+# ==========================
+# Generated Files
+# ==========================
+generated/

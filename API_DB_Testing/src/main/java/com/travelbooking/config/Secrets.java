@@ -1,21 +1,14 @@
 package com.travelbooking.config;
 
-import io.github.cdimascio.dotenv.Dotenv;
-
 public final class Secrets {
-
-    private static final Dotenv dotenv = Dotenv.load();
-
-    public static String get(String key) {
-        String value = dotenv.get(key);
-
-        if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException("Missing secret: " + key);
-        }
-
-        return value;
-    }
 
     private Secrets() {
     }
+
+    public static final String EMAIL =
+            Config.get("TRIPSTACK_USERNAME");
+
+    public static final String PASSWORD =
+            Config.get("TRIPSTACK_PASSWORD");
+
 }
