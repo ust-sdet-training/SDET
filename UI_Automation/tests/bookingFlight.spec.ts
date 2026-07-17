@@ -86,99 +86,99 @@ test.describe("Final Capstone: TripStack Scenario", () => {
 
         await login.userLogin();
 
-        // log.info(
-        //     "Entering passenger details",
-        //     {
-        //         seat: "1B",
-        //         passenger: "Mallory Thomas"
-        //     }
-        // );
+        log.info(
+            "Entering passenger details",
+            {
+                seat: "1B",
+                passenger: "Mallory Thomas"
+            }
+        );
 
-        // await passenger.fillDetails(
-        //     "1B",
-        //     "Mallory",
-        //     "Thomas",
-        //     "18",
-        //     "Female"
-        // );
+        await passenger.fillDetails(
+            "1B",
+            "Mallory",
+            "Thomas",
+            "18",
+            "Female"
+        );
 
-        // log.info(
-        //     "Proceeding to payment"
-        // );
+        log.info(
+            "Proceeding to payment"
+        );
 
-        // await passenger.goToPayment();
+        await passenger.goToPayment();
 
-        // log.info(
-        //     "Entering payment details"
-        // );
+        log.info(
+            "Entering payment details"
+        );
 
-        // await payment.enterPaymentDetails("Mallory");
+        await payment.enterPaymentDetails("Mallory");
 
-        // log.info(
-        //     "Completing payment transaction"
-        // );
+        log.info(
+            "Completing payment transaction"
+        );
 
-        // await payment.completePayment();
+        await payment.completePayment();
 
-        // log.info(
-        //     "Verifying booking confirmation"
-        // );
+        log.info(
+            "Verifying booking confirmation"
+        );
 
-        // await confirmation.verifyBadgeShowsConfirmed();
+        await confirmation.verifyBadgeShowsConfirmed();
 
-        // const ticket_pnr =
-        //     await confirmation.checkPNR_Number.toString();
+        const ticket_pnr =
+            await confirmation.checkPNR_Number.toString();
 
-        // log.info(
-        //     "Booking confirmed",
-        //     {
-        //         pnr: ticket_pnr
-        //     }
-        // );
+        log.info(
+            "Booking confirmed",
+            {
+                pnr: ticket_pnr
+            }
+        );
 
-        // log.info("Navigating to My Trips");
+        log.info("Navigating to My Trips");
 
-        // await confirmation.viewMyTrips();
-        // log.info(
-        //     "Verifying booking exists in My Trips"
-        // );
+        await confirmation.viewMyTrips();
+        log.info(
+            "Verifying booking exists in My Trips"
+        );
 
-        // await mytrips.verifyTicketisBooked();
-        // log.info(
-        //     "Verifying booking PNR",
-        //     {
-        //         pnr: ticket_pnr
-        //     }
-        // );
+        await mytrips.verifyTicketisBooked();
+        log.info(
+            "Verifying booking PNR",
+            {
+                pnr: ticket_pnr
+            }
+        );
 
-        // await mytrips.verifyBookingTitle(
-        //     ticket_pnr
-        // );
-        // log.info(
-        //     "Verifying booking status",
-        //     {
-        //         status: "CONFIRMED"
-        //     }
-        // );
-        // await mytrips.verifyBookingStatus(
-        //     "CONFIRMED"
-        // );
-        // log.info(
-        //     "Verifying booked seat",
-        //     {
-        //         seat: "1B"
-        //     }
-        // );
+        await mytrips.verifyBookingTitle(
+            ticket_pnr
+        );
+        log.info(
+            "Verifying booking status",
+            {
+                status: "CONFIRMED"
+            }
+        );
+        await mytrips.verifyBookingStatus(
+            "CONFIRMED"
+        );
+        log.info(
+            "Verifying booked seat",
+            {
+                seat: "1B"
+            }
+        );
 
-        // await mytrips.verifyBookingSeat("1B");
-        // log.info(
-        //     "Flight booking journey completed successfully",
-        //     {
-        //         pnr: ticket_pnr,
-        //         seat: "1B",
-        //         status: "CONFIRMED"
-        //     }
-        // );
+        await mytrips.verifyBookingSeat("1B");
+        log.info(
+            "Flight booking journey completed successfully",
+            {
+                pnr: ticket_pnr,
+                seat: "1B",
+                status: "CONFIRMED"
+            }
+        );
 
     })
 })
