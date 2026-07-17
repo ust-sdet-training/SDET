@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "from": {
+      "type": "string",
+      "minLength": 1
+    },
+    "to": {
+      "type": "string",
+      "minLength": 1
+    },
+    "date": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pax": {
+      "type": "number"
+    },
+    "class": {
+      "type": "string",
+      "minLength": 1
+    },
+    "count": {
+      "type": "number"
+    },
+    "flights": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "required": [
+          "id",
+          "airline_code",
+          "airline_name",
+          "flight_no",
+          "origin",
+          "dest",
+          "dep_time",
+          "arr_time",
+          "base_fare_paise",
+          "tax_paise",
+          "total_paise",
+          "fare_display"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "airline_code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "airline_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "flight_no": {
+            "type": "string",
+            "minLength": 1
+          },
+          "origin": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dest": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dep_time": {
+            "type": "string",
+            "minLength": 1
+          },
+          "arr_time": {
+            "type": "string",
+            "minLength": 1
+          },
+          "base_fare_paise": {
+            "type": "number"
+          },
+          "tax_paise": {
+            "type": "number"
+          },
+          "total_paise": {
+            "type": "number"
+          },
+          "fare_display": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "from",
+    "to",
+    "date",
+    "pax",
+    "class",
+    "count",
+    "flights"
+  ]
+}
