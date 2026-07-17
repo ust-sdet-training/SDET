@@ -1,4 +1,5 @@
 import { expect, Page } from "@playwright/test";
+import { xp } from "../locators/xp";
 
 /**
 * This page contains all the locators and all the actions for booking confirmation.
@@ -7,7 +8,7 @@ export class ConfirmationPage {
     constructor(private readonly page:Page) {}
 
     async checkPnrVisible(){
-        await expect(this.page.locator('div.pnr[data-id="pnr"]')).toBeVisible();
+        await expect(xp.PNRNUMBER(this.page)).toBeVisible();
     }
 
     async checkAllSetHeadingVisible(){

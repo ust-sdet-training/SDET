@@ -27,24 +27,59 @@ public class BookingRepository {
 
     public String save(BookingData booking) {
         String bookingSql = """
-                INSERT INTO bookings(id, customer_name, status, pnr)
-                VALUES (?, ?, ?, ?)
+                INSERT INTO bookings(id, customer_name, status, pnr, emp_id)
+                VALUES (?, ?, ?, ?, ?)
                 """;
 
         try (Connection connection = connection()) {
+            connection.setAutoCommit(false);
+
             try (PreparedStatement bookingStatement = connection.prepareStatement(bookingSql)) {
                 bookingStatement.setString(1, booking.id());
                 bookingStatement.setString(2, booking.customerName());
                 bookingStatement.setString(3, booking.status());
                 bookingStatement.setString(4, booking.pnr());
+                bookingStatement.setString(5, booking.empId());
 
                 bookingStatement.executeUpdate();
             }
 
+            connection.commit();
             return booking.id();
 
         } catch (SQLException e) {
             throw new IllegalStateException("Could not save booking test data", e);
+        }
+    }
+
+    public BookingData findById(String id) {
+        String sql = """
+                SELECT id, customer_name, status, pnr, emp_id
+                FROM bookings
+                WHERE id = ?
+                """;
+
+        try (Connection connection = connection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, id);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (!resultSet.next()) {
+                    return null;
+                }
+
+                return new BookingData(
+                        resultSet.getString("id"),
+                        resultSet.getString("customer_name"),
+                        resultSet.getString("status"),
+                        resultSet.getString("pnr"),
+                        resultSet.getString("emp_id")
+                );
+            }
+
+        } catch (SQLException e) {
+            throw new IllegalStateException("Could not fetch booking by id", e);
         }
     }
 
@@ -104,7 +139,11 @@ public class BookingRepository {
             String id,
             String customerName,
             String status,
-            String pnr
+            String pnr,
+            String empId
     ) {
+        public BookingData(String id, String customerName, String status, String pnr) {
+            this(id, customerName, status, pnr, null);
+        }
     }
 }

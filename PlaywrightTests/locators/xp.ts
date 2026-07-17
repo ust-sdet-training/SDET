@@ -17,4 +17,8 @@ export class xp {
   static AVAIALBLESLEEPERSEAT(page:Page):Locator{
    return page.locator('[data-deck="upper"][data-kind="sleeper"][data-state="available"]');
   }
+
+  static PNRNUMBER(page:Page):Locator{
+    return page.locator('div.pnr[data-id="pnr"]');
+  }
 }

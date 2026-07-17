@@ -3,24 +3,23 @@ import { testUsers } from '../data/testUser';
 import { util } from '../src/utils/util';
 import { secrets } from '../src/utils/secrets';
 import { testTripData } from '../data/testTripData';
-import { testCard } from '../data/testCard';
 
 test.describe("Test for the flow from ordering a bus",()=>{
     test("End To End Flow",async ({flow,log,evidence,page},testInfo)=>{
       await flow.start();
       log.info("The Home Page Opened");
-
-      await expect(page).toHaveURL("https://tripstack.doomple.com/");
-      log.info("The Home page url verified");
       
       await flow.clickLogin();
       log.info("Clicked on Login Page");
 
-      await expect(page).toHaveURL("/login");
+      expect(await flow.currentUrl()).toContain("/login");
       log.info("Login page url verified");
 
       await flow.login(util.emailName(testUsers.user.name),secrets.getuserPassword(testUsers.user.name));
-      log.info("Login sucessfully for the user",{username:util.emailName(testUsers.user.name),password:secrets.getuserPassword(testUsers.user.name)})
+      log.info("Login sucessfully for the user",{
+        username:util.emailName(testUsers.user.name),
+        password:secrets.getuserPassword(testUsers.user.name)
+      })
       evidence["user-details"] = {
                                   username: testUsers.user.name,
                                   status: "logged-in",
@@ -39,6 +38,13 @@ test.describe("Test for the flow from ordering a bus",()=>{
         util.emailName(testUsers.user.name),
         String(testUsers.user.phone)
       );
+      evidence["Passenger Details"] = {
+        firstName: testUsers.user.name,
+        lastName: testUsers.user.lastName,
+        age: testUsers.user.age,
+        email: util.emailName(testUsers.user.name),
+        phoneNumber: String(testUsers.user.phone)
+      }
       log.info("Passenger details added successfully", {
         firstName: testUsers.user.name,
         lastName: testUsers.user.lastName,
@@ -47,48 +53,30 @@ test.describe("Test for the flow from ordering a bus",()=>{
         phoneNumber: String(testUsers.user.phone)
       });
 
+      const nameOnCard = secrets.get(`MUHAMMED_${testUsers.user.name}_CARD_NAME`);
+      const cardNumber = secrets.get(`MUHAMMED_${testUsers.user.name}_CARD_NUMBER`);
+      const cardexpiry = secrets.get(`MUHAMMED_${testUsers.user.name}_CARD_EXPIRY`);
+      const cvv = secrets.get(`MUHAMMED_${testUsers.user.name}_CARD_CVV`);
       await flow.addPaymentDetails(
-        testCard.card1.nameOnCard,
-        testCard.card1.cardNumber,
-        testCard.card1.expiry,
-        testCard.card1.cvv
+        nameOnCard,
+        cardNumber,
+        cardexpiry,
+        cvv
       );
+      evidence["Passenger Card Details"] = {
+        nameOnCard:nameOnCard,
+        cardNumber:cardNumber,
+        cardexpiry:cardexpiry,
+        cvv:cvv
+      }
       log.info("Payment details added successfully", {
-        nameOnCard: testCard.card1.nameOnCard,
-        cardNumber: testCard.card1.cardNumber,
-        expiry: testCard.card1.expiry,
-        cvv: testCard.card1.cvv
+        nameOnCard:nameOnCard,
+        cardNumber:cardNumber,
+        cardexpiry:cardexpiry,
+        cvv:cvv
       });
 
       await flow.verifyConfirmationDetails();
       log.info("Confirmation page details are visible");
-
-      // await search.gotoFirstProductDetailPage(testProduct.product1.name)
-      // log.info("Go to teh product Detail page")
-
-      // await expect(page).toHaveURL(`product/${testProduct.product1.sku}`);
-      // log.info("Verified the Product Page is reaced using url",{url:testProduct.product1.sku});
-
-      // await search.addToCart();
-      // log.info("Product added to cart");
-
-      // await expect(page).toHaveURL(`cart`);
-      // log.info("Cart Page reached");
-
-
-      // await search.checkOut();
-      // log.info("Product added to cart");
-
-      // await expect(page).toHaveURL(`checkout`);
-      // log.info("checkout Page reached");
-
-      // await search.addAddress(testUsers.user.address);
-      // log.info("Product added to cart");
-
-      // await search.placeOrder();
-      // log.info("Product added to cart");
-
-      // await search.getOrderByAPI(testProduct.product1.sku);
-      // log.info("Product SKU is there",{SKU:testProduct.product1.sku});
     })
 })

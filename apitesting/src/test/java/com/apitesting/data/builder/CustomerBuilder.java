@@ -19,7 +19,7 @@ public class CustomerBuilder {
 
     public Customer build(){
         String email = name + "@tripstack.test";
-        String password = Secrets.get("MUHAMMED__"+name + "_PASSWORD");
+        String password = Secrets.get("MUHAMMED_"+name + "_PASSWORD");
         return new Customer(name,email,password);
     }
 }

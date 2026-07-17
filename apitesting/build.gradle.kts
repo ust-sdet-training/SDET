@@ -90,7 +90,7 @@ tasks.test {
     description = "Run the Tests"
 
     useJUnitPlatform()
-    include("**/BaseTest.class")
+    include("**/*Test.class")
 
     maxParallelForks = 1
 
@@ -113,5 +113,5 @@ tasks.test {
 }
 
 tasks.test{
-    include("**/BaseTest.class");
+    include("**/*Test.class");
 }

@@ -1,9 +1,12 @@
+import { testUsers } from '../data/testUser';
 import { test, expect } from '../fixture/index';
+import { secrets } from '../src/utils/secrets';
+import { util } from '../src/utils/util';
 
 test.describe('Negative tests for bus booking flow', () => {
   test('Login should fail for invalid credentials', async ({ flow, log }) => {
     await flow.start();
-    log.info('Home page opened for invalid credential test');
+    log.info('Home page opened');
 
     await flow.clickLogin();
     log.info('Navigated to login page');
@@ -11,10 +14,10 @@ test.describe('Negative tests for bus booking flow', () => {
     await expect(await flow.currentUrl()).toContain('/login');
     log.info('Login URL verified');
 
-    await flow.login('invalid.user@example.com', 'WrongPassword@123');
+    await flow.login(util.emailName(testUsers.invalidUser.name),secrets.getuserPassword(testUsers.invalidUser.name));
     log.info('Attempted login with invalid credentials', {
-      username: 'invalid.user@example.com',
-      password: 'WrongPassword@123'
+      username: testUsers.invalidUser.name,
+      password: testUsers.invalidUser.name
     });
 
     await expect(await flow.currentUrl()).toContain('/login');

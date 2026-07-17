@@ -57,6 +57,7 @@ export class FullFlow{
     }
 
     async currentUrl(){
+        await this.page.waitForLoadState('load');
         return this.page.url();
     }
 
