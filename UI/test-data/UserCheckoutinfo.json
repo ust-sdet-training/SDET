@@ -1,0 +1,10 @@
+{
+    "Carol": {
+        "firstname": "Carol",
+        "lastname": "Lina",
+        "age": 25,
+        "gender": "Female",
+        "email":"carol@tripstack.test",
+        "phoneno":9876543210
+    }
+}
