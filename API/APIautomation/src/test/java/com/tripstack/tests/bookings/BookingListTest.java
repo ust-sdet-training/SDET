@@ -1,26 +1,22 @@
 package com.tripstack.tests.bookings;
 
 import com.tripstack.base.BaseTest;
-import com.tripstack.utils.TokenManager;
-import io.restassured.response.Response;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import static org.hamcrest.Matchers.*;
+
+@Tag("api")
+@Tag("booking")
+@Tag("security")
 public class BookingListTest extends BaseTest {
 
     @Test
-    public void verifyMyBookings() {
-
-        String token =
-                TokenManager.getToken();
-
-        Response response =
-                bookingClient.getMyBookings(
-                        token
-                );
-
-        response.then()
-                .statusCode(200);
-
-        response.prettyPrint();
+    void myBookingsAreAllInMyNamespace() {
+        // Adjust the JSON path below if your list endpoint wraps results,
+        // e.g. "bookings.empId" instead of "empId", depending on the response shape.
+        bookingClient.listMyBookings(token).then()
+                .statusCode(200)
+                .body("empId", everyItem(equalTo("1014")));
     }
 }

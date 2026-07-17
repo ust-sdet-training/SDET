@@ -1,0 +1,59 @@
+name: TripStack API CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  api-tests:
+    name: RestAssured API + DB
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+        working-directory: SDET/API/APIautomation
+
+      - name: Run API tests (functional + security)
+        env:
+          TRIPSTACK_EMAIL: ${{ secrets.TRIPSTACK_EMAIL }}
+          TRIPSTACK_PASSWORD: ${{ secrets.TRIPSTACK_PASSWORD }}
+          TRIPSTACK_EMP_ID: ${{ secrets.TRIPSTACK_EMP_ID }}
+          TRIPSTACK_DB_URL: ${{ secrets.TRIPSTACK_DB_URL }}
+          TRIPSTACK_DB_USER: ${{ secrets.TRIPSTACK_DB_USER }}
+          TRIPSTACK_DB_PASS: ${{ secrets.TRIPSTACK_DB_PASS }}
+          TRIPSTACK_OTHER_EMP_PNR: ${{ secrets.TRIPSTACK_OTHER_EMP_PNR }}
+          TRIPSTACK_OTHER_EMP_BOOKING_ID: ${{ secrets.TRIPSTACK_OTHER_EMP_BOOKING_ID }}
+        run: ./gradlew clean test -DexcludeTags=performance
+        working-directory: SDET/API/APIautomation
+
+      - name: Run performance gate
+        env:
+          TRIPSTACK_EMAIL: ${{ secrets.TRIPSTACK_EMAIL }}
+          TRIPSTACK_PASSWORD: ${{ secrets.TRIPSTACK_PASSWORD }}
+          TRIPSTACK_EMP_ID: ${{ secrets.TRIPSTACK_EMP_ID }}
+        run: ./gradlew test --tests "*PerformanceTest"
+        working-directory: SDET/API/APIautomation
+
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: SDET/API/APIautomation/allure-results
+
+      - name: Upload Gradle test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gradle-test-report
+          path: SDET/API/APIautomation/build/reports/tests/test

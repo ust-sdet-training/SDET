@@ -1,19 +1,22 @@
 {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Booking",
   "type": "object",
+  "required": ["id", "empId", "state", "journeyType", "inventoryId", "seatIds"],
   "properties": {
-    "id": {
-      "type": "string"
-    },
-    "empId": {
-      "type": "string"
-    },
+    "id": { "type": "string" },
+    "empId": { "type": "string" },
     "state": {
-      "type": "string"
-    }
-  },
-  "required": [
-    "id",
-    "empId",
-    "state"
-  ]
+      "type": "string",
+      "enum": ["HELD", "PAYMENT_PENDING", "CONFIRMED", "CANCELLED", "REFUNDED"]
+    },
+    "journeyType": { "type": "string", "enum": ["bus", "flight"] },
+    "inventoryId": { "type": "string" },
+    "seatIds": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "refundable": { "type": "boolean" },
+    "amountPaise": { "type": "integer" }
+  }
 }

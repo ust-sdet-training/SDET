@@ -1,48 +1,31 @@
 package com.tripstack.client;
 
 import com.tripstack.config.ConfigManager;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 
 public class BusClient {
 
-    private final String BASE_URL =
-            ConfigManager.get("base.url");
-
-    public Response searchBuses(
-            String from,
-            String to,
-            String date
-    ) {
-
+    @Step("GET /buses?from={from}&to={to}&date={date}")
+    public Response searchBus(String token, String from, String to, String date) {
         return given()
-                .baseUri(BASE_URL)
+                .baseUri(ConfigManager.BASE_URL)
+                .header("Authorization", "Bearer " + token)
                 .queryParam("from", from)
                 .queryParam("to", to)
                 .queryParam("date", date)
-                .log().all()
                 .when()
-                .get("/api/buses")
-                .then()
-                .log().all()
-                .extract()
-                .response();
+                .get("/buses");
     }
 
-    public Response getBusSeats(
-            String busId
-    ) {
-
+    @Step("GET /buses/{busId}/seats")
+    public Response getSeatMap(String token, String busId) {
         return given()
-                .baseUri(BASE_URL)
-                .pathParam("id", busId)
-                .log().all()
+                .baseUri(ConfigManager.BASE_URL)
+                .header("Authorization", "Bearer " + token)
                 .when()
-                .get("/api/buses/{id}/seats")
-                .then()
-                .log().all()
-                .extract()
-                .response();
+                .get("/buses/" + busId + "/seats");
     }
 }

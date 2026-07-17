@@ -2,34 +2,20 @@ package com.tripstack.utils;
 
 import com.tripstack.client.AuthClient;
 import com.tripstack.config.ConfigManager;
-import io.restassured.response.Response;
 
 public class TokenManager {
 
-    private static String token;
+    private static String cachedToken;
 
-    public static String getToken() {
-
-        if (token == null) {
-
-            AuthClient authClient =
-                    new AuthClient();
-
-            Response response =
-                    authClient.login(
-                            ConfigManager.EMAIL,
-                            ConfigManager.PASSWORD
-                    );
-
-            token =
-                    response.jsonPath()
-                            .getString("token");
+    public static synchronized String getToken() {
+        if (cachedToken == null) {
+            AuthClient authClient = new AuthClient();
+            cachedToken = authClient.login(ConfigManager.EMAIL, ConfigManager.PASSWORD);
         }
-
-        return token;
+        return cachedToken;
     }
 
-    public static void clearToken() {
-        token = null;
+    public static synchronized void clearToken() {
+        cachedToken = null;
     }
 }

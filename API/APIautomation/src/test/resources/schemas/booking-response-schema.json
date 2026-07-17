@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BookingResponse",
+  "type": "object",
+  "required": ["id", "state", "empId"],
+  "properties": {
+    "id": { "type": "string" },
+    "state": {
+      "type": "string",
+      "enum": ["HELD", "PAYMENT_PENDING", "CONFIRMED", "CANCELLED", "REFUNDED"]
+    },
+    "empId": { "type": "string" },
+    "pnr": {
+      "type": ["string", "null"],
+      "pattern": "^TS-\\d+-\\d{4}$"
+    }
+  }
+}

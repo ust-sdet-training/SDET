@@ -1,21 +1,21 @@
 package com.tripstack.tests.buses;
 
 import com.tripstack.base.BaseTest;
-import io.restassured.response.Response;
+import com.tripstack.config.ConfigManager;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import static org.hamcrest.Matchers.*;
+
+@Tag("api")
+@Tag("bus")
 public class SearchBusTest extends BaseTest {
 
     @Test
-    public void verifyBusSearch() {
-
-        Response response =
-                busClient.searchBuses(
-                        "IXC",
-                        "BLR",
-                        null
-                );
-
-        response.prettyPrint();
+    void searchIxcToBlrReturnsBuses() {
+        busClient.searchBus(token, ConfigManager.FROM_CITY, ConfigManager.TO_CITY, travelDate())
+                .then()
+                .statusCode(200)
+                .body("size()", greaterThan(0));
     }
 }

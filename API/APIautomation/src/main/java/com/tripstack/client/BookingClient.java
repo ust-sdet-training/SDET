@@ -1,130 +1,73 @@
 package com.tripstack.client;
 
 import com.tripstack.config.ConfigManager;
-import io.restassured.http.ContentType;
+import com.tripstack.models.BookingRequest;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
-
-import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
 public class BookingClient {
 
-    private final String BASE_URL =
-            ConfigManager.BASE_URL;
-
-    public Response createBooking(
-            String token,
-            String journeyType,
-            String inventoryId,
-            List<String> seatIds,
-            boolean refundable
-    ) {
-
+    @Step("POST /bookings (hold seats)")
+    public Response createBooking(String token, BookingRequest request) {
         return given()
-                .baseUri(BASE_URL)
-                .contentType(ContentType.JSON)
-                .header(
-                        "Authorization",
-                        "Bearer " + token
-                )
-                .body(
-                        """
-                        {
-                          "journeyType":"%s",
-                          "inventoryId":"%s",
-                          "seatIds":%s,
-                          "refundable":%s
-                        }
-                        """.formatted(
-                                journeyType,
-                                inventoryId,
-                                seatIds.toString(),
-                                refundable
-                        )
-                )
-                .log().all()
+                .baseUri(ConfigManager.BASE_URL)
+                .header("Authorization", "Bearer " + token)
+                .contentType("application/json")
+                .body(request)
                 .when()
-                .post("/api/bookings")
-                .then()
-                .log().all()
-                .extract()
-                .response();
+                .post("/bookings");
     }
 
-    public Response payBooking(
-            String token,
-            String bookingId
-    ) {
-
+    @Step("POST /bookings/{bookingId}/pay")
+    public Response pay(String token, String bookingId) {
         return given()
-                .baseUri(BASE_URL)
-                .contentType(ContentType.JSON)
-                .header(
-                        "Authorization",
-                        "Bearer " + token
-                )
+                .baseUri(ConfigManager.BASE_URL)
+                .header("Authorization", "Bearer " + token)
+                .contentType("application/json")
                 .body("{}")
                 .when()
-                .post("/api/bookings/" + bookingId + "/pay");
+                .post("/bookings/" + bookingId + "/pay");
     }
 
-    public Response confirmBooking(
-            String token,
-            String bookingId
-    ) {
-
+    @Step("POST /bookings/{bookingId}/confirm")
+    public Response confirm(String token, String bookingId) {
         return given()
-                .baseUri(BASE_URL)
-                .header(
-                        "Authorization",
-                        "Bearer " + token
-                )
+                .baseUri(ConfigManager.BASE_URL)
+                .header("Authorization", "Bearer " + token)
+                .contentType("application/json")
+                .body("{}")
                 .when()
-                .post("/api/bookings/" + bookingId + "/confirm");
+                .post("/bookings/" + bookingId + "/confirm");
     }
 
-    public Response cancelBooking(
-            String token,
-            String bookingId
-    ) {
-
+    @Step("POST /bookings/{bookingId}/cancel")
+    public Response cancel(String token, String bookingId) {
         return given()
-                .baseUri(BASE_URL)
-                .header(
-                        "Authorization",
-                        "Bearer " + token
-                )
+                .baseUri(ConfigManager.BASE_URL)
+                .header("Authorization", "Bearer " + token)
+                .contentType("application/json")
+                .body("{}")
                 .when()
-                .post("/api/bookings/" + bookingId + "/cancel");
+                .post("/bookings/" + bookingId + "/cancel");
     }
 
-    public Response getMyBookings(
-            String token
-    ) {
-
+    @Step("GET /bookings (list my namespace)")
+    public Response listMyBookings(String token) {
         return given()
-                .baseUri(BASE_URL)
-                .header(
-                        "Authorization",
-                        "Bearer " + token
-                )
+                .baseUri(ConfigManager.BASE_URL)
+                .header("Authorization", "Bearer " + token)
                 .when()
-                .get("/api/bookings");
+                .get("/bookings");
     }
 
-    public Response getBookingByPNR(
-            String token,
-            String pnr
-    ) {
-
+    @Step("GET /bookings/{pnr}")
+    public Response getByPnr(String token, String pnr) {
         return given()
-                .baseUri(BASE_URL)
-                .header(
-                        "Authorization",
-                        "Bearer " + token
-                )
+                .baseUri(ConfigManager.BASE_URL)
+                .header("Authorization", "Bearer " + token)
                 .when()
-                .get("/api/bookings/" + pnr);
+                .get("/bookings/" + pnr);
     }
 }

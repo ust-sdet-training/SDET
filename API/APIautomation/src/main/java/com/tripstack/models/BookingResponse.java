@@ -1,50 +1,17 @@
 package com.tripstack.models;
 
-import java.util.List;
-
 public class BookingResponse {
-
-    private String id;
-    private String pnr;
+    private String bookingId;
+    private String status;
     private String empId;
-    private String state;
-    private String journeyType;
-    private String inventoryId;
-    private List<String> seatIds;
-    private Integer amountPaise;
+    private String pnr;
 
-    public BookingResponse() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getPnr() {
-        return pnr;
-    }
-
-    public String getEmpId() {
-        return empId;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public String getJourneyType() {
-        return journeyType;
-    }
-
-    public String getInventoryId() {
-        return inventoryId;
-    }
-
-    public List<String> getSeatIds() {
-        return seatIds;
-    }
-
-    public Integer getAmountPaise() {
-        return amountPaise;
-    }
+    public String getBookingId() { return bookingId; }
+    public void setBookingId(String bookingId) { this.bookingId = bookingId; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+    public String getEmpId() { return empId; }
+    public void setEmpId(String empId) { this.empId = empId; }
+    public String getPnr() { return pnr; }
+    public void setPnr(String pnr) { this.pnr = pnr; }
 }
