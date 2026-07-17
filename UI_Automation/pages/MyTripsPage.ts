@@ -16,7 +16,7 @@ export class MyTripsPage{
 
 
     async getBookingCard(){
-        return await this.bookingCard();
+        return this.bookingCard();
     }
 
     async getBookingTitle(){

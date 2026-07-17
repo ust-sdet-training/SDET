@@ -16,6 +16,11 @@ export class PassengerDetailFlow{
         await this.passengerPage.fillGender(seat, gender);
     }
 
+    async fillContactDetails(email: string, phone: string){
+        await this.passengerPage.enterEmail(email);
+        await this.passengerPage.enterPhoneNumber(phone)
+    }
+
     async goToPayment(){
         await this.passengerPage.continueToPayment();
     }

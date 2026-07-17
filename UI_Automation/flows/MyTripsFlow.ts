@@ -11,7 +11,8 @@ export class MyTripsFlow{
 
     }
     async verifyTicketisBooked(){
-        await expect((await this.mytripsPage.getBookingCard()).count()).toBeGreaterThan(0);
+        const bookingCount =await (await this.mytripsPage.getBookingCard()).count();
+        expect(bookingCount).toBeGreaterThan(0);
     }
 
     async verifyBookingTitle(pnr: string){

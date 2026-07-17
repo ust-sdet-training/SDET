@@ -7,7 +7,7 @@ export class PassengerDetailsPage{
     firstName = (seat: string) : Locator => this.page.getByRole('textbox', { name: `First name (seat ${seat})` });
     lastName = (seat: string) : Locator => this.page.getByRole('textbox', { name: `Last name (seat ${seat})` });
     age = (seat: string) : Locator => this.page.getByRole('spinbutton', { name: `Age (seat ${seat})` });
-    gender = (seat: string) : Locator => this.page.getByRole("combobox", {name: `Gender (seat ${seat}d)`});
+    gender = (seat: string) : Locator => this.page.getByRole("combobox", {name: `Gender (seat ${seat})`});
     
     inputEmail = () : Locator => this.page.getByRole("textbox", {name: "Email"});
     inputPhoneNum = () : Locator => this.page.getByRole("textbox", {name: "Phone number"});
@@ -34,7 +34,7 @@ export class PassengerDetailsPage{
         await this.inputEmail().fill(email);
     }
 
-    async enterPassword(phoneNum: string){
+    async enterPhoneNumber(phoneNum: string){
         await this.inputPhoneNum().fill(phoneNum);
     }
 

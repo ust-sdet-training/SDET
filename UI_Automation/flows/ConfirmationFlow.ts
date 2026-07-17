@@ -12,7 +12,7 @@ export class ConfirmationFlow{
         this.confirmationPage.verifyBadge();
     }
 
-    async checkPNR_Number(){
+    async checkPNR_Number(): Promise<string>{
         return await this.confirmationPage.getPnrNumber();
     }
 

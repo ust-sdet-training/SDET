@@ -12,8 +12,8 @@ export class PaymentPage{
     paymentButton = () : Locator => this.page.locator('button[type="submit"]');
 
 
-    async enterNameOnCard(email: string){
-        await this.inputNameOnCard().fill(email);
+    async enterNameOnCard(name: string){
+        await this.inputNameOnCard().fill(name);
     }
 
     async enterCardNumber(number: string){
