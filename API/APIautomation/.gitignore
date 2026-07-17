@@ -50,3 +50,5 @@ scripts/
 .env
 *.env
 gradle/
+allure-results
+build
