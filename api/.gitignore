@@ -1,0 +1,44 @@
+# Gradle
+.gradle/
+build/
+.kotlin
+
+!gradle/wrapper/gradle-wrapper.jar
+
+# IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+.factorypath
+.springBeans
+.sts4-cache
+bin/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# Environment
+.env
+
+# Reports
+reports/
+allure-results/
+allure-report/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
