@@ -69,6 +69,7 @@ public class BookingE2E {
         var getpnr =  ticketClient.getPNR(token,pnr);
 
         System.out.println(getpnr.jsonPath().prettyPrint());
+        home.reset(token);
 
 
     }

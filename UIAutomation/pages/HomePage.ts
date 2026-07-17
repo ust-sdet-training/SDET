@@ -1,58 +1,31 @@
-import { Page, TestInfo } from "@playwright/test";
 import { BasePage } from "./BasePage";
-import { AppLogger } from "../src/logger";
+
+const BASE_URL = "https://tripstack.doomple.com/";
 
 export class HomePage extends BasePage {
-  constructor(page: Page, log: AppLogger) {
-    super(page, log);
+  private readonly loginLink = this.page.getByRole("link", { name: "Log in" });
+  private readonly emailInput = this.page.getByRole("textbox", { name: "Email" });
+  private readonly passwordInput = this.page.getByRole("textbox", { name: "Password" });
+  private readonly signInHeading = this.page.getByRole("heading", { name: "Sign in to TripStack" });
+  private readonly signInButton = this.page.getByRole("button", { name: "Sign in" });
+
+  async open() {
+    await this.goto(BASE_URL);
+    await this.captureScreenshot("home-page-loaded");
   }
 
-  readonly flightsTab = this.page.getByRole("tab", { name: "Flights" });
-
-  readonly fromBox = this.page.getByRole("combobox", { name: "From" });
-
-  readonly toBox = this.page.getByRole("combobox", { name: "To" });
-
-  readonly dateBox = this.page.getByRole("textbox", { name: "Date" });
-
-  readonly searchButton = this.page.getByRole("button", { name: "Search" });
-
-  async open(baseUrl: string) {
-    this.log.info("Opening Flight Home Page");
-    await this.goto(baseUrl);
+  async goToLogin() {
+    await this.click(this.loginLink, "Log in link");
+    await this.expectVisible(this.signInHeading, "Sign in to TripStack heading");
   }
 
-  async verifyHomePage() {
-    this.log.info("Verifying Flight Home Page");
-    await this.verifyVisible(this.flightsTab);
-  }
-
-  async selectFrom(city: string, optionLabel: string) {
-    this.log.info(`Selecting source city: ${city}`);
-    await this.click(this.fromBox);
-    await this.fill(this.fromBox, city);
-    await this.click(this.page.getByRole("option", { name: optionLabel }));
-  }
-
-  async selectTo(city: string, optionLabel: string) {
-    this.log.info(`Selecting destination city: ${city}`);
-    await this.click(this.toBox);
-    await this.fill(this.toBox, city);
-    await this.click(this.page.getByRole("option", { name: optionLabel }));
-  }
-
-  async selectDate(date: string) {
-    this.log.info(`Selecting travel date: ${date}`);
-    await this.fill(this.dateBox, date);
-  }
-
-  async searchFlights() {
-    this.log.info("Clicking Search Flights");
-    await this.click(this.searchButton);
-  }
-
-  async capture(testInfo: TestInfo) {
-    this.log.info("Capturing Flight Home Page screenshot");
-    await this.takeScreenshot(testInfo, "Flight Home Page");
+ 
+  async login(email: string, password: string) {
+    await this.click(this.emailInput, "Email field");
+    await this.fill(this.emailInput, email, "Email field");
+    await this.click(this.passwordInput, "Password field");
+    await this.fill(this.passwordInput, password, "Password field", true);
+    await this.captureScreenshot("login-form-filled");
+    await this.click(this.signInButton, "Sign in button");
   }
 }

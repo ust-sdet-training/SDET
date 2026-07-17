@@ -1,27 +1,26 @@
-import { Page } from "@playwright/test";
-import { BasePage } from "./BasePage";
-import { AppLogger } from "../src/logger";
 
-export class LoginPage extends BasePage {
-  constructor(page: Page, log: AppLogger) {
-    super(page, log);
-  }
+import {Page} from "@playwright/test"
+import { BasePage } from "./BasePage"
+import { SearchData } from "../test-data/SearchData";
+import { config } from "../utils/env";
 
-  readonly loginLink = this.page.getByRole("link", { name: "Log in" });
+export class LoginPage extends BasePage{
+    constructor(page: Page)
+    {super(page)}
 
-  readonly emailBox = this.page.getByRole("textbox", { name: "Email" });
+    private email = this.page.getByRole("textbox", {name:"Email"});
+    private password = this.page.getByRole("textbox", {name:"Password"});
+    private loginBtn= this.page.getByRole("button", {name:"Sign in"});
+    header = () => this.page.getByRole("heading",{name: "Sign in to TripStack"});
 
-  readonly passwordBox = this.page.getByRole("textbox", { name: "Password" });
+    async open(){
+        await this.page.goto(config.baseUrl + "login");
+    }
 
-  readonly signInButton = this.page.getByRole("button", { name: "Sign in" });
-
-  async login(email: string, password: string) {
-    this.log.info(`Logging in as: ${email}`);
-    await this.click(this.loginLink);
-    await this.click(this.emailBox);
-    await this.fill(this.emailBox, email);
-    await this.click(this.passwordBox);
-    await this.fill(this.passwordBox, password);
-    await this.click(this.signInButton);
-  }
+    async login(email: string, password: string){
+        await this.email.fill(email);
+        await this.password.fill(password);
+        await this.loginBtn.click();
+    }
+    
 }

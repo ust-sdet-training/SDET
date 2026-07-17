@@ -1,11 +1,10 @@
 import { test as diagnosticTest, expect } from "./diagnosis";
-import { FlightSearchFlow } from "../flow/FlightSearchFlow";
-
+import { BookingFlow } from "../flow/BookingFlow"
 type Evidence = Record<string, unknown>;
 
 export const test = diagnosticTest.extend<{
   evidence: Evidence;
-  flow: FlightSearchFlow;
+  flow: BookingFlow;
 }>({
   evidence: async ({}, use, testInfo) => {
     const evidence: Evidence = {};
@@ -24,8 +23,9 @@ export const test = diagnosticTest.extend<{
     }
   },
 
-  flow: async ({ page ,log}, use) => {
-    await use( new FlightSearchFlow(page,log));
+
+  flow: async ({ page, log, evidence }, use, testInfo) => {
+    await use(new BookingFlow(page, log, testInfo, evidence));
   },
 });
 
