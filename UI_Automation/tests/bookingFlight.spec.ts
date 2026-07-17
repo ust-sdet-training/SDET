@@ -1,0 +1,185 @@
+import { test, expect } from "../fixtures/ScenarioFixture";
+
+
+test.describe("Final Capstone: TripStack Scenario", () => {
+    test.beforeEach("Opening Page", async ({page}) => {
+        await page.goto("/");
+    })
+
+    test.skip("@smoke Navigating to flight", async ({page, home}) => {
+        await home.goToHomePage();
+        await home.verifyUserOnFlightsTab();
+        await home.fillingTravelDetails("Lucknow", "Delhi", 20);
+    })
+
+    test("@smoke Navigating & Booking flight", async ({log, evidence, login, home, 
+        flights, flight, passenger, payment, confirmation, mytrips}) => {
+        
+        log.info("Launching TripStack home page");
+        await home.goToHomePage();
+
+        log.info("Verified Flights tab is active");
+        await home.verifyUserOnFlightsTab();
+
+        log.info(
+            "Searching flights",
+            {
+                origin: "Lucknow",
+                destination: "Delhi",
+                travelInDays: 20
+            }
+        );
+        await home.fillingTravelDetails(
+            "Lucknow",
+            "Delhi",
+            20
+        );
+
+        log.info(
+            "Validating initial flight search results",
+            {
+                expectedFlights: 8
+            }
+        );
+
+        await flights.verifyflightCount(8);
+
+        log.info(
+            "Validating flight count matches rendered cards"
+        );
+
+        await flights.verifyflightCountAndCardCountMatch();
+
+        log.info(
+            "Opening flight details page"
+        );
+
+        await flights.goToFlightDetailsPage();
+
+        log.info(
+            "Selecting seat",
+            {
+                seat: "1B"
+            }
+        );
+
+        await flight.bookSeat();
+
+        log.info(
+            "Verifying selected seat",
+            {
+                seat: "1B"
+            }
+        );
+
+        await flight.verfiySeatIsBooked();
+
+        log.info(
+            "Navigating to passenger details page"
+        );
+
+        await flight.continueToPassengerDetails();
+
+        log.info(
+            "Authenticating user"
+        );
+
+        await login.userLogin();
+
+        // log.info(
+        //     "Entering passenger details",
+        //     {
+        //         seat: "1B",
+        //         passenger: "Mallory Thomas"
+        //     }
+        // );
+
+        // await passenger.fillDetails(
+        //     "1B",
+        //     "Mallory",
+        //     "Thomas",
+        //     "18",
+        //     "Female"
+        // );
+
+        // log.info(
+        //     "Proceeding to payment"
+        // );
+
+        // await passenger.goToPayment();
+
+        // log.info(
+        //     "Entering payment details"
+        // );
+
+        // await payment.enterPaymentDetails("Mallory");
+
+        // log.info(
+        //     "Completing payment transaction"
+        // );
+
+        // await payment.completePayment();
+
+        // log.info(
+        //     "Verifying booking confirmation"
+        // );
+
+        // await confirmation.verifyBadgeShowsConfirmed();
+
+        // const ticket_pnr =
+        //     await confirmation.checkPNR_Number.toString();
+
+        // log.info(
+        //     "Booking confirmed",
+        //     {
+        //         pnr: ticket_pnr
+        //     }
+        // );
+
+        // log.info("Navigating to My Trips");
+
+        // await confirmation.viewMyTrips();
+        // log.info(
+        //     "Verifying booking exists in My Trips"
+        // );
+
+        // await mytrips.verifyTicketisBooked();
+        // log.info(
+        //     "Verifying booking PNR",
+        //     {
+        //         pnr: ticket_pnr
+        //     }
+        // );
+
+        // await mytrips.verifyBookingTitle(
+        //     ticket_pnr
+        // );
+        // log.info(
+        //     "Verifying booking status",
+        //     {
+        //         status: "CONFIRMED"
+        //     }
+        // );
+        // await mytrips.verifyBookingStatus(
+        //     "CONFIRMED"
+        // );
+        // log.info(
+        //     "Verifying booked seat",
+        //     {
+        //         seat: "1B"
+        //     }
+        // );
+
+        // await mytrips.verifyBookingSeat("1B");
+        // log.info(
+        //     "Flight booking journey completed successfully",
+        //     {
+        //         pnr: ticket_pnr,
+        //         seat: "1B",
+        //         status: "CONFIRMED"
+        //     }
+        // );
+
+    })
+})
+
