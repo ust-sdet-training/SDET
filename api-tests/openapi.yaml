@@ -1,0 +1,947 @@
+openapi: 3.0.3
+
+# ============================================================================
+# TripStack REST API — F10
+# Single source of truth for the JSON API. Mirrors the two UI journeys
+# (Flight cabin seat-map + Bus deck seat-map) and drives participants'
+# RestAssured suites. This document is generated to match the LIVE handlers
+# (auth / flight / bus / booking) exactly — field names, wrappers, status
+# codes and error codes are what the server actually returns.
+#
+# Contract invariants (see CONVENTIONS.md):
+#   * Money is ALWAYS integer paise (…_paise / …Paise, BIGINT). 1 INR = 100 paise.
+#   * PNR = "TS-<empId>-<seq>", minted only on CONFIRMED (e.g. TS-1004-0022).
+#   * Every booking carries empId; namespace/BOLA enforced (cross-emp read -> 403).
+#   * State machine: SEARCHED -> SELECTED -> HELD(TTL) -> PAYMENT_PENDING
+#                    -> CONFIRMED(PNR) -> CANCELLED -> REFUNDED.
+#   * Reference data (flights/buses) is snake_case; booking objects are camelCase.
+#   * Secrets (password, bearer token, card data) are x-data-classification: secret
+#     and are NEVER returned in responses or logged in clear.
+#
+# NOTE on error envelopes: the API does NOT use one uniform error shape. Simple
+# guards return {"error": "<code-or-sentence>"}; role checks add {required,role};
+# the booking state machine returns {"error":"<UPPER_SNAKE>","message","state?"}.
+# Each operation below documents the exact shape it returns.
+# ============================================================================
+
+info:
+  title: TripStack API
+  version: "1.1.0"
+  description: |
+    REST API for the TripStack capstone system-under-test. Two booking journeys
+    (Flight / Bus) share one booking lifecycle. All responses are JSON.
+
+    ### Authentication
+    Obtain a bearer JWT from `POST /api/auth/login`, then send it as
+    `Authorization: Bearer <token>` (the SSR UI also accepts a `ts_token`
+    cookie). Tokens are short-lived (15 min) so the expired-token 401 negative
+    is testable.
+
+    ### Per-employee namespace
+    The JWT carries the caller's `empId`. Bookings are isolated by `empId`:
+    `GET /api/bookings` returns only the caller's rows, and reading another
+    employee's PNR returns **403** (`CROSS_NAMESPACE`). PNRs are `TS-<empId>-<seq>`.
+
+    ### Money
+    Every monetary value is an integer number of **paise**. Flight/bus reference
+    data uses snake_case (`base_fare_paise`, `tax_paise`, `total_paise` /
+    `baseFarePaise`, `taxPaise`, `farePaise`); bookings use `amountPaise`.
+    Divide by 100 for INR.
+
+    ### Error codes participants assert on
+    `invalid_request`, `invalid_credentials`, `unauthorized`, `forbidden`,
+    `BAD_REQUEST`, `INVALID_SEATS`, `SEAT_CONFLICT`, `HOLD_EXPIRED`,
+    `INVALID_STATE`, `NOT_FOUND`, `CROSS_NAMESPACE`, `GATEWAY_DECLINE`,
+    `GATEWAY_ERROR`, `GATEWAY_TIMEOUT`, `GATEWAY_UNAVAILABLE`, `BREAKER_OPEN`,
+    `CANCEL_CANCELLED`, `NON_REFUNDABLE`.
+
+    ### Served spec
+    Served live at `/openapi.yaml` and `/api/openapi.yaml`; `/api` renders a
+    human reference page. The server-rendered **browser booking flow**
+    (`/book/passenger` → `/book/payment/:id` → `/book/confirmation/:id`) is
+    **not** part of this JSON API — see `docs/journey-map.md` for that contract.
+  contact:
+    name: TripStack API contract owner
+  license:
+    name: Internal / capstone use only
+
+servers:
+  - url: https://tripstack.doomple.com
+    description: Hosted SUT (primary; API under /api)
+  - url: https://api.tripstack.doomple.com
+    description: Hosted SUT (api subdomain; same app)
+  - url: https://tripstack-747773947804.asia-south1.run.app
+    description: Cloud Run mirror (Zscaler-friendly fallback; API under /api)
+  - url: http://localhost:4000
+    description: Local app direct
+
+tags:
+  - name: Auth
+    description: Login and identity. Issues and echoes the bearer JWT.
+  - name: Flights
+    description: Flight search and cabin seat map (read-only reference data).
+  - name: Buses
+    description: Bus search and deck seat map (read-only reference data).
+  - name: Bookings
+    description: Booking lifecycle (hold -> pay -> confirm -> cancel), namespace-scoped.
+  - name: Ops
+    description: Self-serve reset of the caller's namespace.
+
+security:
+  - bearerAuth: []          # default: operations need the JWT unless security:[] overrides
+paths:
+
+  # ==========================================================================
+  # AUTH
+  # ==========================================================================
+  /api/auth/login:
+    post:
+      tags: [Auth]
+      summary: Authenticate an employee and mint a bearer JWT
+      description: |
+        Verifies `email` + `password` (bcrypt at rest) and returns a signed JWT
+        carrying `empId` + `role`, plus the employee's `displayName`. The
+        password is a **secret** — request-only, never echoed or logged (F23).
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/LoginRequest' }
+            examples:
+              traveller:
+                value: { email: "dave@tripstack.test", password: "Password@123" }
+      responses:
+        '200':
+          description: Authenticated. Returns the bearer token and the caller's identity.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/LoginResponse' }
+              example:
+                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBJZCI6IjEwMDQ...<snip>"
+                empId: "1004"
+                role: traveller
+                displayName: "Dave Dutta"
+        '400':
+          description: Malformed body (missing/invalid email or password).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SimpleError' }
+              example: { error: invalid_request }
+        '401':
+          description: Unknown email or wrong password (same code for both — no user enumeration).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SimpleError' }
+              example: { error: invalid_credentials }
+
+  /api/auth/me:
+    get:
+      tags: [Auth]
+      summary: Return the identity encoded in the current token
+      description: Echoes `empId`, `role`, `email` and `displayName` from a valid JWT. Proves a token is live.
+      responses:
+        '200':
+          description: The caller's identity.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Identity' }
+              example: { empId: "1004", role: traveller, email: "dave@tripstack.test", displayName: "Dave Dutta" }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/auth/admin-ping:
+    get:
+      tags: [Auth]
+      summary: Admin-only probe (drives the privilege-escalation negative)
+      description: |
+        Returns 200 only for `admin`. A `viewer` or `traveller` token gets
+        **403** `forbidden` — the canonical privilege-escalation negative (F20).
+      responses:
+        '200':
+          description: Caller is an admin.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [ok, empId, role]
+                properties:
+                  ok: { type: boolean, example: true }
+                  empId: { type: string, example: "1001" }
+                  role: { type: string, example: admin }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  # ==========================================================================
+  # FLIGHTS
+  # ==========================================================================
+  /api/flights:
+    get:
+      tags: [Flights]
+      summary: Search flights
+      description: |
+        Mirrors the flight-search UI. `from` and `to` are **required**; missing
+        either returns 400. Fares are integer paise; `total_paise =
+        base_fare_paise + tax_paise` (per passenger). Reference data is public.
+      security: []
+      parameters:
+        - { name: from,    in: query, required: true,  description: 'Origin code (e.g. DEL).',      schema: { type: string, example: DEL } }
+        - { name: to,      in: query, required: true,  description: 'Destination code (e.g. BLR).', schema: { type: string, example: BLR } }
+        - { name: date,    in: query, required: false, description: 'Travel date (echoed back).',   schema: { type: string, format: date, example: "2026-08-01" } }
+        - { name: pax,     in: query, required: false, description: 'Passenger count (echoed back).', schema: { type: integer, minimum: 1, default: 1, example: 1 } }
+        - { name: class,   in: query, required: false, description: 'Cabin class (also accepts `cls`).', schema: { type: string, enum: [economy, business], default: economy } }
+        - { name: sort,    in: query, required: false, description: 'Sort order.', schema: { type: string, enum: [price, airline, departure], default: departure } }
+        - { name: airline, in: query, required: false, description: 'Filter by airline code (e.g. 6E).', schema: { type: string } }
+      responses:
+        '200':
+          description: Matching flights (may be empty). Echoes the query back.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/FlightSearchResponse' }
+        '400':
+          description: '`from` and/or `to` missing.'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SimpleError' }
+              example: { error: "from and to are required" }
+
+  /api/flights/{id}/seats:
+    get:
+      tags: [Flights]
+      summary: Cabin seat map for a flight
+      description: |
+        Row/column cabin grid. Each seat carries traits (`window`/`aisle`/
+        `middle`/`exit_row`) and an `occupied` flag. Intentional locator surface
+        (XPath ancestor-walk / state-predicate) for participants.
+      security: []
+      parameters:
+        - { name: id,    in: path,  required: true,  description: 'Flight id (e.g. FL-DELBLR-51).', schema: { type: string } }
+        - { name: class, in: query, required: false, description: 'Cabin class (price multiplier).', schema: { type: string, enum: [economy, business] } }
+      responses:
+        '200':
+          description: The cabin seat map.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/FlightSeatMap' }
+        '404':
+          description: No such flight.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SimpleError' }
+              example: { error: "flight not found" }
+
+  # ==========================================================================
+  # BUSES
+  # ==========================================================================
+  /api/buses:
+    get:
+      tags: [Buses]
+      summary: Search buses
+      description: |
+        Mirrors the bus-search UI. Operator result cards with fare breakdowns in
+        paise (`farePaise = baseFarePaise + taxPaise`). Reference data is public.
+      security: []
+      parameters:
+        - { name: from, in: query, required: false, description: 'Origin code (e.g. BLR).',      schema: { type: string, example: BLR } }
+        - { name: to,   in: query, required: false, description: 'Destination code (e.g. HYD).', schema: { type: string, example: HYD } }
+        - { name: date, in: query, required: false, description: 'Travel date (echoed back).',   schema: { type: string, format: date, example: "2026-08-01" } }
+      responses:
+        '200':
+          description: Matching buses (may be empty). Echoes the query back.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/BusSearchResponse' }
+
+  /api/buses/{id}/seats:
+    get:
+      tags: [Buses]
+      summary: Deck seat map for a bus
+      description: |
+        Two-deck layout (`lower` / `upper`), structurally different from the
+        flight cabin grid. Seats carry `deck`, `kind` and a `state`. Intentional
+        locator surface for participants.
+      security: []
+      parameters:
+        - { name: id, in: path, required: true, description: 'Bus id (e.g. BUS-BLRHYD-3).', schema: { type: string } }
+      responses:
+        '200':
+          description: The deck seat map.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/BusSeatMap' }
+        '404':
+          description: No such bus.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SimpleError' }
+              example: { error: bus_not_found }
+
+  # ==========================================================================
+  # BOOKINGS — lifecycle
+  # ==========================================================================
+  /api/bookings:
+    get:
+      tags: [Bookings]
+      summary: List the caller's bookings (namespace-scoped)
+      description: |
+        Returns a **bare JSON array** (not an object wrapper) of **only** the
+        bookings whose `empId` matches the token (F12). Never leaks another
+        employee's rows — the primary namespace-isolation assertion.
+      responses:
+        '200':
+          description: The caller's bookings (may be an empty array).
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Booking' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    post:
+      tags: [Bookings]
+      summary: Place a seat hold (create booking in HELD)
+      description: |
+        Selects seats on a flight or bus and creates a booking in **HELD** with a
+        TTL (`holdExpiresAt`). Computes `amountPaise` and sets `refundable`.
+        Requires a valid token (any role — the JSON API does not role-gate holds;
+        the seat-count guard is server-side).
+
+        Negatives:
+        * **400** `BAD_REQUEST` — body fails schema (returns Zod `issues`); or
+          `INVALID_SEATS` — empty list or more than **6** seats per booking.
+        * **401** no/expired token.
+        * **409** `SEAT_CONFLICT` — a requested seat is already held/booked, or
+          the emp is flagged `seathold_conflict` (F14). The `seathold_expiry`
+          flag instead creates the hold already-expired, so the **subsequent**
+          `POST /{id}/pay` returns 409 `HOLD_EXPIRED`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/HoldRequest' }
+            examples:
+              flight:
+                value: { journeyType: flight, inventoryId: FL-DELBLR-51, seatIds: ["12A", "12B"] }
+              bus:
+                value: { journeyType: bus, inventoryId: BUS-BLRHYD-3, seatIds: ["L3"] }
+      responses:
+        '201':
+          description: Hold placed. Booking is HELD with a live TTL.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Booking' }
+        '400':
+          description: Malformed body (`BAD_REQUEST` + `issues`) or bad seat count (`INVALID_SEATS`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+              examples:
+                badRequest:   { value: { error: BAD_REQUEST, issues: [] } }
+                invalidSeats: { value: { error: INVALID_SEATS, message: "at most 6 seats per booking" } }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          description: Seat conflict — a requested seat is already taken.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+              example: { error: SEAT_CONFLICT, message: SEAT_CONFLICT }
+
+  /api/bookings/{id}/pay:
+    post:
+      tags: [Bookings]
+      summary: Pay for a held booking (HELD -> PAYMENT_PENDING)
+      description: |
+        Charges the held booking through the payment mock and moves it to
+        **PAYMENT_PENDING**. The gateway outcome is driven by the caller's
+        per-emp **fault flag** (F13), *not* by the request body — this endpoint
+        does **not** read a request body (send `{}`). If you post card data to
+        practise secret-masking, treat it as **secret**; the mock ignores it.
+
+        The gateway outcomes are distinct so a participant can diagnose their
+        injected fault:
+
+        | Injected fault (F13) | HTTP | `error` code |
+        |----------------------|------|--------------|
+        | `payment_402`        | 402  | `GATEWAY_DECLINE` |
+        | `payment_500`        | 502  | `GATEWAY_ERROR` |
+        | `payment_timeout`    | 504  | `GATEWAY_TIMEOUT` |
+        | `conn_reset`         | 502  | `GATEWAY_UNAVAILABLE` |
+        | `payment_latency`    | 200 (slow) — or **504** `GATEWAY_TIMEOUT` past the client budget |
+
+        Other negatives: **401**; **403** `CROSS_NAMESPACE` (another emp's
+        booking); **404** `NOT_FOUND`; **409** `HOLD_EXPIRED`; **503**
+        `BREAKER_OPEN` (repeated failures tripped the breaker).
+      parameters:
+        - { $ref: '#/components/parameters/BookingId' }
+      requestBody:
+        required: false
+        description: Ignored by the mock. Any card fields are secret (write-only) if sent.
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/PaymentRequest' }
+      responses:
+        '200':
+          description: Payment accepted. Booking is PAYMENT_PENDING.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Booking' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '402':
+          description: Gateway declined (`payment_402`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+              example: { error: GATEWAY_DECLINE, message: "payment declined by gateway" }
+        '403': { $ref: '#/components/responses/CrossNamespace' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409':
+          description: Hold expired before payment.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+              example: { error: HOLD_EXPIRED, message: HOLD_EXPIRED, state: HELD }
+        '502':
+          description: Gateway 5xx (`GATEWAY_ERROR`) or connection reset (`GATEWAY_UNAVAILABLE`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+              examples:
+                gatewayError:       { value: { error: GATEWAY_ERROR, message: "payment gateway error (5xx)" } }
+                gatewayUnavailable: { value: { error: GATEWAY_UNAVAILABLE, message: "payment gateway connection reset" } }
+        '503':
+          description: Payment circuit breaker is open; the attempt failed fast.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+              example: { error: BREAKER_OPEN, message: "payment circuit breaker open" }
+        '504':
+          description: Gateway timed out (`payment_timeout`) or latency exceeded the client budget.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+              example: { error: GATEWAY_TIMEOUT, message: "payment gateway timed out" }
+
+  /api/bookings/{id}/confirm:
+    post:
+      tags: [Bookings]
+      summary: Confirm a paid booking and mint the PNR (PAYMENT_PENDING -> CONFIRMED)
+      description: |
+        Finalises a PAYMENT_PENDING booking, transitions to **CONFIRMED**, and
+        mints the PNR `TS-<empId>-<seq>` (e.g. `TS-1004-0022`). Takes no body.
+
+        Negatives: **401**; **403** `CROSS_NAMESPACE`; **404** `NOT_FOUND`;
+        **409** `INVALID_STATE` (not PAYMENT_PENDING) or `HOLD_EXPIRED`.
+      parameters:
+        - { $ref: '#/components/parameters/BookingId' }
+      responses:
+        '200':
+          description: Confirmed. `pnr` is now set and `state` is CONFIRMED.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Booking' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/CrossNamespace' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409':
+          description: Booking is not in a confirmable state, or the hold expired.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+              examples:
+                invalidState: { value: { error: INVALID_STATE, message: "cannot confirm from HELD", state: HELD } }
+                holdExpired:  { value: { error: HOLD_EXPIRED, message: HOLD_EXPIRED, state: HELD } }
+
+  /api/bookings/{id}/cancel:
+    post:
+      tags: [Bookings]
+      summary: Cancel a confirmed booking (CONFIRMED -> CANCELLED -> REFUNDED)
+      description: |
+        Cancels a CONFIRMED booking. Refundable fares transition
+        CANCELLED -> REFUNDED; non-refundable fares are rejected. Takes no body.
+
+        Negatives: **401**; **403** `CROSS_NAMESPACE`; **404** `NOT_FOUND`;
+        **409** `CANCEL_CANCELLED` (already cancelled); **422** `NON_REFUNDABLE`.
+      parameters:
+        - { $ref: '#/components/parameters/BookingId' }
+      responses:
+        '200':
+          description: Cancelled (and REFUNDED when the fare was refundable).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Booking' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/CrossNamespace' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409':
+          description: Booking is already cancelled (cancel-twice).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+              example: { error: CANCEL_CANCELLED, message: CANCEL_CANCELLED, state: CANCELLED }
+        '422':
+          description: Fare is non-refundable and cannot be cancelled for refund.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+              example: { error: NON_REFUNDABLE, message: NON_REFUNDABLE, state: CONFIRMED }
+
+  /api/bookings/{pnr}:
+    get:
+      tags: [Bookings]
+      summary: Fetch a single booking by PNR (namespace / BOLA enforced)
+      description: |
+        Returns the booking for `pnr` **only if it belongs to the caller's
+        `empId`**. Requesting another employee's PNR returns **403**
+        `CROSS_NAMESPACE` — the canonical cross-namespace read negative (F12).
+        Note: this route shares the `/api/bookings/{...}` path space; a value
+        that is not a known PNR yields **404** `NOT_FOUND`.
+      parameters:
+        - name: pnr
+          in: path
+          required: true
+          description: Booking PNR, `TS-<empId>-<seq>`.
+          schema: { type: string, pattern: '^TS-[^-]+-\d+$' }
+          example: TS-1004-0022
+      responses:
+        '200':
+          description: The caller's booking.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Booking' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/CrossNamespace' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  # ==========================================================================
+  # OPS
+  # ==========================================================================
+  /api/reset:
+    post:
+      tags: [Ops]
+      summary: Reset a namespace (self-serve; admin may target any emp)
+      description: |
+        Clears bookings and releases held seats for a namespace (F17), so a
+        participant can re-run from a clean slate. Defaults to the caller's own
+        `empId`; pass `?emp=<id>` to target another — allowed **only for admin**,
+        otherwise **403** `CROSS_NAMESPACE`.
+      parameters:
+        - { name: emp, in: query, required: false, description: 'Target empId (admin only; defaults to caller).', schema: { type: string } }
+      responses:
+        '200':
+          description: Namespace reset. Returns the emp and how many bookings were purged.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [emp, purged]
+                properties:
+                  emp:    { type: string,  example: "1004" }
+                  purged: { type: integer, example: 3 }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403':
+          description: Non-admin attempted to reset another emp's namespace.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+              example: { error: CROSS_NAMESPACE, message: "can only reset your own namespace" }
+
+# ============================================================================
+components:
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Short-lived (15 min) JWT from `POST /api/auth/login`, carrying `empId`
+        and `role`. Send as `Authorization: Bearer <token>`. The token is a
+        **secret** — never log it.
+
+  parameters:
+    BookingId:
+      name: id
+      in: path
+      required: true
+      description: |
+        Booking identifier — accepts EITHER the internal id (opaque UUID) OR a
+        PNR (`TS-<emp>-<seq>`). Passing another employee's PNR to pay/confirm/cancel
+        enforces the ownership boundary → **403** `CROSS_NAMESPACE` (the "cancel
+        another's booking" negative); an unknown value → **404** `NOT_FOUND`.
+      schema: { type: string }
+      example: adec25fe-dfd4-4b71-9d3b-d4b98637c0fc
+
+  responses:
+    Unauthorized:
+      description: Missing, invalid, or expired bearer token.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/SimpleError' }
+          example: { error: unauthorized }
+    Forbidden:
+      description: Caller's role is insufficient for this route (privilege escalation negative).
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/RoleError' }
+          example: { error: forbidden, required: [admin], role: traveller }
+    CrossNamespace:
+      description: The resource belongs to another employee (BOLA).
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          example: { error: CROSS_NAMESPACE, message: CROSS_NAMESPACE }
+    NotFound:
+      description: Resource not found in the caller's scope.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          example: { error: NOT_FOUND, message: NOT_FOUND }
+
+  schemas:
+
+    # ---- Auth ----
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+          description: Employee login email (public test data).
+          x-data-classification: public
+          example: dave@tripstack.test
+        password:
+          type: string
+          format: password
+          description: Plaintext password, verified against the bcrypt hash. Request-only.
+          x-data-classification: secret
+          writeOnly: true
+          example: "Password@123"
+        ttlSeconds:
+          type: integer
+          minimum: 1
+          maximum: 900
+          description: |
+            Optional short token lifetime in **seconds** (1–900). Use it to make the
+            **expired-token 401** negative testable without waiting the default 15 min —
+            e.g. request `ttlSeconds: 2`, wait ~3 s, then call any authed endpoint → 401.
+            Omit for the normal 15-minute token.
+          example: 2
+
+    LoginResponse:
+      type: object
+      required: [token, empId, role, displayName]
+      properties:
+        token:
+          type: string
+          description: Signed bearer JWT (secret — do not log). Expires in 15 min.
+          x-data-classification: secret
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.<...>"
+        empId:
+          type: string
+          description: Employee id encoded in the token; PNR namespace root.
+          x-data-classification: public
+          example: "1004"
+        role: { $ref: '#/components/schemas/Role' }
+        displayName:
+          type: string
+          nullable: true
+          description: Employee display name.
+          example: "Dave Dutta"
+
+    Identity:
+      type: object
+      required: [empId, role]
+      properties:
+        empId:       { type: string, x-data-classification: public, example: "1004" }
+        role:        { $ref: '#/components/schemas/Role' }
+        email:       { type: string, nullable: true, example: "dave@tripstack.test" }
+        displayName: { type: string, nullable: true, example: "Dave Dutta" }
+
+    Role:
+      type: string
+      description: |
+        RBAC role. `viewer` may search/read only; `traveller` books; `admin`
+        books and reaches admin routes (F20).
+      enum: [viewer, traveller, admin]
+      example: traveller
+
+    # ---- Flights (snake_case reference data) ----
+    Flight:
+      type: object
+      description: A flight result card. Fares are public integer paise.
+      required: [id, airline_code, airline_name, flight_no, origin, dest, dep_time, arr_time, base_fare_paise, tax_paise, total_paise, fare_display]
+      properties:
+        id:              { type: string, example: FL-DELBLR-51 }
+        airline_code:    { type: string, example: UK }
+        airline_name:    { type: string, example: Vistara }
+        flight_no:       { type: string, example: UK-483 }
+        origin:          { type: string, example: DEL }
+        dest:            { type: string, example: BLR }
+        dep_time:        { type: string, example: "05:57" }
+        arr_time:        { type: string, example: "08:18" }
+        base_fare_paise: { type: integer, format: int64, x-data-classification: public, example: 619700 }
+        tax_paise:       { type: integer, format: int64, x-data-classification: public, example: 111546 }
+        total_paise:     { type: integer, format: int64, description: base + tax (per pax), x-data-classification: public, example: 731246 }
+        fare_display:    { type: string, description: 'Rendered total (₹, display only). Never assert money on this — use total_paise.', example: "₹7,312" }
+
+    FlightSearchResponse:
+      type: object
+      required: [from, to, count, flights]
+      properties:
+        from:    { type: string, example: DEL }
+        to:      { type: string, example: BLR }
+        date:    { type: string, nullable: true, example: "2026-08-01" }
+        pax:     { type: integer, example: 1 }
+        class:   { type: string, enum: [economy, business], example: economy }
+        count:   { type: integer, description: 'Number of results (== flights.length).', example: 48 }
+        flights:
+          type: array
+          items: { $ref: '#/components/schemas/Flight' }
+
+    FlightSeatMap:
+      type: object
+      required: [flight_id, layout, cols, total, available, rows]
+      properties:
+        flight_id: { type: string, example: FL-DELBLR-51 }
+        layout:    { type: string, enum: [cabin], example: cabin }
+        cols:      { type: array, items: { type: string }, example: ["A","B","C","D","E","F"] }
+        total:     { type: integer, description: Total seats, example: 156 }
+        available: { type: integer, description: Currently free seats, example: 141 }
+        rows:
+          type: array
+          items: { $ref: '#/components/schemas/CabinRow' }
+
+    CabinRow:
+      type: object
+      required: [row, exit_row, seats]
+      properties:
+        row:      { type: integer, example: 12 }
+        exit_row: { type: boolean, example: false }
+        seats:
+          type: array
+          items: { $ref: '#/components/schemas/CabinSeat' }
+
+    CabinSeat:
+      type: object
+      required: [seat_id, row, col, occupied]
+      properties:
+        seat_id:  { type: string, description: 'row+col, e.g. 12A.', example: "12A" }
+        row:      { type: integer, example: 12 }
+        col:      { type: string, example: A }
+        window:   { type: boolean, example: true }
+        aisle:    { type: boolean, example: false }
+        middle:   { type: boolean, example: false }
+        exit_row: { type: boolean, example: false }
+        occupied: { type: boolean, description: 'true = taken (drives seat-conflict).', example: false }
+
+    # ---- Buses (camelCase reference data) ----
+    Bus:
+      type: object
+      description: A bus result card. Fares are public integer paise.
+      required: [id, operator, operatorName, kind, origin, dest, depTime, arrTime, baseFarePaise, taxPaise, farePaise, seatsLeft]
+      properties:
+        id:            { type: string, example: BUS-BLRHYD-3 }
+        operator:      { type: string, description: Operator code, example: VRL }
+        operatorName:  { type: string, example: "VRL Travels" }
+        kind:          { type: string, enum: [sleeper, seater, ac-semi], example: sleeper }
+        origin:        { type: string, example: BLR }
+        dest:          { type: string, example: HYD }
+        depTime:       { type: string, example: "20:30" }
+        arrTime:       { type: string, example: "07:45" }
+        baseFarePaise: { type: integer, format: int64, x-data-classification: public, example: 129000 }
+        taxPaise:      { type: integer, format: int64, x-data-classification: public, example: 6450 }
+        farePaise:     { type: integer, format: int64, description: base + tax, x-data-classification: public, example: 135450 }
+        seatsLeft:     { type: integer, example: 22 }
+
+    BusSearchResponse:
+      type: object
+      required: [count, buses]
+      properties:
+        from:  { type: string, nullable: true, example: BLR }
+        to:    { type: string, nullable: true, example: HYD }
+        date:  { type: string, nullable: true, example: "2026-08-01" }
+        count: { type: integer, example: 6 }
+        buses:
+          type: array
+          items: { $ref: '#/components/schemas/Bus' }
+
+    BusSeatMap:
+      type: object
+      required: [busId, operator, layout, decks]
+      properties:
+        busId:    { type: string, example: BUS-BLRHYD-3 }
+        operator: { type: string, example: VRL }
+        layout:   { type: string, enum: [deck], example: deck }
+        decks:
+          type: object
+          required: [lower, upper]
+          properties:
+            lower: { type: array, items: { $ref: '#/components/schemas/DeckSeat' } }
+            upper: { type: array, items: { $ref: '#/components/schemas/DeckSeat' } }
+
+    DeckSeat:
+      type: object
+      required: [seatId, deck, state]
+      properties:
+        seatId: { type: string, description: 'deck+index, e.g. L3 / U5.', example: "L3" }
+        deck:   { type: string, enum: [lower, upper], example: lower }
+        kind:   { type: string, description: 'Seat kind (sleeper/seater/ladies…).', example: sleeper }
+        state:  { type: string, description: 'available / occupied / booked / ladies (literal class token).', example: available }
+
+    # ---- Bookings (camelCase) ----
+    HoldRequest:
+      type: object
+      required: [journeyType, inventoryId, seatIds]
+      properties:
+        journeyType:
+          type: string
+          enum: [flight, bus]
+          example: flight
+        inventoryId:
+          type: string
+          description: flights.id or buses.id being booked.
+          example: FL-DELBLR-51
+        seatIds:
+          type: array
+          description: 'Seats to hold — 1..6. Empty or >6 -> 400 INVALID_SEATS. A taken seat -> 409 SEAT_CONFLICT.'
+          items: { type: string }
+          minItems: 1
+          maxItems: 6
+          example: ["12A", "12B"]
+        refundable:
+          type: boolean
+          description: Override refundability (optional; otherwise derived from the fare).
+          example: true
+        holdTtlSec:
+          type: integer
+          description: Custom hold TTL in seconds (optional; testing hook for the expiry negative).
+          example: 120
+
+    PaymentRequest:
+      type: object
+      description: |
+        Optional and **ignored by the mock** — the gateway outcome is driven by
+        the caller's per-emp fault flag, not this body. If you send card fields
+        to practise masking, they are **secret** (write-only, never stored/echoed).
+      properties:
+        method:    { type: string, enum: [card, upi, netbanking], example: card }
+        cardToken:
+          type: string
+          description: Tokenised card reference (secret).
+          x-data-classification: secret
+          writeOnly: true
+          example: tok_test_visa
+        cardNumber:
+          type: string
+          description: Raw PAN (secret; discouraged — use cardToken).
+          x-data-classification: secret
+          writeOnly: true
+        upiId:
+          type: string
+          description: UPI VPA (secret when present).
+          x-data-classification: secret
+          writeOnly: true
+
+    Booking:
+      type: object
+      description: A booking row, scoped to the caller's empId. This is the exact object returned by hold/pay/confirm/cancel and the two read endpoints.
+      required: [id, pnr, empId, journeyType, inventoryId, state, seatIds, amountPaise, refundable, holdExpiresAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Opaque booking id (used in /pay, /confirm, /cancel paths).
+          example: adec25fe-dfd4-4b71-9d3b-d4b98637c0fc
+        pnr:
+          type: string
+          nullable: true
+          description: '`TS-<empId>-<seq>`; null until CONFIRMED.'
+          x-data-classification: public
+          example: TS-1004-0022
+        empId:
+          type: string
+          description: Owner. The namespace/BOLA boundary.
+          x-data-classification: public
+          example: "1004"
+        journeyType: { type: string, enum: [flight, bus], example: flight }
+        inventoryId: { type: string, example: FL-DELBLR-51 }
+        state: { $ref: '#/components/schemas/BookingState' }
+        seatIds:
+          type: array
+          items: { type: string }
+          example: ["12A", "12B"]
+        amountPaise:
+          type: integer
+          format: int64
+          nullable: true
+          description: Total charged in paise = (base+tax) * seats.
+          x-data-classification: public
+          example: 1462492
+        refundable:
+          type: boolean
+          description: Drives the 422 NON_REFUNDABLE on cancel.
+          example: true
+        holdExpiresAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: TTL for HELD; past this, /pay and /confirm return 409 HOLD_EXPIRED.
+          example: "2026-07-17T05:15:35.869Z"
+
+    BookingState:
+      type: string
+      description: |
+        `SEARCHED -> SELECTED -> HELD -> PAYMENT_PENDING -> CONFIRMED -> CANCELLED -> REFUNDED`.
+      enum: [SEARCHED, SELECTED, HELD, PAYMENT_PENDING, CONFIRMED, CANCELLED, REFUNDED]
+      example: HELD
+
+    # ---- Error envelopes (NON-uniform — see per-operation docs) ----
+    SimpleError:
+      type: object
+      description: Minimal envelope from simple guards. `error` is a stable code (e.g. `unauthorized`) or, on flight/bus 400/404, a short sentence.
+      required: [error]
+      properties:
+        error: { type: string, example: unauthorized }
+
+    RoleError:
+      type: object
+      description: Returned by role checks (403 `forbidden`).
+      required: [error, required, role]
+      properties:
+        error:    { type: string, example: forbidden }
+        required: { type: array, items: { type: string }, example: [admin] }
+        role:     { type: string, example: traveller }
+
+    Error:
+      type: object
+      description: |
+        Booking state-machine envelope. `error` is a stable UPPER_SNAKE code the
+        RestAssured suites assert on; `message` is human detail (defaults to the
+        code); `state` (when present) is the booking's current state; `issues` is
+        present only on `BAD_REQUEST` (Zod validation detail).
+      required: [error]
+      properties:
+        error:
+          type: string
+          description: |
+            Machine code. One of: `BAD_REQUEST`, `INVALID_SEATS`, `SEAT_CONFLICT`,
+            `HOLD_EXPIRED`, `INVALID_STATE`, `NOT_FOUND`, `CROSS_NAMESPACE`,
+            `GATEWAY_DECLINE`, `GATEWAY_ERROR`, `GATEWAY_TIMEOUT`,
+            `GATEWAY_UNAVAILABLE`, `BREAKER_OPEN`, `CANCEL_CANCELLED`,
+            `NON_REFUNDABLE`.
+          example: HOLD_EXPIRED
+        message:
+          type: string
+          description: Human-readable detail (never contains secrets).
+          example: HOLD_EXPIRED
+        state:
+          $ref: '#/components/schemas/BookingState'
+        issues:
+          type: array
+          description: Zod validation issues (only on `BAD_REQUEST`).
+          items: { type: object, additionalProperties: true }

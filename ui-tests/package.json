@@ -1,0 +1,20 @@
+{
+  "name": "tripstack-ui-tests",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "test:journeys": "playwright test --grep @journey",
+    "test:negatives": "playwright test --grep @negative",
+    "test:resilience": "playwright test --grep @resilience",
+    "test:all": "playwright test",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.1.1",
+    "allure-playwright": "^2.15.0",
+    "dotenv": "^16.4.0",
+    "typescript": "^5.6.3"
+  }
+}

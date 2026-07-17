@@ -1,0 +1,4 @@
+com\capstone\resilience\CircuitBreakerResilienceTest.class
+com\capstone\db\DataOwnershipTest.class
+com\capstone\negatives\AuthorizationNegativeTest.class
+com\capstone\journeys\BookingJourneyTest.class
