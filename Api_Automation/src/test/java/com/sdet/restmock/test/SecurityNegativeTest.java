@@ -20,7 +20,7 @@ public class SecurityNegativeTest {
     {
         TamperedToken= ProductFactory.getAuthToken()+"tampered"; //here i am creating the tampered token
         given()
-                .when().log().all()
+                .when()
                 .spec(tampered)
                 .header("Authorization", "Bearer " + TamperedToken)
                 .when()

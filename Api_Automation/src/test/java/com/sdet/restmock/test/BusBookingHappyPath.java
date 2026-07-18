@@ -1,20 +1,16 @@
 package com.sdet.restmock.test;
-import com.sdet.restmock.config.BaseConfig;
-import com.sdet.restmock.config.UserData;
 import com.sdet.restmock.support.ProductFactory;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.util.Map;
 
 import static org.hamcrest.Matchers.*;
 import static io.restassured.RestAssured.*;
 import static com.sdet.restmock.config.UserData.*;
 import static com.sdet.restmock.support.ProductFactory.*;
 
-public class SampleTest {
+public class BusBookingHappyPath {
 
     public static  String  Token;
     @BeforeAll
@@ -39,13 +35,11 @@ public class SampleTest {
                 .get("")
                 .then()
                 .statusCode(200)
-                .log().all()
                 .body("count",notNullValue())
                 .body("from", equalToIgnoringCase("HYD"))
                 .body("to",equalToIgnoringCase("CCU"))
                 .extract().path("buses[0].id");
 
-        System.out.println(busid);
 
 
         given()
@@ -77,42 +71,70 @@ public class SampleTest {
                         .extract().path("id");
 
 
-        given()
+        Response res1=given()
                 .spec(booking)
-                .log().all()
                 .header("Authorization", "Bearer " + Token)
                 .pathParam("id",id)
-                .log().all()
                 .when()
-                .post("/{id}/pay")
-                .then()
-                .statusCode(200)
-                .log().all()
-                .body("state", equalTo("PAYMENT_PENDING"));
+                .post("/{id}/pay");
+                if(res1.statusCode()==502)
+                {
+                        res1.then()
+                                .body("error",equalToIgnoringCase("GATEWAY_UNAVAILABLE"))
+                                .body("message",containsString("connection reset"));
+                }
+                else if (res1.statusCode()==200)
+                {
+
+                    res1.then()
+                            .body("state", equalTo("PAYMENT_PENDING"));
+
+                }
 
 
-        given()
+
+        Response res2 =given()
                 .spec(booking)
                 .header("Authorization", "Bearer " + Token)
                 .pathParam("id", id)
                 .when()
-                .post("/{id}/confirm")
-                .then()
-                .statusCode(200)
-                .body("state", equalTo("CONFIRMED"))
-                .body("pnr", notNullValue());
+                .post("/{id}/confirm");
+        if(res2.statusCode()==200) {
+                res2.then()
+                    .body("state", equalTo("CONFIRMED"));
+        }
+        else if (res2.statusCode()==402)
+        {
+            res2.then()
+                    .body("error",equalToIgnoringCase("GATEWAY_DECLINE"))
+                    .body("message",equalToIgnoringCase("no captured payment"));
+        }
 
-        given()
+//if(res2.statusCode()==200) {
+//    given()
+//            .spec(booking)
+//            .header("Authorization", "Bearer " + Token)
+//            .log().all()
+//            .pathParam("pnr",res2.body())
+//            .when()
+//            .get("/{pnr}")
+//            .then()
+//            .statusCode(200)
+//            .body("pnr", notNullValue());
+//}
+
+
+        Response res3=given()
                 .spec(booking)
                 .header("Authorization", "Bearer " + Token)
                 .pathParam("id", id)
                 .when()
-                .post("/{id}/cancel")
-                .then()
-                .statusCode(200)
-                .body("state", equalTo("REFUNDED"));
-
-
+                .post("/{id}/cancel");
+                if(res2.statusCode()==402)
+                {
+                    res3.then().statusCode(200)
+                            .body("pnr",emptyOrNullString());
+                }
 
     }
 

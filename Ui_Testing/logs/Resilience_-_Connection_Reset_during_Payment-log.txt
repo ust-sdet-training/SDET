@@ -1,2 +1,2 @@
-[INFO - 12:54:58] Test Started {null
-[INFO - 12:55:07] Test timedOut {null
+[INFO - 23:25:00] Test Started {null
+[INFO - 23:25:10] Test timedOut {null

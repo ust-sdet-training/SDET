@@ -1,0 +1,7 @@
+[INFO - 23:24:13] Test Started {null
+[INFO - 23:24:14] Login for the Tripstack  {null
+[INFO - 23:24:15] Search for the bus in Tripstack {null
+[INFO - 23:24:15] Select the seat for the bus {null
+[INFO - 23:24:16] Enter the passender details {null
+[INFO - 23:24:17] Enter the cardnumber and do the payment {null
+[INFO - 23:24:17] Test passed {null

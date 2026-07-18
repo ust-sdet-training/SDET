@@ -34,9 +34,9 @@ export class SeatTypePage
     async selectAvailableSeat()
     {
         //   await this.page.getByRole('tabpanel', { name: 'lower deck' }).;
-             await this.page.getByRole('button', { name: 'Seat L10 available' }).click();
-            // const availableSeat = this.page.locator('[data-state="available"]').last();
-            // await availableSeat.click();
+             //await this.page.getByRole('button', { name: 'Seat L5 available' }).click();
+             const availableSeat = this.page.locator('[data-state="available"]').first();
+             await availableSeat.click();
 
     }
 

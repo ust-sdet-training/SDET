@@ -5,15 +5,18 @@ import java.util.Map;
 public class UserData
 {
 
-    public static Map<String,Object> busdetails=Map.of("journeyType", "bus",
+     public static Map<String,Object> busdetails=Map.of("journeyType", "bus",
         "inventoryId", "BUS-HYDCCU-04",
         "seatIds" , List.of("14A")
         );
 
-    public static Map<String,Object> tamperSeat=Map.of("journeyType", "bus",
+     public static Map<String,Object> tamperSeat=Map.of("journeyType", "bus",
             "inventoryId", "BUS-HYDCCU-04",
             "seatIds" , List.of("16A")
     );
+
+     public static Map<String,String> tok= Map.of("email",BaseConfig.TEST_USERNAME,"password",BaseConfig.PASSWORD);
+
 
 //    public static Map wrongPassword=Map.of("username",BaseConfig.TEST_USERNAME,"password",BaseConfig.WRONG_PASSWORD);
 }

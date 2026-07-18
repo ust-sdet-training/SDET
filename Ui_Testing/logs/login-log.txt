@@ -1,7 +1,4 @@
-[INFO - 18:34:54] Test Started {null
-[INFO - 18:35:03] Login for the Tripstack  {null
-[INFO - 18:35:03] Search for the bus in Tripstack {null
-[INFO - 18:35:04] Select the seat for the bus {null
-[INFO - 18:35:05] Enter the passender details {null
-[INFO - 18:35:05] Enter the cardnumber {null
-[INFO - 18:35:05] Test passed {null
+[INFO - 16:07:13] Test Started {null
+[INFO - 16:07:15] Login for the Tripstack  {null
+[INFO - 16:07:16] Search for the bus in Tripstack {null
+[INFO - 16:07:23] Test timedOut {null

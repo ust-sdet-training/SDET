@@ -17,5 +17,4 @@ export class Env
         static readonly exp=process.env.EXP!;
         static readonly cardnumber=process.env.CARDNUMBER!;
 
-
     }

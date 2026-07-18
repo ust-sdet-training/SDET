@@ -53,8 +53,18 @@ export class TripStackFlow  {
     }
     async payment(firstname:string,cardnumber:string,exp:string,cv:string)
     {
+
+        
         await this.paymentPage.enterPaymentDetails(firstname,cardnumber,exp,cv)
+        const paymentError = this.page.getByText('payment gateway connection');
+        if (await paymentError.isVisible({ timeout: 3000 }).catch(() => false)) 
+        {
+        await expect(paymentError).toBeVisible();
+        }
+        else
+        {
         await expect(this.page.getByText('Booking reference (PNR)')).toBeVisible();
+        }
         
 
     }

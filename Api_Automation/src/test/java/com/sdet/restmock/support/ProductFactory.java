@@ -10,20 +10,12 @@ import io.restassured.specification.ResponseSpecification;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.util.Map;
-
-import static com.sdet.restmock.test.SampleTest.Token;
+import static com.sdet.restmock.config.UserData.*;
 import static io.restassured.RestAssured.*;
-import static io.restassured.specification.ProxySpecification.auth;
-import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.lessThan;
 public class ProductFactory {
 
-    static Map<String,String> tok= Map.of("email",BaseConfig.TEST_USERNAME,"password",BaseConfig.PASSWORD);
-
-
-
-
-
+//    static Map<String,String> tok= Map.of("email",BaseConfig.TEST_USERNAME,"password",BaseConfig.PASSWORD);
     static final String baseURL=BaseConfig.BASE_URL;
 
    public  static  ResponseSpecification ok=new ResponseSpecBuilder()
@@ -89,7 +81,7 @@ public class ProductFactory {
         String token=given()
                 .baseUri(baseURL)
                 .contentType("application/json")
-                .body(tok)
+                .body(UserData.tok)
                 .when()
                 .post("api/auth/login")
                 .then().extract().path("token");
