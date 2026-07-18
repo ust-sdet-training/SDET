@@ -23,14 +23,15 @@ export default defineConfig({
   reporter: [
     ['html'],
     ['list'],
-    ['json', { outputFile: 'reports/results.json' }]
+    ['json', { outputFile: 'reports/results.json' }],
+    ['allure-playwright', { resultsDir: 'allure-results' }]
   ],
 
   use: {
 
     baseURL: 'https://tripstack.doomple.com',
 
-    headless: false,
+    headless: !!process.env.CI,
 
     viewport: {
       width: 1920,
@@ -57,8 +58,6 @@ export default defineConfig({
         ...devices['Desktop Chrome']
       }
     },
-
-  
   ],
 
   outputDir: 'reports/artifacts',

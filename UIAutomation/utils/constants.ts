@@ -1,9 +1,9 @@
-export const BASE_URL = "https://tripstack.doomple.com";
+export const PNR_PREFIX = "TS";
 
-export const USER_EMAIL = "niaj@tripstack.test";
+export const DATE_OFFSET_DAYS = 15;
 
-export const USER_PASSWORD = "Password@123";
+export const FROM_CITY_LABEL = "Chandigarh IXC";
+export const TO_CITY_LABEL = "Bengaluru BLR";
 
-export const EMP_ID = "1014";
-
-export const PNR_PREFIX = `TS-${EMP_ID}`;
+export const BOARDING_POINT_TEXT = "Chandigarh Airport Road";
+export const DROPPING_POINT_TEXT = "Bengaluru Railway Station";

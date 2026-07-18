@@ -11,5 +11,14 @@
     "regression": "playwright test --grep @regression",
     "security": "playwright test tests/security",
     "resilience": "playwright test tests/resilience"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^22.20.1",
+    "allure-playwright": "^3.10.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
   }
 }
