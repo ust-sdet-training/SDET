@@ -6,9 +6,9 @@ public final class Secrets {
     }
 
     public static final String EMAIL =
-            Config.get("TRIPSTACK_USERNAME");
+            Config.get("SAITEJA_TRIPSTACK_USERNAME");
 
     public static final String PASSWORD =
-            Config.get("TRIPSTACK_PASSWORD");
+            Config.get("SAITEJA_TRIPSTACK_PASSWORD");
 
 }

@@ -39,6 +39,6 @@ public final class Config {
     }
 
     public static final String BASE_URL =
-            get("BASE_URL", "https://api.tripstack.doomple.com");
+            get("SAITEJA_BASE_URL", "https://api.tripstack.doomple.com");
 
 }
