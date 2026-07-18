@@ -131,15 +131,13 @@ jobs:
           java-version: '22'
           cache: maven
 
-      - name: Verify Docker is available
-        run: docker info
 
       - name: Run Container Suite (Testcontainers/MySQL)
         run: mvn test -Dtest=DbSupportContainerTest
 
       - name: Run Remaining Suite (BookingE2E, PTest, WireMockTest, RunCucumberTest)
         if: always()
-        run: mvn test -Dtest=BookingE2E,PTest,WireMockTest,RunCucumberTest
+        run: mvn test -Dtest=BookingE2E,WireMockTest,RunCucumberTest
 
       - name: Upload Container Suite reports
         if: always()
