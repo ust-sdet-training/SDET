@@ -438,3 +438,28 @@
 17-07-2026 17:16:01 [INFO] Clicking Pay Button
 17-07-2026 17:16:01 [INFO] ✅ Booking Confirmed
 17-07-2026 17:16:01 [INFO] ✅ PNR Generated
+18-07-2026 18:42:18 [INFO] Opening TripStack
+18-07-2026 18:42:19 [INFO] Opening Login Page
+18-07-2026 18:42:19 [INFO] Entering Username
+18-07-2026 18:42:19 [INFO] Entering Password
+18-07-2026 18:42:19 [INFO] Clicking Sign In
+18-07-2026 18:42:20 [INFO] ✅ Login Successful
+18-07-2026 18:42:20 [INFO] Opening Bus Module
+18-07-2026 18:42:20 [INFO] Selecting Source : Hyderabad HYD
+18-07-2026 18:42:20 [INFO] Selecting Destination : Delhi DEL
+18-07-2026 18:42:20 [INFO] Journey Date : 2026-08-06
+18-07-2026 18:42:20 [INFO] Searching Bus
+18-07-2026 18:42:20 [INFO] Applying AC Seater Filter
+18-07-2026 18:42:20 [INFO] ✅ Orange Tours Bus Displayed
+18-07-2026 18:42:20 [INFO] Selecting Bus
+18-07-2026 18:42:21 [INFO] Selecting Seat S22
+18-07-2026 18:42:21 [INFO] Entering Passenger Details
+18-07-2026 18:42:21 [INFO] Proceeding to Payment
+18-07-2026 18:42:21 [INFO] Verifying Payment Page
+18-07-2026 18:42:21 [INFO] Entering Card Holder Name
+18-07-2026 18:42:22 [INFO] Entering Card Number
+18-07-2026 18:42:22 [INFO] Entering Expiry
+18-07-2026 18:42:22 [INFO] Entering CVV
+18-07-2026 18:42:22 [INFO] Clicking Pay Button
+18-07-2026 18:42:22 [INFO] ✅ Booking Confirmed
+18-07-2026 18:42:22 [INFO] ✅ PNR Generated
