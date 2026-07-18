@@ -70,8 +70,4 @@ public class FlightApiClient {
         }
         return availableSeatIds;
     }
-
-    public String selectFirstAvailableSeatId(String flightId, String journeyClass) {
-        return selectAvailableSeatIds(flightId, journeyClass).get(0);
-    }
 }

@@ -24,7 +24,7 @@ class SeatMapPerformanceTest extends BaseApiTest {
 
     @Test
     @Tag("performance")
-    void shouldLoadFlightSeatMapWithinConfiguredResponseTime() {
+    void FlightSeatMap() {
         String flightId = flightApiClient.selectFirstFlightId(
                 "CCU", "BOM", "2026-08-10", 1, "economy");
 

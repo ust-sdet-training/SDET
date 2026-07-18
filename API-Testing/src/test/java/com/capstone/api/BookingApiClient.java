@@ -17,13 +17,6 @@ public class BookingApiClient {
         this.request = request;
     }
 
-//    public Response resetNamespace(String token) {
-//        return given(request)
-//                .spec(com.capstone.api.specs.RequestSpecs.authorizedSpec(token))
-//                .when()
-//                .post("/reset");
-//    }
-
     public Response holdBooking(String token, String journeyType, String inventoryId, List<String> seatIds) {
         return given(request)
                 .spec(RequestSpecs.authorizedSpec(token))

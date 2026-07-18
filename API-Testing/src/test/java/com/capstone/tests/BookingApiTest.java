@@ -24,7 +24,7 @@ public class BookingApiTest extends BaseApiTest {
     }
 
     @Test
-    void shouldCompleteFlightBookingHappyPath() {
+    void FlightBookingTest() {
 
         String token = loginAs("traveller");
 

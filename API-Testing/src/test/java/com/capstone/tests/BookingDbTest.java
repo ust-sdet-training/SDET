@@ -16,7 +16,7 @@ public class BookingDbTest {
     private final BookingRepository bookingRepository = new BookingRepository();
 
     @Test
-    void shouldReadSeededConfirmedBusBooking() throws SQLException {
+    void localDatabaseTest() throws SQLException {
         DbSeeder.seedConfirmedBusBooking();
 
         BookingRecord databaseBooking = bookingRepository.findByPnr(DbSeeder.PNR)

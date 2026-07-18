@@ -34,7 +34,7 @@ class BookingDbContainerTest {
     }
 
     @Test
-    void shouldCreateAndReadSeededConfirmedBusBookingInContainer() throws SQLException {
+    void DatabaseTestContainer() throws SQLException {
         DbSeeder.seedConfirmedBusBooking();
 
         BookingRecord databaseBooking = bookingRepository.findByPnr(DbSeeder.PNR)
