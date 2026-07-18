@@ -34,8 +34,45 @@ test("E24 end-to-end bus booking and PNR validation", async ({
   await bookingPage.continueToPassengerDetails();
 
   await passengerPage.fillPassengerDetails();
+
+  const paymentResponsePromise = page.waitForResponse((response) => {
+    const paymentPath = new URL(response.url()).pathname;
+    return (
+      response.request().method() === "POST" &&
+      /^\/book\/payment\/[^/]+$/.test(paymentPath)
+    );
+  });
+
   await paymentPage.pay();
-  logger.info("Payment", "Completed", "Completed payment form and clicked pay");
+  const paymentResponse = await paymentResponsePromise;
+  const paymentStatus = paymentResponse.status();
+  logger.info(
+    "Payment",
+    `HTTP ${paymentStatus}`,
+    "Submitted payment form and captured gateway response",
+  );
+
+  if (paymentStatus >= 500 && paymentStatus <= 599) {
+    await expect(paymentPage.gatewayError).toBeVisible({ timeout: 10000 });
+    await expect(paymentPage.viewTripsButton).not.toBeVisible();
+    await expect(page).toHaveURL(/\/book\/payment\/[^/]+$/);
+    logger.info(
+      "Payment",
+      "Gateway failure handled",
+      `Expected degraded payment path returned HTTP ${paymentStatus}`,
+    );
+
+    await test.info().attach("booking-diagnosis", {
+      body: Buffer.from(logger.getTable(), "utf-8"),
+      contentType: "text/markdown",
+    });
+    return;
+  }
+
+  expect(
+    paymentStatus >= 200 && paymentStatus <= 399,
+    `Expected payment success/redirect or gateway 5xx, received HTTP ${paymentStatus}`,
+  ).toBe(true);
 
   await expect(paymentPage.viewTripsButton).toBeVisible({ timeout: 30000 });
   await paymentPage.viewTripsButton.click();

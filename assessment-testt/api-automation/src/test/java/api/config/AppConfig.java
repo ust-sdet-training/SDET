@@ -10,10 +10,7 @@ public final class AppConfig {
     public static final String DB_URL = PropertyReader.getProperty("DB_URL", "");
     public static final String DB_USER = PropertyReader.getProperty("DB_USER", "");
     public static final String DB_PASSWORD = PropertyReader.getProperty("DB_PASSWORD", "");
-    public static final boolean ENABLE_BOOKING = Boolean.parseBoolean(PropertyReader.getProperty("ENABLE_BOOKING", "false"));
-    public static final boolean EXPECT_PAYMENT_500 = Boolean.parseBoolean(
-        PropertyReader.getProperty("EXPECT_PAYMENT_500", "false")
-    );
+    public static final boolean ENABLE_BOOKING = Boolean.parseBoolean(PropertyReader.getProperty("ENABLE_BOOKING", "true"));
 
     private AppConfig() {
 

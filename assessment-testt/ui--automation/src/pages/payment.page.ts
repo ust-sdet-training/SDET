@@ -8,6 +8,7 @@ export class PaymentPage {
   readonly cvv: Locator;
   readonly payButton: Locator;
   readonly viewTripsButton: Locator;
+  readonly gatewayError: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -17,6 +18,7 @@ export class PaymentPage {
     this.cvv = page.getByRole("textbox", { name: "CVV" });
     this.payButton = page.getByRole("button", { name: /Pay ₹/ });
     this.viewTripsButton = page.getByRole("button", { name: "View my trips" });
+    this.gatewayError = page.getByText(/payment gateway error\s*\(5xx\)/i);
   }
 
   async pay() {
