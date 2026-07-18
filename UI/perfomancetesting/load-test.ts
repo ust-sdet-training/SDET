@@ -3,7 +3,6 @@ import { expect } from 'https://jslib.k6.io/k6-testing/0.3.0/index.js';
 import { Options } from 'k6/options';
 
 
-// Define strongly typed k6 options
 export const options: Options = {
   scenarios: {
     ui_performance: {

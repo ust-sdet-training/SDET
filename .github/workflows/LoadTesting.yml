@@ -1,4 +1,4 @@
-name: API CI
+name: LoadTesting CI
 
 on:
   push:
@@ -14,10 +14,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Run k6 load test
-        uses: grafana/k6-action@v0.3.1
-        env:
-          ARAVIND_BASE_URL_UI: ${{ secrets.ARAVIND_BASE_URL_UI }}
-          ARAVIND_PASSWORD: ${{ secrets.ARAVIND_PASSWORD }}
-        with:
-          filename: UI/perfomancetesting/load-test.ts
+      - name: Run k6 UI Performance Test
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            -w /workspace \
+            -e K6_BROWSER_ENABLED=true \
+            -e ARAVIND_BASE_URL_UI="${{ secrets.ARAVIND_BASE_URL_UI }}" \
+            -e ARAVIND_PASSWORD="${{ secrets.ARAVIND_PASSWORD }}" \
+            grafana/k6:latest-with-browser run UI/perfomancetesting/load-test.ts
