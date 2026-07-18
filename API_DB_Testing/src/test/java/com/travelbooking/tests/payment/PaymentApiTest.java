@@ -32,7 +32,7 @@ public class PaymentApiTest extends BaseTest {
         HoldRequest holdRequest = new HoldRequest();
         holdRequest.setJourneyType("bus");
         holdRequest.setInventoryId(inventoryId);
-        holdRequest.setSeatIds(List.of("L9"));
+        holdRequest.setSeatIds(List.of("L7"));
 
         Response holdResponse = bookingClient.holdBooking(
                 holdRequest,

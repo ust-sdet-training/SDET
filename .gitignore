@@ -1,0 +1,21 @@
+# Operating System
+.DS_Store
+Thumbs.db
+
+.vscode/
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Environment
+.env
+
+# Build
+coverage/
+reports/
+
+# GitHub Actions artifacts
+*.zip

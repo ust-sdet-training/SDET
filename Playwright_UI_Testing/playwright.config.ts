@@ -11,9 +11,10 @@ export default defineConfig({
 
   retries: process.env.CI ? 2 : 0,
 
-  reporter: process.env.CI
-    ? [["list"], ["blob"]]
-    : [["list"], ["html"]],
+  reporter: [
+  ["list"],
+  ["html", { open: "never" }]
+],
 
   use: {
     baseURL: process.env.BASE_URL,

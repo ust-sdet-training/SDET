@@ -31,8 +31,8 @@ public class BookingApiTest extends BaseTest {
         HoldRequest holdRequest = new HoldRequest(
                 "bus",
                 inventoryId,
-                List.of("L9"),
-                false,
+                List.of("L1"),
+                true,
                 300
         );
 
@@ -85,7 +85,7 @@ public class BookingApiTest extends BaseTest {
         HoldRequest holdRequest = new HoldRequest();
         holdRequest.setJourneyType("bus");
         holdRequest.setInventoryId(inventoryId);
-        holdRequest.setSeatIds(List.of("L9"));
+        holdRequest.setSeatIds(List.of("L1"));
 
         Response holdResponse = bookingClient.holdBooking(
                 holdRequest,

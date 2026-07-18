@@ -1,6 +1,6 @@
 package com.travelbooking.database;
 
-import com.travelbooking.config.DatabaseConfig;
+import com.travelbooking.database.config.DatabaseConfig;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,4 +1,4 @@
-package com.travelbooking.database;
+package com.travelbooking.tests.database;
 
 import com.travelbooking.database.models.Booking;
 import com.travelbooking.database.queries.BookingQueries;
@@ -13,7 +13,7 @@ public class BookingDatabaseTest {
 
         BookingQueries bookingQueries = new BookingQueries();
 
-        Booking booking = bookingQueries.getBookingById(1);
+        Booking booking = bookingQueries.getBookingByPnr("TS-1026-0001");
 
         assertNotNull(booking);
         assertEquals("TS-1026-0001", booking.getPnr());

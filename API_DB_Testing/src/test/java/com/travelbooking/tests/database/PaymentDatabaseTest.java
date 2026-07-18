@@ -1,4 +1,4 @@
-package com.travelbooking.database;
+package com.travelbooking.tests.database;
 
 import com.travelbooking.database.models.Payment;
 import com.travelbooking.database.queries.PaymentQueries;

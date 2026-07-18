@@ -1,6 +1,7 @@
-package com.travelbooking.database;
+package com.travelbooking.tests.database;
 
-import com.travelbooking.config.DatabaseConfig;
+import com.travelbooking.database.config.DatabaseConfig;
+import com.travelbooking.config.TestContainerConfig;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
@@ -8,7 +9,7 @@ import java.sql.Connection;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DatabaseConnectionTest {
+public class DatabaseConnectionTest extends TestContainerConfig {
 
     @Test
     void shouldConnectToDatabase() throws Exception {

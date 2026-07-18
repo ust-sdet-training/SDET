@@ -8,11 +8,11 @@ import java.sql.SQLException;
 
 public class BookingQueries {
 
-    public Booking getBookingById(int bookingId) {
+    public Booking getBookingByPnr(String pnr) {
 
-        String query = "SELECT * FROM bookings WHERE booking_id = ?";
+        String query = "SELECT * FROM bookings WHERE pnr = ?";
 
-        ResultSet rs = DatabaseHelper.executeQuery(query, bookingId);
+        ResultSet rs = DatabaseHelper.executeQuery(query, pnr);
 
         try {
 
@@ -36,5 +36,27 @@ public class BookingQueries {
         }
 
         return null;
+    }
+
+    public void saveBooking(String pnr,
+                            String sourceCity,
+                            String destinationCity,
+                            String bookingStatus,
+                            double totalAmount) {
+
+        String query = """
+            INSERT INTO bookings
+            (pnr, source_city, destination_city, journey_date, total_amount, booking_status)
+            VALUES (?, ?, ?, CURDATE(), ?, ?)
+            """;
+
+        DatabaseHelper.executeUpdate(
+                query,
+                pnr,
+                sourceCity,
+                destinationCity,
+                totalAmount,
+                bookingStatus
+        );
     }
 }
