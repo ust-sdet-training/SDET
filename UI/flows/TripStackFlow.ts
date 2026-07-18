@@ -153,5 +153,40 @@ export class TripStackFlow {
         BookingData.secondPNR = secondPNR;
 
     }
+    async completeSeatHoldExpiryBooking() {
+
+    await this.loginToApplication();
+
+    await this.home.searchFlight(
+        BookingData.FIRST_SOURCE,
+        BookingData.FIRST_DESTINATION,
+        BookingData.FIRST_TRAVEL_AFTER_DAYS
+    );
+
+    await this.result.chooseFirstFlight();
+
+    const seat =
+        await this.seat.chooseSeatAndContinue();
+
+    await this.passenger.completePassengerForm(
+        seat,
+        BookingData.FIRST_NAME,
+        BookingData.LAST_NAME,
+        BookingData.AGE,
+        BookingData.GENDER,
+        BookingData.EMAIL,
+        BookingData.PHONE
+    );
+
+   const result = await this.payment.completeExpiredPayment(
+    BookingData.CARD_NAME,
+    BookingData.CARD_NUMBER,
+    BookingData.CARD_EXPIRY,
+    BookingData.CARD_CVV
+);
+
+console.log(result);
+
+}
 
 }
