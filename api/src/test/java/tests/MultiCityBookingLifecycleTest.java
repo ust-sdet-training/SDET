@@ -35,6 +35,9 @@ public class MultiCityBookingLifecycleTest {
 
 
 
+    private static final int MAX_RETRIES = 10;
+
+
 
 
     @BeforeAll
@@ -51,8 +54,100 @@ public class MultiCityBookingLifecycleTest {
                 response.token()
         );
 
+    }
+
+
+
+
+
+    private BookingResponse createBookingWithRetry(
+            String token,
+            String inventoryId
+    ){
+
+
+        int attempt = 0;
+
+
+
+        while(attempt < MAX_RETRIES){
+
+
+            attempt++;
+
+
+            String seat =
+                    SeatGenerator.generateUniqueSeat();
+
+
+
+            BookingRequest request =
+
+                    BookingRequestBuilder.booking()
+
+                            .journeyType("flight")
+
+                            .inventoryId(
+                                    inventoryId
+                            )
+
+                            .seatIds(
+                                    List.of(seat)
+                            )
+
+                            .refundable(
+                                    TestData.refundable()
+                            )
+
+                            .build();
+
+
+
+            try {
+
+
+                return bookingClient.createBooking(
+                        token,
+                        request
+                );
+
+
+            }
+
+            catch(Exception e){
+
+
+                if(
+                        e.getMessage()
+                                .contains("409")
+                ){
+
+
+                    System.out.println(
+                            "Seat conflict detected. Generating new seat..."
+                    );
+
+
+                    continue;
+
+                }
+
+
+
+                throw e;
+
+            }
+
+        }
+
+
+
+        throw new RuntimeException(
+                "Unable to create booking after retries"
+        );
 
     }
+
 
 
 
@@ -68,45 +163,16 @@ public class MultiCityBookingLifecycleTest {
 
 
 
-        String seat1 =
-                SeatGenerator.generateUniqueSeat();
 
 
-        String seat2 =
-                SeatGenerator.generateUniqueSeat();
-
-
-
-
-        BookingRequest firstRequest =
-
-                BookingRequestBuilder.booking()
-
-                        .journeyType("flight")
-
-                        .inventoryId(
-                                TestData.firstInventory()
-                        )
-
-                        .seatIds(
-                                List.of(seat1)
-                        )
-
-                        .refundable(
-                                TestData.refundable()
-                        )
-
-                        .build();
-
-
-
+        // FIRST CITY BOOKING
 
 
         BookingResponse firstBooking =
 
-                bookingClient.createBooking(
+                createBookingWithRetry(
                         token,
-                        firstRequest
+                        TestData.firstInventory()
                 );
 
 
@@ -118,35 +184,17 @@ public class MultiCityBookingLifecycleTest {
 
 
 
-        BookingRequest secondRequest =
-
-                BookingRequestBuilder.booking()
-
-                        .journeyType("flight")
-
-                        .inventoryId(
-                                TestData.secondInventory()
-                        )
-
-                        .seatIds(
-                                List.of(seat2)
-                        )
-
-                        .refundable(
-                                TestData.refundable()
-                        )
-
-                        .build();
 
 
 
+        // SECOND CITY BOOKING
 
 
         BookingResponse secondBooking =
 
-                bookingClient.createBooking(
+                createBookingWithRetry(
                         token,
-                        secondRequest
+                        TestData.secondInventory()
                 );
 
 
@@ -159,6 +207,10 @@ public class MultiCityBookingLifecycleTest {
 
 
 
+
+        // PAYMENT
+
+
         bookingClient.payBooking(
                 token,
                 firstBooking.id()
@@ -173,6 +225,10 @@ public class MultiCityBookingLifecycleTest {
 
 
 
+
+
+
+        // CONFIRM
 
 
         BookingResponse firstConfirmed =
@@ -194,9 +250,12 @@ public class MultiCityBookingLifecycleTest {
 
 
 
+
+
         TestContext.setFirstPnr(
                 firstConfirmed.pnr()
         );
+
 
 
         TestContext.setSecondPnr(
@@ -207,12 +266,18 @@ public class MultiCityBookingLifecycleTest {
 
 
 
+
+
+        // VALIDATION
+
+
         BookingResponse booking1 =
 
                 bookingClient.getBooking(
                         token,
                         firstConfirmed.pnr()
                 );
+
 
 
         BookingResponse booking2 =
@@ -225,16 +290,21 @@ public class MultiCityBookingLifecycleTest {
 
 
 
+
         Assertions.assertEquals(
                 "CONFIRMED",
                 booking1.state()
         );
 
 
+
         Assertions.assertEquals(
                 "CONFIRMED",
                 booking2.state()
         );
+
+
+
 
 
 
@@ -255,9 +325,12 @@ public class MultiCityBookingLifecycleTest {
         );
 
 
+
+
         System.out.println(
-                "Multi city booking journey completed"
+                "Multi city booking journey completed successfully"
         );
+
 
     }
 

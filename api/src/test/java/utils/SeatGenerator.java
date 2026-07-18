@@ -1,71 +1,77 @@
 package utils;
 
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 public final class SeatGenerator {
 
 
-    private SeatGenerator(){
+    private SeatGenerator() {
         // Prevent object creation
     }
 
 
 
-    private static final Set<String> USED_SEATS =
-            new HashSet<>();
+    private static final List<String> AVAILABLE_SEATS =
+            new ArrayList<>();
 
 
 
-    private static final String[] SEATS =
-            {
-                    "10A",
-                    "10B",
-                    "11A",
-                    "12C",
-                    "14B",
-                    "15C",
-                    "16A",
-                    "16B",
-                    "17C",
-                    "18A",
-                    "20A",
-                    "20B",
-                    "21A",
-                    "21B"
-            };
+    static {
 
 
+        // Generate seats dynamically
+        // Example: 1A to 30F
 
-    public static String generateUniqueSeat(){
-
-
-        String seat;
-
-
-        do {
+        for (int row = 1; row <= 30; row++) {
 
 
-            seat =
-                    SEATS[
-                            new Random()
-                                    .nextInt(SEATS.length)
-                            ];
+            for (char column = 'A'; column <= 'F'; column++) {
 
+
+                AVAILABLE_SEATS.add(
+                        row + String.valueOf(column)
+                );
+
+            }
 
         }
-        while(
-                USED_SEATS.contains(seat)
+
+    }
+
+
+
+
+
+    public static String generateUniqueSeat() {
+
+
+        if (AVAILABLE_SEATS.isEmpty()) {
+
+
+            throw new RuntimeException(
+                    "No seats available"
+            );
+
+        }
+
+
+
+        // Shuffle to avoid always selecting same seat
+
+        Collections.shuffle(
+                AVAILABLE_SEATS
         );
 
 
-        USED_SEATS.add(seat);
 
+        // Remove selected seat so same test run
+        // will not generate duplicate seats
 
-        return seat;
+        return AVAILABLE_SEATS.remove(0);
 
     }
 

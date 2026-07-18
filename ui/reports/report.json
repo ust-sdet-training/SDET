@@ -2,12 +2,12 @@
   "config": {
     "argv": [
       "C:\\Program Files\\nodejs\\node.exe",
-      "C:\\Users\\310970\\Desktop\\SaturdayFinal\\ui\\node_modules\\@playwright\\test\\cli.js",
+      "C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\node_modules\\@playwright\\test\\cli.js",
       "test",
       "tests/booking.spec.ts"
     ],
-    "configFile": "C:\\Users\\310970\\Desktop\\SaturdayFinal\\ui\\playwright.config.ts",
-    "rootDir": "C:/Users/310970/Desktop/SaturdayFinal/ui/tests",
+    "configFile": "C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\playwright.config.ts",
+    "rootDir": "C:/Users/310970/Desktop/SaturdayFinal/SDET/ui/tests",
     "failOnFlakyTests": false,
     "forbidOnly": false,
     "fullyParallel": false,
@@ -23,7 +23,7 @@
     "preserveOutput": "always",
     "projects": [
       {
-        "outputDir": "C:/Users/310970/Desktop/SaturdayFinal/ui/test-results",
+        "outputDir": "C:/Users/310970/Desktop/SaturdayFinal/SDET/ui/test-results",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -31,7 +31,7 @@
         },
         "id": "Google Chrome",
         "name": "Google Chrome",
-        "testDir": "C:/Users/310970/Desktop/SaturdayFinal/ui/tests",
+        "testDir": "C:/Users/310970/Desktop/SaturdayFinal/SDET/ui/tests",
         "testIgnore": [],
         "testMatch": [
           "**/*.@(spec|test).?(c|m)[jt]s?(x)"
@@ -107,38 +107,41 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 5937,
+                      "duration": 6577,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "Available : 134\n"
+                          "text": "Available seats: \u001b[33m113\u001b[39m\n"
                         },
                         {
-                          "text": "Selected Index : 131\n"
+                          "text": "Selected seat index: \u001b[33m46\u001b[39m\n"
                         },
                         {
-                          "text": "PNR : TS-1015-0011\n"
+                          "text": "Seat selected successfully\n"
+                        },
+                        {
+                          "text": "PNR : TS-1015-0059\n"
                         }
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-07-17T09:56:24.932Z",
+                      "startTime": "2026-07-18T06:58:17.407Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screenshot",
                           "contentType": "image/png",
-                          "path": "C:\\Users\\310970\\Desktop\\SaturdayFinal\\ui\\test-results\\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\\test-finished-1.png"
+                          "path": "C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\test-results\\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\\test-finished-1.png"
                         },
                         {
                           "name": "video",
                           "contentType": "video/webm",
-                          "path": "C:\\Users\\310970\\Desktop\\SaturdayFinal\\ui\\test-results\\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\\video.webm"
+                          "path": "C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\test-results\\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\\video.webm"
                         },
                         {
                           "name": "trace",
                           "contentType": "application/zip",
-                          "path": "C:\\Users\\310970\\Desktop\\SaturdayFinal\\ui\\test-results\\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\\trace.zip"
+                          "path": "C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\test-results\\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\\trace.zip"
                         }
                       ]
                     }
@@ -158,8 +161,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-07-17T09:56:23.322Z",
-    "duration": 12010.152,
+    "startTime": "2026-07-18T06:58:16.607Z",
+    "duration": 10543.952000000001,
     "expected": 1,
     "skipped": 0,
     "unexpected": 0,
