@@ -106,6 +106,10 @@ jobs:
 
     env:
       CI: true
+      BASEURL: https://tripstack.doomple.com/
+      CUSTOMER_EMAIL: ${{ secrets.SHAHBAZ_CUSTOMER_EMAIL }}
+      CUSTOMER_PASSWORD: ${{ secrets.SHAHBAZ_CUSTOMER_PASSWORD }}
+     
 
     steps:
       - name: Checkout repository
@@ -150,7 +154,7 @@ jobs:
 
       - name: Run API tests
         working-directory: APIAutomationFinal
-        run: ./gradlew test --tests "com.ust.tripStack.*"
+        run: ./gradlew test
 
       - name: Upload test reports
         if: always()
