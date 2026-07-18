@@ -25,7 +25,6 @@ test.describe('Checking whether I handle the show error', () => {
     
     expect(await flow.currentUrl()).toContain('/my-trips');
 
-
   });
 
 });

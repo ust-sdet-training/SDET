@@ -97,10 +97,8 @@ export class FullFlow{
     }
 
     async verifyTrip(){
-        
         await this.page.waitForLoadState('load');
         expect(this.page.url()).toContain('/my-trips');
         await expect(this.page.getByRole('heading',{name: "My Trips",level: 1})).toBeVisible();
-
     }
 }

@@ -3,7 +3,6 @@ import { testUsers } from '../data/testUser';
 import { util } from '../src/utils/util';
 import { secrets } from '../src/utils/secrets';
 import { testTripData } from '../data/testTripData';
-import { info } from 'node:console';
 
 test.describe("Resilience", () => {
   test("UI detects payment decline", async ({ flow, log, evidence, page ,isMobile}) => {
