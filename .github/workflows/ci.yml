@@ -1,0 +1,73 @@
+name: TripStack CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+    env:
+      SANKARAN_API_BASE_URL: ${{ secrets.SANKARAN_API_BASE_URL }}
+      SANKARAN_API_EMAIL: ${{ secrets.SANKARAN_API_EMAIL }}
+      SANKARAN_API_PASSWORD: ${{ secrets.SANKARAN_API_PASSWORD }}
+      SANKARAN_VIEWER_EMAIL: ${{ secrets.SANKARAN_VIEWER_EMAIL }}
+      SANKARAN_VIEWER_PASSWORD: ${{ secrets.SANKARAN_VIEWER_PASSWORD }}
+      SANKARAN_EMP_ID: ${{ secrets.SANKARAN_EMP_ID }}
+      SANKARAN_ORIGIN: ${{ secrets.SANKARAN_ORIGIN }}
+      SANKARAN_DESTINATION: ${{ secrets.SANKARAN_DESTINATION }}
+      SANKARAN_DAYS_AHEAD: ${{ secrets.SANKARAN_DAYS_AHEAD }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Run API tests
+        working-directory: ./RestAssured_API
+        run: mvn test
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-test-reports
+          path: RestAssured_API/target/surefire-reports
+
+  ui-tests:
+    runs-on: ubuntu-latest
+    env:
+      SANKARAN_UI_BASE_URL: ${{ secrets.SANKARAN_UI_BASE_URL }}
+      SANKARAN_UI_EMAIL: ${{ secrets.SANKARAN_UI_EMAIL }}
+      SANKARAN_UI_PASSWORD: ${{ secrets.SANKARAN_UI_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: ./Playwright_UI
+        run: npm ci
+
+      - name: Install Playwright browsers
+        working-directory: ./Playwright_UI
+        run: npx playwright install --with-deps
+
+      - name: Run UI tests
+        working-directory: ./Playwright_UI
+        run: npx playwright test
+
+      - name: Upload traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: Playwright_UI/test-results/
