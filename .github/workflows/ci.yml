@@ -2,7 +2,7 @@ name: TripStack CI
 
 on:
   push:
-    branches: jyothsan-finalcapstone
+    branches: jyothsna-finalcapstone
   
 
 jobs:
@@ -30,8 +30,10 @@ jobs:
           TRIPSTACK_DB_URL: ${{ secrets.EMP1014_TRIPSTACK_DB_URL }}
           TRIPSTACK_DB_USER: ${{ secrets.EMP1014_TRIPSTACK_DB_USER }}
           TRIPSTACK_DB_PASS: ${{ secrets.EMP1014_TRIPSTACK_DB_PASS }}
-          TRIPSTACK_OTHER_EMP_PNR: ${{ secrets.EMP1014_TRIPSTACK_OTHER_EMP_PNR }}
-          TRIPSTACK_OTHER_EMP_BOOKING_ID: ${{ secrets.EMP1014_TRIPSTACK_OTHER_EMP_BOOKING_ID }}
+          # Not sensitive - a PNR and booking id, not credentials.
+          # Hardcoded directly to avoid the repo's 100-secret limit.
+          TRIPSTACK_OTHER_EMP_PNR: "TS-1023-0058"
+          TRIPSTACK_OTHER_EMP_BOOKING_ID: "2e463660-cee8-4f90-b7a7-b8a99e25b7d9"
         run: ./gradlew clean test -DexcludeTags=performance
         working-directory: API/APIautomation
 

@@ -6,7 +6,14 @@ export async function resetNamespace(): Promise<void> {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: ENV.EMAIL, password: ENV.PASSWORD })
     });
-    const loginData = await loginResponse.json();
+
+    const loginText = await loginResponse.text();
+    if (!loginResponse.ok) {
+        console.error(`Login failed: ${loginResponse.status} — ${loginText.slice(0, 200)}`);
+        throw new Error(`Login failed with status ${loginResponse.status}`);
+    }
+
+    const loginData = JSON.parse(loginText);
     const token = loginData.token;
 
     const resetResponse = await fetch(`${ENV.BASE_URL}/api/reset`, {
@@ -18,10 +25,12 @@ export async function resetNamespace(): Promise<void> {
         body: '{}'
     });
 
+    const resetText = await resetResponse.text();
     if (!resetResponse.ok) {
-        console.warn(`Namespace reset returned ${resetResponse.status} — proceeding anyway.`);
-    } else {
-        const resetData = await resetResponse.json();
-        console.log(`Namespace reset: emp=${resetData.emp}, purged=${resetData.purged}`);
+        console.warn(`Namespace reset returned ${resetResponse.status}: ${resetText.slice(0, 200)} — proceeding anyway.`);
+        return;
     }
+
+    const resetData = JSON.parse(resetText);
+    console.log(`Namespace reset: emp=${resetData.emp}, purged=${resetData.purged}`);
 }
