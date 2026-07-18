@@ -28,7 +28,7 @@ export class TicketBookFlow {
 
     }
 
-    async bookTicket(user:keyof typeof usercheckoutdata,departure : string, destination : string){
+    async bookTicket (user:keyof typeof usercheckoutdata,departure : string, destination : string):Promise<string>{
         await this.flighthome.setDepatureLocation(departure)
         await this.flighthome.setDestinationLocation(destination)
 
@@ -117,6 +117,13 @@ export class TicketBookFlow {
         this.log.info("Flight Booked Successfully")
 
 
+        return tripId
+    }
+
+
+
+    async cancelTrip(tripId:string){
+
     this.log.info("Flight Cancellation Process Initiated")
 
     const tripCard = await this.page.locator(`[data-id="trip-${tripId}"]`);
@@ -127,12 +134,14 @@ export class TicketBookFlow {
 
     this.log.info("Flight Cancelled Successfully")
 
+    await this.page.reload;
+
     await this.page.screenshot({ 
             path: 'screenshots/flight-cancelled.png'
         });
 
     
-        await this.test.info().attach("Flight Booked Proof", {
+        await this.test.info().attach("Flight Cancelled Proof", {
             path: "screenshots/flight-cancelled.png",
             contentType: "image/png"
         });

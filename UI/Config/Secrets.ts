@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as dotenv from 'dotenv';
 
 export  function  getPassword(): string {
-      const envKey = `PASSWORD`;
+      const envKey = `ARAVIND_PASSWORD`;
 
         try {
             const envFilePath = path.resolve(process.cwd(),'.env'); 

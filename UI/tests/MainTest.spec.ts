@@ -21,9 +21,9 @@ test('Booking a Flight', async ({ page, log, evidence }) => {
 
   const user = "Carol"
 
-  const departure = "BLR"
+  const departure = "DEL"
 
-  const destination = "GOI"
+  const destination = "BLR"
 
   const Cabin = "Business"
 
@@ -168,17 +168,33 @@ test('Booking a Flight', async ({ page, log, evidence }) => {
   })
 //////////////////////////////////////////////////////////////////////////////
 
-    // test('Booking a Flight using Flow', async ({ page, log, evidence }) => {
+    test('Booking a Flight Multicity', async ({ page, log, evidence }) => {
 
-    //   await page.goto('/', {waitUntil: "domcontentloaded"});
+      await page.goto('/', {waitUntil: "domcontentloaded"});
 
-    //     var loginpage = new LoginPage(page)
+        var loginpage = new LoginPage(page)
 
-    //     const user = "Carol"
+        const user = "Carol"
 
-    //     await loginpage.login(userlogindata[user].email, getPassword())
+        await loginpage.login(userlogindata[user].email, getPassword())
 
-    //     let ticketbookingflow  = new TicketBookFlow(page,log,evidence,test,expect)
+        let ticketbookingflow  = new TicketBookFlow(page,log,evidence,test,expect)
 
-    //     ticketbookingflow.bookTicket(user,"GOI","PUN")
-    // })
+        log.info("Booking first part of trip")
+
+        var tripId1 = await ticketbookingflow.bookTicket(user,"BLR","GOI")
+
+        evidence.tripId1 = tripId1
+
+        log.info("Booking second part of trip")
+
+        await page.goto('/')
+
+        var tripId2 = await ticketbookingflow.bookTicket(user,"GOI","PUN")
+
+        evidence.tripId2 = tripId2
+
+        await ticketbookingflow.cancelTrip(tripId1)
+
+        await ticketbookingflow.cancelTrip(tripId2)
+    })

@@ -28,8 +28,16 @@ export class PaymentPage{
         await this.page.getByRole('button', { name: 'Pay ₹' }).click();
     }
 
-    async getTripId(){
-        return await this.page.locator('[data-id="pnr"]').textContent();
+    async getTripId():Promise<string>{
+       var tripId =  await this.page.locator('[data-id="pnr"]').textContent();
+
+       
+    if (tripId === null) {
+            throw new Error('Trip ID not found');
+        }
+
+    return tripId;
+
     }
 
 
