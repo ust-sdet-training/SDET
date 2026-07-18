@@ -3,8 +3,7 @@ import { Page } from "@playwright/test";
 export class BusDetailPage {
   constructor(private readonly page: Page) {}
 
-  async selectSeat(): Promise<string> {
-    const seatNumber = "L3";
+  async selectSeat(seatNumber: string): Promise<string> {
 
     await this.page
       .getByRole("button", { name: `Seat ${seatNumber} available` })

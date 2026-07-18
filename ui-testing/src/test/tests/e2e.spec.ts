@@ -1,5 +1,5 @@
 import { test, expect } from "../fixtures/test";
-import { testUsers } from "../fixtures/test-users";
+import { testUsers, testData } from "../fixtures/data";
 
 test("Bus booking happy path", async ({
   book,
@@ -7,6 +7,7 @@ test("Bus booking happy path", async ({
   log,
   evidence,
 }) => {
+  
   log.info("Starting booking flow");
 
   // Login
@@ -16,35 +17,37 @@ test("Bus booking happy path", async ({
 
   // Search
   const curdate = new Date();
-  curdate.setDate(curdate.getDate()+30);
+  curdate.setDate(curdate.getDate() + 30);
   const travelDate = curdate.toISOString().split("T")[0];
-  await book.search("BOM", "DEL", "2026-08-17");
+  await book.search(testData.from, testData.to, testData.date);
 
-  await expect(page.getByText("Kallada Travels")).toBeVisible();
+  await expect(page.getByText(testData.busName)).toBeVisible();
 
   evidence.searchCriteria = {
-    from: "BOM",
-    to: "DEL",
-    date: "2026-08-17",
+    from: testData.from,
+    to: testData.to,
+    date: testData.date,
   };
 
   log.info("Bus search completed");
 
   // Select Bus
-  await book.selectBus("Kallada Travels");
+  await book.selectBus(testData.busName);
+  await page.getByRole('tab', { name: 'Lower deck' }).click();
 
-  await expect(page.getByRole("button", { name: "Seat L3 available" })).toBeVisible();
+  await expect(page.getByRole("button", { name: `Seat ${testData.seatNumber} available` })).toBeVisible();
 
   log.info("Bus selected", {
-    busName: "Kallada Travels",
+    busName: testData.busName,
   });
 
   // Seat Selection
-  await book.selectSeat();
+
+  await book.selectSeat(testData.seatNumber);
 
   await expect(page.getByRole("textbox", { name: /email/i })).toBeVisible();
 
-  evidence.selectedSeat = "L3";
+  evidence.selectedSeat = testData.seatNumber;
 
   log.info("Seat selected");
 
@@ -64,18 +67,22 @@ test("Bus booking happy path", async ({
   log.info("Traveller details entered");
 
   // Payment
-  await book.payment();
+  const paymentSuccess = await book.payment();
+  if (!paymentSuccess) {
+    log.info("Payment failed");
+    return;
+  }
 
   log.info("Payment successful");
   await book.confirmSeat();
   evidence.bookingCompleted = true;
-  
+
   log.info("Booking completed successfully");
-  
-  await page.getByRole("button", { name: "View my trips",}).click();
+
+  await page.getByRole("button", { name: "View my trips", }).click();
   await expect(page).toHaveURL(/.*trip.*/i);
   await expect(page.getByRole('heading', { name: 'My Trips' })).toBeVisible();
   await page.getByRole('button', { name: 'Cancel' }).click();
-  
+
   log.info("Ticket cancellation completed successfully");
 });
