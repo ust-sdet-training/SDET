@@ -18,7 +18,7 @@ export class HomePage {
     * This method is used to click on loginbutton and go to login page
     */
     async clickLogin(){
-        await xp.LOGINBUTTON(this.page).click();
+        await this.page.getByRole('link', { name: 'Log in' }).click();
     }
 
      /**

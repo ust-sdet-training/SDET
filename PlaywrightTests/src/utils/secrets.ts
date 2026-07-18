@@ -5,8 +5,7 @@ dotenv.config();
 export class secrets {
   static get(key: string): string {
     const value =
-      process.env[key.toUpperCase()] ??
-      process.env[key];
+      process.env[key.toUpperCase()];
  
     if (!value) {
       throw new Error(`Missing secret: ${key}`);
@@ -16,10 +15,9 @@ export class secrets {
 
   static getuserPassword(key: string): string {
     const value =
-      process.env[`MUHAMMED_${key.toLowerCase()}_PASSWORD`] ??
-      process.env[key];
+      process.env[`MUHAMMED_${key.toUpperCase()}_PASSWORD`];
  
-    if (!value) {
+    if (!value) {    
       throw new Error(`Missing secret: ${key}`);
     }
     return value;

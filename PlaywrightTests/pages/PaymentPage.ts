@@ -25,4 +25,8 @@ export class PaymentPage {
     async clickPay(){
         await this.page.getByRole('button', { name: 'Pay ₹' }).click();
     }
+
+    async getPaymentErrorMessage() {
+    return this.page.getByRole('alert');
+    }
 }
