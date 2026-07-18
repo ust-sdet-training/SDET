@@ -2,6 +2,9 @@ package com.tripstack.config;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 public class TestConfig {
@@ -17,7 +20,31 @@ public class TestConfig {
         } catch (IOException e) {
             throw new RuntimeException("Unable to load config.properties", e);
         }
+
+        Properties envProperties = loadEnvProperties();
+        envProperties.forEach((key, value) -> {
+            String normalized = normalizeKey(key.toString());
+            properties.setProperty(key.toString(), value.toString());
+            properties.setProperty(normalized, value.toString());
+        });
         return properties;
+    }
+
+    private static Properties loadEnvProperties() {
+        Properties properties = new Properties();
+        Path envPath = Paths.get(".env");
+        if (Files.exists(envPath)) {
+            try (InputStream input = Files.newInputStream(envPath)) {
+                properties.load(input);
+            } catch (IOException e) {
+                throw new RuntimeException("Unable to load .env", e);
+            }
+        }
+        return properties;
+    }
+
+    private static String normalizeKey(String key) {
+        return key.toLowerCase().replace('_', '.');
     }
 
     public static String getBaseUrl() {

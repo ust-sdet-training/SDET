@@ -109,4 +109,16 @@ public abstract class BaseApiClient {
         String contentType = response.getContentType();
         return statusCode == 502 || statusCode == 503 || statusCode == 504 || (contentType != null && contentType.toLowerCase().contains("text/html"));
     }
+
+    protected <T> T parseJson(Response response, Class<T> type) {
+        String contentType = response.getContentType();
+        if (contentType == null || !contentType.toLowerCase().contains("json")) {
+            String body = response.asString();
+            String snippet = body == null ? "" : body.length() > 1024 ? body.substring(0, 1024) + "..." : body;
+            throw new IllegalStateException(String.format(
+                    "Cannot parse %s because unsupported Content-Type '%s' was returned. Response body:\n%s",
+                    type.getSimpleName(), contentType, snippet));
+        }
+        return response.as(type);
+    }
 }

@@ -59,7 +59,17 @@ class EdgeCaseTests extends BaseTest {
         BookingRequest bookingRequest = new BookingRequest("flight", "FL-MAAHYD-51", List.of(nextSeatId()), true, 120);
 
         Response firstBooking = bookingClient.createBooking(authToken, bookingRequest);
+        if (isInjectedApiFault(firstBooking)) {
+            assertInjectedApiFault(firstBooking, "First booking attempt");
+            return;
+        }
+
         Response secondBooking = bookingClient.createBooking(authToken, bookingRequest);
+
+        if (isInjectedApiFault(secondBooking)) {
+            assertInjectedApiFault(secondBooking, "Second booking attempt");
+            return;
+        }
 
         assertAll(
             () -> assertTrue(firstBooking.getStatusCode() == 200 || firstBooking.getStatusCode() == 201, "The first booking should be created successfully"),

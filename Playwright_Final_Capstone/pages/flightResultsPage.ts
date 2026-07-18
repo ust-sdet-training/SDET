@@ -3,8 +3,17 @@ import { Page } from '@playwright/test';
 export class FlightResultsPage {
   constructor(private readonly page: Page) {}
 
-  private readonly flightCard = (flightName: string) => this.page.locator('article, .flight-card, .result-card, tr').filter({ hasText: flightName }).first();
-  private readonly bookButton = (flightName: string) => this.flightCard(flightName).getByRole('button', { name: /book/i }).first();
+  private readonly flightCard = (flightName: string) =>
+    this.page
+      .locator('article, .flight-card, .result-card, tr, div')
+      .filter({
+        hasText: flightName,
+        has: this.page.getByRole('button', { name: /book/i }),
+      })
+      .first();
+
+  private readonly bookButton = (flightName: string) =>
+    this.flightCard(flightName).getByRole('button', { name: /book/i }).first();
 
   flight(flightName: string) {
     return this.flightCard(flightName);

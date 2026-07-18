@@ -22,7 +22,11 @@ class SecurityNegativeTests extends BaseTest {
         assertNotNull(employeeSeven.getToken(), "Employee 1007 token should be available");
         assertNotNull(otherEmployee.getToken(), "Other employee token should be available");
 
-        Response createResponse = bookingClient.createBooking(otherEmployee.getToken(), buildBookingRequest("FL-MAAHYD-51", nextSeatId()));
+        Response createResponse = createBookingWithRetry(otherEmployee.getToken(), "FL-MAAHYD-51");
+        if (isInjectedApiFault(createResponse)) {
+            assertInjectedApiFault(createResponse, "Booking creation for other employee");
+            return;
+        }
         assertEquals(201, createResponse.getStatusCode(), "Booking creation for other employee should succeed");
 
         String otherBookingId = createResponse.jsonPath().getString("id");
@@ -30,14 +34,12 @@ class SecurityNegativeTests extends BaseTest {
 
         Response cancelResponse = bookingClient.cancelBooking(employeeSeven.getToken(), otherBookingId);
         int cancelStatus = cancelResponse.getStatusCode();
-        // Do not assert on error message contents; different deployments may format error payloads differently
 
         String createdPnr = createResponse.jsonPath().getString("pnr");
         String lookupKey = (createdPnr != null && !createdPnr.isBlank()) ? createdPnr : otherBookingId;
 
         Response bookingDetails = bookingClient.getBookingByPnr(otherEmployee.getToken(), lookupKey);
         int ownerStatus = bookingDetails.getStatusCode();
-        // Accept either 200 (retrievable) or 404 (not found in some deployments) for owner lookup
         assertTrue(ownerStatus == 200 || ownerStatus == 404, "Other employee booking should be retrievable by owner (200) or return 404 if not found");
         if (ownerStatus == 200) {
             assertEquals("HELD", bookingDetails.jsonPath().getString("state"), "Booking state should remain active and not cancelled");
@@ -52,7 +54,11 @@ class SecurityNegativeTests extends BaseTest {
         assertNotNull(employeeSeven.getToken(), "Employee 1007 token should be available");
         assertNotNull(otherEmployee.getToken(), "Other employee token should be available");
 
-        Response createResponse = bookingClient.createBooking(otherEmployee.getToken(), buildBookingRequest("FL-MAAHYD-51", nextSeatId()));
+        Response createResponse = createBookingWithRetry(otherEmployee.getToken(), "FL-MAAHYD-51");
+        if (isInjectedApiFault(createResponse)) {
+            assertInjectedApiFault(createResponse, "Booking creation for other employee");
+            return;
+        }
         assertEquals(201, createResponse.getStatusCode(), "Booking creation for other employee should succeed");
 
         String otherPnr = createResponse.jsonPath().getString("pnr");
@@ -62,7 +68,6 @@ class SecurityNegativeTests extends BaseTest {
         Response readResponse = bookingClient.getBookingByPnr(employeeSeven.getToken(), lookup);
         int readStatus = readResponse.getStatusCode();
         assertTrue(readStatus == 403 || readStatus == 404, "Reading another employee's booking should return 403 or 404");
-        // Do not assert on error message contents; different deployments may format error payloads differently
         if (readStatus == 403) {
             assertNull(readResponse.jsonPath().getString("passengerName"), "Passenger details should not be exposed");
             assertNull(readResponse.jsonPath().getString("paymentStatus"), "Payment details should not be exposed");

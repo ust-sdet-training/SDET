@@ -33,14 +33,13 @@ public final class RequestSpecificationBuilder {
                 .addFilter(new ResponseLoggingFilter(STATUS))
                 .addFilter(new ResponseLoggingFilter(BODY));
 
-            // Relax SSL validation to allow tests against self-signed or internal certificates
             builder.setRelaxedHTTPSValidation();
 
         if (bearerToken != null && !bearerToken.isBlank()) {
             builder.addHeader("Authorization", "Bearer " + bearerToken.trim());
         }
 
-        String apiKey = System.getenv("API_KEY");
+        String apiKey = ConfigManager.getOptional("API_KEY");
         if (apiKey != null && !apiKey.isBlank()) {
             builder.addHeader("X-API-KEY", apiKey.trim());
         }

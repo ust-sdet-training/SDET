@@ -14,7 +14,7 @@ public class AuthClient extends BaseApiClient {
     }
 
     public LoginResponse login(LoginRequest request) {
-        return loginResponse(request).as(LoginResponse.class);
+        return parseJson(loginResponse(request), LoginResponse.class);
     }
 
     public Response meResponse(String token) {
@@ -22,6 +22,6 @@ public class AuthClient extends BaseApiClient {
     }
 
     public LoginResponse me(String token) {
-        return meResponse(token).as(LoginResponse.class);
+        return parseJson(meResponse(token), LoginResponse.class);
     }
 }

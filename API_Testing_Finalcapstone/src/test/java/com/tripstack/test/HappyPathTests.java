@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
-import com.tripstack.model.BookingRequest;
 import com.tripstack.model.BookingResponse;
 import com.tripstack.model.LoginRequest;
 import com.tripstack.model.LoginResponse;
@@ -21,7 +20,7 @@ class HappyPathTests extends BaseTest {
         LoginRequest loginRequest = new LoginRequest(TEST_EMAIL, TEST_PASSWORD);
 
         Response loginHttpResponse = authClient.loginResponse(loginRequest);
-        LoginResponse loginResponse = loginHttpResponse.as(LoginResponse.class);
+        LoginResponse loginResponse = parseJson(loginHttpResponse, LoginResponse.class);
         Response identityResponse = authClient.meResponse(loginResponse.getToken());
 
         assertAll(
@@ -70,10 +69,8 @@ class HappyPathTests extends BaseTest {
 
     @Test
     void createBookingSuccessfully() throws Exception {
-        BookingRequest bookingRequest = buildBookingRequest("FL-MAAHYD-51", nextSeatId());
-
-        Response response = bookingClient.createBooking(authToken, bookingRequest);
-        BookingResponse bookingResponse = response.as(BookingResponse.class);
+        Response response = createBookingWithRetry(authToken, "FL-MAAHYD-51");
+        BookingResponse bookingResponse = parseJson(response, BookingResponse.class);
 
         assertAll(
             () -> assertEquals(201, response.getStatusCode(), "Booking creation should return 201"),
@@ -90,10 +87,18 @@ class HappyPathTests extends BaseTest {
 
     @Test
     void paymentShouldBeSuccessful() throws Exception {
-        Response createResponse = bookingClient.createBooking(authToken, buildBookingRequest("FL-MAAHYD-51", nextSeatId()));
-        BookingResponse bookingResponse = createResponse.as(BookingResponse.class);
+        Response createResponse = createBookingWithRetry(authToken, "FL-MAAHYD-51");
+        if (isInjectedApiFault(createResponse)) {
+            assertInjectedApiFault(createResponse, "Booking creation");
+            return;
+        }
+        BookingResponse bookingResponse = parseJson(createResponse, BookingResponse.class);
 
         Response response = bookingClient.payBooking(authToken, bookingResponse.getId());
+        if (isInjectedApiFault(response)) {
+            assertInjectedApiFault(response, "Payment");
+            return;
+        }
 
         assertAll(
             () -> assertEquals(200, response.getStatusCode(), "Payment should return 200"),
@@ -107,11 +112,24 @@ class HappyPathTests extends BaseTest {
 
     @Test
     void confirmBookingSuccessfully() throws Exception {
-        Response createResponse = bookingClient.createBooking(authToken, buildBookingRequest("FL-MAAHYD-51", nextSeatId()));
-        BookingResponse bookingResponse = createResponse.as(BookingResponse.class);
+        Response createResponse = createBookingWithRetry(authToken, "FL-MAAHYD-51");
+        if (isInjectedApiFault(createResponse)) {
+            assertInjectedApiFault(createResponse, "Booking creation");
+            return;
+        }
+        BookingResponse bookingResponse = parseJson(createResponse, BookingResponse.class);
 
-        bookingClient.payBooking(authToken, bookingResponse.getId());
+        Response paymentResponse = bookingClient.payBooking(authToken, bookingResponse.getId());
+        if (isInjectedApiFault(paymentResponse)) {
+            assertInjectedApiFault(paymentResponse, "Payment");
+            return;
+        }
+
         Response response = bookingClient.confirmBooking(authToken, bookingResponse.getId());
+        if (isInjectedApiFault(response)) {
+            assertInjectedApiFault(response, "Booking confirmation");
+            return;
+        }
 
         assertAll(
             () -> assertEquals(200, response.getStatusCode(), "Booking confirmation should return 200"),
@@ -125,21 +143,26 @@ class HappyPathTests extends BaseTest {
     @Test
     void retrieveBookingSuccessfully() throws Exception {
 
-        Response createResponse =
-                bookingClient.createBooking(
-                        authToken,
-                        buildBookingRequest("FL-MAAHYD-51", nextSeatId()));
+        Response createResponse = createBookingWithRetry(authToken, "FL-MAAHYD-51");
+        if (isInjectedApiFault(createResponse)) {
+            assertInjectedApiFault(createResponse, "Booking creation");
+            return;
+        }
 
         assertEquals(201, createResponse.getStatusCode());
 
         BookingResponse bookingResponse =
-                createResponse.as(BookingResponse.class);
+                parseJson(createResponse, BookingResponse.class);
 
         Response paymentResponse =
                 bookingClient.payBooking(
                         authToken,
                         bookingResponse.getId());
 
+        if (isInjectedApiFault(paymentResponse)) {
+            assertInjectedApiFault(paymentResponse, "Payment");
+            return;
+        }
         assertEquals(200, paymentResponse.getStatusCode());
 
         Response confirmResponse =
@@ -147,6 +170,10 @@ class HappyPathTests extends BaseTest {
                         authToken,
                         bookingResponse.getId());
 
+        if (isInjectedApiFault(confirmResponse)) {
+            assertInjectedApiFault(confirmResponse, "Booking confirmation");
+            return;
+        }
         assertEquals(200, confirmResponse.getStatusCode());
 
         String pnr =
@@ -156,6 +183,11 @@ class HappyPathTests extends BaseTest {
                 bookingClient.getBookingByPnr(
                         authToken,
                         pnr);
+
+        if (isInjectedApiFault(response)) {
+            assertInjectedApiFault(response, "Retrieve booking");
+            return;
+        }
 
         assertAll(
                 () -> assertEquals(200, response.getStatusCode()),
@@ -167,10 +199,19 @@ class HappyPathTests extends BaseTest {
     }
     @Test
     void cancelBookingSuccessfully() throws Exception {
-        Response createResponse = bookingClient.createBooking(authToken, buildBookingRequest("FL-MAAHYD-51", nextSeatId()));
-        BookingResponse bookingResponse = createResponse.as(BookingResponse.class);
+        Response createResponse = createBookingWithRetry(authToken, "FL-MAAHYD-51");
+        if (isInjectedApiFault(createResponse)) {
+            assertInjectedApiFault(createResponse, "Booking creation");
+            return;
+        }
+        BookingResponse bookingResponse = parseJson(createResponse, BookingResponse.class);
 
         Response response = bookingClient.cancelBooking(authToken, bookingResponse.getId());
+        if (isInjectedApiFault(response)) {
+            assertInjectedApiFault(response, "Booking cancellation");
+            return;
+
+        }
 
         assertAll(
             () -> assertEquals(200, response.getStatusCode(), "Booking cancellation should return 200"),

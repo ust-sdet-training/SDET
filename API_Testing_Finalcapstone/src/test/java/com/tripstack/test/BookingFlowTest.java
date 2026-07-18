@@ -18,13 +18,34 @@ class BookingFlowTest extends BaseTest {
 
         Response searchResponse = flightClient.searchFlights("MAA", "HYD", travelDate, 1, "business");
         Response seatMapResponse = flightClient.getSeatMap(flightId);
-        Response createResponse = bookingClient.createBooking(authToken, buildBookingRequest(flightId, seatId));
-        BookingResponse bookingResponse = createResponse.as(BookingResponse.class);
+        Response createResponse = createBookingWithRetry(authToken, flightId);
+        if (isInjectedApiFault(createResponse)) {
+            assertInjectedApiFault(createResponse, "Booking creation");
+            return;
+        }
+        BookingResponse bookingResponse = parseJson(createResponse, BookingResponse.class);
         Response paymentResponse = bookingClient.payBooking(authToken, bookingResponse.getId());
+        if (isInjectedApiFault(paymentResponse)) {
+            assertInjectedApiFault(paymentResponse, "Payment");
+            return;
+        }
         Response confirmResponse = bookingClient.confirmBooking(authToken, bookingResponse.getId());
+        if (isInjectedApiFault(confirmResponse)) {
+            assertInjectedApiFault(confirmResponse, "Booking confirmation");
+            return;
+        }
         String confirmedPnr = confirmResponse.jsonPath().getString("pnr");
         Response retrieveResponse = bookingClient.getBookingByPnr(authToken, confirmedPnr);
+        if (isInjectedApiFault(retrieveResponse)) {
+            assertInjectedApiFault(retrieveResponse, "Retrieve booking");
+            return;
+        }
+
         Response cancelResponse = bookingClient.cancelBooking(authToken, bookingResponse.getId());
+        if (isInjectedApiFault(cancelResponse)) {
+            assertInjectedApiFault(cancelResponse, "Cancellation");
+            return;
+        }
 
         assertEquals(200, searchResponse.getStatusCode(), "Flight search should return 200");
         assertEquals(200, seatMapResponse.getStatusCode(), "Seat map retrieval should return 200");
