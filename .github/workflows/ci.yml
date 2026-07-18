@@ -111,8 +111,10 @@ jobs:
     env:
       CI: true
       baseUrl: https://tripstack.doomple.com/
-      CUSTOMER_MAIL: ${{ secrets.SHAHBAZ_CUSTOMER_EMAIL }}
+      CUSTOMER_EMAIL: ${{ secrets.SHAHBAZ_CUSTOMER_EMAIL }}
       CUSTOMER_PASSWORD: ${{ secrets.SHAHBAZ_CUSTOMER_PASSWORD }}
+      # Optional overrides — DbSupportContainerTest provisions its own MySQL via
+      # Testcontainers, so these are likely unused, but harmless to pass through.
       DB_JDBC_URL: jdbc:mysql://localhost:3306/tripstack
       DB_USER: root
       DB_PASSWORD: ${{ secrets.SHAHBAZ_DB_PASSWORD }}
@@ -121,9 +123,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
       - name: Set up JDK 22
         uses: actions/setup-java@v4
         with:
@@ -131,25 +130,13 @@ jobs:
           java-version: '22'
           cache: maven
 
+      - name: Run tests
+        run: mvn -B clean test
 
-      - name: Run Test
-        if: always()
-        run: mvn clean test
-
-      - name: Upload Container Suite reports
+      - name: Upload Surefire reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: api-container-suite-reports
-          path: |
-            APIAutomationFinal/target/surefire-reports/*DbSupportContainerTest*
-          if-no-files-found: warn
-
-      - name: Upload Remaining Suite reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: api-remaining-suite-reports
-          path: |
-            APIAutomationFinal/target/surefire-reports/
+          name: api-test-reports
+          path: APIAutomationFinal/target/surefire-reports/
           if-no-files-found: warn
