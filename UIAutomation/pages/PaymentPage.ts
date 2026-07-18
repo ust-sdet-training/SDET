@@ -1,13 +1,10 @@
 import {Page} from "@playwright/test"
 import { BasePage } from "./BasePage"
-import { SearchData } from "../test-data/SearchData";
-import { config } from "../utils/env";
+import { env } from "../utils/env";
 import { expect } from "@playwright/test"
 
 export class PaymentPage extends BasePage{
-    constructor(page: Page)
-    {super(page)}
-
+    
     private cardName = this.page.getByLabel("Name on card");
     private cardNo = this.page.getByLabel("Card number");
     private expiry = this.page.getByLabel("Expiry");
@@ -34,6 +31,4 @@ export class PaymentPage extends BasePage{
         const pnr = (await this.pnr.innerText()).trim();
         return pnr;
     }
-
-    
 }

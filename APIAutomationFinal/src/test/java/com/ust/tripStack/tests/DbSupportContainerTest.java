@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Epic("tripStack Journeys")
 @Feature("DbSupport - MySQL Testcontainer")
 @Owner("Shahbaz Ahmad")
-class DbSupportTestcontainersTest {
+class DbSupportContainerTest {
 
     private static DbSupport dbSupport;
 

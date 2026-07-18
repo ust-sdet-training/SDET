@@ -16,6 +16,7 @@ export class CheckoutPageWithPayment extends BasePage {
   private readonly cvvInput = this.page.getByRole("textbox", { name: "CVV" });
   private readonly totalPayableText = this.page.getByText("Total payable₹");
   private readonly payButton = this.page.getByRole("button", { name: "Pay ₹" });
+  private readonly gatewayTimeout=this.page.locator("//p[@role='alert']");
 
   async verifyLoaded() {
     await this.expectVisible(this.heading, "Secure checkout heading");
@@ -45,4 +46,9 @@ export class CheckoutPageWithPayment extends BasePage {
   async pay() {
     await this.click(this.payButton, "Pay button");
   }
+
+   async displayMesassage()
+    {
+        await this.expectVisible(this.gatewayTimeout, "Secure checkout heading");
+    }
 }

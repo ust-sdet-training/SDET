@@ -48,6 +48,8 @@ public final class DbSupport {
 
                     List<String> seatIds = parseSeatIds(result.getString("seat_ids"));
 
+                    Timestamp holdExpiresAt = result.getTimestamp("hold_expires_at");
+
                     return new BookingRow(
                             result.getString("id"),
                             result.getString("pnr"),
@@ -58,7 +60,7 @@ public final class DbSupport {
                             seatIds,
                             result.getLong("amount_paise"),
                             result.getBoolean("refundable"),
-                            result.getTimestamp("hold_expires_at").toInstant()
+                            holdExpiresAt != null ? holdExpiresAt.toInstant() : null
                     );
                 }
 

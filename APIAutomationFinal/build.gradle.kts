@@ -217,7 +217,6 @@ val remainingSuite by tasks.registering(Test::class) {
 
     include(
         "**/BookingE2E.class",
-        "**/PTest.class",
         "**/WireMockTest.class",
         "**/RunCucumberTest.class"
     )

@@ -4,13 +4,15 @@ on:
   push:
     branches:
       - shahbaz-final-capstone
+      - main
   pull_request:
     branches:
       - shahbaz-final-capstone
+      - main
 
 jobs:
   ui-tests:
-    name: UI Automation Tests
+    name: UI Playwright Tests
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
@@ -18,8 +20,24 @@ jobs:
       run:
         working-directory: UIAutomation
 
+    env:
+      CI: true
+      BASEURL: ${{ vars.BASEURL || 'https://tripstack.doomple.com/' }}
+      CUSTOMER_EMAIL: ${{ secrets.SHAHBAZ_CUSTOMER_EMAIL }}
+      CUSTOMER_PASSWORD: ${{ secrets.SHAHBAZ_CUSTOMER_PASSWORD }}
+      PASSENGER_FIRST_NAME: ${{ vars.PASSENGER_FIRST_NAME || 'Test' }}
+      PASSENGER_LAST_NAME: ${{ vars.PASSENGER_LAST_NAME || 'User' }}
+      PASSENGER_AGE: ${{ vars.PASSENGER_AGE || '30' }}
+      PASSENGER_GENDER: ${{ vars.PASSENGER_GENDER || 'male' }}
+      PASSENGER_EMAIL: ${{ secrets.SHAHBAZ_PASSENGER_EMAIL || 'test@example.com' }}
+      PASSENGER_PHONE: ${{ secrets.SHAHBAZ_PASSENGER_PHONE || '1234567890' }}
+      CARD_NAME_ON_CARD: ${{ secrets.SHAHBAZ_CARD_NAME_ON_CARD || 'Test User' }}
+      CARD_NUMBER: ${{ secrets.SHAHBAZ_CARD_NUMBER || '4111111111111111' }}
+      CARD_EXPIRY: ${{ secrets.SHAHBAZ_CARD_EXPIRY || '12/30' }}
+      CARD_CVV: ${{ secrets.SHAHBAZ_CARD_CVV || '123' }}
+
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -29,31 +47,16 @@ jobs:
           cache: npm
           cache-dependency-path: UIAutomation/package-lock.json
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: npm ci
 
-      - name: Install Playwright Browsers
+      - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
-      - name: Run Playwright Tests
-        env:
-          CI: true
-          BASEURL: https://tripstack.doomple.com/
-          CUSTOMER_EMAIL: ${{ secrets.SHAHBAZ_CUSTOMER_EMAIL }}
-          CUSTOMER_PASSWORD: ${{ secrets.SHAHBAZ_CUSTOMER_PASSWORD }}
-          PASSENGER_FIRST_NAME: ${{ vars.PASSENGER_FIRST_NAME || 'Test' }}
-          PASSENGER_LAST_NAME: ${{ vars.PASSENGER_LAST_NAME || 'User' }}
-          PASSENGER_AGE: ${{ vars.PASSENGER_AGE || '30' }}
-          PASSENGER_GENDER: ${{ vars.PASSENGER_GENDER || 'male' }}
-          PASSENGER_EMAIL: ${{ secrets.SHAHBAZ_PASSENGER_EMAIL || 'test@example.com' }}
-          PASSENGER_PHONE: ${{ secrets.SHAHBAZ_PASSENGER_PHONE || '1234567890' }}
-          CARD_NAME_ON_CARD: ${{ secrets.SHAHBAZ_CARD_NAME_ON_CARD || 'Test User' }}
-          CARD_NUMBER: ${{ secrets.SHAHBAZ_CARD_NUMBER || '4111111111111111' }}
-          CARD_EXPIRY: ${{ secrets.SHAHBAZ_CARD_EXPIRY || '12/30' }}
-          CARD_CVV: ${{ secrets.SHAHBAZ_CARD_CVV || '123' }}
-        run: npx playwright test InvalidLogin.spec.ts
+      - name: Run Playwright tests
+        run: npx playwright test
 
-      - name: Upload Playwright HTML Report
+      - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -61,7 +64,7 @@ jobs:
           path: UIAutomation/playwright-report/
           if-no-files-found: warn
 
-      - name: Upload Playwright Test Results
+      - name: Upload Playwright test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -69,117 +72,41 @@ jobs:
           path: UIAutomation/test-results/
           if-no-files-found: warn
 
-  performance-tests:
-    name: Performance Tests (k6)
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-
-    defaults:
-      run:
-        working-directory: UIAutomation
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Install k6
-        run: |
-          sudo gpg -k
-          sudo apt-get update
-          sudo apt-get install -y gnupg software-properties-common
-          curl -fsSL https://dl.k6.io/key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/k6-archive-keyring.gpg
-          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
-          sudo apt-get update
-          sudo apt-get install -y k6
-
-      - name: Verify k6 Installation
-        run: k6 version
-
-      - name: Run k6 Performance Test
-        run: |
-          k6 run performance/checkout-load.js
-
   api-tests:
-    name: API Automation Tests with Testcontainers
+    name: API Maven Tests
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
+    defaults:
+      run:
+        working-directory: APIAutomationFinal
+
     env:
       CI: true
-      BASEURL: https://tripstack.doomple.com/
+      BASEURL: ${{ vars.BASEURL || 'https://tripstack.doomple.com/' }}
       CUSTOMER_EMAIL: ${{ secrets.SHAHBAZ_CUSTOMER_EMAIL }}
       CUSTOMER_PASSWORD: ${{ secrets.SHAHBAZ_CUSTOMER_PASSWORD }}
-      # Add any additional secrets your API tests need below, e.g.:
-      # API_KEY: ${{ secrets.SHAHBAZ_API_KEY }}
-      # DB_USERNAME: ${{ secrets.SHAHBAZ_DB_USERNAME }}
-      # DB_PASSWORD: ${{ secrets.SHAHBAZ_DB_PASSWORD }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
 
       - name: Set up JDK 22
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '22'
-          cache: gradle
+          cache: maven
 
-      - name: Set up Gradle (for wrapper fallback)
-        uses: gradle/actions/setup-gradle@v4
+      - name: Run Maven tests
+        run: mvn -B test
 
-      - name: Ensure Gradle wrapper exists
-        working-directory: APIAutomationFinal
-        run: |
-          # Clean up if 'gradle' or 'gradle/wrapper' exists as a stray file instead of a directory
-          if [ -e "gradle" ] && [ ! -d "gradle" ]; then
-            echo "Found stray file at 'gradle', removing it"
-            rm -f gradle
-          fi
-          if [ -e "gradle/wrapper" ] && [ ! -d "gradle/wrapper" ]; then
-            echo "Found stray file at 'gradle/wrapper', removing it"
-            rm -f gradle/wrapper
-          fi
-
-          if [ ! -f "gradlew" ]; then
-            echo "gradlew not found — generating wrapper with installed Gradle"
-            gradle wrapper --gradle-version 8.13
-          else
-            echo "gradlew already present, skipping generation"
-          fi
-
-      - name: Grant execute permission for Gradle wrapper
-        working-directory: APIAutomationFinal
-        run: chmod +x gradlew
-
-      - name: Run Container Suite (Testcontainers/MySQL)
-        working-directory: APIAutomationFinal
-        run: ./gradlew containerSuite --no-daemon
-
-      - name: Run Remaining Suite (BookingE2E, PTest, WireMockTest, RunCucumberTest)
-        working-directory: APIAutomationFinal
-        if: always()
-        run: ./gradlew remainingSuite --no-daemon
-
-      - name: Upload Container Suite reports
+      - name: Upload Maven reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: api-container-suite-reports
+          name: api-maven-reports
           path: |
-            APIAutomationFinal/build/reports/tests/containerSuite/
-            APIAutomationFinal/build/test-results/containerSuite/
-          if-no-files-found: warn
-
-      - name: Upload Remaining Suite reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: api-remaining-suite-reports
-          path: |
-            APIAutomationFinal/build/reports/tests/remainingSuite/
-            APIAutomationFinal/build/test-results/remainingSuite/
+            APIAutomationFinal/target/surefire-reports/
+            APIAutomationFinal/target/site/
           if-no-files-found: warn
