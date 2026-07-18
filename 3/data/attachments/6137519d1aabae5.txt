@@ -1,0 +1,3 @@
+2026-07-18 15:22:32 [INFO] Flight Booking Test Starts..
+2026-07-18 15:22:35 [INFO] User Login Sucessful
+2026-07-18 15:22:36 [INFO] IndiGo 6E-494 is available and selected succesfully
