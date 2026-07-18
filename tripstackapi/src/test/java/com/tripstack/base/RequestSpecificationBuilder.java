@@ -11,6 +11,7 @@ public final class RequestSpecificationBuilder {
     private RequestSpecificationBuilder() {
     }
 
+
     public static RequestSpecification requestSpecification() {
 
         return new RequestSpecBuilder()
