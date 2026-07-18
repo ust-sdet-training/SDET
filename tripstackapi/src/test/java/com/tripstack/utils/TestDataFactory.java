@@ -55,7 +55,7 @@ public final class TestDataFactory {
                 inventoryId,
                 List.of(seatId),
                 true,
-                null
+                120
         );
     }
 

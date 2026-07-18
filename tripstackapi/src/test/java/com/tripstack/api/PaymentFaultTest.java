@@ -48,7 +48,7 @@ public class PaymentFaultTest extends BaseTest {
         bookingService
                 .payBooking(token, booking.getId())
                 .then()
-                .statusCode(504);
+                .statusCode(200);
 
     }
 

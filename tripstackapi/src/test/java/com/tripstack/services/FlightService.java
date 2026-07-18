@@ -36,13 +36,16 @@ public class FlightService {
 
     public String getFirstFlightId(Response response) {
 
-        List<String> ids = response.jsonPath().getList("flights.id");
+        String id = response.jsonPath().getString("flights[0].id");
 
-        if (ids == null || ids.isEmpty()) {
+        if (id == null || id.isBlank()) {
             throw new RuntimeException("No flights found.");
         }
+        System.out.println(response.asPrettyString());
+        System.out.println("Flight ID = " + id);
 
-        return ids.get(0);
+        return id;
+
     }
 
     @SuppressWarnings("unchecked")

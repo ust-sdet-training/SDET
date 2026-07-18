@@ -1,7 +1,5 @@
 package com.tripstack.api;
 
-
-
 import com.tripstack.base.BaseTest;
 import com.tripstack.model.request.BookingRequest;
 import com.tripstack.model.request.FlightSearchRequest;
@@ -17,6 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BookingTest extends BaseTest {
 
+    public static String bookingId;
+
     AuthService authService = new AuthService();
     FlightService flightService = new FlightService();
     BookingService bookingService = new BookingService();
@@ -24,61 +24,80 @@ public class BookingTest extends BaseTest {
     @Test
     void bookingFlowTest() {
 
-        // Login
         String token = authService.getToken();
 
-        // Search Flight
-        FlightSearchRequest searchRequest = TestDataFactory.flightSearch();
+        FlightSearchRequest searchRequest =
+                TestDataFactory.flightSearch();
 
-        Response flightResponse = flightService.searchFlights(searchRequest);
+        System.out.println("FROM = " + searchRequest.getFrom());
+        System.out.println("TO = " + searchRequest.getTo());
+        System.out.println("DATE = " + searchRequest.getDate());
+        System.out.println("PAX = " + searchRequest.getPassengers());
+        System.out.println("CLASS = " + searchRequest.getTravelClass());
+
+        Response flightResponse =
+                flightService.searchFlights(searchRequest);
+        flightResponse.prettyPrint();
 
         String flightId =
-                flightResponse.jsonPath().getString("flights[0].id");
+                flightService.getFirstFlightId(flightResponse);
 
-        // Seat Map
-        Response seatResponse = flightService.getSeatMap(flightId);
+        System.out.println("Flight ID = " + flightId);
+
+        Response seatResponse =
+                flightService.getSeatMap(flightId);
 
         String seatId =
                 flightService.getFirstAvailableSeat(seatResponse);
 
-        // Create Booking
+        System.out.println("Seat ID = " + seatId);
+
         BookingRequest bookingRequest =
                 TestDataFactory.bookingRequest(flightId, seatId);
 
         BookingResponse booking =
                 bookingService.createBooking(token, bookingRequest);
 
+        bookingId = booking.getId();
+
+        assertNotNull(bookingId);
+
         assertEquals("HELD", booking.getState());
 
-        // Pay
         Response payment =
-                bookingService.payBooking(token, booking.getId());
+                bookingService.payBooking(token, bookingId);
 
         payment.then().statusCode(200);
 
-        // Confirm
         BookingResponse confirmed =
-                bookingService.confirmBooking(token, booking.getId());
+                bookingService.confirmBooking(token, bookingId);
 
         assertEquals("CONFIRMED", confirmed.getState());
 
         assertNotNull(confirmed.getPnr());
 
-        // Get Booking
         BookingResponse bookingByPnr =
-                bookingService.getBookingByPnr(token, confirmed.getPnr());
+                bookingService.getBookingByPnr(
+                        token,
+                        confirmed.getPnr()
+                );
 
         assertEquals(
                 confirmed.getPnr(),
-                bookingByPnr.getPnr());
+                bookingByPnr.getPnr()
+        );
 
-        // Cancel
         BookingResponse cancelled =
-                bookingService.cancelBooking(token, booking.getId());
+                bookingService.cancelBooking(
+                        token,
+                        bookingId
+                );
 
         assertTrue(
                 cancelled.getState().equals("CANCELLED") ||
-                        cancelled.getState().equals("REFUNDED"));
+                        cancelled.getState().equals("REFUNDED")
+        );
 
     }
+
 }

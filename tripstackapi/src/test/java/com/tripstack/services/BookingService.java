@@ -18,9 +18,11 @@ public class BookingService {
         return given()
                 .spec(RequestSpecificationBuilder.authorizedRequest(token))
                 .body(request)
+                .log().all()
                 .when()
                 .post(ApiEndpoints.BOOKINGS)
                 .then()
+                .log().all()
                 .statusCode(201)
                 .extract()
                 .as(BookingResponse.class);

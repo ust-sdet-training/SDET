@@ -4,26 +4,34 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export default defineConfig({
-  testDir: './tests',
-
-  timeout: 60000,
-
-  expect: {
-    timeout: 10000
-  },
-
-  reporter: [
-    ['html']
-  ],
+  workers: 1,
+  retries: 1,
 
   use: {
     baseURL: process.env.BASE_URL,
-    headless: process.env.HEADLESS === 'true',
-
+    headless: !!process.env.CI,
     screenshot: 'only-on-failure',
-
-    trace: 'retain-on-failure',
-
-    video: 'retain-on-failure'
+    video: 'retain-on-failure',
+    trace: 'on-first-retry'
   }
 });
+
+/*
+
+import { defineConfig } from '@playwright/test';
+
+export default defineConfig({
+  workers: 1,
+  retries: 1,
+
+  use: {
+    baseURL: process.env.BASE_URL,
+    headless: !!process.env.CI,
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
+    trace: 'on-first-retry'
+  }
+});
+
+
+*/

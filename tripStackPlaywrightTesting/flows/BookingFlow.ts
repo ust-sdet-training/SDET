@@ -23,19 +23,13 @@ export class BookingFlow {
 
     async searchFlight() {
 
-        await this.homePage.verifyHomePageLoaded();
+    await this.homePage.searchFlight(
+        bookingData.from,
+        bookingData.to,
+        bookingData.travelDate
+    );
 
-        await this.homePage.enterSource(
-            bookingData.from
-        );
-
-        await this.homePage.enterDestination(
-            bookingData.to
-        );
-
-        await this.homePage.clickSearch();
-
-    }
+}
 
     async selectFlightAndSeat() {
 
@@ -151,33 +145,39 @@ while (true) {
 
     async completeRoundTripBooking() {
 
-        // Outbound Journey
-        await this.completeBooking();
+    console.log('========== OUTBOUND JOURNEY ==========');
 
-        // Return Journey
+    await this.searchFlight();
 
-        await this.homePage.page.goto('/');
+    await this.selectFlightAndSeat();
 
-        await this.homePage.verifyHomePageLoaded();
+    await this.enterPassengerDetails();
 
-        await this.homePage.enterSource(
-            bookingData.to
-        );
+    await this.makePayment();
 
-        await this.homePage.enterDestination(
-            bookingData.from
-        );
+    await this.verifyBookingSuccess();
 
-        await this.homePage.clickSearch();
+    console.log('========== RETURN JOURNEY ==========');
 
-        await this.selectFlightAndSeat();
+    await this.homePage.page.goto('/');
 
-        await this.enterPassengerDetails();
+    await this.homePage.searchFlight(
+        bookingData.to,
+        bookingData.from
+    );
 
-        await this.makePayment();
+    await this.selectFlightAndSeat();
 
-        await this.verifyBookingSuccess();
+    await this.enterPassengerDetails();
 
-    }
+    await this.makePayment();
+
+    await this.verifyBookingSuccess();
+
+    await this.openMyTrips();
+
+    await this.verifyBookingInTrips();
+
+}
 
 }

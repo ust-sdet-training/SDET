@@ -5,9 +5,8 @@ export class MyTripsPage {
     readonly page: Page;
 
     readonly myTripsHeading: Locator;
-    readonly bookingCards: Locator;
-    readonly latestBooking: Locator;
-    readonly cancelButton: Locator;
+    readonly confirmedBookings: Locator;
+    readonly cancelButtons: Locator;
 
     constructor(page: Page) {
 
@@ -17,19 +16,13 @@ export class MyTripsPage {
             name: 'My Trips'
         });
 
-        // Your latest booking is displayed first
-        this.bookingCards = page.locator('[data-id="booking-card"]');
+        this.confirmedBookings = page.locator(
+            'span[data-id="state"]'
+        );
 
-        // Fallback if booking cards don't have a data-id
-        this.latestBooking = page
-            .getByText(new RegExp(`TS-${process.env.EMPLOYEE_ID}-`))
-            .first();
-
-        this.cancelButton = page
-            .getByRole('button', {
-                name: 'Cancel'
-            })
-            .first();
+        this.cancelButtons = page.getByRole('button', {
+            name: 'Cancel'
+        });
 
     }
 
@@ -41,31 +34,34 @@ export class MyTripsPage {
 
     async verifyBookingExists() {
 
-        await expect(this.latestBooking).toBeVisible();
+        await expect(this.confirmedBookings.first()).toBeVisible();
 
     }
 
-    async verifyBookingConfirmed() {
+    async verifyRoundTripBookings() {
+
+        await expect(this.confirmedBookings.first()).toBeVisible();
+
+        const totalBookings =
+            await this.confirmedBookings.count();
+
+        expect(totalBookings).toBeGreaterThanOrEqual(2);
+
+    }
+
+    async getTotalBookings(): Promise<number> {
+
+        return await this.confirmedBookings.count();
+
+    }
+
+    async clickFirstCancel() {
 
         await expect(
-            this.page.getByText('CONFIRMED').first()
+            this.cancelButtons.first()
         ).toBeVisible();
 
-    }
-
-    async getBookingPNR(): Promise<string> {
-
-        const text = await this.latestBooking.textContent();
-
-        return text ?? '';
-
-    }
-
-    async clickCancel() {
-
-        await expect(this.cancelButton).toBeVisible();
-
-        await this.cancelButton.click();
+        await this.cancelButtons.first().click();
 
     }
 
