@@ -15,6 +15,9 @@ test("Bus booking happy path", async ({
   log.info("Login successful");
 
   // Search
+  const curdate = new Date();
+  curdate.setDate(curdate.getDate()+30);
+  const travelDate = curdate.toISOString().split("T")[0];
   await book.search("BOM", "DEL", "2026-08-17");
 
   await expect(page.getByText("Kallada Travels")).toBeVisible();

@@ -8,9 +8,7 @@ import org.junit.jupiter.api.Test;
 
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
-import static com.github.tomakehurst.wiremock.stubbing.Scenario.STARTED;
 import static io.restassured.RestAssured.given;
-import static java.net.http.HttpResponse.BodyHandlers.ofString;
 import static org.hamcrest.Matchers.equalTo;
 
 import java.net.http.HttpClient;
