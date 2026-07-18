@@ -2,7 +2,7 @@ import { Secrets } from "../config/Secrets";
 
 export const Users = {
     employee: {
-        email: Secrets.get("USERNAME"),
-        password: Secrets.get("PASSWORD")
+        email: "erin@tripstack.test",
+        password:"Password@123",
     }
 };
