@@ -4,13 +4,11 @@ import { util } from '../src/utils/util';
 import { secrets } from '../src/utils/secrets';
 import { testTripData } from '../data/testTripData';
 
-// Baseline established on a clean local run against the live site.
-// Re-capture this after your first real measurement and adjust.
 const BASELINE_MS = 2500;
-const REGRESSION_MULTIPLIER = 1.5; // fail if >50% slower than baseline
+const REGRESSION_MULTIPLIER = 1.5;
 const THRESHOLD_MS = BASELINE_MS * REGRESSION_MULTIPLIER;
 
-test.describe("Performance — Results listing page (empId 1022)", () => {
+test.describe("Performance", () => {
   test("bus results page loads within threshold", async ({ flow, log, evidence, page }) => {
     await flow.start();
     await flow.clickLogin();
