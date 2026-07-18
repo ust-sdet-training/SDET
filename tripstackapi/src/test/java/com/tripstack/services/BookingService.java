@@ -7,8 +7,10 @@ import com.tripstack.model.response.BookingResponse;
 import io.restassured.response.Response;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static io.restassured.RestAssured.given;
+import static org.awaitility.Awaitility.await;
 
 public class BookingService {
 
@@ -30,12 +32,17 @@ public class BookingService {
 
     public Response payBooking(String token, String bookingId) {
 
-        return given()
+        Response response = given()
                 .spec(RequestSpecificationBuilder.authorizedRequest(token))
                 .pathParam("id", bookingId)
                 .body("{}")
                 .when()
                 .post(ApiEndpoints.PAY_BOOKING);
+
+        response.prettyPrint();
+        System.out.println("Status Code = " + response.statusCode());
+
+        return response;
     }
 
     public BookingResponse confirmBooking(String token,
