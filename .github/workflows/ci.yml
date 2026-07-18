@@ -1,0 +1,105 @@
+name: UI and API Automation
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+
+  api-tests:
+    name: API Tests
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: API
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 22
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 8.14
+
+      - name: Run API Tests
+        run: gradle clean test
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+          EMAIL: ${{ secrets.EMAIL }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          EXPIRED_TOKEN: ${{ secrets.EXPIRED_TOKEN }}
+
+      - name: Upload Allure Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: API/build/allure-results
+
+      - name: Generate Allure Report
+        if: always()
+        uses: simple-elf/allure-report-action@master
+        with:
+          allure_results: API/build/allure-results
+          allure_report: allure-report
+
+      - name: Upload Allure Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report
+
+  ui-tests:
+    name: UI Tests
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: UI
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright Tests
+        run: npx playwright test
+        env:
+          EMAIL: ${{ secrets.EMAIL }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          FIRST_NAME: ${{ secrets.FIRST_NAME }}
+          LAST_NAME: ${{ secrets.LAST_NAME }}
+          CARD_NAME: ${{ secrets.CARD_NAME }}
+          CARD_NUMBER: ${{ secrets.CARD_NUMBER }}
+          CARD_EXPIRY: ${{ secrets.CARD_EXPIRY }}
+          CVV: ${{ secrets.CVV }}
+          AGE: ${{ secrets.AGE }}
+          PHONE: ${{ secrets.PHONE }}
+
+      - name: Upload Playwright Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: UI/playwright-report
