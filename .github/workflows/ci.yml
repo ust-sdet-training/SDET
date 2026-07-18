@@ -2,9 +2,9 @@ name: TripStack CI
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ main ,muhammed_final_capston ]
   push:
-    branches: [ main ]
+    branches: [ main ,muhammed_final_capston]
 
 env:
   CI: "true"
