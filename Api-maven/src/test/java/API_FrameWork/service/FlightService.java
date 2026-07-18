@@ -1,10 +1,8 @@
 package API_FrameWork.service;
 
-import API_FrameWork.Factory.RequestSpecFactory;
+import API_FrameWork.Factory.SpecFactory;
 import API_FrameWork.config.EndPoints;
 import API_FrameWork.models.FlightResponse;
-
-import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 
@@ -14,22 +12,21 @@ public class FlightService {
             String from,
             String to,
             String date,
-            String flightClass) {
+            String travelClass) {
 
-        Response response =
-                given()
-                        .spec(RequestSpecFactory.getRequestSpec())
-                        .queryParam("from", from)
-                        .queryParam("to", to)
-                        .queryParam("date", date)
-                        .queryParam("class", flightClass)
-                        .when()
-                        .get(EndPoints.FLIGHTS)
-                        .then()
-                        .statusCode(200)
-                        .extract()
-                        .response();
+        return given()
+                .spec(SpecFactory.requestSpec())
+                .queryParam("from", from)
+                .queryParam("to", to)
+                .queryParam("date", date)
+                .queryParam("class", travelClass)
 
-        return response.as(FlightResponse.class);
+                .when()
+                .get(EndPoints.SEARCH_FLIGHTS)
+
+                .then()
+                .statusCode(200)
+                .extract()
+                .as(FlightResponse.class);
     }
 }

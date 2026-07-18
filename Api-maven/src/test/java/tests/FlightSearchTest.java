@@ -1,33 +1,32 @@
 package tests;
 
+import API_FrameWork.config.TestData;
 import API_FrameWork.models.FlightResponse;
 import API_FrameWork.service.FlightService;
-
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class FlightSearchTest {
+public class FlightSearchTest extends BaseTest {
 
     @Test
+    @DisplayName("Verify flight search")
     void searchFlights() {
+        FlightService flightService = new FlightService();
 
-        FlightService service = new FlightService();
+        FlightResponse response = flightService.searchFlights(
+                TestData.FROM,
+                TestData.TO,
+                TestData.DATE,
+                TestData.TRAVEL_CLASS
+        );
 
-        FlightResponse response =
-                service.searchFlights(
-                        "JAI",
-                        "BOM",
-                        "2026-08-14",
-                        "economy");
+        FlightResponse.Flight flight = response.getFlights().get(0);
 
-        Assertions.assertTrue(response.getCount() > 0);
+        Assertions.assertTrue(response.getCount() > 0, "At least one flight should be returned");
+        Assertions.assertEquals(TestData.FROM, flight.getOrigin());
+        Assertions.assertEquals(TestData.TO, flight.getDest());
 
-        FlightResponse.Flight flight =
-                response.getFlights().get(0);
-
-        Assertions.assertEquals("JAI", flight.getOrigin());
-        Assertions.assertEquals("BOM", flight.getDest());
-
-        System.out.println("Flight ID : " + flight.getId());
+        System.out.println("Flight ID: " + flight.getId());
     }
 }

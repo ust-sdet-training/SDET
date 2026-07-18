@@ -54,7 +54,7 @@ export class BookingFlow {
         );
 
         await this.seat.chooseSeat(
-            "Seat 4A, window, available"
+            "Seat 3A, window, available"
         );
 
         await this.passenger.enterPassengerDetails(
