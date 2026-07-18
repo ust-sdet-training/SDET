@@ -9,11 +9,29 @@ on:
       - shahbaz-final-capstone
 
 jobs:
+  check-secrets:
+    name: Check Required Secrets
+    runs-on: ubuntu-latest
+    outputs:
+      has_creds: ${{ steps.check.outputs.has_creds }}
+    steps:
+      - id: check
+        env:
+          CUSTOMER_EMAIL: ${{ secrets.SHAHBAZ_CUSTOMER_EMAIL }}
+          CUSTOMER_PASSWORD: ${{ secrets.SHAHBAZ_CUSTOMER_PASSWORD }}
+        run: |
+          if [ -n "$CUSTOMER_EMAIL" ] && [ -n "$CUSTOMER_PASSWORD" ]; then
+            echo "has_creds=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_creds=false" >> "$GITHUB_OUTPUT"
+          fi
+
   ui-tests:
     name: UI Automation Tests
+    needs: check-secrets
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    if: ${{ secrets.SHAHBAZ_CUSTOMER_EMAIL != '' && secrets.SHAHBAZ_CUSTOMER_PASSWORD != '' }}
+    if: needs.check-secrets.outputs.has_creds == 'true'
 
     defaults:
       run:
