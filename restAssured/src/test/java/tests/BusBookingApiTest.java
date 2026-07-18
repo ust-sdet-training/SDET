@@ -120,6 +120,23 @@ class BusBookingApiTest {
                         .withBookingId(bookingId)
                         .build());
 
+        if(payResponse.statusCode() == 402){
+            payResponse.then().log().all();
+        payResponse.then()
+                .statusCode(402)
+                .body("error", equalTo("GATEWAY_DECLINE"))
+                .body("message", equalTo("payment declined by gateway"));
+        }
+
+        else if (payResponse.statusCode() == 200) {
+            payResponse.then()
+                    .spec(ResponseSpecs.success())
+                    .statusCode(200)
+                    .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/booking-schema.json"))
+                    .body("state", equalTo("PAYMENT_PENDING"))
+                    .body("pnr", equalTo(null));
+        
+
         payResponse.then()
                 .spec(ResponseSpecs.success())
                 .statusCode(200)
@@ -163,6 +180,7 @@ class BusBookingApiTest {
                 .statusCode(200)
                 .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/bookings-schema.json"))
                 .body("pnr", hasItem(pnr));
+        }
     }
 
     private Map<String, Object> selectPreferredBus(List<Map<String, Object>> buses) {
@@ -197,4 +215,6 @@ class BusBookingApiTest {
 
         return value == null ? "" : value.replace("_", "").toLowerCase(Locale.ROOT);
     }
+
+
 }

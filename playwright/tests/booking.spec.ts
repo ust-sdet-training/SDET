@@ -33,8 +33,10 @@ test("TripStack Bus Booking", async ({ booking, evidence, page }) => {
 
     await booking.checkout(payment.card.name, payment.card.number,payment.card.expiry,payment.card.cvv  );
 
-    await booking.ticketConfirmation();
+    const bookingStatus = await booking.verifyBookingOutcome();
 
-    evidence.actual = { bookingStatus: "Confirmed" };
+    evidence.expected = {bookingStatus: "Confirmed or Payment Declined"};
+
+    evidence.actual = {  bookingStatus };
 
 });

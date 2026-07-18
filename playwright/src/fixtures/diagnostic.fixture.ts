@@ -3,6 +3,7 @@ import crypto from "node:crypto";
 import { BookingFlow } from "../flows/BookingFlow";
 import { logger, type AppLogger, redactForLog } from "../utils/logger";
 import { getMaskedLocators } from "../utils/mask";
+import "../config/constants"
 
 type DiagnosticFixtures = {
     correlationId: string;

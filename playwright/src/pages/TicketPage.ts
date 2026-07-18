@@ -11,10 +11,10 @@ export class TicketPage {
     }
 
 
-    async verifyTicket(): Promise<void>{
-        await this.locators.pnr().isVisible();
-        await this.locators.verifyPage().isVisible();
-        await this.locators.viewButton().isVisible();
-    }
+    async verifyTicket(): Promise<void> {
+        await expect(this.locators.pnr()).toBeVisible();
+        await expect(this.locators.verifyPage()).toBeVisible();
+        await expect(this.locators.viewButton()).toBeVisible();
+}
 
 }

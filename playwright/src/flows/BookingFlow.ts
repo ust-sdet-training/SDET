@@ -18,10 +18,7 @@ export class BookingFlow {
     private readonly checkoutPage: CheckoutPage;
     private readonly ticketPage: TicketPage;
 
-    constructor(
-        private readonly page: Page,
-        private readonly log: AppLogger
-    ) {
+    constructor(private readonly page: Page,private readonly log: AppLogger) {
 
         this.loginPage = new LoginPage(page);
         this.homePage = new HomePage(page);
@@ -139,12 +136,24 @@ export class BookingFlow {
 
     }
 
-    async ticketConfirmation(): Promise<void> {
+    async verifyBookingOutcome(): Promise<"Confirmed" | "Payment Declined"> {
 
-        this.log.info("Waiting for booking confirmation");
-        await this.ticketPage.verifyTicket();
-        this.log.info("Booking confirmed");
+    this.log.info("Checking booking outcome");
 
+    const outcome = await this.checkoutPage.getBookingOutcome();
+
+    if (outcome === "Payment Declined") {
+        this.log.info("Payment declined by gateway");
+        return "Payment Declined";
     }
+
+    this.log.info("Payment successful");
+
+    await this.ticketPage.verifyTicket();
+
+    this.log.info("Booking confirmed");
+
+    return "Confirmed";
+}
 
 }

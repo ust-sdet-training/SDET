@@ -27,6 +27,10 @@ export class CheckoutLocators {
     payButton(): Locator{
         return this.page.getByRole("button", {name: "Pay ₹1298.85"})
     }
+
+    paymentDeclined(): Locator{
+        return this.page.locator('[data-ref="payment-error"]');
+    }
     
 
 }

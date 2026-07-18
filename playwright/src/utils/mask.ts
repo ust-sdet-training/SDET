@@ -30,7 +30,6 @@ export async function getMaskedLocators(
 
     const masks: Locator[] = [];
 
-    // Framework default selectors
     for (const selector of DEFAULT_MASKS) {
 
         const locator = page.locator(selector);
@@ -43,7 +42,6 @@ export async function getMaskedLocators(
 
     }
 
-    // User supplied selectors/locators
     for (const item of additionalLocators) {
 
         if (typeof item === "string") {

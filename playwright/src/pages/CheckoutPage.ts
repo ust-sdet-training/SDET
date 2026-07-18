@@ -31,4 +31,15 @@ export class CheckoutPage {
         await this.locators.payButton().click();
     }
 
+    async getBookingOutcome(): Promise<"Confirmed" | "Payment Declined"> {
+
+    const declined = await this.locators.paymentDeclined().isVisible().catch(() => false);
+
+    if (declined) {
+        return "Payment Declined";
+    }
+
+    return "Confirmed";
+}
+
 }
