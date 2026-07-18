@@ -191,7 +191,13 @@ jobs:
   security-tests:
     name: Security Tests
     runs-on: ubuntu-latest
+<<<<<<< HEAD
 
+=======
+    permissions:
+      contents: read
+      issues: write
+>>>>>>> 078c441f (ci)
     env:
       DB_URL: jdbc:mysql://127.0.0.1:3306/tripstack
       DB_USERNAME: root
@@ -249,11 +255,19 @@ jobs:
       - name: Run OWASP ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.14.0
         with:
+<<<<<<< HEAD
           target: ${{ secrets.CHAITHRA_BASE_URL }}
           cmd_options: "-a -j"
           allow_issue_writing: true
 
       - name: Upload ZAP Report
+=======
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target: ${{ secrets.BASE_URL }}
+          cmd_options: "-a -j"
+          allow_issue_writing: true
+      - name: Upload ZAP report
+>>>>>>> 078c441f (ci)
         if: always()
         uses: actions/upload-artifact@v4
         with:
