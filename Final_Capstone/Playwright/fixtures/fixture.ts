@@ -6,67 +6,39 @@ import { BookingPage } from "../pages/BookingPage";
 import { CabinPage } from "../pages/CabinPage";
 import { DetailsPage } from "../pages/DetailsPage";
 import { CardPage } from "../pages/CardPage";
-import {ConfirmedPage } from "../pages/ConfirmedPage";
+import { ConfirmedPage } from "../pages/ConfirmedPage";
 
-type PageFixtures = {
+export const test = base.extend<{
+    pages: {
+        login: LoginPage;
+        flight: FlightSearchPage;
+        booking: BookingPage;
+        cabin: CabinPage;
+        details: DetailsPage;
+        payment: CardPage;
+        confirmation: ConfirmedPage;
+    };
+}>({
 
-    loginPage: LoginPage;
+    pages: async ({ page }, use) => {
 
-    flightSearchPage: FlightSearchPage;
+        await use({
 
-    bookingPage: BookingPage;
+            login: new LoginPage(page),
 
-    cabinPage: CabinPage;
+            flight: new FlightSearchPage(page),
 
-    detailsPage: DetailsPage;
+            booking: new BookingPage(page),
 
-    paymentPage: CardPage;
+            cabin: new CabinPage(page),
 
-    bookingConfirmationPage: ConfirmedPage;
+            details: new DetailsPage(page),
 
-};
+            payment: new CardPage(page),
 
-export const test = base.extend<PageFixtures>({
+            confirmation: new ConfirmedPage(page)
 
-    loginPage: async ({ page }, use) => {
-
-        await use(new LoginPage(page));
-
-    },
-
-    flightSearchPage: async ({ page }, use) => {
-
-        await use(new FlightSearchPage(page));
-
-    },
-
-    bookingPage: async ({ page }, use) => {
-
-        await use(new BookingPage(page));
-
-    },
-
-    cabinPage: async ({ page }, use) => {
-
-        await use(new CabinPage(page));
-
-    },
-
-    detailsPage: async ({ page }, use) => {
-
-        await use(new DetailsPage(page));
-
-    },
-
-    paymentPage: async ({ page }, use) => {
-
-        await use(new CardPage(page));
-
-    },
-
-    bookingConfirmationPage: async ({ page }, use) => {
-
-        await use(new ConfirmedPage(page));
+        });
 
     }
 

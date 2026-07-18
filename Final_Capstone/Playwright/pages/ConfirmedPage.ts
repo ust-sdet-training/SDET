@@ -8,8 +8,7 @@ export class ConfirmedPage {
 
     constructor(page: Page) {
 
-        this.booking=
-            new ConfirmedLocators(page);
+        this.booking = new ConfirmedLocators(page);
 
     }
 
@@ -18,20 +17,21 @@ export class ConfirmedPage {
 
         await expect(this.booking.bookingMessage).toBeVisible();
 
-        // await expect(this.booking.bookingStatus).toBeVisible();
+        await expect(this.booking.bookingStatus).toHaveText('CONFIRMED');
+
         logger.info("Booking confirmation page verified");
     }
 
     async getBookingReference(){
-        const bookingReference = (await this.booking.bookingReference.textContent())?.trim() || "";
-
+        const bookingReference = (await this.booking.bookingReference.textContent());
         logger.info(`Retrieved booking reference: ${bookingReference}`);
+
         return bookingReference;
     }
 
     async getAmountPaid(){
         const amountPaid = (
-        await this.booking.amountPaid.textContent())?.trim() || "";
+        await this.booking.amountPaid.textContent());
         logger.info(`Retrieved amount paid: ${amountPaid}`);
         return amountPaid;
     }

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8b133089-aa71-458e-9493-3945d687a2a1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.github/.idea/.github.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/workflows/api_data_valid.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/workflows/playwright.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/SDET.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/base/BaseAPI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/builders/BookingBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/builders/FlightSearchBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/builders/LoginBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/clients/BookingClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/clients/FlightClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/clients/PaymentClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/clients/ResetClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/config/AppConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/config/ConfigManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/config/Secrets.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/constants/TestData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/model/request/BookingRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/model/response/BookingListResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/model/response/FlightResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/model/response/LoginResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/model/response/SeatResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/repository/BookingRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/repository/FlightRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/specs/RequestSpec.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/specs/ResponseSpec.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/utils/TokenManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/Database/database/DBConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/Database/database/DatabaseConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/Database/database/Queries.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/Database/database/TestContainer/testContainer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/tests/BaseTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/tests/BookingLifeCycleTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/tests/FlightTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/tests/LoginTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/tests/ResetTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/tests/SearchFlightTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/tests/SeatMapTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/tests/SecurityTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Final_Capstone/API/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/base/BaseAPI.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/builders/BookingBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/builders/LoginBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/clients/AuthClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/clients/AuthClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/clients/BookingClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/clients/PaymentClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/clients/SearchClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/config/ConfigManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/config/Secrets.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/constants/Endpoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/constants/Endpoints.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/database/DatabaseConnection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/model/request/BookingRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/model/request/LoginRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/model/request/LoginRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/model/response/BookingResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/API_Framework/model/response/BookingResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/model/response/LoginResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/specs/RequestSpec.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/specs/ResponseSpec.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/tests/auth/BaseTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/tests/auth/LoginTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/tests/booking/BookingLifeCycleTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/tests/database/BookingDBTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/tests/search/BusSearchTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/tests/search/FlightSearchTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/tests/security/SecurityTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/utils/JsonUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/API/src/test/java/org/sdet/utils/TokenManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/Playwright/fixtures/fixture.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Final_Capstone/Playwright/fixtures/fixture.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/Playwright/locators/ConfirmedLocator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Final_Capstone/Playwright/locators/ConfirmedLocator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/Playwright/pages/ConfirmedPage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Final_Capstone/Playwright/pages/ConfirmedPage.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/Playwright/playwright.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Final_Capstone/Playwright/playwright.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final_Capstone/Playwright/tests/confirmed.spec.ts" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="3Ge3whx43PlAQ8tBTA7IJvzUsjp" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "Salman__Final__Capstone",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/299171/Documents/SDET"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8b133089-aa71-458e-9493-3945d687a2a1" name="Changes" comment="" />
+      <created>1784318448796</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1784318448796</updated>
+    </task>
+    <servers />
+  </component>
+</project>

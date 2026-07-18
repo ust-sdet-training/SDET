@@ -14,19 +14,15 @@ export class ConfirmedLocators {
 
     constructor(page: Page) {
 
-        this.bookingMessage = page.getByRole("heading", {
-            name: /You're all set!/i
-        });
+        this.bookingMessage = page.getByRole("heading", {name: /You're all set!/i});
 
-        this.bookingReference = page.locator("h2");
+        this.bookingReference = page.locator(".pnr");
 
-        this.bookingStatus = page.getByText("CONFIRMED");
+        this.bookingStatus = page.getByText("CONFIRMED",{exact:true});
 
         this.amountPaid = page.getByText(/₹/);
 
-        this.viewMyTripsButton = page.getByRole("button", {
-            name: /View my trips/i
-        });
+        this.viewMyTripsButton = page.getByRole("button", {name: /View my trips/i});
 
     }
 
