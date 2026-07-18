@@ -20,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * 2. Data availability and consistency under normal load
  * 3. API stability for critical operations
  * 
- * Test Profile: E05 Bhumika (emp_id: 1005)
- * Route: PUN → BOM flights
+ * Test Profile: E13 Justin / Mallory Menon (emp_id: 1013)
+ * Route: LKO → DEL flights
  */
 @DisplayName("Resilience - API Response Time & Stability")
 public class ResilienceTest extends BaseTest {
@@ -31,12 +31,12 @@ public class ResilienceTest extends BaseTest {
     public void flightSearchShouldReturnDataWithinTimeout() {
         login();
 
-        String travelDate = LocalDate.now().plusDays(7).format(DateTimeFormatter.ISO_LOCAL_DATE);
+        String travelDate = LocalDate.now().plusDays(20).format(DateTimeFormatter.ISO_LOCAL_DATE);
         FlightService flightService = new FlightService(apiClient, requestSpecFactory, configManager);
 
         long startTime = System.currentTimeMillis();
         
-        FlightSearchResponse searchResponse = flightService.searchFlights("PUN", "BOM", travelDate);
+        FlightSearchResponse searchResponse = flightService.searchFlights("LKO", "DEL", travelDate);
         
         long endTime = System.currentTimeMillis();
         long duration = endTime - startTime;
@@ -56,10 +56,10 @@ public class ResilienceTest extends BaseTest {
     public void seatMapShouldReturnDataWithinTimeout() {
         login();
 
-        String travelDate = LocalDate.now().plusDays(7).format(DateTimeFormatter.ISO_LOCAL_DATE);
+        String travelDate = LocalDate.now().plusDays(20).format(DateTimeFormatter.ISO_LOCAL_DATE);
         FlightService flightService = new FlightService(apiClient, requestSpecFactory, configManager);
 
-        FlightSearchResponse searchResponse = flightService.searchFlights("PUN", "BOM", travelDate);
+        FlightSearchResponse searchResponse = flightService.searchFlights("LKO", "DEL", travelDate);
         assertTrue(searchResponse.getCount() > 0, "At least one flight should be returned");
         
         var flights = searchResponse.getFlights();
@@ -90,7 +90,7 @@ public class ResilienceTest extends BaseTest {
     public void multipleSequentialRequestsShouldMaintainPerformance() {
         login();
 
-        String travelDate = LocalDate.now().plusDays(7).format(DateTimeFormatter.ISO_LOCAL_DATE);
+        String travelDate = LocalDate.now().plusDays(20).format(DateTimeFormatter.ISO_LOCAL_DATE);
         FlightService flightService = new FlightService(apiClient, requestSpecFactory, configManager);
 
         long totalDuration = 0;
@@ -101,7 +101,7 @@ public class ResilienceTest extends BaseTest {
         for (int i = 0; i < requestCount; i++) {
             long startTime = System.currentTimeMillis();
             
-            FlightSearchResponse response = flightService.searchFlights("PUN", "BOM", travelDate);
+            FlightSearchResponse response = flightService.searchFlights("LKO", "DEL", travelDate);
             
             long endTime = System.currentTimeMillis();
             long duration = endTime - startTime;

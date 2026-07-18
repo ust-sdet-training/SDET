@@ -45,6 +45,8 @@ public class BookingLifecycleTest extends BaseTest {
         assertNotNull(seatMap, "Seat map should not be null");
 
         String[] seatIds = new String[2];
+        Integer default_Ttl = 120;
+
         int index = 0;
         for (FlightSeatMap.CabinRow row : seatMap.getRows()) {
             for (FlightSeatMap.CabinSeat seat : row.getSeats()) {
@@ -65,7 +67,7 @@ public class BookingLifecycleTest extends BaseTest {
         assertNotNull(seatIds[1], "Second seat should be available");
 
         BookingService bookingService = new BookingService(apiClient, requestSpecFactory, configManager, token);
-        BookingHoldResponse holdResponse = bookingService.holdSeats("flight", targetFlight.getId(), seatIds);
+        BookingHoldResponse holdResponse = bookingService.holdSeats("flight", targetFlight.getId(), seatIds, default_Ttl);
         assertNotNull(holdResponse, "Hold response should not be null");
         assertEquals("HELD", holdResponse.getStatus(), "Hold status should be HELD");
         assertNotNull(holdResponse.getHoldId(), "Hold ID should be returned");

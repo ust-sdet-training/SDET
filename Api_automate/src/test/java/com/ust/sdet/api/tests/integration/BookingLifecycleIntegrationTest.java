@@ -80,6 +80,7 @@ public class BookingLifecycleIntegrationTest extends BaseTest {
         // Stage 4: Select available seats
         System.out.println("\n=== Stage 4: Select Available Seats ===");
         String[] seatIds = new String[2];
+        Integer default_ttl = 120;
         int index = 0;
         for (FlightSeatMap.CabinRow row : seatMap.getRows()) {
             for (FlightSeatMap.CabinSeat seat : row.getSeats()) {
@@ -101,7 +102,7 @@ public class BookingLifecycleIntegrationTest extends BaseTest {
         // Stage 5: Hold Seats via API
         System.out.println("\n=== Stage 5: Hold Seats ===");
         BookingService bookingService = new BookingService(apiClient, requestSpecFactory, configManager, token);
-        BookingHoldResponse holdResponse = bookingService.holdSeats("flight", targetFlight.getId(), seatIds);
+        BookingHoldResponse holdResponse = bookingService.holdSeats("flight", targetFlight.getId(), seatIds, default_ttl);
         String bookingId = holdResponse.getHoldId();
         
         assertNotNull(bookingId, "Hold ID should be returned");

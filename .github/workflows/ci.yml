@@ -1,0 +1,34 @@
+name: Final Capstone CI
+
+on:
+  push:
+    branches: ["justin_Final_Capstone"]
+  pull_request:
+    branches: ["justin_Final_Capstone"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    defaults:
+      working-directory: UI_Automation
+
+    steps:
+      - name: 1. Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 2. Setup JDK 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: 3. Setup Depedencies
+        run: npm ci
+
+      - name: 4. Setting up Browsers
+        run: npx playwright-test 
+
+      

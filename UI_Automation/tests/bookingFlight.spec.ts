@@ -45,8 +45,8 @@ test.describe("Final Capstone: TripStack Scenario", () => {
         log.info("Opening flight details page");
         await flights.goToFlightDetailsPage();
 
-        log.info("Selecting seat",{seat: "1D"});
         const selectedSeat = await flight.bookSeat();
+        log.info("Selecting seat",{seat: selectedSeat});
 
         log.info("Verifying selected seat",{seat:selectedSeat});
         await flight.verifySeatisSelected();
@@ -118,7 +118,7 @@ await mytrips.verifyBookingTitle(ticket_pnr);
         log.info("Flight booking journey completed successfully",
             {
                 pnr: ticket_pnr,
-                seat: "1D",
+                seat: selectedSeat,
                 status: "CONFIRMED"
             }
         );

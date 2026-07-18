@@ -13,12 +13,12 @@ public class ConfigManager {
 
     private ConfigManager() {
         this.baseUrl = readValue("TRIPSTACK_BASE_URL", "https://tripstack.doomple.com");
-        this.email = readValue("TRIPSTACK_EMAIL", "erin@tripstack.test");
+        this.email = readValue("TRIPSTACK_EMAIL", "mallory@tripstack.test");
         this.password = readValue("TRIPSTACK_PASSWORD", "Password@123");
         this.dbUrl = readValue("TRIPSTACK_DB_URL", "jdbc:postgresql://localhost:5432/tripstack");
         this.dbUser = readValue("TRIPSTACK_DB_USER", "postgres");
         this.dbPassword = readValue("TRIPSTACK_DB_PASSWORD", "password");
-        this.empId = 1005;
+        this.empId = 1013;
     }
 
     public static ConfigManager getInstance() {

@@ -21,11 +21,11 @@ public class FlightSearchTest extends BaseTest {
     public void flightSearchAndSeatMapShouldWorkForPuneToMumbai() {
         login();
 
-        // E05 Bhumika: Flight round-trip PUN → BOM, date offset +7 days, cabin class
-        String travelDate = LocalDate.now().plusDays(7).format(DateTimeFormatter.ISO_LOCAL_DATE);
+        // E13 Justin: one-way flight LKO → DEL, date offset +20 days, economy class
+        String travelDate = LocalDate.now().plusDays(20).format(DateTimeFormatter.ISO_LOCAL_DATE);
         FlightService flightService = new FlightService(apiClient, requestSpecFactory, configManager);
 
-        FlightSearchResponse searchResponse = flightService.searchFlights("PUN", "BOM", travelDate);
+        FlightSearchResponse searchResponse = flightService.searchFlights("LKO", "DEL", travelDate);
         assertNotNull(searchResponse, "Flight search response should not be null");
         assertTrue(searchResponse.getCount() > 0, "At least one flight should be returned for the requested route");
 
@@ -33,7 +33,7 @@ public class FlightSearchTest extends BaseTest {
         assertFalse(flights.isEmpty(), "Flight list should not be empty");
 
         Flight targetFlight = flights.stream()
-                .filter(flight -> "FL-PUNBOM-51".equalsIgnoreCase(flight.getId()))
+                .filter(flight -> "FL-LKODEL-51".equalsIgnoreCase(flight.getId()))
                 .findFirst()
                 .orElseThrow(() -> new AssertionError("Expected the requested flight in the search results"));
 

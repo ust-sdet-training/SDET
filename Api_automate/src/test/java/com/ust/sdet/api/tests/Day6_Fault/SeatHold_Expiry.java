@@ -1,12 +1,6 @@
-package com.ust.sdet.api.tests.api;
+package com.ust.sdet.api.tests.Day6_Fault;
 
-import com.ust.sdet.api.base.BaseTest;
-import com.ust.sdet.api.models.BookingConfirmResponse;
-import com.ust.sdet.api.models.BookingHoldResponse;
-import com.ust.sdet.api.models.Flight;
-import com.ust.sdet.api.models.FlightSearchResponse;
-import com.ust.sdet.api.models.FlightSeatMap;
-import com.ust.sdet.api.models.PaymentResponse;
+import com.ust.sdet.api.models.*;
 import com.ust.sdet.api.services.BookingService;
 import com.ust.sdet.api.services.FlightService;
 import org.junit.jupiter.api.Test;
@@ -15,15 +9,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import com.ust.sdet.api.base.BaseTest;
 
-public class BookingLifecycleTest extends BaseTest {
+import static org.junit.jupiter.api.Assertions.*;
+
+public class SeatHold_Expiry extends BaseTest{
 
     @Test
-    public void completeBookingLifecycleShouldWorkForFlight() {
+    public void seatholdExpiryForFlight() throws InterruptedException {
         login();
 
         // E13 Justin: one-way flight LKO → DEL, date offset +20 days, economy class
@@ -45,6 +38,8 @@ public class BookingLifecycleTest extends BaseTest {
         assertNotNull(seatMap, "Seat map should not be null");
 
         String[] seatIds = new String[2];
+        Integer timeout_Ttl = 3;
+
         int index = 0;
         for (FlightSeatMap.CabinRow row : seatMap.getRows()) {
             for (FlightSeatMap.CabinSeat seat : row.getSeats()) {
@@ -65,18 +60,18 @@ public class BookingLifecycleTest extends BaseTest {
         assertNotNull(seatIds[1], "Second seat should be available");
 
         BookingService bookingService = new BookingService(apiClient, requestSpecFactory, configManager, token);
-        BookingHoldResponse holdResponse = bookingService.holdSeats("flight", targetFlight.getId(), seatIds);
-        assertNotNull(holdResponse, "Hold response should not be null");
-        assertEquals("HELD", holdResponse.getStatus(), "Hold status should be HELD");
-        assertNotNull(holdResponse.getHoldId(), "Hold ID should be returned");
+        BookingHoldResponse holdResponse = bookingService.holdSeats("flight", targetFlight.getId(), seatIds, timeout_Ttl);
 
-        PaymentResponse paymentResponse = bookingService.processPayment(holdResponse.getHoldId());
-        assertNotNull(paymentResponse, "Payment response should not be null");
-        assertEquals("PAYMENT_PENDING", paymentResponse.getStatus(), "Payment status should be PAYMENT_PENDING");
+        assertNotNull(holdResponse);
+        assertEquals("HELD", holdResponse.getStatus());
+        assertNotNull(holdResponse.getHoldId());
 
-        BookingConfirmResponse confirmResponse = bookingService.confirmBooking(holdResponse.getHoldId());
-        assertNotNull(confirmResponse, "Confirm response should not be null");
-        assertEquals("CONFIRMED", confirmResponse.getStatus(), "Booking status should be CONFIRMED");
-        assertNotNull(confirmResponse.getPnr(), "PNR should be returned");
+        ErrorResponse errorResponse = bookingService.cannotProcessPayment(holdResponse.getHoldId());
+
+        assertEquals("HOLD_EXPIRED", errorResponse.getError());
+
+        assertEquals("HOLD_EXPIRED", errorResponse.getMessage());
+
+
     }
 }
