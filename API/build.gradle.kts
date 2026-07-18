@@ -95,6 +95,14 @@ val BusAPITest by tasks.registering(Test::class) {
     include("**/BusAPITest.class")
 }
 
+val PerformanceTest by tasks.registering(Test::class) {
+    description = "Runs the performance test"
+    group = "verification"
+    useProjectTestClasses()
+    useJUnitPlatform()
+    include("**/PerformanceTest.class")
+}
+
 tasks.test {
     useJUnitPlatform()
 }

@@ -5,11 +5,9 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import io.restassured.http.ContentType;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import io.github.cdimascio.dotenv.Dotenv;
-
-public class BusAPITest {
-
+public class PerformanceTest {
     private static final Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
 
     private static String getValue(String key) {
@@ -26,10 +24,8 @@ public class BusAPITest {
 
     private static final String PASSWORD = getValue("PASSWORD");
 
-    private static final String EXPIRED_TOKEN = getValue("EXPIRED_TOKEN");
-
     @Test
-    void BookSleeperBusEndToEnd() {
+    void checkoutPerformanceGate() {
         String token = 
             given()
                 .contentType(ContentType.JSON)
@@ -49,18 +45,6 @@ public class BusAPITest {
                 .extract()
                 .path("token");
 
-        given()
-            .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + token)
-        .when()
-            .get(BASE_URL + "/auth/me")
-        .then()
-            .statusCode(200)
-            .body("empId", equalTo("1010"))
-            .body("role", equalTo("traveller"))
-            .body("email", equalTo("judy@tripstack.test"))
-            .body("displayName", equalTo("Judy Joshi"));
-        
         String busId = 
             given()
                 .contentType(ContentType.JSON)
@@ -113,54 +97,17 @@ public class BusAPITest {
                 .extract()
                 .path("id");
 
-        given()
-            .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + token)
-        .when()
-            .post(BASE_URL + "/bookings/{id}/pay", bookingId)
-        .then()
-            .statusCode(200)
-            .body("pnr", equalTo(null))
-            .body("empId", equalTo("1010"))
-            .body("journeyType", equalTo("bus"))
-            .body("inventoryId", equalTo(busId))
-            .body("state", equalTo("PAYMENT_PENDING"))
-            .body("seatIds", contains(seatId))
-            .body("refundable", equalTo(true));
+        long responseTime =
+                given()
+                    .header("Authorization", "Bearer " + token)
+                    .contentType(ContentType.JSON)
+                .when()
+                    .post(BASE_URL + "/bookings/{id}/pay", bookingId)
+                .time();
 
-        String tripPnr = 
-            given()
-                .contentType(ContentType.JSON)
-                .header("Authorization", "Bearer " + token)
-            .when()
-                .post(BASE_URL + "/bookings/{id}/confirm", bookingId)
-            .then()
-                .statusCode(200)
-                .body("pnr", startsWith("TS-1010-"))
-                .body("empId", equalTo("1010"))
-                .body("journeyType", equalTo("bus"))
-                .body("inventoryId", equalTo(busId))
-                .body("state", equalTo("CONFIRMED"))
-                .body("seatIds", contains(seatId))
-                .body("refundable", equalTo(true))
-                .extract()
-                .path("pnr");
+        System.out.println("Checkout Response Time: " + responseTime + " ms");
 
-        given()
-            .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + token)
-        .when()
-            .get(BASE_URL + "/bookings/{pnr}", tripPnr)
-        .then()
-            .statusCode(200)
-            .body("id", equalTo(bookingId))
-            .body("pnr", startsWith(tripPnr))
-            .body("empId", equalTo("1010"))
-            .body("journeyType", equalTo("bus"))
-            .body("inventoryId", equalTo(busId))
-            .body("state", equalTo("CONFIRMED"))
-            .body("seatIds", contains(seatId))
-            .body("refundable", equalTo(true));
+        assertTrue(responseTime < 400, "Performance regression detected");
 
         given()
             .contentType(ContentType.JSON)
@@ -170,17 +117,5 @@ public class BusAPITest {
         .then()
             .statusCode(200)
             .body("emp", equalTo("1010"));
-    }
-
-    @Test
-    void expiredTokenSecurityCheck() {
-        given()
-            .contentType(ContentType.JSON)
-            .header("Authorization", "Bearer " + EXPIRED_TOKEN)
-        .when()
-            .get(BASE_URL + "/auth/me")
-        .then()
-            .statusCode(401)
-            .body("error", equalTo("unauthorized"));
     }
 }
