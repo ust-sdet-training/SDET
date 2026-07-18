@@ -19,7 +19,7 @@ test('@smoke books a bus ticket for employee 1018 from BLR to HYD for seat S4', 
   );
 
   if (!pnr) {
-    test.skip('Skipping due to temporary payment/confirmation issue');
+    test.skip('Skipping due to temporary payment issue');
     return;
   }
 
