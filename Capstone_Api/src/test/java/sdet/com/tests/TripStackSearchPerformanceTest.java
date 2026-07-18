@@ -4,7 +4,10 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import sdet.com.models.BookingResponse;
 import sdet.com.services.TripStackApiService;
+import sdet.com.specs.TripStackRequestSpecs;
 import sdet.com.support.TripStackConfig;
+
+import java.util.HashMap;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -138,10 +141,13 @@ public class TripStackSearchPerformanceTest {
 
         Response response =
                 given()
-                        .baseUri(TripStackConfig.BASE_URL)
-                        .header("Authorization", "Bearer " + token)
+                        .spec(
+                                TripStackRequestSpecs.jsonSpec(
+                                        TripStackConfig.BASE_URL,
+                                        token))
+                        .body(new HashMap<>())
                         .when()
-                        .post("/api/bookings/" + booking.getId() + "/payment");
+                        .post("/api/bookings/" + booking.getId() + "/pay");
 
         assertThat(response.statusCode()).isEqualTo(500);
     }

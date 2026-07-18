@@ -7,45 +7,74 @@ export class BookingPage {
 
     async selectBus() {
 
-        Logger.info("Selecting A/C Sleeper filter");
+    Logger.info("Selecting A/C Sleeper filter");
 
-        await this.page.getByRole('checkbox', { name: 'A/C Sleeper' }).check();
+    await this.page.getByRole('checkbox', {
+        name: 'A/C Sleeper'
+    }).check();
 
-        Logger.info("Selecting KPN Travels");
+    Logger.info("Selecting KPN Travels");
 
-        await this.page
-            .getByLabel('KPN Travels')
-            .getByRole('button', { name: 'Select Seats' })
-            .click();
+    await this.page
+        .getByLabel('KPN Travels')
+        .getByRole('button', {
+            name: 'Select Seats'
+        })
+        .click();
 
-        Logger.info("Bus selected successfully");
-    }
+    // Wait until seat page finishes loading
+    await this.page.waitForLoadState("networkidle");
+
+    Logger.info("Bus selected successfully");
+}
 
     async selectSeat() {
 
         Logger.info("Selecting boarding point");
 
-        await this.page.locator('.swatch.ladies').click();
+        await expect(this.page.locator(".swatch.ladies"))
+    .toBeVisible({ timeout: 20000 });
 
-        await this.page.getByText('Chandigarh Highway Toll Plaza').click();
+await this.page.locator(".swatch.ladies").click();
+
+await expect(
+    this.page.getByText("Chandigarh Highway Toll Plaza")
+).toBeVisible({ timeout: 20000 });
+
+await this.page
+    .getByText("Chandigarh Highway Toll Plaza")
+    .click();
+    await this.page.waitForLoadState("networkidle");
 
         Logger.info("Selecting available seat");
 
-        const seatButton =this.page
-        .getByRole("button", { name: /Seat .* available/ })
-        .first();
+        const seatButton = this.page
+    .getByRole("button", {
+        name: /Seat .* available/i
+    })
+    .first();
 
-        await expect(seatButton).toBeVisible();
+await expect(seatButton)
+    .toBeVisible({
+        timeout: 30000
+    });
 
-        await seatButton.click();
+await seatButton.click();
+await this.page.waitForLoadState("networkidle");
 
         Logger.info("Seat selected successfully");
 
-        await this.page
-            .getByRole('button', {
-                name: 'Continue to passenger details'
-            })
-            .click();
+        const continueButton =
+this.page.getByRole("button", {
+    name: "Continue to passenger details"
+});
+
+await expect(continueButton)
+    .toBeVisible({
+        timeout:20000
+    });
+
+await continueButton.click();
 
         Logger.info("Navigated to Passenger Details page");
     }
