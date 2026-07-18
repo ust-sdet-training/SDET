@@ -19,8 +19,8 @@ public final class MySQLTestContainer {
 
             CONTAINER = new MySQLContainer<>("mysql:8.0")
                     .withDatabaseName("tripstack")
-                    .withUsername("tripstack_user")
-                    .withPassword("tripstack_pass");
+                    .withUsername("root")
+                    .withPassword(TestEnvironment.required("DB_PASSWORD"));
 
             CONTAINER.start();
 
