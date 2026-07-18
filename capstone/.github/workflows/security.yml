@@ -2,6 +2,8 @@ name: Security Testing
 
 on:
   push:
+    branches:
+      - rishika-final-capstone
   pull_request:
 
 jobs:

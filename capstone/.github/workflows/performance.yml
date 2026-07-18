@@ -2,37 +2,18 @@ name: Security Testing
 
 
 on:
-
   push:
-
     branches:
-      - main
-
-
+      - rishika-final-capstone
   pull_request:
-
-    branches:
-      - main
 
 
   workflow_dispatch:
 
-
-
-
 jobs:
-
-
   security:
-
-
     name: API Security Tests
-
-
     runs-on: ubuntu-latest
-
-
-
     defaults:
 
       run:
