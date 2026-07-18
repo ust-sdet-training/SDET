@@ -149,7 +149,7 @@ public class BookingSteps {
                         {
                           "journeyType":"bus",
                           "inventoryId":"BUS-BOMDEL-04",
-                          "seatIds":["L7"]
+                          "seatIds":["L9"]
                         }
                         """
         );
