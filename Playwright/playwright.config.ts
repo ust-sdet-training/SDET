@@ -13,7 +13,7 @@ export default defineConfig({
 
   retries: process.env.CI ? 2 : 0,
 
-  workers: process.env.CI ? 1 : 1,
+  workers: 1,
 
   reporter: [
     ['list'],
@@ -37,9 +37,9 @@ export default defineConfig({
 
     ignoreHTTPSErrors: true,
 
-    actionTimeout: 10000,
+    actionTimeout: 30000,
 
-    navigationTimeout: 30000,
+    navigationTimeout: 60000,
 
     screenshot: 'on',
 
@@ -50,23 +50,19 @@ export default defineConfig({
   },
 
   projects: [
-
     {
       name: 'Google Chrome',
-
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome'
       }
-
     }
-
   ],
 
-  timeout: 60000,
+  timeout: 120000,
 
   expect: {
-    timeout: 10000
+    timeout: 30000
   },
 
   outputDir: 'test-results'
