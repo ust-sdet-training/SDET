@@ -70,6 +70,7 @@ jobs:
       - name: Run Playwright Tests
         working-directory: ui-playwright
         run: npx playwright test booking.spec.ts
+        
 
       - name: Upload Playwright Report
         if: always()
