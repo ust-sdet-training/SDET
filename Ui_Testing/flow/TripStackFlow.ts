@@ -1,5 +1,5 @@
 import { expect,Page } from "@playwright/test";
-import{LoginPage} from "../pages/loginPage"
+import{LoginPage} from "../pages/LoginPage"
 import {BusSearchPage} from "../pages/BusSearchPage"
 import {SeatTypePage} from "../pages/SeatTypePage"
 import {PassengerDetailsPage}from  "../pages/PassengerDetailsPage"
