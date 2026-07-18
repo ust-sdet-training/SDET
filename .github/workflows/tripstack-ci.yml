@@ -3,27 +3,67 @@ name: TripStack CI
 on:
   push:
     branches:
-      -  vikram-final-capstone
+      - vikram-final-capstone
+
+  pull_request:
+    branches:
+      - vikram-final-capstone
+
   workflow_dispatch:
 
 permissions:
   contents: write
 
+env:
+  TRIPSTACK_BASE_URL: https://tripstack.doomple.com
+  TRIPSTACK_EMAIL: ${{ secrets.TRIPSTACK_EMAIL }}
+  TRIPSTACK_PASSWORD: ${{ secrets.TRIPSTACK_PASSWORD }}
+
 jobs:
-  tripstack-tests:
+
+  api-tests:
+    name: API Tests
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+
+    defaults:
+      run:
+        working-directory: APITesting
 
     steps:
-      # Checkout
       - name: Checkout Repository
         uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
 
-      # -------------------------------
-      # UI TESTS
-      # -------------------------------
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - name: Run API Tests
+        continue-on-error: true
+        run: mvn clean test
+
+      - name: Upload API Allure Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-allure-results
+          path: APITesting/target/allure-results
+          if-no-files-found: warn
+
+  ui-tests:
+    name: UI Tests
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: playwrightUI
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -31,93 +71,67 @@ jobs:
           cache: npm
           cache-dependency-path: playwrightUI/package-lock.json
 
-      - name: Install Playwright
-        working-directory: playwrightUI
+      - name: Install Dependencies
         run: |
           npm ci
           npx playwright install --with-deps chromium
 
       - name: Run Playwright Tests
         continue-on-error: true
-        working-directory: playwrightUI
         env:
           CI: true
-          TRIPSTACK_BASE_URL: https://tripstack.doomple.com
-          TRIPSTACK_EMAIL: ${{ secrets.TRIPSTACK_EMAIL }}
-          TRIPSTACK_PASSWORD: ${{ secrets.TRIPSTACK_PASSWORD }}
         run: |
           npx playwright test
 
-      # -------------------------------
-      # API TESTS
-      # -------------------------------
-      - name: Setup Java
-        uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version: '21'
-          cache: maven
-
-      - name: Run RestAssured Tests
-        continue-on-error: true
-        working-directory: APITesting
-        env:
-          TRIPSTACK_BASE_URL: https://tripstack.doomple.com
-          TRIPSTACK_EMAIL: ${{ secrets.TRIPSTACK_EMAIL }}
-          TRIPSTACK_PASSWORD: ${{ secrets.TRIPSTACK_PASSWORD }}
-        run: |
-          mvn clean test
-
-      # -------------------------------
-      # MERGE ALLURE RESULTS
-      # -------------------------------
-      - name: Prepare Allure Results
-        if: always()
-        run: |
-          rm -rf allure-results
-          mkdir allure-results
-
-          if [ -d playwrightUI/allure-results ]; then
-            cp -R playwrightUI/allure-results/* allure-results/ || true
-          fi
-
-          if [ -d APITesting/target/allure-results ]; then
-            cp -R APITesting/target/allure-results/* allure-results/ || true
-          fi
-
-      - name: Verify Allure Results
-        if: always()
-        run: |
-          echo "===== ALLURE FILES ====="
-          find allure-results -type f || true
-
-      # -------------------------------
-      # Upload Raw Results
-      # -------------------------------
-      - name: Upload Allure Results
+      - name: Upload UI Allure Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results
-          path: allure-results
+          name: ui-allure-results
+          path: playwrightUI/allure-results
           if-no-files-found: warn
 
-      # -------------------------------
-      # Download Previous History
-      # -------------------------------
+  allure-report:
+    name: Generate & Publish Allure Report
+
+    needs:
+      - api-tests
+      - ui-tests
+
+    if: always()
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Download API Results
+        uses: actions/download-artifact@v4
+        with:
+          name: api-allure-results
+          path: allure-results
+
+      - name: Download UI Results
+        uses: actions/download-artifact@v4
+        with:
+          name: ui-allure-results
+          path: ui-results
+
+      - name: Merge Allure Results
+        run: |
+          cp -R ui-results/. allure-results/ || true
+
       - name: Checkout gh-pages
-        if: always()
         continue-on-error: true
         uses: actions/checkout@v5
         with:
           ref: gh-pages
           path: gh-pages
 
-      # -------------------------------
-      # Generate Allure Report
-      # -------------------------------
       - name: Generate Allure Report
-        if: always()
         uses: simple-elf/allure-report-action@master
         with:
           allure_results: allure-results
@@ -125,22 +139,14 @@ jobs:
           allure_history: allure-history
           gh_pages: gh-pages
 
-      # -------------------------------
-      # Upload HTML Report
-      # -------------------------------
       - name: Upload Allure Report
-        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: allure-report
           if-no-files-found: warn
 
-      # -------------------------------
-      # Deploy to GitHub Pages
-      # -------------------------------
-      - name: Deploy Report
-        if: always()
+      - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
@@ -148,11 +154,7 @@ jobs:
           clean: true
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # -------------------------------
-      # Summary
-      # -------------------------------
       - name: Report Link
-        if: always()
         run: |
           OWNER="${{ github.repository_owner }}"
           REPO="${{ github.event.repository.name }}"
