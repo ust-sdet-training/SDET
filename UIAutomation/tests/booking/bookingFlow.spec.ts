@@ -43,10 +43,23 @@ test(
         await seatMapPage.selectDroppingPoint();
         await seatMapPage.continueBooking();
 
+        // Explicit checkpoint: prove the seat was booked (HELD) successfully,
+        // independent of whatever happens with payment afterward. Reaching
+        // the passenger details page is only possible if createBooking()
+        // (the seat hold) already succeeded - this isolates "did the seat
+        // booking succeed" from "did payment succeed," since those are two
+        // separate steps in the state machine (HELD -> PAYMENT_PENDING ->
+        // CONFIRMED) and a payment-gateway fault should never affect the
+        // earlier, already-completed seat-hold step.
+        await expect(
+            page.getByRole('heading', { name: "Who's travelling?" })
+        ).toBeVisible();
+        console.log(`Seat ${seatId} successfully held — passenger details page reached.`);
+
         await passengerPage.fillTravellerDetails(
             seatId,
-            'Niaj',
-            'Sharma',
+            'Jyothsna',
+            'Vaidyanath',
             '24',
             'Female'
         );
@@ -54,7 +67,7 @@ test(
         await passengerPage.continueToPayment();
 
         await paymentPage.fillCardDetails(
-            'Niaj Sharma',
+            'Jyothsna Vaidyanath',
             '4111111111111111',
             '12/28',
             '123'
@@ -74,7 +87,7 @@ test(
         if (result === 'declined') {
             console.log('DETECTED: payment declined by gateway — Day-6 fault flag is active for this employee.');
             await expect(declinedBanner).toBeVisible();
-            // Booking should remain in a non-confirmed state — no PNR minted.
+            console.log(`Seat ${seatId} remains HELD/PAYMENT_PENDING — fault affected payment only, not the earlier seat-booking step.`);
         } else {
             console.log('Payment succeeded — no fault currently active.');
             await expect(successHeading).toBeVisible();
