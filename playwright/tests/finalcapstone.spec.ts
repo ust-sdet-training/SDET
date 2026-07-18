@@ -6,8 +6,17 @@ import { redactSensitiveFields } from "../src/logger";
 test('Tripstack Validation', async ({ trip, log,evidence }) => {
 
    log.info("Logging in");
+
+   const loginStart = performance.now();
+   await trip.makeALoginWith(
+      Util.emailName(userdata.user1.firstname),
+      Secrets.get(`TRIPSTACK_${userdata.user1.firstname}_PASSWORD`)
+   );
   await trip.makeALoginWith(Util.emailName(userdata.user1.firstname),Secrets.get(`TRIPSTACK_${userdata.user1.firstname}_PASSWORD`));
    log.info("Login successful");
+   const loginTime = performance.now() - loginStart;
+   log.info(`Login Time: ${loginTime} ms`);
+
    log.info(`Selecting route: ${userdata.busDetails.from} -> ${userdata.busDetails.to}`);
    await trip.selectTheRoute(userdata.busDetails.from,userdata.busDetails.to);
    log.info("Route selected");
@@ -15,17 +24,28 @@ test('Tripstack Validation', async ({ trip, log,evidence }) => {
    await trip.bookFor(userdata.busDetails.days);
    log.info("Travel date selected");
 
+     const searchStart = performance.now();
+     
    log.info("Searching buses...");
    await trip.searchBus();
    log.info("Bus search completed");
 
+   const searchTime = performance.now() - searchStart;
+      log.info(`Login Time: ${searchTime} ms`);
+
    log.info(`Opening ${userdata.busDetails.bus_kind} bus listing page`);
    await trip.goToBusListingPageFor(userdata.busDetails.bus_kind);
+
+   const listingStart = performance.now();
+
+
    log.info("Bus listing page opened");
 
    log.info(`Selecting seat on ${userdata.busDetails.deck} deck`);
    await trip.selectAvailableSeat(userdata.busDetails.deck);
    log.info("Seat selected");
+   const listingTime = performance.now() - listingStart;
+      log.info(`Login Time: ${listingTime} ms`);
 
    log.info("Navigating to passenger details page");
    await trip.goToPassengerDetails();

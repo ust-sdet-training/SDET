@@ -1,8 +1,8 @@
 import { Page } from "playwright/test";
-import { LoginPage } from "../pages/loginpage";
-import { BusListingPage } from "../pages/buslistingpage";
-import { SearchPage } from "../pages/searchpage";
-import { SeatPage } from "../pages/seatpage";
+import { LoginPage } from "../pages/loginPage";
+import { BusListingPage } from "../pages/busListingpage";
+import { SearchPage } from "../pages/searchPage";
+import { SeatPage } from "../pages/seatPage";
 import { PassengerDetailsPage } from "../pages/passengerDetailsPage";
 import { PaymentPage } from "../pages/paymentPage";
 import { ConfirmationPage } from "../pages/confirmationPage";

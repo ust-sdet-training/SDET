@@ -45,7 +45,7 @@ public class BaseApiTest {
 
         BusStep busStep = new BusStep();
 
-        busStep.searchBuses("BLR", "HYD", "2026-08-01")
+        busStep.searchBuses("CCU", "DEL", "2026-07-29")
                 .then()
                 .spec(ApiSpec.okResponse())
                 .log().all();
@@ -69,14 +69,14 @@ public class BaseApiTest {
         BusStep busStep = new BusStep();
 
         String busId = busStep.getFirstBusId(
-                "BLR",
-                "HYD",
-                "2026-08-01"
+                "CCU",
+                "DEL",
+                "2026-07-29"
         );
 
         busStep.getSeatMap(busId)
                 .then()
-                .statusCode(200)
+                .spec(ApiSpec.okResponse())
                 .body("busId", equalTo(busId))
                 .body("layout", equalTo("deck"))
                 .body("decks.lower", notNullValue())
@@ -93,19 +93,25 @@ public class BaseApiTest {
                 .jsonPath()
                 .getString("token");
 
+        new ResetStep()
+                .resetNamespace(token)
+                .then()
+                .statusCode(200);
+
+
         BookingStep bookingStep = new BookingStep();
 
         bookingStep.createBooking(
                         token,
-                        "flight",
-                        "FL-DELBLR-51",
-                        List.of("12A"),
+                        "bus",
+                        "BUS-CCUDEL-02",
+                        List.of("S1"),
                         true,
                         120)
                 .then()
-                .statusCode(201)
+                .spec(ApiSpec.createdResponse())
                 .body("state", equalTo("HELD"))
-                .body("journeyType", equalTo("flight"))
+                .body("journeyType", equalTo("bus"))
                 .log().all();
     }
 
@@ -122,9 +128,9 @@ public class BaseApiTest {
 
         Response bookingResponse = bookingStep.createBooking(
                 token,
-                "flight",
-                "FL-DELBLR-51",
-                List.of("12A"),
+                "bus",
+                "BUS-CCUDEL-02",
+                List.of("S1"),
                 true,
                 120
         );
@@ -133,7 +139,7 @@ public class BaseApiTest {
 
         bookingStep.payBooking(token, bookingId)
                 .then()
-                .statusCode(200)
+                .spec(ApiSpec.okResponse())
                 .body("state", equalTo("PAYMENT_PENDING"));
 
         Response confirmResponse =
@@ -141,7 +147,7 @@ public class BaseApiTest {
 
         confirmResponse
                 .then()
-                .statusCode(200)
+                .spec(ApiSpec.okResponse())
                 .body("state", equalTo("CONFIRMED"))
                 .body("pnr", notNullValue())
                 .log().all();
@@ -160,8 +166,8 @@ public class BaseApiTest {
 
         bookingStep.createBooking(
                         token,
-                        "flight",
-                        "FL-DELBLR-51",
+                        "bus",
+                        "BUS-CCUDEL-02",
                         List.of(),
                         true,
                         120)
@@ -184,7 +190,7 @@ public class BaseApiTest {
 
         bookingStep.getBookings(token)
                 .then()
-                .statusCode(200)
+                .spec(ApiSpec.okResponse())
                 .log().all();
     }
 
@@ -205,8 +211,8 @@ public class BaseApiTest {
         String bookingId = bookingStep.getBookingId(
                 bookingStep.createBooking(
                         token,
-                        "flight",
-                        "FL-DELBLR-51",
+                        "bus",
+                        "BUS-CCUDEL-02",
                         List.of("7A"),
                         true,
                         120
@@ -220,7 +226,7 @@ public class BaseApiTest {
         bookingStep.cancelBooking(token, bookingId)
                 .then()
                 .log().all()
-                .statusCode(200)
+                .spec(ApiSpec.okResponse())
                 .body("state", equalTo("REFUNDED"));
     }
 
@@ -236,16 +242,16 @@ public class BaseApiTest {
         new ResetStep()
                 .resetNamespace(token)
                 .then()
-                .statusCode(200);
+                .spec(ApiSpec.okResponse());
 
         BookingStep bookingStep = new BookingStep();
 
         String bookingId = bookingStep.getBookingId(
                 bookingStep.createBooking(
                         token,
-                        "flight",
-                        "FL-DELBLR-51",
-                        List.of("12A"),
+                        "bus",
+                        "BUS-CCUDEL-02",
+                        List.of("S1"),
                         true,
                         120
                 )
@@ -267,9 +273,28 @@ public class BaseApiTest {
         bookingStep.getBookingByPnr(token, pnr)
                 .then()
                 .log().all()
-                .statusCode(200);
+                .spec(ApiSpec.okResponse());
     }
 
+    @Test
+    public void shouldReturnForbiddenForTravellerToken() {
+
+        AuthenticationStep authStep =
+                new AuthenticationStep();
+
+        String token =
+                authStep.makeTheUserAuthentication()
+                        .jsonPath()
+                        .getString("token");
+
+        authStep.adminPing(token)
+                .then()
+                .statusCode(403)
+                .body("error", equalTo("forbidden"))
+                .body("required[0]", equalTo("admin"))
+                .body("role", equalTo("traveller"))
+                .log().all();
+    }
 
     @Test
     public void shouldResetCurrentUserNamespace() {
@@ -284,8 +309,8 @@ public class BaseApiTest {
 
         resetStep.resetNamespace(token)
                 .then()
-                .statusCode(200)
-                .body("emp", equalTo("1004"))
+                .spec(ApiSpec.okResponse())
+                .body("emp", equalTo("1008"))
                 .body("purged", notNullValue())
                 .log().all();
     }

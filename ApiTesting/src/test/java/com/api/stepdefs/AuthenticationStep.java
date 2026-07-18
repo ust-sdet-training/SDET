@@ -16,4 +16,9 @@ public class AuthenticationStep {
     public Response makeTheUserAuthentication() {
         return authClient.loginAsDave();
     }
+
+    @Step("Verify admin access")
+    public Response adminPing(String token) {
+        return authClient.adminPing(token);
+    }
 }

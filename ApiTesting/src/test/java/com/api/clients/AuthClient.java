@@ -20,12 +20,20 @@ public class AuthClient {
 
     public Response loginAsDave(){
         Map<String, String> body = Map.of(
-                "email", Secrets.get("DAVE_EMAIL"),
-                "password", Secrets.get("DAVE_PASSWORD")
+                "email", Secrets.get("HEIDI_EMAIL"),
+                "password", Secrets.get("HEIDI_PASSWORD")
         );
         return loginSpec(body);
     }
 
+    public Response adminPing(String token) {
+
+        return given()
+                .spec(ApiSpec.requestspec())
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .get("/auth/admin-ping");
+    }
 
 
 }

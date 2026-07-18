@@ -3,6 +3,8 @@ import org.gradle.api.tasks.testing.Test
         plugins {
             java
             id("io.qameta.allure") version "2.12.0"
+            id("org.owasp.dependencycheck") version "12.1.8"
+            id("io.gatling.gradle") version "3.13.4"
         }
 
 group = "com.ust.sdet"
@@ -32,7 +34,9 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:$junitVersion"))
     testImplementation(platform("io.cucumber:cucumber-bom:$cucumberVersion"))
     testImplementation(platform("io.qameta.allure:allure-bom:$allureVersion"))
-
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.19.2")
+    gatling("io.gatling:gatling-core:3.13.4")
+    gatling("io.gatling:gatling-http:3.13.4")
 
     testImplementation("org.seleniumhq.selenium:selenium-java:$seleniumVersion")
     testImplementation("com.codeborne:selenide:$selenideVersion")
@@ -66,24 +70,22 @@ tasks.withType<JavaCompile>().configureEach {
     options.release.set(22)
 }
 
-
 tasks.withType<Test>().configureEach {
-    useJUnitPlatform()
-//    systemProperty("baseUrl", providers.gradleProperty("baseUrl").get())
-//    systemProperty("headless", providers.gradleProperty("headless").get())
-//    systemProperty("browser", providers.gradleProperty("browser").get())
-//    systemProperty("build.label", providers.gradleProperty("buildLabel").orElse("gradle-local").get())
-//    systemProperty("cucumber.publish.quiet", "true")
-//    testLogging {
-//        events("passed", "skipped", "failed")
-//        showStandardStreams = true
-//        exceptionFormat =
-//            org.gradle.api.tasks.testing.logging.TestExceptionFormat.SHORT
-//    }
+useJUnitPlatform()
+testLogging {
+                events("passed", "skipped", "failed")
+                exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.SHORT
+            }
 }
-tasks.test{
+
+        fun Test.useProjectTestClasses() {
+            testClassesDirs = sourceSets.test.get().output.classesDirs
+            classpath = sourceSets.test.get().runtimeClasspath
+        }
+
+        tasks.test{
             description = "Run the tests"
             include("**/BaseApiTest.class")
-
+            include("**/BookingTestIT.class")
             maxParallelForks = 1
-}
+        }
