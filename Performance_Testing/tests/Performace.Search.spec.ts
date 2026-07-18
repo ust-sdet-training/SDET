@@ -1,7 +1,5 @@
 import { test, expect } from "@playwright/test";
 import { TripStackFlow } from "../flow/TripStackFlow";
-import { Env } from "../../Ui_Testing/config/Env";
-
 test("Search Performance", async ({ page }) => {
 
     const flow = new TripStackFlow(page);
