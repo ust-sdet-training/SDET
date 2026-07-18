@@ -92,8 +92,8 @@ jobs:
     env:
       BASE_URL: https://tripstack.doomple.com/
 
-      TRIPSTACK_EMAIL: ${{ secrets.PREM_TRIPSTACK_EMAIL }}
-      TRIPSTACK_PASSWORD: ${{ secrets.PREM_TRIPSTACK_PASSWORD }}
+      PREM_TRIPSTACK_EMAIL: ${{ secrets.PREM_TRIPSTACK_EMAIL }}
+      PREM_TRIPSTACK_PASSWORD: ${{ secrets.PREM_TRIPSTACK_PASSWORD }}
 
     steps:
       - name: Checkout Repository
