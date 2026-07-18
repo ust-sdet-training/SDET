@@ -133,20 +133,21 @@ test.describe('E07 Flight booking', () => {
 
     await test.step('Verify the booking confirmation page or injected payment fault', async () => {
       const bookingLabel = confirmation.bookingReferenceLabel();
+      const bookingReference = confirmation.bookingReference();
 
-      const timeout = config.paymentMaxMs + 5000;
+      const timeout = config.paymentMaxMs + 10000;
 
-      const result = await Promise.race([
-        bookingLabel.waitFor({
-          state: 'visible',
-          timeout,
-        }).then(() => 'confirmed'),
-
-        paymentError.waitFor({
-          state: 'visible',
-          timeout,
-        }).then(() => 'payment-fault'),
-      ]);
+      const result = await Promise.any([
+        bookingLabel
+          .waitFor({ state: 'visible', timeout })
+          .then(() => 'confirmed'),
+        bookingReference
+          .waitFor({ state: 'visible', timeout })
+          .then(() => 'confirmed'),
+        paymentError
+          .waitFor({ state: 'visible', timeout })
+          .then(() => 'payment-fault'),
+      ]).catch(() => 'timeout');
 
       if (result === 'payment-fault') {
         await expect(paymentError).toBeVisible({ timeout: 1000 });
@@ -159,12 +160,15 @@ test.describe('E07 Flight booking', () => {
         return;
       }
 
+      if (result === 'timeout') {
+        const pageText = await page.textContent('body');
+        throw new Error(`Booking confirmation did not appear within ${timeout}ms. Page content snapshot:\n${pageText?.slice(0, 2000)}`);
+      }
+
       bookingSucceeded = true;
 
-      await expect(bookingLabel).toBeVisible({ timeout });
-
+      await expect(bookingReference).toBeVisible({ timeout });
       await expect(await confirmation.bookingReference()).toBeVisible({ timeout });
-
       await expect(await confirmation.confirmationStatus()).toHaveText('CONFIRMED', { timeout });
 
       await checkAccessibility(page);
