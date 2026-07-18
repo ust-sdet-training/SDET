@@ -1,10 +1,12 @@
 name: Travel Stack CI
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
       - master
+      - ajay_Final_Capston
   pull_request:
 
 jobs:
