@@ -49,4 +49,13 @@ export class PaymentPage {
         await this.enterCVV(cvv);
         await this.clickPay();
     }
+
+    async verifyConnectionResetError() {
+
+        await expect(this.page.getByText("payment gateway connection reset")).toBeVisible();
+
+        await expect(this.page.getByRole("heading", {name:"Secure checkout"})).toBeVisible();
+
+        await expect(this.page).toHaveURL(/payment/);
+    }
 }

@@ -18,4 +18,5 @@ export class PaymentLocators {
 
     payButton = () =>
         this.page.getByRole("button", { name: /Pay/i });
+
 }

@@ -38,9 +38,9 @@ jobs:
 
       - name: Run Playwright Tests
         env:
-          BASE_URL: ${{ secrets.SAITEJA_BASE_URL }}
-          TRIPSTACK_USERNAME: ${{ secrets.SAITEJA_TRIPSTACK_USERNAME }}
-          TRIPSTACK_PASSWORD: ${{ secrets.SAITEJA_TRIPSTACK_PASSWORD }}
+          BASE_URL: ${{ secrets.BASE_URL }}
+          TRIPSTACK_USERNAME: ${{ secrets.TRIPSTACK_USERNAME }}
+          TRIPSTACK_PASSWORD: ${{ secrets.TRIPSTACK_PASSWORD }}
         run: npx playwright test busBooking.spec.ts
 
       - name: Upload Playwright HTML Report

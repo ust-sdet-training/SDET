@@ -41,10 +41,18 @@ export class BusBookingFlow {
         await this.busSearchResultsPage.selectFirstBus();
     }
 
-    async selectSeat(seatNo: string) {
-        logger.info(`Choosing seat ${seatNo}`);
+    async selectSeat(
+        seatNo: string,
+        deck: "lower" | "upper" = "lower"
+    ) {
+        logger.info(`Choosing ${deck} deck seat ${seatNo}`);
+
         await this.seatSelectionPage.verifySeatMapLoaded();
-        await this.seatSelectionPage.selectSeatAndContinue(seatNo);
+
+        await this.seatSelectionPage.selectSeatAndContinue(
+            seatNo,
+            deck
+        );
     }
 
     async enterPassengerDetails(
@@ -73,6 +81,7 @@ export class BusBookingFlow {
         cvv: string
     ) {
         logger.info("Starting payment flow");
+
         await this.paymentPage.verifyPaymentPage();
 
         await this.paymentPage.makePayment(
@@ -81,7 +90,14 @@ export class BusBookingFlow {
             expiry,
             cvv
         );
+
         logger.info("Payment submitted");
+    }
+
+    async verifyConnectionReset() {
+        logger.info("Verifying connection reset");
+        await this.paymentPage.verifyConnectionResetError();
+        logger.info("Connection reset verified");
     }
 
     async verifyBooking() {

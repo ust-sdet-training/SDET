@@ -5,16 +5,16 @@ export class PassengerDetailsLocators {
     constructor(private page: Page) {}
 
     firstNameInput = () =>
-        this.page.locator("#name-L5");
+        this.page.locator("#name-U4");
 
     lastNameInput = () =>
-        this.page.locator("#lastname-L5");
+        this.page.locator("#lastname-U4");
 
     ageInput = () =>
-        this.page.locator("#age-L5");
+        this.page.locator("#age-U4");
 
     genderDropdown = () =>
-        this.page.locator("#gender-L5");
+        this.page.locator("#gender-U4");
 
     emailInput = () =>
         this.page.locator("#email");

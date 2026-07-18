@@ -3,9 +3,9 @@ import { Users } from "../data/Users";
 import { BusData } from "../data/BusData";
 import { PaymentData } from "../data/PaymentData";
 
-test.describe("Bus Booking", () => {
+test.describe("Connection Reset Resilience", () => {
 
-    test("User should book a bus successfully", async ({ busBookingFlow }) => {
+    test("Should handle payment gateway connection reset gracefully", async ({ busBookingFlow }) => {
 
         await busBookingFlow.login(
             Users.username,
@@ -21,18 +21,17 @@ test.describe("Bus Booking", () => {
         await busBookingFlow.selectBus();
 
         await busBookingFlow.selectSeat(
-            BusData.seatNumber, 
-            BusData.deck
+            BusData.seatNumber
         );
 
         await busBookingFlow.enterPassengerDetails(
-        BusData.firstName,
-        BusData.lastName,
-        BusData.age,
-        BusData.gender,
-        Users.email,
-        Users.phone
-    );
+            BusData.firstName,
+            BusData.lastName,
+            BusData.age,
+            BusData.gender,
+            Users.email,
+            Users.phone
+        );
 
         await busBookingFlow.makePayment(
             PaymentData.cardName,
@@ -41,6 +40,7 @@ test.describe("Bus Booking", () => {
             PaymentData.cvv
         );
 
+        await busBookingFlow.verifyConnectionReset();
     });
 
 });

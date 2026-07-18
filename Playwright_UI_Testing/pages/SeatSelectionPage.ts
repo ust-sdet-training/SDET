@@ -13,6 +13,14 @@ export class SeatSelectionPage {
         await expect(this.locators.availableSeats().first()).toBeVisible();
     }
 
+    async selectLowerDeck() {
+        await this.locators.lowerDeckButton().click();
+    }
+
+    async selectUpperDeck() {
+        await this.locators.upperDeckButton().click();
+    }
+
     async selectSeat(seatNo: string) {
         await this.locators.seatByNumber(seatNo).click();
     }
@@ -25,7 +33,17 @@ export class SeatSelectionPage {
         await this.locators.continueButton().click();
     }
 
-    async selectSeatAndContinue(seatNo: string) {
+    async selectSeatAndContinue(
+        seatNo: string,
+        deck: "lower" | "upper" = "lower"
+    ) {
+
+        if (deck === "upper") {
+            await this.selectUpperDeck();
+        } else {
+            await this.selectLowerDeck();
+        }
+
         await this.selectSeat(seatNo);
         await this.clickContinue();
     }

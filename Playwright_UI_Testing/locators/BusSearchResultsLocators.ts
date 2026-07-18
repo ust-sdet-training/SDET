@@ -1,32 +1,30 @@
-import { Page } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 
 export class BusSearchResultsLocators {
 
     constructor(private page: Page) {}
 
-    results = () =>
+    results = (): Locator =>
         this.page.locator("#bus-results");
 
-    busCards = () =>
-        this.page.locator("article.trip-card.bus-card");
+    busCards = (): Locator =>
+        this.page.locator("article.trip-card");
 
-    firstBusCard = () =>
+    firstBusCard = (): Locator =>
         this.busCards().first();
 
-    operatorName = () =>
+    operatorName = (): Locator =>
         this.firstBusCard().locator(".op .row");
 
-    busType = () =>
+    busType = (): Locator =>
         this.firstBusCard().locator(".op-type");
 
-    sleeperBadge = () =>
+    sleeperBadge = (): Locator =>
         this.firstBusCard().locator(".badge.badge-bus");
 
-    fare = () =>
+    fare = (): Locator =>
         this.firstBusCard().locator(".fare.price-big");
 
-    selectSeatsButton = () =>
-        this.firstBusCard().getByRole("button", {
-            name: "Select Seats"
-        });
+    selectSeatsButton = (): Locator =>
+        this.firstBusCard().locator("a.btn.btn-bus");
 }
