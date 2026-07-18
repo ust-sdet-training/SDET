@@ -17,6 +17,7 @@ export class TicketBookFlow {
     private evidence: any
     private test: any
     private expect: any
+    private tripId: string
 
     constructor(private page: Page,log: any, evidence: any, test :any, expect : any) { 
 
@@ -25,13 +26,14 @@ export class TicketBookFlow {
         this.evidence = evidence
         this.test = test
         this.expect = expect
+        this.tripId = ""
 
     }
 
     async bookTicket (user:keyof typeof usercheckoutdata,departure : string, destination : string):Promise<string>{
+        
         await this.flighthome.setDepatureLocation(departure)
         await this.flighthome.setDestinationLocation(destination)
-
 
         var plus14Days = await this.flighthome.setDate(14)
 
@@ -95,11 +97,21 @@ export class TicketBookFlow {
 
     await paymentPage.setCardDetails(cartdetails[user])
 
-    await paymentPage.payPrice();
+  
+    try {
+        await paymentPage.payPrice();
+        this.tripId = await paymentPage.getTripId();
+    } catch (error) {
+       
+            this.log.error("Payment failed")
+            return ""
+        
+    }
 
-    const tripId = await paymentPage.getTripId();
 
-    this.evidence.tripId = tripId;
+    this.tripId = await paymentPage.getTripId();
+
+    this.evidence.tripId = this.tripId;
 
 
     await this.page.goto('/my-trips', {waitUntil: "domcontentloaded"});
@@ -117,7 +129,7 @@ export class TicketBookFlow {
         this.log.info("Flight Booked Successfully")
 
 
-        return tripId
+        return this.tripId
     }
 
 

@@ -28,7 +28,7 @@ export class PaymentPage{
         await this.page.getByRole('button', { name: 'Pay ₹' }).click();
     }
 
-    async getTripId():Promise<string>{
+    async getTripIdorg():Promise<string>{
        var tripId =  await this.page.locator('[data-id="pnr"]').textContent();
 
        
@@ -39,6 +39,34 @@ export class PaymentPage{
     return tripId;
 
     }
+
+    async getTripId(): Promise<string> {
+    const pnrLocator = this.page.locator('[data-id="pnr"]');
+    const alertLocator = this.page.getByRole('alert');
+
+    const result = await Promise.race([
+        pnrLocator.waitFor({ state: 'visible' }).then(() => 'SUCCESS'),
+        alertLocator.waitFor({ state: 'visible' }).then(() => 'ERROR')
+    ]);
+
+    if (result === 'ERROR') {
+        const msg = await alertLocator.textContent();
+
+        if (/payment gateway timed out/i.test(msg ?? '')) {
+            throw new Error('Payment gateway timed out');
+        }
+
+        throw new Error(`Payment failed: ${msg}`);
+    }
+
+    const tripId = (await pnrLocator.textContent())?.trim();
+
+    if (!tripId) {
+        throw new Error('Trip ID not found');
+    }
+
+    return tripId;
+}
 
 
 

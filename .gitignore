@@ -1,24 +1,24 @@
 
 # Playwright
-node_modules/
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
-/playwright/.auth/
+ui/node_modules/
+ui/test-results/
+ui/playwright-report/
+ui/blob-report/
+ui/playwright/.cache/
+ui/playwright/.auth/
 
 # Gradle
-.gradle/
-build/
-gradle/wrapper/gradle-wrapper.jar
+api/.gradle/
+api/build/
+api/gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
  
 # Kotlin
-.kotlin/
+api/.kotlin/
  
 # Maven
-target/
+api/target/
  
 ### IntelliJ IDEA ###
 **/.idea/

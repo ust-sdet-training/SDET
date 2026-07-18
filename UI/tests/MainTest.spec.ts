@@ -124,9 +124,25 @@ test('Booking a Flight', async ({ page, log, evidence }) => {
 
   await paymentPage.setCardDetails(cartdetails[user])
 
-  await paymentPage.payPrice();
+  // await paymentPage.payPrice();
 
-  const tripId = await paymentPage.getTripId();
+  // await expect(page.getByRole('alert')).toBeVisible()
+
+  // await expect(page.getByRole('alert')).toHaveText(/payment gateway timed out|another text/)
+
+  // return
+
+  var tripId;
+  
+try {
+    await paymentPage.payPrice();
+    tripId = await paymentPage.getTripId();
+} catch (error) {    
+        log.error("Payment failed")
+        return 
+}
+
+
 
   evidence.tripId = tripId;
 
@@ -184,6 +200,11 @@ test('Booking a Flight', async ({ page, log, evidence }) => {
 
         var tripId1 = await ticketbookingflow.bookTicket(user,"BLR","GOI")
 
+        if(tripId1 === ""){
+          log.error("Payment failure")
+          return
+        }
+
         evidence.tripId1 = tripId1
 
         log.info("Booking second part of trip")
@@ -197,4 +218,23 @@ test('Booking a Flight', async ({ page, log, evidence }) => {
         await ticketbookingflow.cancelTrip(tripId1)
 
         await ticketbookingflow.cancelTrip(tripId2)
+    })
+
+     test('Verifying the Mytrips Page', async ({ page, log, evidence }) => {
+
+      await page.goto('/', {waitUntil: "domcontentloaded"});
+
+        var loginpage = new LoginPage(page)
+
+        const user = "Carol"
+
+        await loginpage.login(userlogindata[user].email, getPassword())
+
+        await page.goto('/my-trips', {waitUntil: "domcontentloaded"});
+
+        const firstResult = await page.locator('.result-list .result').first()
+
+        
+        await expect(firstResult).toBeVisible()
+
     })

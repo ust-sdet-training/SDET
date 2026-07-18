@@ -1,5 +1,5 @@
 
-export interface CardDetails {
+export interface CardDetailsModel {
   name: string;
   cardnumber: string;
   expirydate: string;
