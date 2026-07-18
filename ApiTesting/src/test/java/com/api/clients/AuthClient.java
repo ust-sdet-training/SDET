@@ -22,7 +22,7 @@ public class AuthClient {
     public Response loginAsDave(){
         Map<String, String> body = Map.of(
                 "email", TestData.getName()+"@tripstack.test",
-                "password", Secrets.get("HEIDI_PASSWORD")
+                "password", System.getenv("HEIDI_PASSWORD")
         );
         return loginSpec(body);
     }
