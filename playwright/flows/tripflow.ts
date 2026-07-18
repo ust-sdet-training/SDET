@@ -1,6 +1,6 @@
 import { Page } from "playwright/test";
 import { LoginPage } from "../pages/loginPage";
-import { BusListingPage } from "../pages/busListingpage";
+import { BusListingPage } from "../pages/busListingPage";
 import { SearchPage } from "../pages/searchPage";
 import { SeatPage } from "../pages/seatPage";
 import { PassengerDetailsPage } from "../pages/passengerDetailsPage";
