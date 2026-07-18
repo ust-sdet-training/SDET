@@ -61,8 +61,14 @@ test.describe("Test for the flow from ordering a bus",()=>{
         cvv: testCard.card1.cvv
       });
 
-      await flow.verifyConfirmationDetails();
-      log.info("Confirmation page details are visible");
+      const confirmationOutcome = await flow.verifyConfirmationDetails();
+
+      if (confirmationOutcome === "decline") {
+        log.info("Payment decline fault injected and handled as expected");
+        await expect.soft(page.getByText(/payment declined by gateway/i)).toContainText("payment declined by gateway");
+      } else {
+        log.info("Confirmation page details are visible");
+      }
 
     })
 })

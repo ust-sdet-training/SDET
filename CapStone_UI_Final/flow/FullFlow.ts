@@ -88,6 +88,6 @@ export class FullFlow{
     }
 
     async verifyConfirmationDetails(){
-        await this.confirmationPage.checkConfirmationDetailsVisible();
+        return await this.confirmationPage.checkConfirmationDetailsVisible();
     }
 }
