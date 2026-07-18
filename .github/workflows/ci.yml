@@ -113,11 +113,10 @@ jobs:
       baseUrl: https://tripstack.doomple.com/
       CUSTOMER_EMAIL: ${{ secrets.SHAHBAZ_CUSTOMER_EMAIL }}
       CUSTOMER_PASSWORD: ${{ secrets.SHAHBAZ_CUSTOMER_PASSWORD }}
-      # Optional overrides — DbSupportContainerTest provisions its own MySQL via
-      # Testcontainers, so these are likely unused, but harmless to pass through.
+      TEST_USE_TESTCONTAINERS: "true"
+      DB_PASSWORD: ${{ secrets.SHAHBAZ_DB_PASSWORD }}
       DB_JDBC_URL: jdbc:mysql://localhost:3306/tripstack
       DB_USER: root
-      DB_PASSWORD: ${{ secrets.SHAHBAZ_DB_PASSWORD }}
 
     steps:
       - name: Checkout repository
