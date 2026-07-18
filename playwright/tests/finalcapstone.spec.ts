@@ -60,15 +60,8 @@ const safeCardDetails = redactSensitiveFields(userdata.cardDetails);
    await trip.paywith(userdata.cardDetails.cardName, userdata.cardDetails.cardNumber, userdata.cardDetails.expiry, userdata.cardDetails.cvv);
   evidence.cardDetails = safeCardDetails;
 
-   log.info("Payment submitted");
-
-   log.info("Validating booking status...");
-    const bookingStatus = await trip.validateBookingStatus();
-
-   log.info(`Booking Status: ${bookingStatus}`);
-
-   await expect(bookingStatus).toContain("CONFIRMED");
-
-   log.info("Booking confirmed successfully");
+    const server_error = await trip.validateThePayement500();
+    expect(server_error).toEqual('payment gateway error (5xx)');
+   log.info("Payment500")
 
 });

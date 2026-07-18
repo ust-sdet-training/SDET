@@ -87,5 +87,6 @@ testLogging {
             description = "Run the tests"
             include("**/BaseApiTest.class")
             include("**/BookingTestIT.class")
+            include("**/PrevilegeEscalation.class")
             maxParallelForks = 1
         }

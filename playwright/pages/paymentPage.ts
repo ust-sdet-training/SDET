@@ -1,4 +1,4 @@
-import {Page} from "@playwright/test"
+import {expect, Page} from "@playwright/test"
 export class PaymentPage{
 
     constructor(private readonly page:Page){}
@@ -13,5 +13,13 @@ export class PaymentPage{
 
     async clickPay(){
         await this.page.getByRole("button",{name:/Pay/i}).click();
+    }
+
+    async error(){
+        const errorText = await this.page.getByRole("alert").textContent();    
+        return errorText;
+}
+    async goToMyTrips(){
+        await this.page.getByRole('link',{name:"My Trips"}).click();
     }
 }

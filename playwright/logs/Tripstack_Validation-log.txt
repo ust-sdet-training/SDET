@@ -1,26 +1,22 @@
-[INFO - 12:51:32] Test Started {null
-[INFO - 12:51:32] Logging in {null
-[INFO - 12:51:34] Login successful {null
-[INFO - 12:51:34] Login Time: 2204.8530000000005 ms {null
-[INFO - 12:51:34] Selecting route: CCU -> DEL {null
-[INFO - 12:51:34] Route selected {null
-[INFO - 12:51:34] Booking for 12 day(s) {null
-[INFO - 12:51:34] Travel date selected {null
-[INFO - 12:51:34] Searching buses... {null
-[INFO - 12:51:35] Bus search completed {null
-[INFO - 12:51:35] Login Time: 276.77769999999964 ms {null
-[INFO - 12:51:35] Opening seater bus listing page {null
-[INFO - 12:51:35] Bus listing page opened {null
-[INFO - 12:51:35] Selecting seat on S2 deck {null
-[INFO - 12:51:35] Seat selected {null
-[INFO - 12:51:35] Login Time: 220.01769999999942 ms {null
-[INFO - 12:51:35] Navigating to passenger details page {null
-[INFO - 12:51:36] Passenger details page opened {null
-[INFO - 12:51:36] Entering passenger details for HEIDI HEIDI {null
-[INFO - 12:51:36] Passenger details entered successfully {null
-[INFO - 12:51:36] Processing payment with card  {null
-[INFO - 12:51:37] Payment submitted {null
-[INFO - 12:51:37] Validating booking status... {null
-[INFO - 12:51:37] Booking Status: CONFIRMED {null
-[INFO - 12:51:37] Booking confirmed successfully {null
-[INFO - 12:51:37] Test passed {null
+[INFO - 20:15:33] Test Started {null
+[INFO - 20:15:34] Logging in {null
+[INFO - 20:15:36] Login successful {null
+[INFO - 20:15:36] Login Time: 2162.2798 ms {null
+[INFO - 20:15:36] Selecting route: CCU -> DEL {null
+[INFO - 20:15:36] Route selected {null
+[INFO - 20:15:36] Booking for 12 day(s) {null
+[INFO - 20:15:36] Travel date selected {null
+[INFO - 20:15:36] Searching buses... {null
+[INFO - 20:15:36] Bus search completed {null
+[INFO - 20:15:36] Login Time: 261.6246000000001 ms {null
+[INFO - 20:15:36] Opening seater bus listing page {null
+[INFO - 20:15:37] Bus listing page opened {null
+[INFO - 20:15:37] Selecting seat on S2 deck {null
+[INFO - 20:15:37] Seat selected {null
+[INFO - 20:15:37] Login Time: 88.00680000000011 ms {null
+[INFO - 20:15:37] Navigating to passenger details page {null
+[INFO - 20:15:37] Passenger details page opened {null
+[INFO - 20:15:37] Entering passenger details for HEIDI HEIDI {null
+[INFO - 20:15:37] Passenger details entered successfully {null
+[INFO - 20:15:37] Processing payment with card  {null
+[INFO - 20:15:40] Test passed {null

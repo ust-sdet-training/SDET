@@ -74,4 +74,12 @@ export class tripflow{
         return status;
     }
 
+    async validateThePayement500(){
+        
+        const errorMessage = await this.paymentpage.error();
+         await this.paymentpage.goToMyTrips();
+         return errorMessage;
+    }
+
+
 }
