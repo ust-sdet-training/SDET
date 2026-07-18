@@ -1,85 +1,89 @@
-name: UI Performance
+name: Security Testing
 
 
 on:
 
+  push:
+
+    branches:
+      - main
+
+
+  pull_request:
+
+    branches:
+      - main
+
+
   workflow_dispatch:
+
+
 
 
 jobs:
 
 
-  performance:
+  security:
+
+
+    name: API Security Tests
 
 
     runs-on: ubuntu-latest
 
 
+
+    defaults:
+
+      run:
+
+        working-directory: api-Automation
+
+
+
     steps:
 
 
-      - uses: actions/checkout@v4
+
+      - name: Checkout Code
+
+        uses: actions/checkout@v4
 
 
 
-      - uses: actions/setup-node@v4
+
+      - name: Setup Java 22
+
+        uses: actions/setup-java@v4
 
         with:
 
-          node-version:20
+          java-version: '22'
+
+          distribution: temurin
+
+          cache: maven
 
 
 
-      - name:
 
-        Install
-
-
-        run:
-
-          cd ui-automation &&
-          npm install
-
-
-
-      - name:
-
-        Install browsers
-
+      - name: Run Security Tests
 
         run:
 
-          cd ui-automation &&
-          npx playwright install --with-deps
+          mvn clean test -Dtest="*SecurityTest"
 
 
 
-      - name:
 
-        Run Performance
-
-
-        run:
-
-          cd ui-automation &&
-          npm run performance
-
-
-
-      - name:
-
-        Upload Report
-
+      - name: Upload Security Reports
 
         if: always()
-
 
         uses: actions/upload-artifact@v4
 
         with:
 
-          name: performance-report
+          name: security-test-report
 
-          path:
-
-            ui-automation/playwright-report
+          path: api-Automation/target/surefire-reports
