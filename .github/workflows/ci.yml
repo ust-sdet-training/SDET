@@ -25,7 +25,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
           cache-dependency-path: UIAutomation/package-lock.json
 
@@ -51,7 +51,7 @@ jobs:
           CARD_NUMBER: ${{ secrets.SHAHBAZ_CARD_NUMBER || '4111111111111111' }}
           CARD_EXPIRY: ${{ secrets.SHAHBAZ_CARD_EXPIRY || '12/30' }}
           CARD_CVV: ${{ secrets.SHAHBAZ_CARD_CVV || '123' }}
-        run: npx playwright test InvalidLogin.spec.ts
+        run: npx playwright test
 
       - name: Upload Playwright HTML Report
         if: always()
@@ -109,7 +109,10 @@ jobs:
       BASEURL: https://tripstack.doomple.com/
       CUSTOMER_EMAIL: ${{ secrets.SHAHBAZ_CUSTOMER_EMAIL }}
       CUSTOMER_PASSWORD: ${{ secrets.SHAHBAZ_CUSTOMER_PASSWORD }}
-     
+      # Add any additional secrets your API tests need below, e.g.:
+      # API_KEY: ${{ secrets.SHAHBAZ_API_KEY }}
+      # DB_USERNAME: ${{ secrets.SHAHBAZ_DB_USERNAME }}
+      # DB_PASSWORD: ${{ secrets.SHAHBAZ_DB_PASSWORD }}
 
     steps:
       - name: Checkout repository
@@ -152,16 +155,31 @@ jobs:
         working-directory: APIAutomationFinal
         run: chmod +x gradlew
 
-      - name: Run API tests
+      - name: Run Container Suite (Testcontainers/MySQL)
         working-directory: APIAutomationFinal
-        run: ./gradlew test
+        run: ./gradlew containerSuite --no-daemon
 
-      - name: Upload test reports
+      - name: Run Remaining Suite (BookingE2E, PTest, WireMockTest, RunCucumberTest)
+        working-directory: APIAutomationFinal
+        if: always()
+        run: ./gradlew remainingSuite --no-daemon
+
+      - name: Upload Container Suite reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: api-test-reports
+          name: api-container-suite-reports
           path: |
-            APIAutomationFinal/build/reports/
-            APIAutomationFinal/build/test-results/
+            APIAutomationFinal/build/reports/tests/containerSuite/
+            APIAutomationFinal/build/test-results/containerSuite/
+          if-no-files-found: warn
+
+      - name: Upload Remaining Suite reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-remaining-suite-reports
+          path: |
+            APIAutomationFinal/build/reports/tests/remainingSuite/
+            APIAutomationFinal/build/test-results/remainingSuite/
           if-no-files-found: warn

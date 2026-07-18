@@ -122,9 +122,22 @@ tasks.withType<Test>().configureEach {
 
     maxParallelForks = 1
 
+    // baseUrl: prefer explicit -DbaseUrl=..., then BASEURL env var (set in CI),
+    // then fall back to local dev default.
     systemProperty(
         "baseUrl",
-        System.getProperty("baseUrl", "http://localhost:5173")
+        System.getProperty("baseUrl", System.getenv("BASEURL") ?: "http://localhost:5173")
+    )
+
+    // Login credentials: pulled from CI env vars (CUSTOMER_EMAIL / CUSTOMER_PASSWORD),
+    // overridable locally with -DcustomerEmail=... / -DcustomerPassword=...
+    systemProperty(
+        "customerEmail",
+        System.getProperty("customerEmail", System.getenv("CUSTOMER_EMAIL") ?: "")
+    )
+    systemProperty(
+        "customerPassword",
+        System.getProperty("customerPassword", System.getenv("CUSTOMER_PASSWORD") ?: "")
     )
 
     systemProperty(
@@ -144,8 +157,8 @@ tasks.withType<Test>().configureEach {
             "build/allure-results"
         )
     )
-                systemProperty(
-                "pact_do_not_track",
+    systemProperty(
+        "pact_do_not_track",
         "true"
     )
 
@@ -184,62 +197,29 @@ tasks.test {
     group = "verification"
 }
 
+// ---------------------------------------------------------------------
+// Two suites: containers (Testcontainers/DB) vs. everything else
+// ---------------------------------------------------------------------
 
-val BookingE2E by tasks.registering(Test::class) {
-    description = "Repository practTest tests"
-    group = "verification"
-
-    useProjectTestClasses()
-
-    include("**/BookingE2E.class")
-}
-val PTest by tasks.registering(Test::class) {
-    description = "Repository practTest tests"
-    group = "verification"
-
-    useProjectTestClasses()
-
-    include("**/PTest.class")
-}
-
-
-val WireMockTest by tasks.registering(Test::class) {
-    description = "Repository WireMockTest tests"
-    group = "verification"
-
-    useProjectTestClasses()
-
-    include("**/WireMockTest.class")
-}
-
-
-val RunCucumberTest by tasks.registering(Test::class) {
-    description = "Runs RunCucumberTest "
-    group = "verification"
-
-    useProjectTestClasses()
-
-    include("**/RunCucumberTest.class")
-    maxParallelForks = 1
-}
-val DbSupportContainerTest  by tasks.registering(Test::class) {
-    description = "Builder/Factory/Repository suite against a MySQL Testcontainer"
+val containerSuite by tasks.registering(Test::class) {
+    description = "Runs the Testcontainers-backed suite (MySQL container tests)."
     group = "verification"
     useProjectTestClasses()
+
     include("**/DbSupportContainerTest.class")
     maxParallelForks = 1
 }
 
-val FullSuite by tasks.registering(Test::class) {
-    description = "Runs the full suite: BookingE2E, PTest, WireMockTest, RunCucumberTest, DbSupportContainerTest"
+val remainingSuite by tasks.registering(Test::class) {
+    description = "Runs everything except the Testcontainers suite: BookingE2E, PTest, WireMockTest, RunCucumberTest."
     group = "verification"
     useProjectTestClasses()
 
     include(
         "**/BookingE2E.class",
+        "**/PTest.class",
         "**/WireMockTest.class",
-        "**/RunCucumberTest.class",
-        "**/DbSupportContainerTest.class"
+        "**/RunCucumberTest.class"
     )
     maxParallelForks = 1
 }
