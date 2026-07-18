@@ -15,6 +15,7 @@ export class PaymentPage extends BasePage{
     private pnr = this.page.locator("[data-id='pnr']");
     private payBtn = this.page.getByRole("button", {name:/Pay/});
     private myTrips = this.page.getByRole("link", {name:"My Trips"});
+    private paymentError = this.page.getByRole("alert")
     
     async getPnr(): Promise<string> {
         return (await this.pnr.innerText()).trim();
@@ -26,6 +27,12 @@ export class PaymentPage extends BasePage{
         await this.expiry.fill(expiry);
         await this.cvv.fill(cvv);
         await this.payBtn.click();
+        if(await this.paymentError.isVisible()){
+            console.log("Error");
+            return "";
+        }
+
+        
         await expect(this.page.getByText("CONFIRMED", {exact:true })).toBeVisible();
         await expect(this.page.getByText(/TS/)).toBeVisible();
         await expect(this.page.locator("[data-id='pnr']")).toContainText("TS-1023-");

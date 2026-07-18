@@ -68,6 +68,10 @@ export class BookingFlow {
 
         this.log.info("ENTERING PAYMENT DETAILS")
         const pnr = await this.payment.fillDetails(config.cardName, config.cardNo, config.expiry,config.cvv);
+        if (pnr=="") {
+            this.log.error("PAYMENT GATEWAY TIMEOUT");
+            return;
+        }
         await testInfo.attach("Successful Booking", {
         body: await this.payment.page.screenshot(),
         contentType: "image/png",

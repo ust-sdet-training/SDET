@@ -30,7 +30,7 @@ public class BookingTests extends BaseTest {
 
     private String getAvailableSeat(String flightId) {
         Response response = flightClient.getSeatMap(flightId, TestData.CABIN);
-        response.prettyPrint();
+//        response.prettyPrint();
         return response.jsonPath()
                 .getString("rows.find { it.seats.find { s -> s.occupied == false } }" +
                         ".seats.find { it.occupied == false }.seat_id");
@@ -68,7 +68,13 @@ public class BookingTests extends BaseTest {
 
         Response hold = bookingClient.createBooking(authToken, booking);
         String bookingId = hold.jsonPath().getString("id");
+        long start = System.currentTimeMillis();
         Response payment = bookingClient.pay(authToken, bookingId);
+
+        long duration = System.currentTimeMillis() - start;
+
+        System.out.println("Start time:" +duration);
+
         payment.then()
                 .statusCode(200)
                 .body("state", equalTo("PAYMENT_PENDING"));
