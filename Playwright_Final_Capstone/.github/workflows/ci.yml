@@ -1,0 +1,83 @@
+name: TripStack CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ui:
+    name: Playwright UI
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Playwright_Final_Capstone
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20.x
+      - name: Install UI dependencies
+        run: npm ci
+      - name: TypeScript typecheck
+        run: npm run typecheck
+      - name: Install browser dependencies
+        run: npx playwright install --with-deps chromium
+      - name: Run Playwright UI tests (all)
+        run: npx playwright test --project=chromium --retries=1
+        env:
+          BASE_URL: ${{ vars.TRIPSTACK_BASE_URL || 'https://tripstack.doomple.com/' }}
+          HEADLESS: 'true'
+          TRIPSTACK_EMAIL: ${{ secrets.TRIPSTACK_EMAIL }}
+          TRIPSTACK_PASSWORD: ${{ secrets.TRIPSTACK_PASSWORD }}
+          SEAT_MAP_MAX_RENDER_MS: ${{ vars.SEAT_MAP_MAX_RENDER_MS || '5000' }}
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: Playwright_Final_Capstone/artifacts/html-report
+      - name: Upload Playwright traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: Playwright_Final_Capstone/artifacts/test-results
+      - name: Upload Playwright artifacts (report & traces)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-artifacts
+          path: |
+            Playwright_Final_Capstone/artifacts/html-report
+            Playwright_Final_Capstone/artifacts/test-results
+          if-no-files-found: warn
+
+  api:
+    name: RestAssured API
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: API_Testing_Finalcapstone
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Run API tests (all)
+        run: mvn -B -q test
+      - name: Generate API Allure report (if configured)
+        if: always()
+        run: mvn -q allure:report || echo "No Allure plugin configured for API project"
+      - name: Upload Maven surefire reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-test-results
+          path: API_Testing_Finalcapstone/target/surefire-reports

@@ -10,11 +10,14 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: [
-    ['list'],
-    ['html', { outputFolder: `${evidenceDir}/html-report`, open: 'never' }],
-    ['junit', { outputFile: `${evidenceDir}/junit/results.xml` }],
-  ],
+  reporter: (() => {
+    const base = [
+      ['list'],
+      ['html', { outputFolder: `${evidenceDir}/html-report`, open: 'never' }],
+    ] as any[];
+
+   
+  })(),
   snapshotPathTemplate: '{testDir}/{testFilePath}/{arg}{ext}',
   use: {
     baseURL: config.baseURL,

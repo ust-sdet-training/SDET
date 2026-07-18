@@ -10,7 +10,9 @@
     "typecheck": "tsc --project tsconfig.json --noEmit --ignoreDeprecations 5.0",
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
-    "report": "playwright show-report"
+    "report": "playwright show-report",
+    "allure:generate": "allure generate allure-results --clean -o artifacts/allure-report",
+    "allure:serve": "allure serve allure-results"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +22,8 @@
     "@axe-core/playwright": "^4.12.1",
     "@playwright/test": "^1.61.1",
     "@types/node": "^26.1.1",
+    "allure-commandline": "^2.16.0",
+    "allure-playwright": "^2.24.0",
     "dotenv": "^16.4.2",
     "typescript": "^5.9.3"
   }
