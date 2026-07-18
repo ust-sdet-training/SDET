@@ -1,26 +1,42 @@
 import dotenv from "dotenv";
- 
-dotenv.config();
- 
+
+const envConfig = dotenv.config().parsed ?? {};
+
 export class secrets {
+
   static get(key: string): string {
-    const value =
-      process.env[key.toUpperCase()];
- 
-    if (!value) {
-      throw new Error(`Missing secret: ${key}`);
+    const envKey = key.toUpperCase();
+
+    const ciValue = process.env[envKey];
+
+    if (ciValue?.trim()) {
+      return ciValue;
     }
-    return value;
+
+    const envValue = envConfig[envKey];
+
+    if (envValue?.trim()) {
+      return envValue;
+    }
+
+    return "";
   }
 
   static getuserPassword(key: string): string {
-    const value =
-      process.env[`MUHAMMED_${key.toUpperCase()}_PASSWORD`];
- 
-    if (!value) {    
-      throw new Error(`Missing secret: ${key}`);
-    }
-    return value;
-  }
+    const envKey = `MUHAMMED_${key.toUpperCase()}_PASSWORD`;
 
+    const ciValue = process.env[envKey];
+
+    if (ciValue?.trim()) {
+      return ciValue;
+    }
+
+    const envValue = envConfig[envKey];
+
+    if (envValue?.trim()) {
+      return envValue;
+    }
+
+    return "";
+  }
 }

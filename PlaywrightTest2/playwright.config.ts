@@ -2,6 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 import dotenv from 'dotenv';
 import path from 'path';
+import { secrets } from './src/util/secret';
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 export default defineConfig({
@@ -13,7 +14,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   use: {
-    baseURL: process.env.MUHAMMED_BASEURL,
+    baseURL: secrets.get("BASEURL"),
 
      trace: 'on',
      screenshot: 'only-on-failure',
