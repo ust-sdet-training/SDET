@@ -15,16 +15,16 @@ permissions:
   contents: write
 
 env:
-  USER_EMAIL: ${{ secrets.USER_EMAIL }}
-  USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+  USER_EMAIL: ${{ secrets.DEEPAK_USER_EMAIL }}
+  USER_PASSWORD: ${{ secrets.DEEPAK_USER_PASSWORD }}
 
-  BASE_URL: ${{ secrets.BASE_URL }}
+  BASE_URL: ${{ secrets.DEEPAK_BASE_URL }}
 
-  USER_PHONE_NUMBER: ${{ secrets.USER_PHONE_NUMBER }}
-  USER_NAME_ON_CARD: ${{ secrets.USER_NAME_ON_CARD }}
-  USER_CARD_NUMBER: ${{ secrets.USER_CARD_NUMBER }}
-  USER_CARD_CVV: ${{ secrets.USER_CARD_CVV }}
-  USER_CARD_EXPIRY_DATE: ${{ secrets.USER_CARD_EXPIRY_DATE }}
+  USER_PHONE_NUMBER: ${{ secrets.DEEPAK_USER_PHONE_NUMBER }}
+  USER_NAME_ON_CARD: ${{ secrets.DEEPAK_USER_NAME_ON_CARD }}
+  USER_CARD_NUMBER: ${{ secrets.DEEPAK_USER_CARD_NUMBER }}
+  USER_CARD_CVV: ${{ secrets.DEEPAK_USER_CARD_CVV }}
+  USER_CARD_EXPIRY_DATE: ${{ secrets.DEEPAK_USER_CARD_EXPIRY_DATE }}
 
 jobs:
 

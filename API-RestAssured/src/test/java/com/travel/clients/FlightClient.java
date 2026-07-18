@@ -6,6 +6,7 @@ import com.travel.models.response.Row;
 import com.travel.models.response.Seat;
 import com.travel.models.response.SeatMapResponse;
 import com.travel.specs.ResponseSpec;
+import com.travel.utils.ConfigReader;
 
 import java.time.LocalDate;
 
