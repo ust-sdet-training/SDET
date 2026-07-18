@@ -25,11 +25,11 @@ export class PassengerLocators {
 
   phoneInput(): Locator {
     return this.page
-      .getByRole("textbox", { name: /phone number|phone/i })
+      .getByRole("textbox", { name: /phone number/i })
       .first();
   }
 
   continueButton(): Locator {
-    return this.page.getByRole("button", { name: /continue to payment|continue/i }).first();
+    return this.page.getByRole("button", { name: /continue to payment/i }).first();
   }
 }

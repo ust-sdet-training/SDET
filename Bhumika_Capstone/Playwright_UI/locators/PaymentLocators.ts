@@ -5,7 +5,7 @@ export class PaymentLocators {
 
   nameOnCardInput(): Locator {
     return this.page
-      .getByRole("textbox", { name: /name on card|cardholder|name/i })
+      .getByRole("textbox", { name: /name on card/i })
       .first();
   }
 
@@ -14,11 +14,11 @@ export class PaymentLocators {
   }
 
   expiryInput(): Locator {
-    return this.page.getByRole("textbox", { name: /expiry|expir/i }).first();
+    return this.page.getByRole("textbox", { name: /expiry/i }).first();
   }
 
   cvvInput(): Locator {
-    return this.page.getByRole("textbox", { name: /cvv|cvc/i }).first();
+    return this.page.getByRole("textbox", { name: /cvv/i }).first();
   }
 
   payButton(): Locator {

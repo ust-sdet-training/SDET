@@ -12,6 +12,10 @@ export class ResultsPage {
     await this.locators.heading().waitFor({ state: "visible" });
   }
 
+  async verifyNoFlightsFound() {
+    await this.locators.noFlightsMessage().waitFor({ state: "visible" });
+  }
+
   async selectFirstFlight() {
     await this.locators.firstBookButton().click();
   }

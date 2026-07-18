@@ -15,7 +15,7 @@ export default defineConfig({
 
   use: {
     baseURL: process.env.BASE_URL || "https://tripstack.doomple.com",
-    headless: false,
+    headless: process.env.CI ? true : false,
 
     trace: "on-first-retry",
 

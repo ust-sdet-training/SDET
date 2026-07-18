@@ -17,7 +17,7 @@ export class SearchLocators {
 
   searchButton(): Locator {
     return this.page
-      .getByRole("button", { name: /search flights|search/i })
+      .getByRole("button", { name: /search flights/i })
       .first();
   }
 }

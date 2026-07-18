@@ -10,4 +10,8 @@ export class ResultsLocators {
   firstBookButton(): Locator {
     return this.page.getByRole("button", { name: /^book$/i }).first();
   }
+
+  noFlightsMessage(): Locator {
+    return this.page.getByText(/no flights found/i).first();
+  }
 }
