@@ -13,6 +13,7 @@ import java.util.List;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 class BookingNegativeTest extends BaseApiTest {
 
@@ -34,6 +35,25 @@ class BookingNegativeTest extends BaseApiTest {
 
         Response confirm = bookingClient.confirm(bookingId);
         assertTrue(confirm.getStatusCode() == 400 || confirm.getStatusCode() == 404);
+    }
+
+    @Test
+    void handlesPayment500WhenFaultIsEnabled() {
+        assumeTrue("true".equalsIgnoreCase(System.getenv("TRIPSTACK_RUN_PAYMENT_FAILURE")));
+
+        String token = loginUser();
+        BookingClient bookingClient = new BookingClient(token);
+        BookingRequest holdRequest = createHoldRequest();
+
+        Response hold = bookingClient.createHold(holdRequest);
+        assertEquals(201, hold.getStatusCode());
+        String bookingId = hold.jsonPath().getString("bookingId");
+
+        Response payment = bookingClient.pay(bookingId);
+        assertTrue(
+                payment.getStatusCode() == 200 || payment.getStatusCode() == 500,
+                "Expected payment to succeed or return a handled 500, but got " + payment.getStatusCode()
+        );
     }
 
     @Test

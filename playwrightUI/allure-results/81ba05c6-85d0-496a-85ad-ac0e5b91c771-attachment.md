@@ -1,0 +1,246 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: booking-flow.spec.ts >> complete bus booking >> books HYD to BOM AC Semi-Sleeper and verifies its PNR in My Trips
+- Location: tests\booking-flow.spec.ts:14:7
+
+# Error details
+
+```
+Error: expect(locator).toContainText(expected) failed
+
+Locator: locator('body')
+Timeout: 20000ms
+Expected pattern: /TS-1030-\d+/
+Received string:  "······
+    TripStack·····
+      Flights
+      Buses·······
+        My Trips·········
+        Log out····················································
+      1Search·············
+      2Seats·············
+      3Passenger·············
+      4Payment·············
+      5Ticket··········
+    Secure checkout
+    Confirm booking 96fdc2f2-21cd-43f4-a07a-866c6c2a6f53 by entering your card details.·
+    payment gateway error (5xx)······················
+          Fare breakup
+          SeatsS2
+          JourneyBus
+          Base fare (1 × ₹1187.55)₹1187.55
+          Taxes & feesIncluded
+          Total payable₹1187.55·································
+          FLAT ₹100 OFF · use TRIP100
+          10% cashback on UPI
+          No convenience fee today··················
+          Card details···········
+            Name on card···································
+            Card number················································
+              CVV·········································
+              Expiry·······································
+          Pay ₹1187.55
+           This is a training sandbox — no real card is charged.······························
+    © TripStack — a demo travel marketplace for SDET training.
+    Flights · Buses · Seat selection · Secure checkout·······
+"
+
+Call log:
+  - Expect "toContainText" with timeout 20000ms
+  - waiting for locator('body')
+    42 × locator resolved to <body>…</body>
+       - unexpected value "
+  
+  
+    TripStack
+    
+      Flights
+      Buses
+      
+        My Trips
+        
+        Log out
+      
+    
+  
+
+
+  
+  
+  
+  
+  
+  
+    
+
+
+
+
+  
+    
+      1Search
+    
+  
+    
+      2Seats
+    
+  
+    
+      3Passenger
+    
+  
+    
+      4Payment
+    
+  
+    
+      5Ticket
+    
+  
+
+
+    Secure checkout
+    Confirm booking 96fdc2f2-21cd-43f4-a07a-866c6c2a6f53 by entering your card details.
+
+    payment gateway error (5xx)
+
+    
+      
+        
+          Fare breakup
+          SeatsS2
+          JourneyBus
+          Base fare (1 × ₹1187.55)₹1187.55
+          Taxes & feesIncluded
+          Total payable₹1187.55
+        
+      
+
+      
+        
+          FLAT ₹100 OFF · use TRIP100
+          10% cashback on UPI
+          No convenience fee today
+        
+        
+          Card details
+          
+            Name on card
+            
+          
+          
+            Card number
+            
+          
+          
+            
+              CVV
+              
+            
+            
+              Expiry
+              
+            
+          
+          Pay ₹1187.55
+           This is a training sandbox — no real card is charged.
+        
+      
+    
+  
+  
+  
+    © TripStack — a demo travel marketplace for SDET training.
+    Flights · Buses · Seat selection · Secure checkout
+  
+
+
+
+
+"
+
+```
+
+```yaml
+- banner:
+  - link "TripStack":
+    - /url: /
+  - navigation "Primary":
+    - link "Flights":
+      - /url: /flights/search
+    - link "Buses":
+      - /url: /buses/search
+    - link "My Trips":
+      - /url: /my-trips
+    - link "Log out":
+      - /url: /logout
+- main:
+  - list "Booking progress":
+    - listitem: 1 Search
+    - listitem: 2 Seats
+    - listitem: 3 Passenger
+    - listitem: 4 Payment
+    - listitem: 5 Ticket
+  - heading "Secure checkout" [level=1]
+  - paragraph: Confirm booking
+  - text: 96fdc2f2-21cd-43f4-a07a-866c6c2a6f53 by entering your card details.
+  - paragraph
+  - alert: payment gateway error (5xx)
+  - complementary:
+    - paragraph: Fare breakup
+    - text: Seats S2 Journey Bus Base fare (1 × ₹1187.55) ₹1187.55 Taxes & fees Included Total payable ₹1187.55
+  - text: FLAT ₹100 OFF · use TRIP100 10% cashback on UPI No convenience fee today
+  - heading "Card details" [level=2]
+  - text: Name on card
+  - textbox "Name on card"
+  - text: Card number
+  - textbox "Card number":
+    - /placeholder: 1234 5678 9012 3456
+  - text: CVV
+  - textbox "CVV"
+  - text: Expiry
+  - textbox "Expiry":
+    - /placeholder: MM/YY
+  - button "Pay ₹1187.55"
+  - paragraph:
+    - img
+    - text: This is a training sandbox — no real card is charged.
+- contentinfo: © TripStack — a demo travel marketplace for SDET training. Flights · Buses · Seat selection · Secure checkout
+```
+
+# Test source
+
+```ts
+  1  | import { expect, type Page } from '@playwright/test';
+  2  | 
+  3  | function escapeRegExp(value: string): string {
+  4  |   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  5  | }
+  6  | 
+  7  | export class BookingConfirmationPage {
+  8  |   constructor(private readonly page: Page) {}
+  9  | 
+  10 |   async pnrFor(employeeId: string): Promise<string> {
+  11 |     const pattern = new RegExp(`TS-${escapeRegExp(employeeId)}-\\d+`);
+  12 |     const confirmationBody = this.page.locator('body');
+  13 | 
+> 14 |     await expect(confirmationBody).toContainText(pattern, { timeout: 20_000 });
+     |                                    ^ Error: expect(locator).toContainText(expected) failed
+  15 |     const content = await confirmationBody.innerText();
+  16 |     const match = content.match(pattern);
+  17 | 
+  18 |     if (!match?.[0]) {
+  19 |       throw new Error(`Could not find a booking PNR matching ${pattern} on the confirmation page.`);
+  20 |     }
+  21 | 
+  22 |     return match[0].trim();
+  23 |   }
+  24 | }
+  25 | 
+```
