@@ -1,14 +1,14 @@
 import { test, expect } from "../fixtures/evidence";
 import { BookingFlowInput } from "../flow/BookingFlow";
 import { env } from "../utils/env";
-import { onwardTrip } from "../utils/test-data";
+import { returnTrip } from "../utils/test-data";
 
-test("Book a flight from BLR to CCU and verify it in My Trips", async ({ flow, evidence }) => {
+test("Book a return flight from CCU to BLR and verify it in My Trips", async ({ flow, evidence }) => {
   const input: BookingFlowInput = {
     credentials: env.credentials,
     passenger: env.passenger,
     card: env.card,
-    ...onwardTrip,
+    ...returnTrip,
   };
 
   await flow.runFullBookingFlow(input);

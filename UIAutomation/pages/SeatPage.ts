@@ -1,3 +1,4 @@
+import { expect } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
 export class SeatPage extends BasePage {
@@ -17,4 +18,12 @@ export class SeatPage extends BasePage {
   async continueToPassengerDetails() {
     await this.click(this.continueButton, "Continue to passenger details button");
   }
+
+  async verifySeatNotAvailable(seatDescription: string) {
+  await expect(
+    this.page.getByLabel(seatDescription)
+  ).toHaveCount(0);
+
+  await this.captureScreenshot("seat-not-available");
+}
 }

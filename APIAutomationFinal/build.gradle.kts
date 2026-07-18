@@ -193,24 +193,53 @@ val BookingE2E by tasks.registering(Test::class) {
 
     include("**/BookingE2E.class")
 }
+val PTest by tasks.registering(Test::class) {
+    description = "Repository practTest tests"
+    group = "verification"
+
+    useProjectTestClasses()
+
+    include("**/PTest.class")
+}
 
 
-//val WireMockTest by tasks.registering(Test::class) {
-//    description = "Repository WireMockTest tests"
-//    group = "verification"
-//
-//    useProjectTestClasses()
-//
-//    include("**/WireMockTest.class")
-//}
-//
-//
-//val RunCucumberTest by tasks.registering(Test::class) {
-//    description = "Runs RunCucumberTest "
-//    group = "verification"
-//
-//    useProjectTestClasses()
-//
-//    include("**/RunCucumberTest.class")
-//    maxParallelForks = 1
-//}
+val WireMockTest by tasks.registering(Test::class) {
+    description = "Repository WireMockTest tests"
+    group = "verification"
+
+    useProjectTestClasses()
+
+    include("**/WireMockTest.class")
+}
+
+
+val RunCucumberTest by tasks.registering(Test::class) {
+    description = "Runs RunCucumberTest "
+    group = "verification"
+
+    useProjectTestClasses()
+
+    include("**/RunCucumberTest.class")
+    maxParallelForks = 1
+}
+val DbSupportContainerTest  by tasks.registering(Test::class) {
+    description = "Builder/Factory/Repository suite against a MySQL Testcontainer"
+    group = "verification"
+    useProjectTestClasses()
+    include("**/DbSupportContainerTest.class")
+    maxParallelForks = 1
+}
+
+val FullSuite by tasks.registering(Test::class) {
+    description = "Runs the full suite: BookingE2E, PTest, WireMockTest, RunCucumberTest, DbSupportContainerTest"
+    group = "verification"
+    useProjectTestClasses()
+
+    include(
+        "**/BookingE2E.class",
+        "**/WireMockTest.class",
+        "**/RunCucumberTest.class",
+        "**/DbSupportContainerTest.class"
+    )
+    maxParallelForks = 1
+}

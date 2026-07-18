@@ -27,8 +27,8 @@ public class SeatClient {
 
         var resBody = Map.of(
                 "journeyType", "flight",
-                "inventoryId", "FL-DELBLR-51",
-                "seatIds", List.of("12A"),
+                "inventoryId", "FL-BLRCCU-57",
+                "seatIds", List.of("2A"),
                   "refundable", true,
                 "holdTtlSec", 120
         );

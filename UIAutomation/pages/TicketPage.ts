@@ -1,12 +1,12 @@
 import { BasePage } from "./BasePage";
 
 export class TicketPage extends BasePage {
-  private readonly successHeading = this.page.getByRole("heading", { name: "You're all set! 🎉" });
+  private readonly successHeading = this.page.getByRole("heading", { name: "You're all set!" });
   private readonly amountPaidText = this.page.getByText("Amount paid₹");
   private readonly viewMyTripsButton = this.page.getByRole("button", { name: "View my trips" });
 
   private bookingRefText(prefix: string) {
-    return this.page.getByText(prefix);
+    return this.page.getByText(new RegExp(`^${prefix}\\d+$`));
   }
 
   async verifyConfirmation(bookingRefPrefix: string) {

@@ -16,7 +16,6 @@ export abstract class BasePage {
   }
 
   async click(locator: Locator, description: string) {
-    this.log.info(`Clicking: ${description}`);
     await locator.click();
   }
 
@@ -32,7 +31,6 @@ export abstract class BasePage {
   }
 
   async expectVisible(locator: Locator, description: string) {
-    this.log.info(`Asserting visible: ${description}`);
     await expect(locator).toBeVisible();
   }
 

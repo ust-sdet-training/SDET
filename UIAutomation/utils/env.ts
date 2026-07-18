@@ -12,22 +12,14 @@ function required(key: string): string {
 }
 
 export const env = {
-  baseurl:required("BASEURL"),
+  baseurl: required("BASEURL"),
+
   credentials: {
     email: required("CUSTOMER_EMAIL"),
     password: required("CUSTOMER_PASSWORD"),
   },
-  search: {
-    from: required("SEARCH_FROM"),
-    fromOptionLabel: required("SEARCH_FROM_LABEL"),
-    to: required("SEARCH_TO"),
-    toOptionLabel: required("SEARCH_TO_LABEL"),
-    date: required("SEARCH_DATE"),
-  },
-  flightLabel: required("FLIGHT_LABEL"),
-  seatDescription: required("SEAT_DESCRIPTION"),
+
   passenger: {
-    seatLabel: required("PASSENGER_SEAT_LABEL"),
     firstName: required("PASSENGER_FIRST_NAME"),
     lastName: required("PASSENGER_LAST_NAME"),
     age: required("PASSENGER_AGE"),
@@ -35,13 +27,11 @@ export const env = {
     email: required("PASSENGER_EMAIL"),
     phone: required("PASSENGER_PHONE"),
   },
+
   card: {
     nameOnCard: required("CARD_NAME_ON_CARD"),
     cardNumber: required("CARD_NUMBER"),
     expiry: required("CARD_EXPIRY"),
     cvv: required("CARD_CVV"),
   },
-  couponLabel: required("COUPON_LABEL"),
-  bookingRefPrefix: required("BOOKING_REF_PREFIX"),
-  myTripsSummary: required("MY_TRIPS_SUMMARY"),
 };

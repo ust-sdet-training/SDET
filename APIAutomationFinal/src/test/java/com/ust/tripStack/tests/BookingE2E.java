@@ -40,17 +40,16 @@ public class BookingE2E {
 
         var resme= auth.authMe(token)
                 .then().statusCode(200);
-        System.out.println(resme.extract().jsonPath().prettyPrint());
+//        System.out.println(resme.extract().jsonPath().prettyPrint());
 
         var flight = home.searchFlight(token,"BLR","CCU").
                 then().extract().response();
+        System.out.println(flight.jsonPath().prettyPrint());
 
 
         var seatRes = seat.getFlight(token,"FL-BLRCCU-51");
 
-        System.out.println(seatRes.jsonPath().prettyPrint());
-
-
+//        System.out.println(seatRes.jsonPath().prettyPrint());
         var seatBooking = seat.booking(token);
 
         System.out.println(seatBooking.jsonPath().prettyPrint());
@@ -68,7 +67,6 @@ public class BookingE2E {
 
         var getpnr =  ticketClient.getPNR(token,pnr);
 
-        System.out.println(getpnr.jsonPath().prettyPrint());
         home.reset(token);
 
 

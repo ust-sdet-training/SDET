@@ -1,7 +1,7 @@
 import { BasePage } from "./BasePage";
 
 export interface PassengerDetails {
-  seatLabel: string; // e.g. "2A" - used to scope per-seat fields
+  seatLabel: string; 
   firstName: string;
   lastName: string;
   age: string;

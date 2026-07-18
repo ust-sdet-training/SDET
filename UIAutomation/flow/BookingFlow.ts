@@ -11,6 +11,7 @@ import { MyTripsPage } from "../pages/MyTripsPage";
 
 export interface BookingFlowInput {
   credentials: { email: string; password: string };
+
   search: {
     from: string;
     fromOptionLabel: string;
@@ -18,12 +19,21 @@ export interface BookingFlowInput {
     toOptionLabel: string;
     date: string;
   };
+
   flightLabel: string;
-  seatDescription: string; 
-  passenger: PassengerDetails;
+
+  seatDescription: string;
+
+  passengerSeatLabel: string;
+
+  passenger: Omit<PassengerDetails, "seatLabel">;
+
   card: CardDetails;
+
   couponLabel: string;
-  bookingRefPrefix: string; 
+
+  bookingRefPrefix: string;
+
   myTripsSummary: string;
 }
 
@@ -81,12 +91,22 @@ export class BookingFlow {
     }
   }
 
-  async fillPassengerDetails(details: PassengerDetails) {
-    this.log.info("Step: Fill passenger details");
-    await this.passengerDetails.verifyLoaded();
-    await this.passengerDetails.fillDetails(details);
-    await this.passengerDetails.continueToPayment();
-  }
+ async fillPassengerDetails(
+  passenger: Omit<PassengerDetails, "seatLabel">,
+  seatLabel: string
+) {
+  this.log.info("Step: Fill passenger details");
+
+  await this.passengerDetails.verifyLoaded();
+
+  const passengerDetails: PassengerDetails = {
+    ...passenger,
+    seatLabel,
+  };
+
+  await this.passengerDetails.fillDetails(passengerDetails);
+  await this.passengerDetails.continueToPayment();
+}
 
 
   async payForBooking(couponLabel: string, card: CardDetails) {
@@ -103,11 +123,6 @@ export class BookingFlow {
     await this.ticket.goToMyTrips();
   }
 
-//   async verifyMyTrips(tripSummary: string) {
-//     this.log.info("Step: Verify My Trips");
-//     await this.myTrips.verifyTripPresent(tripSummary);
-//   }
-
 
   async runFullBookingFlow(input: BookingFlowInput) {
     await this.login(input.credentials.email, input.credentials.password);
@@ -117,9 +132,44 @@ export class BookingFlow {
     // Original script hits a direct URL that forces a re-login mid-flow.
     await this.reLoginIfRedirected(input.credentials.email, input.credentials.password);
 
-    await this.fillPassengerDetails(input.passenger);
+    await this.fillPassengerDetails(
+    input.passenger,
+    input.passengerSeatLabel
+);
     await this.payForBooking(input.couponLabel, input.card);
     await this.verifyConfirmationAndGoToMyTrips(input.bookingRefPrefix);
 
   }
+
+  async measureCheckoutPerformance(input: BookingFlowInput) {
+  await this.login(input.credentials.email, input.credentials.password);
+
+  await this.searchAndBookFlight(
+    input.search,
+    input.flightLabel
+  );
+
+  await this.selectSeatAndContinue(
+    input.seatDescription
+  );
+
+  await this.reLoginIfRedirected(
+    input.credentials.email,
+    input.credentials.password
+  );
+
+  const start = Date.now();
+
+  await this.fillPassengerDetails(
+    input.passenger,
+    input.passengerSeatLabel
+  );
+
+  // Wait until Checkout page is displayed
+  await this.checkout.verifyLoaded();
+
+  const end = Date.now();
+
+  return end - start;
+}
 }
