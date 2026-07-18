@@ -35,9 +35,12 @@ jobs:
         working-directory: ApiTesting
         run: chmod +x gradlew
 
-      - name: Run Integration Tests
-        working-directory: ApiTesting
+      - name: Run Tests
         run: ./gradlew test
+        env:
+         BASE_URL: ${{ secrets.BASE_TRIP_HEIDI_URL }}
+         HEIDI_PASSWORD: ${{ secrets.TRIPSTACK_HEIDI_PASSWORD }}
+        
 
 
   ui-tests:
