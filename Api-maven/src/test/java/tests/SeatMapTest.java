@@ -22,28 +22,16 @@ public class SeatMapTest extends BaseTest {
                 TestData.TRAVEL_CLASS
         );
 
-        String flightId = flights.getFlights().get(0).getId();
+        String flightId = flights.flights().getFirst().id();
 
-        SeatService seatService = new SeatService();
-        SeatMapResponse seatMap = seatService.getSeatMap(flightId);
+        SeatMapResponse seatMap = new SeatService().getSeatMap(flightId);
+        String availableSeat = seatMap.firstAvailableSeatId();
 
-        String availableSeat = findAvailableSeat(seatMap);
-
-        Assertions.assertFalse(seatMap.getRows().isEmpty(), "Seat map should contain rows");
+        Assertions.assertFalse(seatMap.rows().isEmpty(), "Seat map should contain rows");
         Assertions.assertNotNull(availableSeat, "At least one seat should be available");
 
         System.out.println("Flight ID: " + flightId);
         System.out.println("Seat ID: " + availableSeat);
     }
 
-    private String findAvailableSeat(SeatMapResponse seatMap) {
-        for (SeatMapResponse.Row row : seatMap.getRows()) {
-            for (SeatMapResponse.Seat seat : row.getSeats()) {
-                if (!seat.isOccupied()) {
-                    return seat.getSeatId();
-                }
-            }
-        }
-        return null;
-    }
 }

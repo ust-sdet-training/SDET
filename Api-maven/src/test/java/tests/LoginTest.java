@@ -11,14 +11,11 @@ public class LoginTest extends BaseTest {
     @Test
     @DisplayName("Verify user can login successfully")
     void loginSuccessfully() {
-        AuthService authService = new AuthService();
+        LoginResponse response = new AuthService().login(TestData.EMAIL, TestData.PASSWORD);
 
-        LoginResponse response = authService.login(TestData.EMAIL, TestData.PASSWORD);
-
-        Assertions.assertNotNull(response.getToken(), "Login token should be generated");
-        Assertions.assertEquals("1011", response.getEmpId());
-        Assertions.assertEquals("traveller", response.getRole());
-
+        Assertions.assertNotNull(response.token(), "Login token should be generated");
+        Assertions.assertEquals("1011", response.empId());
+        Assertions.assertEquals("traveller", response.role());
         System.out.println("Login completed successfully");
     }
 }

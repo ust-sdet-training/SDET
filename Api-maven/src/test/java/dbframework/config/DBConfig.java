@@ -1,14 +1,18 @@
 package dbframework.config;
 
 public final class DBConfig {
-
     private DBConfig() {
     }
 
-    // Connection settings for the local MySQL database
-    public static final String URL =
-            "jdbc:mysql://localhost:3306/tripstack?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Kolkata";
+    public static final String HOST = value("DB_HOST", "localhost");
+    public static final String PORT = value("DB_PORT", "3306");
+    public static final String NAME = value("DB_NAME", "tripstack");
+    public static final String USER = value("DB_USER", "root");
+    public static final String PASSWORD = value("DB_PASSWORD", "");
+    public static final String URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + NAME;
 
-    public static final String USERNAME = "root";
-    public static final String PASSWORD = "Hemu@123";
+    private static String value(String name, String defaultValue) {
+        String value = System.getProperty(name);
+        return value == null || value.isBlank() ? System.getenv().getOrDefault(name, defaultValue) : value;
+    }
 }

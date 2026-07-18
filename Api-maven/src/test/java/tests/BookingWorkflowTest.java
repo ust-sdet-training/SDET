@@ -14,60 +14,41 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
+import java.util.List;
 
 public class BookingWorkflowTest extends BaseTest {
 
     @Test
     @DisplayName("Verify complete booking workflow")
     void bookingWorkflow() {
-        AuthService authService = new AuthService();
-        LoginResponse loginResponse = authService.login(TestData.EMAIL, TestData.PASSWORD);
-        String token = loginResponse.getToken();
-
-        FlightService flightService = new FlightService();
-        FlightResponse flights = flightService.searchFlights(
+        String token = new AuthService()
+                .login(TestData.EMAIL, TestData.PASSWORD)
+                .token();
+        FlightResponse flights = new FlightService().searchFlights(
                 TestData.FROM,
                 TestData.TO,
                 TestData.DATE,
                 TestData.TRAVEL_CLASS
         );
-        String flightId = flights.getFlights().get(0).getId();
-
-        SeatService seatService = new SeatService();
-        SeatMapResponse seatMap = seatService.getSeatMap(flightId);
-        String seatId = findAvailableSeat(seatMap);
-
-        BookingRequest request = new BookingRequest();
-        request.setJourneyType(TestData.JOURNEY_TYPE);
-        request.setInventoryId(flightId);
-        request.setSeatIds(Collections.singletonList(seatId));
-        request.setRefundable(TestData.REFUNDABLE);
-        request.setHoldTtlSec(TestData.HOLD_TIME);
-
+        String flightId = flights.flights().getFirst().id();
+        String seatId = new SeatService().getSeatMap(flightId).firstAvailableSeatId();
+        Assertions.assertNotNull(seatId, "At least one seat should be available");
+        BookingRequest request = new BookingRequest(
+                TestData.JOURNEY_TYPE,
+                flightId,
+                List.of(seatId),
+                TestData.REFUNDABLE,
+                TestData.HOLD_TIME
+        );
         BookingService bookingService = new BookingService();
         BookingResponse booking = bookingService.createBooking(request, token);
-        Assertions.assertEquals("HELD", booking.getState());
-
-        booking = bookingService.payBooking(booking.getId(), token);
-        Assertions.assertEquals("PAYMENT_PENDING", booking.getState());
-
-        booking = bookingService.confirmBooking(booking.getId(), token);
-        Assertions.assertEquals("CONFIRMED", booking.getState());
-        Assertions.assertNotNull(booking.getPnr());
-
-        System.out.println("Booking ID: " + booking.getId());
-        System.out.println("PNR: " + booking.getPnr());
-    }
-
-    private String findAvailableSeat(SeatMapResponse seatMap) {
-        for (SeatMapResponse.Row row : seatMap.getRows()) {
-            for (SeatMapResponse.Seat seat : row.getSeats()) {
-                if (!seat.isOccupied()) {
-                    return seat.getSeatId();
-                }
-            }
-        }
-        return null;
+        Assertions.assertEquals("HELD", booking.state());
+        booking = bookingService.payBooking(booking.id(), token);
+        Assertions.assertEquals("PAYMENT_PENDING", booking.state());
+        booking = bookingService.confirmBooking(booking.id(), token);
+        Assertions.assertEquals("CONFIRMED", booking.state());
+        Assertions.assertNotNull(booking.pnr());
+        System.out.println("Booking ID: " + booking.id());
+        System.out.println("PNR: " + booking.pnr());
     }
 }

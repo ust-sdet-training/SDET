@@ -5,20 +5,18 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
-public class DatabaseConnectionTest {
-
+class DatabaseConnectionTest {
     @Test
-    void verifyConnection() throws Exception {
+    void connectsToMySqlDatabase() throws Exception {
+        try (Connection connection = DBConnection.open();
+             Statement statement = connection.createStatement();
+             ResultSet result = statement.executeQuery("SELECT 1")) {
 
-        Connection connection = DBConnection.getConnection();
-
-        Assertions.assertNotNull(connection);
-
-        System.out.println("====================================");
-        System.out.println("Connected to MySQL Successfully");
-        System.out.println("====================================");
-
-        connection.close();
+            Assertions.assertTrue(result.next());
+            Assertions.assertEquals(1, result.getInt(1));
+        }
     }
 }

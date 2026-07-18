@@ -7,15 +7,11 @@ import API_FrameWork.models.SeatMapResponse;
 import static io.restassured.RestAssured.given;
 
 public class SeatService {
-
     public SeatMapResponse getSeatMap(String flightId) {
-
         return given()
                 .spec(SpecFactory.requestSpec())
-
                 .when()
                 .get(EndPoints.SEAT_MAP.replace("{id}", flightId))
-
                 .then()
                 .statusCode(200)
                 .extract()
