@@ -3,12 +3,11 @@ name: Playwright UI Automation
 on:
   push:
     branches:
-      - main
-
+      - Salman_Final_Capstone
 
   pull_request:
     branches:
-      - main
+      - Salman_Final_Capstone
 
   workflow_dispatch:
 
@@ -53,8 +52,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: playwright-html-report
-          working-directory: Playwright
-          path: playwright-report/
+          
+          path: Playwright/playwright-report/
           retention-days: 7
 
       - name: Upload Test Results
@@ -62,8 +61,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: playwright-test-results
-          working-directory: Playwright
-          path: test-results/
+          path: Playwright/test-results/
           retention-days: 7
 
       - name: Upload Screenshots
@@ -71,7 +69,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: screenshots
-          working-directory: Playwright
           path: |
             test-results/**/*.png
           if-no-files-found: ignore
@@ -81,7 +78,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: videos
-          working-directory: Playwright
           path: |
             test-results/**/*.webm
           if-no-files-found: ignore
@@ -91,7 +87,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: traces
-          working-directory: Playwright
           path: |
             test-results/**/*.zip
           if-no-files-found: ignore
