@@ -1,6 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 const CI = !!process.env.CI;
- 
+ import  dotenv from "dotenv";
+dotenv.config();
 export default defineConfig({
     testDir:"./tests",
     timeout: 10_000,
