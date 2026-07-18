@@ -11,8 +11,15 @@ public final class ConfigReader {
     private ConfigReader() {
     }
 
-    public static String get(String key) {
-        return dotenv.get(key);
+    private static String get(String key) {
+
+        String value = System.getenv(key);
+
+        if (value == null || value.isBlank()) {
+            value = dotenv.get(key);
+        }
+
+        return value;
     }
 
     public static String getBaseUrl() {

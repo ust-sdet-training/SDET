@@ -16,7 +16,6 @@ public final class RequestSpecificationBuilder {
         return new RequestSpecBuilder()
                 .setBaseUri(ConfigReader.getBaseUrl())
                 .setContentType(ContentType.JSON)
-//                .addFilter(new AllureRestAssured())
                 .build();
     }
 
@@ -26,7 +25,6 @@ public final class RequestSpecificationBuilder {
                 .setBaseUri(ConfigReader.getBaseUrl())
                 .setContentType(ContentType.JSON)
                 .addHeader("Authorization", "Bearer " + token)
-//                .addFilter(new AllureRestAssured())
                 .build();
     }
 

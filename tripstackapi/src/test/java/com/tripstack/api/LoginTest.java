@@ -18,14 +18,9 @@ public class LoginTest extends BaseTest {
     @Test
     @DisplayName("Verify successful login")
     void verifySuccessfulLogin() {
-
-        // Arrange
         LoginRequest request = TestDataFactory.validLogin();
 
-        // Act
         LoginResponse response = authService.login();
-
-        // Assert
         assertNotNull(response);
         assertNotNull(response.getToken());
         assertNotNull(response.getEmpId());
