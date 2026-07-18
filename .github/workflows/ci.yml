@@ -2,7 +2,7 @@ name: ci
 
 on:
   push:
-    branches: [V2]
+    branches: [Jamesy_Capstone_Final]
   pull_request:
 
 jobs:
