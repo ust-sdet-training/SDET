@@ -108,6 +108,20 @@ jobs:
       run:
         working-directory: APIAutomationFinal
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.SHAHBAZ_DB_PASSWORD }}
+          MYSQL_DATABASE: tripstack
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -p${{ secrets.SHAHBAZ_DB_PASSWORD }}"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=10
+
     env:
       CI: true
       BASE_URL: https://tripstack.doomple.com/
@@ -128,6 +142,18 @@ jobs:
           distribution: temurin
           java-version: '22'
           cache: maven
+
+      - name: Wait for MySQL service container
+        run: |
+          for i in $(seq 1 20); do
+            mysqladmin ping -h127.0.0.1 -P3306 -uroot -p"${{ secrets.SHAHBAZ_DB_PASSWORD }}" --silent && break
+            echo "waiting for mysql... ($i)"
+            sleep 3
+          done
+
+      - name: Apply bookings schema
+        run: |
+          mysql -h127.0.0.1 -P3306 -uroot -p"${{ secrets.SHAHBAZ_DB_PASSWORD }}" tripstack < src/test/resources/db/migration/V1__init_bookings.sql
 
       - name: Run tests
         run: mvn -B clean test
