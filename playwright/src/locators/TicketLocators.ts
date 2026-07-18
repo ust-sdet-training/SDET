@@ -13,7 +13,7 @@ export class TicketLocators {
     }
 
     viewButton(): Locator{
-        return this.page.getByRole("button", {name: "Search buses"});
+        return this.page.getByRole("button", {name: "View my trips"});
     }
 
 }
