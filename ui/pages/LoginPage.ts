@@ -9,11 +9,13 @@ export class LoginPage extends BasePage {
   }
 
   async login(email: string, password: string) {
-    await this.page.getByLabel('Email').fill(email);
-    await this.page.getByLabel('Password').fill(password);
+    const emailField = this.page.getByLabel(/email/i).or(this.page.locator('input[type="email"]')).first();
+    const passwordField = this.page.getByLabel(/password/i).or(this.page.locator('input[type="password"]')).first();
+    await emailField.fill(email);
+    await passwordField.fill(password);
     await this.page.getByRole('button', { name: /sign in/i }).click();
 
-    const logoutLink = this.page.getByRole('link', { name: 'Log out' });
+    const logoutLink = this.page.getByRole('link', { name: /log out/i }).or(this.page.getByText(/log out/i));
     const errorAlert = this.page.getByRole('alert').filter({ hasText: /invalid|incorrect|email or password/i });
 
     await expect.poll(

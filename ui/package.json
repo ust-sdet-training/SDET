@@ -1,14 +1,19 @@
 {
-  "name": "deleteit",
+  "name": "tripstack-ui-capstone",
   "version": "1.0.0",
-  "description": "",
+  "description": "TripStack Playwright capstone suite for the Lakhan booking scenario",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test",
-    "test:headed": "npx playwright test --headed",
-    "show-trace": "npx playwright show-trace",
-    "show-report": "npx playwright show-report",
-    "artifact-index": "node ./scripts/build-artifact-index.js"
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:ci": "playwright test tests/tripstack-bus-booking.spec.ts tests/tripstack-negative.spec.ts --project=chromium --workers=1 --reporter=line,html",
+    "show-trace": "playwright show-trace",
+    "show-report": "playwright show-report",
+    "artifact-index": "node ./scripts/build-artifact-index.js",
+    "api:contract": "node ./scripts/api-contract-smoke.cjs",
+    "perf:baseline": "node ./scripts/perf-baseline.cjs",
+    "perf:check": "node ./scripts/perf-check.cjs"
   },
   "keywords": [],
   "author": "",

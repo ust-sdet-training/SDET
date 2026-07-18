@@ -73,6 +73,7 @@ public class BookingLifecycleTest extends BaseTest {
         String[] seatIds = availableSeats.subList(0, 2).toArray(new String[0]);
 
         BookingService bookingService = new BookingService(apiClient, requestSpecFactory, configManager, token);
+        
         BookingHoldResponse holdResponse = bookingService.holdSeats("bus", targetBus.getId(), seatIds);
         assertNotNull(holdResponse, "Hold response should not be null");
         assertEquals("HELD", holdResponse.getStatus(), "Hold status should be HELD");
