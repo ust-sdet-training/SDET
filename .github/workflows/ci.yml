@@ -1,10 +1,9 @@
-name: Playwright + Performance CI
+name: CI for UI and API Automation
 
 on:
   push:
     branches:
       - shahbaz-final-capstone
-
   pull_request:
     branches:
       - shahbaz-final-capstone
@@ -88,18 +87,7 @@ jobs:
       - name: Run k6 Performance Test
         run: |
           k6 run performance/checkout-load.js
-          
-name: API Automation CI
 
-on:
-  push:
-    branches:
-      - shahbaz-final-capstone
-  pull_request:
-    branches:
-      - shahbaz-final-capstone
-
-jobs:
   api-tests:
     name: API Automation Tests with Testcontainers
     runs-on: ubuntu-latest
@@ -141,4 +129,3 @@ jobs:
             APIAutomationFinal/build/reports/
             APIAutomationFinal/build/test-results/
           if-no-files-found: warn
-    
