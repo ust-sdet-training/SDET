@@ -65,8 +65,8 @@ public class BookingSteps {
                 """
                 {
                   "journeyType":"bus",
-                  "inventoryId":"BUS-BOMDEL-1",
-                  "seatIds":["L3"]
+                  "inventoryId":"BUS-BOMDEL-04",
+                  "seatIds":["L7"]
                 }
                 """
         );
@@ -121,6 +121,14 @@ public class BookingSteps {
             );
 
         };
+    }
+
+    @And("he cancelled the ticket")
+    public void heCancelledTheTicket() {
+        Response response = bookingClient.cancelBooking(
+                context.getToken(),
+                context.getOtherUserBookingId()
+        );
     }
 
     private record Credentials(String email, String password) {

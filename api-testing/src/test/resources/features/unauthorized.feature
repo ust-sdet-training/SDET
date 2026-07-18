@@ -11,5 +11,8 @@ Feature: Login
     Given "dave" has a confirmed booking
     And "bob" logs in
     When Bob cancels Dave's booking
-    Then he should receive 404 response
-    And the error should be "NOT_FOUND"
+    Then he should receive 403 response
+    And the error should be "CROSS_NAMESPACE"
+    Then "dave" logs in
+    And he cancelled the ticket
+
