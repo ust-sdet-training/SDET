@@ -1,0 +1,85 @@
+name: UI Performance
+
+
+on:
+
+  workflow_dispatch:
+
+
+jobs:
+
+
+  performance:
+
+
+    runs-on: ubuntu-latest
+
+
+    steps:
+
+
+      - uses: actions/checkout@v4
+
+
+
+      - uses: actions/setup-node@v4
+
+        with:
+
+          node-version:20
+
+
+
+      - name:
+
+        Install
+
+
+        run:
+
+          cd ui-automation &&
+          npm install
+
+
+
+      - name:
+
+        Install browsers
+
+
+        run:
+
+          cd ui-automation &&
+          npx playwright install --with-deps
+
+
+
+      - name:
+
+        Run Performance
+
+
+        run:
+
+          cd ui-automation &&
+          npm run performance
+
+
+
+      - name:
+
+        Upload Report
+
+
+        if: always()
+
+
+        uses: actions/upload-artifact@v4
+
+        with:
+
+          name: performance-report
+
+          path:
+
+            ui-automation/playwright-report

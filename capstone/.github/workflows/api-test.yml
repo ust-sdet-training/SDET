@@ -1,0 +1,34 @@
+name: API Automation Tests
+
+on:
+  push:
+    branches:
+       rishika-final-capstone
+
+  pull_request:
+
+jobs:
+  api-test:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '22'
+          distribution: 'temurin'
+          cache: maven
+
+      # Check live API connection
+      - name: Check API availability
+        run: |
+          curl -I https://api.tripstack.doomple.com
+
+      # Run API Automation tests
+      - name: Run API Tests
+        working-directory: api-Automation
+        run: mvn test

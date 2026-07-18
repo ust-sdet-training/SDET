@@ -14,7 +14,6 @@ public class BaseApiClient {
                 .spec(spec.RequestSpec.request())
                 .when()
                 .get(endpoint);
-
     }
 
     protected Response getWithAuth(String endpoint, String token) {
@@ -24,9 +23,7 @@ public class BaseApiClient {
                 .header("Authorization", "Bearer " + token)
                 .when()
                 .get(endpoint);
-
     }
-
 
     protected Response post(String endpoint, Object body) {
 
@@ -35,9 +32,7 @@ public class BaseApiClient {
                 .body(body)
                 .when()
                 .post(endpoint);
-
     }
-
 
     protected Response postWithAuth(
             String endpoint,
@@ -52,5 +47,4 @@ public class BaseApiClient {
                 .when()
                 .post(endpoint);
     }
-
 }

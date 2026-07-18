@@ -1,4 +1,4 @@
 export const seats = {
-    preferredSeat: "2C",
+    preferredSeat: "1D",
     seatType: "Window"
 };
