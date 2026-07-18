@@ -8,16 +8,27 @@ import static org.hamcrest.Matchers.*;
 
 import java.beans.Transient;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 public class BusAPITest {
-    private static final Dotenv dotenv = Dotenv.load();
 
-    private static final String BASE_URL = dotenv.get("BASE_URL");
+    private static final Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
 
-    private static final String EMAIL = dotenv.get("EMAIL");
+    private static String getValue(String key) {
+        String env = System.getenv(key);
+        if (env != null && !env.isBlank()) {
+            return env;
+        }
+        return dotenv.get(key);
+    }
 
-    private static final String PASSWORD = dotenv.get("PASSWORD");
+    private static final String BASE_URL = getValue("BASE_URL");
 
-    private static final String EXPIRED_TOKEN = dotenv.get("EXPIRED_TOKEN");
+    private static final String EMAIL = getValue("EMAIL");
+
+    private static final String PASSWORD = getValue("PASSWORD");
+
+    private static final String EXPIRED_TOKEN = getValue("EXPIRED_TOKEN");
 
     @Test
     void BookSleeperBusEndToEnd() {
