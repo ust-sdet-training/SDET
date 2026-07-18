@@ -22,4 +22,6 @@ export class PaymentPage{
     async goToMyTrips(){
         await this.page.getByRole('link',{name:"My Trips"}).click();
     }
+
+    
 }

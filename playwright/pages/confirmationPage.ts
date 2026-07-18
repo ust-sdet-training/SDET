@@ -5,7 +5,8 @@ export class ConfirmationPage{
     constructor(private readonly page:Page){}
 
     async bookingStatus(){
-        return ConfirmationPageLocators.bookStatus(this.page).textContent()
+        
+        return await  ConfirmationPageLocators.bookStatus(this.page).textContent()
     }
    
 }

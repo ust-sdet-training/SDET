@@ -1,22 +1,22 @@
-[INFO - 20:15:33] Test Started {null
-[INFO - 20:15:34] Logging in {null
-[INFO - 20:15:36] Login successful {null
-[INFO - 20:15:36] Login Time: 2162.2798 ms {null
-[INFO - 20:15:36] Selecting route: CCU -> DEL {null
-[INFO - 20:15:36] Route selected {null
-[INFO - 20:15:36] Booking for 12 day(s) {null
-[INFO - 20:15:36] Travel date selected {null
-[INFO - 20:15:36] Searching buses... {null
-[INFO - 20:15:36] Bus search completed {null
-[INFO - 20:15:36] Login Time: 261.6246000000001 ms {null
-[INFO - 20:15:36] Opening seater bus listing page {null
-[INFO - 20:15:37] Bus listing page opened {null
-[INFO - 20:15:37] Selecting seat on S2 deck {null
-[INFO - 20:15:37] Seat selected {null
-[INFO - 20:15:37] Login Time: 88.00680000000011 ms {null
-[INFO - 20:15:37] Navigating to passenger details page {null
-[INFO - 20:15:37] Passenger details page opened {null
-[INFO - 20:15:37] Entering passenger details for HEIDI HEIDI {null
-[INFO - 20:15:37] Passenger details entered successfully {null
-[INFO - 20:15:37] Processing payment with card  {null
-[INFO - 20:15:40] Test passed {null
+[INFO - 22:32:37] Test Started {null
+[INFO - 22:32:37] Logging in {null
+[INFO - 22:32:40] Login successful {null
+[INFO - 22:32:40] Login Time: 2283.7396 ms {null
+[INFO - 22:32:40] Selecting route: CCU -> DEL {null
+[INFO - 22:32:40] Route selected {null
+[INFO - 22:32:40] Booking for 12 day(s) {null
+[INFO - 22:32:40] Travel date selected {null
+[INFO - 22:32:40] Searching buses... {null
+[INFO - 22:32:40] Bus search completed {null
+[INFO - 22:32:40] Login Time: 286.1900999999998 ms {null
+[INFO - 22:32:40] Opening seater bus listing page {null
+[INFO - 22:32:40] Bus listing page opened {null
+[INFO - 22:32:40] Selecting seat on S2 deck {null
+[INFO - 22:32:40] Seat selected {null
+[INFO - 22:32:40] Login Time: 66.12830000000031 ms {null
+[INFO - 22:32:40] Navigating to passenger details page {null
+[INFO - 22:32:41] Passenger details page opened {null
+[INFO - 22:32:41] Entering passenger details for HEIDI HEIDI {null
+[INFO - 22:32:42] Passenger details entered successfully {null
+[INFO - 22:32:42] Booking Status: CONFIRMED {null
+[INFO - 22:32:42] Test passed {null

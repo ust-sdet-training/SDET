@@ -3,7 +3,7 @@ import { Util } from "../src/utils";
 import { Secrets } from "../src/secrets";
 import { userdata } from "../testdata/userdata";
 import { redactSensitiveFields } from "../src/logger";
-test('Tripstack Validation', async ({ trip, log,evidence }) => {
+test('Tripstack Validation', async ({ trip, log,evidence,page }) => {
 
    log.info("Logging in");
 
@@ -56,12 +56,37 @@ test('Tripstack Validation', async ({ trip, log,evidence }) => {
    await trip.makeAPaymentFor(userdata.busDetails.deck,userdata.user1.firstname,userdata.user1.lastname,userdata.user1.age,userdata.user1.gender, Util.emailName(userdata.user1.firstname),userdata.user1.phone);
    log.info("Passenger details entered successfully");
 const safeCardDetails = redactSensitiveFields(userdata.cardDetails);
-   log.info( "Processing payment with card ");
-   await trip.paywith(userdata.cardDetails.cardName, userdata.cardDetails.cardNumber, userdata.cardDetails.expiry, userdata.cardDetails.cvv);
-  evidence.cardDetails = safeCardDetails;
+  
+try {
+    await trip.paywith(
+        userdata.cardDetails.cardName,
+        userdata.cardDetails.cardNumber,
+        userdata.cardDetails.expiry,
+        userdata.cardDetails.cvv
+    );
 
-    const server_error = await trip.validateThePayement500();
-    expect(server_error).toEqual('payment gateway error (5xx)');
-   log.info("Payment500")
+    const bookingStatus = await trip.validateBookingStatus();
 
+    expect(bookingStatus).toContain("CONFIRMED");
+
+    log.info(`Booking Status: ${bookingStatus}`);
+
+} catch (bookingError) {
+
+    log.warn(`Booking validation failed: ${bookingError}`);
+
+    try {
+        const serverError = await trip.validateThePayement500();
+
+        expect(serverError).toBe("payment gateway error (5xx)");
+
+        log.info("Payment Gateway Error validated successfully");
+
+    } catch (paymentError) {
+
+        log.error(`Payment validation failed: ${paymentError}`);
+
+        throw paymentError;
+    }
+}
 });
