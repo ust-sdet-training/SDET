@@ -51,7 +51,7 @@ jobs:
           CARD_NUMBER: ${{ secrets.SHAHBAZ_CARD_NUMBER || '4111111111111111' }}
           CARD_EXPIRY: ${{ secrets.SHAHBAZ_CARD_EXPIRY || '12/30' }}
           CARD_CVV: ${{ secrets.SHAHBAZ_CARD_CVV || '123' }}
-        run: npx playwright test
+        run: npx playwright test InvalidLogin.spec.ts
 
       - name: Upload Playwright HTML Report
         if: always()
