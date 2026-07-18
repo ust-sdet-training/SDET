@@ -1,5 +1,6 @@
 package ust.sdet.Util;
 
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import ust.sdet.Data.TestDataBuilder;
 import ust.sdet.SpecFactory.AuthSpec;
@@ -19,6 +20,7 @@ public class Functions {
 
     AuthSpec authSpec = new AuthSpec();
 
+    @Step("Generate Authentication Token")
     public String getToken(){
         return given()
                 .spec(configSpec.setHeaders())
@@ -43,6 +45,7 @@ public class Functions {
                 .path("token");
     }
 
+    @Step("Calling the api endpoint with priviledge required")
     public Response privilegeEscalationCall(String token){
 
         return given()
@@ -55,6 +58,7 @@ public class Functions {
 
     }
 
+    @Step("Search for available flights")
     public Response searchFlight(){
         return given()
                 .spec(configSpec.setHeaders())
@@ -68,6 +72,7 @@ public class Functions {
                 .response();
     }
 
+    @Step("Search for seats available in a flights")
     public String getFlightSeats(String flightid){
         return given()
                 .spec(configSpec.setHeaders())
@@ -79,6 +84,7 @@ public class Functions {
                 .path("rows.seats.flatten().find { !it.occupied }.seat_id");
     }
 
+    @Step("Booking a seat in flight")
     public String bookSeats(String token,String flightid,String seatid){
         return given()
                 .spec(authSpec.setToken(token))
@@ -92,6 +98,7 @@ public class Functions {
                 .extract().path("id");
     }
 
+    @Step("Paying for booked seats")
     public Response payForSeats(String token,String bookingid){
         return given()
                 .spec(authSpec.setToken(token))
@@ -102,6 +109,7 @@ public class Functions {
                 .extract().response();
     }
 
+    @Step("Confirming the paid seats")
     public Response confirmSeats(String token,String bookingid){
         return given()
                 .spec(authSpec.setToken(token))
@@ -112,6 +120,8 @@ public class Functions {
                 .extract().response();
     }
 
+
+    @Step("Cancelling the booked seats")
     public Response cancelSeats(String token,String bookingid){
         return given()
                 .spec(authSpec.setToken(token))
