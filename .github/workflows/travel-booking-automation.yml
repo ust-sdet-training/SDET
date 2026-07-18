@@ -2,9 +2,9 @@ name: Travel Booking Automation
 
 on:
   push:
-    branches: [ main ]
+    branches: [ bhumika_final ]
   pull_request:
-    branches: [ main ]
+    branches: [ bhumika_final ]
   workflow_dispatch:
 
 jobs:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: Playwright_UI
+        working-directory: Bhumika_Capstone
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
