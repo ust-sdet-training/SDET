@@ -34,6 +34,13 @@ jobs:
           BASE_URL: https://tripstack.doomple.com
           TRIPSTACK_USERNAME: erin@tripstack.test
           TRIPSTACK_PASSWORD: Password@123
+
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_NAME: tripstack
+          DB_USERNAME: root
+          DB_PASSWORD: root
+
         run: npx playwright test
 
       - name: Upload Playwright Report
@@ -58,7 +65,7 @@ jobs:
         image: mysql:8.4
         env:
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: travel_booking
+          MYSQL_DATABASE: tripstack
         ports:
           - 3306:3306
         options: >-
@@ -95,9 +102,13 @@ jobs:
           BASE_URL: https://tripstack.doomple.com
           TRIPSTACK_USERNAME: erin@tripstack.test
           TRIPSTACK_PASSWORD: Password@123
-          DB_URL: jdbc:mysql://127.0.0.1:3306/travel_booking
+
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_NAME: tripstack
           DB_USERNAME: root
           DB_PASSWORD: root
+
         run: mvn clean test
 
       - name: Upload Allure Results
@@ -130,11 +141,18 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Run Performance Test
+      - name: Run Performance Tests
         env:
           BASE_URL: https://tripstack.doomple.com
           TRIPSTACK_USERNAME: erin@tripstack.test
           TRIPSTACK_PASSWORD: Password@123
+
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_NAME: tripstack
+          DB_USERNAME: root
+          DB_PASSWORD: root
+
         run: npx playwright test tests/performance.spec.ts
 
       - name: Upload Performance Results
