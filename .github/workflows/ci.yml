@@ -1,0 +1,214 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - Chaithra_final_assessment
+  pull_request:
+    branches:
+      - Chaithra_final_assessment
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  BASE_URL: ${{ secrets.CHAITHRA_BASE_URL }}
+  USER_EMAIL: ${{ secrets.CHAITHRA_USER_EMAIL }}
+  USER_PASSWORD: ${{ secrets.CHAITHRA_USER_PASSWORD }}
+  BROWSER: chromium
+  HEADLESS: "true"
+  TIMEOUT: "30000"
+  LOG_LEVEL: info
+
+jobs:
+
+  playwright:
+    name: Playwright Tests
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: playwright
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: playwright/package-lock.json
+
+      - run: npm ci
+
+      - run: npx playwright install --with-deps chromium
+
+      - run: npx playwright test
+
+      - name: Upload Playwright Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright/playwright-report
+          if-no-files-found: ignore
+
+  api-tests:
+    name: API Tests
+    runs-on: ubuntu-latest
+
+    env:
+      DB_URL: jdbc:mysql://127.0.0.1:3306/tripstack
+      DB_USERNAME: root
+      DB_PASSWORD: root
+
+    services:
+      mysql:
+        image: mysql:8.0
+
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: tripstack
+
+        ports:
+          - 3306:3306
+
+        options: >-
+          --health-cmd="mysqladmin ping -h127.0.0.1 -uroot -proot --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    defaults:
+      run:
+        working-directory: restAssured
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "22"
+          cache: maven
+
+      - name: Run API Tests
+        run: mvn --batch-mode test "-Dtest=LoginTest,BusBookingApiTest"
+
+      - name: Upload API Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-test-reports
+          path: restAssured/target/surefire-reports
+          if-no-files-found: ignore
+
+  db-tests:
+    name: Database Tests
+    runs-on: ubuntu-latest
+
+    env:
+      DB_URL: jdbc:mysql://127.0.0.1:3306/tripstack
+      DB_USERNAME: root
+      DB_PASSWORD: root
+
+    services:
+      mysql:
+        image: mysql:8.0
+
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: tripstack
+
+        ports:
+          - 3306:3306
+
+        options: >-
+          --health-cmd="mysqladmin ping -h127.0.0.1 -uroot -proot --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    defaults:
+      run:
+        working-directory: restAssured
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "22"
+          cache: maven
+
+      - run: docker info
+
+      - name: Run Database Tests
+        run: mvn --batch-mode test "-Dtest=BusBookingDbTest"
+
+      - name: Upload DB Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: db-test-reports
+          path: restAssured/target/surefire-reports
+          if-no-files-found: ignore
+
+  security-tests:
+    name: Security Tests
+    runs-on: ubuntu-latest
+
+    env:
+      DB_URL: jdbc:mysql://127.0.0.1:3306/tripstack
+      DB_USERNAME: root
+      DB_PASSWORD: root
+
+    services:
+      mysql:
+        image: mysql:8.0
+
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: tripstack
+
+        ports:
+          - 3306:3306
+
+        options: >-
+          --health-cmd="mysqladmin ping -h127.0.0.1 -uroot -proot --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    defaults:
+      run:
+        working-directory: restAssured
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "22"
+          cache: maven
+
+      - name: Run BOLA Test
+        run: mvn --batch-mode test "-Dtest=SecurityBolaTest"
+
+      - name: Run OWASP ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.14.0
+        with:
+          target: ${{ secrets.CHAITHRA_BASE_URL }}
+          cmd_options: "-a -j"
+          allow_issue_writing: true
+
+      - name: Upload ZAP Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-report
+          path: report_html.html
+          if-no-files-found: ignore
