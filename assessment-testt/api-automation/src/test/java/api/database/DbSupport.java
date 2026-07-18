@@ -21,7 +21,7 @@ public final class DbSupport {
     }
 
     public static boolean isConfigured() {
-        return !DbConfig.DB_URL.isBlank() && !DbConfig.DB_USER.isBlank() && !DbConfig.DB_PASSWORD.isBlank();
+        return !DbConfig.getDbUrl().isBlank() && !DbConfig.getDbUser().isBlank() && !DbConfig.getDbPassword().isBlank();
     }
 
     public static Connection getConnection() throws SQLException {
@@ -30,13 +30,13 @@ public final class DbSupport {
         }
 
         try {
-            return DriverManager.getConnection(DbConfig.DB_URL, DbConfig.DB_USER, DbConfig.DB_PASSWORD);
+            return DriverManager.getConnection(DbConfig.getDbUrl(), DbConfig.getDbUser(), DbConfig.getDbPassword());
         } catch (SQLException exception) {
             // If DB doesn't exist or is unreachable, try to create it on server first
             if (isUnknownDatabaseError(exception)) {
                 try {
                     createDatabaseIfMissing();
-                    return DriverManager.getConnection(DbConfig.DB_URL, DbConfig.DB_USER, DbConfig.DB_PASSWORD);
+                    return DriverManager.getConnection(DbConfig.getDbUrl(), DbConfig.getDbUser(), DbConfig.getDbPassword());
                 } catch (SQLException e) {
                     // fall through to Testcontainers fallback
                 }
@@ -53,7 +53,7 @@ public final class DbSupport {
                 }
             }
 
-            return DriverManager.getConnection(DbConfig.DB_URL, DbConfig.DB_USER, DbConfig.DB_PASSWORD);
+            return DriverManager.getConnection(DbConfig.getDbUrl(), DbConfig.getDbUser(), DbConfig.getDbPassword());
         }
     }
 
@@ -64,10 +64,10 @@ public final class DbSupport {
     }
 
     private static void createDatabaseIfMissing() throws SQLException {
-        String databaseName = extractDatabaseName(DbConfig.DB_URL);
-        String serverUrl = stripDatabaseFromUrl(DbConfig.DB_URL);
+        String databaseName = extractDatabaseName(DbConfig.getDbUrl());
+        String serverUrl = stripDatabaseFromUrl(DbConfig.getDbUrl());
 
-        try (Connection connection = DriverManager.getConnection(serverUrl, DbConfig.DB_USER, DbConfig.DB_PASSWORD);
+        try (Connection connection = DriverManager.getConnection(serverUrl, DbConfig.getDbUser(), DbConfig.getDbPassword());
              Statement statement = connection.createStatement()) {
             statement.executeUpdate("CREATE DATABASE IF NOT EXISTS `" + databaseName + "`");
         }
