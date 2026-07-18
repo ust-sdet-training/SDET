@@ -5,6 +5,7 @@ import com.capstone.api.FlightApiClient;
 import com.capstone.support.BaseApiTest;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class BookingApiTest extends BaseApiTest {
     void FlightBookingTest() {
 
         String token = loginAs("traveller");
+        assertEquals(200, bookingApiClient.resetNamespace(token).statusCode());
 
         Response flightSearchResponse = flightApiClient.searchFlights(
                 "CCU", "BOM", "2026-08-10", 1, "economy");
@@ -70,5 +72,30 @@ public class BookingApiTest extends BaseApiTest {
         bookingsResponse.then().body(matchesJsonSchemaInClasspath("schemas/bookings-schema.json"));
         List<String> bookingIds = bookingsResponse.jsonPath().getList("id");
         assertTrue(bookingIds.contains(bookingId));
+    }
+
+    @Test
+    @Tag("negative")
+    void SeatHoldHasExpired() throws InterruptedException {
+        final int holdTtlSeconds = 1;
+        String token = loginAs("otherTraveller");
+        assertEquals(200, bookingApiClient.resetNamespace(token).statusCode());
+        String flightId = flightApiClient.selectFirstFlightId(
+                "CCU", "BOM", "2026-08-10", 1, "economy");
+        List<String> availableSeatIds = flightApiClient.selectAvailableSeatIds(flightId, "economy");
+
+        Response holdResponse = bookingApiClient.holdAvailableSeat(
+                token, flightId, availableSeatIds, holdTtlSeconds);
+        assertEquals(201, holdResponse.statusCode());
+
+        Thread.sleep((holdTtlSeconds + 1L) * 1_000L);
+
+        Response paymentResponse = bookingApiClient.payBooking(
+                token, holdResponse.jsonPath().getString("id"));
+
+        assertAll(
+                () -> assertEquals(409, paymentResponse.statusCode()),
+                () -> assertEquals("HOLD_EXPIRED", paymentResponse.jsonPath().getString("error"))
+        );
     }
 }

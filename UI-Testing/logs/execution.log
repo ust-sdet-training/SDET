@@ -707,3 +707,415 @@
 [INFO] 2026-07-18 11:50:34 - Clicking element
 [INFO] 2026-07-18 11:50:35 - Verifying booking confirmation page
 [INFO] 2026-07-18 11:50:35 - test finished {"status":"passed"}
+[INFO] 2026-07-18 12:08:18 - test started
+[INFO] 2026-07-18 12:08:18 - Opening Home Page
+[INFO] 2026-07-18 12:08:18 - Opening url: /
+[INFO] 2026-07-18 12:08:19 - Opening Login Page
+[INFO] 2026-07-18 12:08:19 - Clicking element
+[INFO] 2026-07-18 12:08:19 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 12:08:19 - Entering value: Password@123
+[INFO] 2026-07-18 12:08:19 - Clicking element
+[INFO] 2026-07-18 12:08:19 - Searching for Flight
+[INFO] 2026-07-18 12:08:19 - Entering value: CCU
+[INFO] 2026-07-18 12:08:19 - Entering value: BOM
+[INFO] 2026-07-18 12:08:19 - Entering value: 2026-08-10
+[INFO] 2026-07-18 12:08:19 - Clicking element
+[INFO] 2026-07-18 12:08:20 - Verifying flight results are displayed
+[INFO] 2026-07-18 12:08:20 - Number of flight cards: 8
+[INFO] 2026-07-18 12:08:20 - Clicking Book button
+[INFO] 2026-07-18 12:08:20 - Clicking element
+[INFO] 2026-07-18 12:08:20 - Seat map render time: 249 ms
+[INFO] 2026-07-18 12:08:20 - Selected seat: 9C
+[INFO] 2026-07-18 12:08:20 - Clicking element
+[INFO] 2026-07-18 12:08:20 - Filling passenger details
+[INFO] 2026-07-18 12:08:20 - Entering value: Mani
+[INFO] 2026-07-18 12:08:20 - Entering value: Prasad
+[INFO] 2026-07-18 12:08:20 - Entering value: 25
+[INFO] 2026-07-18 12:08:20 - Entering value: mani@example.com
+[INFO] 2026-07-18 12:08:20 - Proceeding to payment
+[INFO] 2026-07-18 12:08:20 - Clicking element
+[INFO] 2026-07-18 12:08:21 - Entering payment details
+[INFO] 2026-07-18 12:08:21 - Entering value: Mani Prasad
+[INFO] 2026-07-18 12:08:21 - Entering value: 3647848312340967
+[INFO] 2026-07-18 12:08:21 - Entering value: 23/30
+[INFO] 2026-07-18 12:08:21 - Entering value: 454
+[INFO] 2026-07-18 12:08:21 - Clicking Pay button
+[INFO] 2026-07-18 12:08:21 - Clicking element
+[INFO] 2026-07-18 12:08:21 - Verifying booking confirmation page
+[INFO] 2026-07-18 12:08:21 - test finished {"status":"passed"}
+[INFO] 2026-07-18 19:09:06 - test started
+[INFO] 2026-07-18 19:09:06 - Opening Home Page
+[INFO] 2026-07-18 19:09:06 - Opening url: /
+[INFO] 2026-07-18 19:09:07 - Opening Login Page
+[INFO] 2026-07-18 19:09:07 - Clicking element
+[INFO] 2026-07-18 19:09:07 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 19:09:07 - Entering value: Password@123
+[INFO] 2026-07-18 19:09:07 - Clicking element
+[INFO] 2026-07-18 19:09:08 - Searching for Flight
+[INFO] 2026-07-18 19:09:08 - Entering value: CCU
+[INFO] 2026-07-18 19:09:08 - Entering value: BOM
+[INFO] 2026-07-18 19:09:08 - Entering value: 2026-08-10
+[INFO] 2026-07-18 19:09:08 - Clicking element
+[INFO] 2026-07-18 19:09:08 - Verifying flight results are displayed
+[INFO] 2026-07-18 19:09:08 - Number of flight cards: 0
+[INFO] 2026-07-18 19:09:08 - test finished {"status":"failed"}
+[INFO] 2026-07-18 19:09:41 - test started
+[INFO] 2026-07-18 19:09:41 - Opening Home Page
+[INFO] 2026-07-18 19:09:41 - Opening url: /
+[INFO] 2026-07-18 19:09:42 - Opening Login Page
+[INFO] 2026-07-18 19:09:42 - Clicking element
+[INFO] 2026-07-18 19:09:42 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 19:09:42 - Entering value: Password@123
+[INFO] 2026-07-18 19:09:42 - Clicking element
+[INFO] 2026-07-18 19:09:42 - Searching for Flight
+[INFO] 2026-07-18 19:09:42 - Entering value: CCU
+[INFO] 2026-07-18 19:09:42 - Entering value: BOM
+[INFO] 2026-07-18 19:09:42 - Entering value: 2026-08-10
+[INFO] 2026-07-18 19:09:43 - Clicking element
+[INFO] 2026-07-18 19:09:43 - Verifying flight results are displayed
+[INFO] 2026-07-18 19:09:43 - Number of flight cards: 0
+[INFO] 2026-07-18 19:09:43 - test finished {"status":"failed"}
+[INFO] 2026-07-18 19:11:21 - test started
+[INFO] 2026-07-18 19:11:21 - Opening Home Page
+[INFO] 2026-07-18 19:11:21 - Opening url: /
+[INFO] 2026-07-18 19:11:21 - Opening Login Page
+[INFO] 2026-07-18 19:11:21 - Clicking element
+[INFO] 2026-07-18 19:11:21 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 19:11:21 - Entering value: Password@123
+[INFO] 2026-07-18 19:11:21 - Clicking element
+[INFO] 2026-07-18 19:11:22 - Searching for Flight
+[INFO] 2026-07-18 19:11:22 - Entering value: CCU
+[INFO] 2026-07-18 19:11:22 - Entering value: BOM
+[INFO] 2026-07-18 19:11:22 - Entering value: 2026-08-10
+[INFO] 2026-07-18 19:11:22 - Clicking element
+[INFO] 2026-07-18 19:11:22 - Verifying flight results are displayed
+[INFO] 2026-07-18 19:11:22 - Number of flight cards: 0
+[INFO] 2026-07-18 19:11:22 - test finished {"status":"failed"}
+[INFO] 2026-07-18 19:12:37 - test started
+[INFO] 2026-07-18 19:12:37 - Opening Home Page
+[INFO] 2026-07-18 19:12:37 - Opening url: /
+[INFO] 2026-07-18 19:12:38 - Opening Login Page
+[INFO] 2026-07-18 19:12:38 - Clicking element
+[INFO] 2026-07-18 19:12:38 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 19:12:38 - Entering value: Password@123
+[INFO] 2026-07-18 19:12:38 - Clicking element
+[INFO] 2026-07-18 19:12:39 - Searching for Flight
+[INFO] 2026-07-18 19:12:39 - Entering value: CCU
+[INFO] 2026-07-18 19:12:39 - Entering value: BOM
+[INFO] 2026-07-18 19:12:39 - Entering value: 2026-08-10
+[INFO] 2026-07-18 19:12:39 - Clicking element
+[INFO] 2026-07-18 19:12:39 - Verifying flight results are displayed
+[INFO] 2026-07-18 19:12:39 - Number of flight cards: 0
+[INFO] 2026-07-18 19:12:40 - test finished {"status":"failed"}
+[INFO] 2026-07-18 19:14:56 - test started
+[INFO] 2026-07-18 19:14:56 - Opening Home Page
+[INFO] 2026-07-18 19:14:56 - Opening url: /
+[INFO] 2026-07-18 19:14:56 - Opening Login Page
+[INFO] 2026-07-18 19:14:56 - Clicking element
+[INFO] 2026-07-18 19:14:57 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 19:14:57 - Entering value: Password@123
+[INFO] 2026-07-18 19:14:57 - Clicking element
+[INFO] 2026-07-18 19:14:57 - Searching for Flight
+[INFO] 2026-07-18 19:14:57 - Entering value: CCU
+[INFO] 2026-07-18 19:14:57 - Entering value: BOM
+[INFO] 2026-07-18 19:14:57 - Entering value: 2026-08-10
+[INFO] 2026-07-18 19:14:57 - Clicking element
+[INFO] 2026-07-18 19:14:58 - Verifying flight results are displayed
+[INFO] 2026-07-18 19:14:58 - Number of flight cards: 0
+[INFO] 2026-07-18 19:14:58 - test finished {"status":"failed"}
+[INFO] 2026-07-18 19:17:01 - test started
+[INFO] 2026-07-18 19:17:01 - Opening Home Page
+[INFO] 2026-07-18 19:17:01 - Opening url: /
+[INFO] 2026-07-18 19:17:01 - Opening Login Page
+[INFO] 2026-07-18 19:17:01 - Clicking element
+[INFO] 2026-07-18 19:17:02 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 19:17:02 - Entering value: Password@123
+[INFO] 2026-07-18 19:17:02 - Clicking element
+[INFO] 2026-07-18 19:17:02 - Searching for Flight
+[INFO] 2026-07-18 19:17:02 - Entering value: CCU
+[INFO] 2026-07-18 19:17:02 - Entering value: BOM
+[INFO] 2026-07-18 19:17:02 - Entering value: 2026-08-10
+[INFO] 2026-07-18 19:17:03 - Clicking element
+[INFO] 2026-07-18 19:17:03 - Verifying flight results are displayed
+[INFO] 2026-07-18 19:17:03 - Number of flight cards: 1
+[INFO] 2026-07-18 19:17:03 - Clicking Book button
+[INFO] 2026-07-18 19:17:03 - Clicking element
+[INFO] 2026-07-18 19:17:03 - test finished {"status":"failed"}
+[INFO] 2026-07-18 19:20:08 - test started
+[INFO] 2026-07-18 19:20:08 - Opening Home Page
+[INFO] 2026-07-18 19:20:08 - Opening url: /
+[INFO] 2026-07-18 19:20:09 - Opening Login Page
+[INFO] 2026-07-18 19:20:09 - Clicking element
+[INFO] 2026-07-18 19:20:09 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 19:20:09 - Entering value: Password@123
+[INFO] 2026-07-18 19:20:09 - Clicking element
+[INFO] 2026-07-18 19:20:10 - Searching for Flight
+[INFO] 2026-07-18 19:20:10 - Entering value: CCU
+[INFO] 2026-07-18 19:20:10 - Entering value: BOM
+[INFO] 2026-07-18 19:20:10 - Entering value: 2026-08-10
+[INFO] 2026-07-18 19:20:10 - Clicking element
+[INFO] 2026-07-18 19:20:10 - Verifying flight results are displayed
+[INFO] 2026-07-18 19:20:10 - Number of flight cards: 1
+[INFO] 2026-07-18 19:20:10 - Clicking Book button
+[INFO] 2026-07-18 19:20:10 - Clicking element
+[INFO] 2026-07-18 19:20:11 - test finished {"status":"failed"}
+[INFO] 2026-07-18 19:20:51 - test started
+[INFO] 2026-07-18 19:20:51 - Opening Home Page
+[INFO] 2026-07-18 19:20:51 - Opening url: /
+[INFO] 2026-07-18 19:20:52 - Opening Login Page
+[INFO] 2026-07-18 19:20:52 - Clicking element
+[INFO] 2026-07-18 19:20:52 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 19:20:52 - Entering value: Password@123
+[INFO] 2026-07-18 19:20:52 - Clicking element
+[INFO] 2026-07-18 19:20:53 - Searching for Flight
+[INFO] 2026-07-18 19:20:53 - Entering value: CCU
+[INFO] 2026-07-18 19:20:53 - Entering value: BOM
+[INFO] 2026-07-18 19:20:53 - Entering value: 2026-08-10
+[INFO] 2026-07-18 19:20:53 - Clicking element
+[INFO] 2026-07-18 19:20:53 - Verifying flight results are displayed
+[INFO] 2026-07-18 19:20:53 - Number of flight cards: 1
+[INFO] 2026-07-18 19:20:53 - Clicking Book button
+[INFO] 2026-07-18 19:20:53 - Clicking element
+[INFO] 2026-07-18 19:20:53 - test finished {"status":"failed"}
+[INFO] 2026-07-18 19:25:46 - test started
+[INFO] 2026-07-18 19:25:46 - Opening Home Page
+[INFO] 2026-07-18 19:25:46 - Opening url: /
+[INFO] 2026-07-18 19:25:47 - Opening Login Page
+[INFO] 2026-07-18 19:25:47 - Clicking element
+[INFO] 2026-07-18 19:25:47 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 19:25:47 - Entering value: Password@123
+[INFO] 2026-07-18 19:25:47 - Clicking element
+[INFO] 2026-07-18 19:25:48 - Searching for Flight
+[INFO] 2026-07-18 19:25:48 - Entering value: CCU
+[INFO] 2026-07-18 19:25:48 - Entering value: BOM
+[INFO] 2026-07-18 19:25:48 - Entering value: 2026-08-10
+[INFO] 2026-07-18 19:25:48 - Clicking element
+[INFO] 2026-07-18 19:25:48 - Verifying flight results are displayed
+[INFO] 2026-07-18 19:25:48 - Number of flight cards: 0
+[INFO] 2026-07-18 19:25:48 - test finished {"status":"failed"}
+[INFO] 2026-07-18 19:26:29 - test started
+[INFO] 2026-07-18 19:26:29 - Opening Home Page
+[INFO] 2026-07-18 19:26:29 - Opening url: /
+[INFO] 2026-07-18 19:26:29 - Opening Login Page
+[INFO] 2026-07-18 19:26:29 - Clicking element
+[INFO] 2026-07-18 19:26:30 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 19:26:30 - Entering value: Password@123
+[INFO] 2026-07-18 19:26:30 - Clicking element
+[INFO] 2026-07-18 19:26:30 - Searching for Flight
+[INFO] 2026-07-18 19:26:30 - Entering value: CCU
+[INFO] 2026-07-18 19:26:30 - Entering value: BOM
+[INFO] 2026-07-18 19:26:30 - Entering value: 2026-08-10
+[INFO] 2026-07-18 19:26:31 - Clicking element
+[INFO] 2026-07-18 19:26:31 - Verifying flight results are displayed
+[INFO] 2026-07-18 19:26:31 - Number of flight cards: 1
+[INFO] 2026-07-18 19:26:31 - Clicking Book button
+[INFO] 2026-07-18 19:26:31 - test finished {"status":"failed"}
+[INFO] 2026-07-18 19:27:14 - test started
+[INFO] 2026-07-18 19:27:14 - Opening Home Page
+[INFO] 2026-07-18 19:27:14 - Opening url: /
+[INFO] 2026-07-18 19:27:15 - Opening Login Page
+[INFO] 2026-07-18 19:27:15 - Clicking element
+[INFO] 2026-07-18 19:27:16 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 19:27:16 - Entering value: Password@123
+[INFO] 2026-07-18 19:27:16 - Clicking element
+[INFO] 2026-07-18 19:27:16 - Searching for Flight
+[INFO] 2026-07-18 19:27:16 - Entering value: CCU
+[INFO] 2026-07-18 19:27:16 - Entering value: BOM
+[INFO] 2026-07-18 19:27:16 - Entering value: 2026-08-10
+[INFO] 2026-07-18 19:27:16 - Clicking element
+[INFO] 2026-07-18 19:27:17 - Verifying flight results are displayed
+[INFO] 2026-07-18 19:27:17 - Number of flight cards: 1
+[INFO] 2026-07-18 19:27:17 - Clicking Book button
+[INFO] 2026-07-18 19:27:17 - Clicking element
+[INFO] 2026-07-18 19:27:17 - test finished {"status":"failed"}
+[INFO] 2026-07-18 19:29:33 - test started
+[INFO] 2026-07-18 19:29:33 - Opening Home Page
+[INFO] 2026-07-18 19:29:33 - Opening url: /
+[INFO] 2026-07-18 19:29:34 - Opening Login Page
+[INFO] 2026-07-18 19:29:34 - Clicking element
+[INFO] 2026-07-18 19:29:34 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 19:29:34 - Entering value: Password@123
+[INFO] 2026-07-18 19:29:34 - Clicking element
+[INFO] 2026-07-18 19:29:35 - Searching for Flight
+[INFO] 2026-07-18 19:29:35 - Entering value: CCU
+[INFO] 2026-07-18 19:29:35 - Entering value: BOM
+[INFO] 2026-07-18 19:29:35 - Entering value: 2026-08-10
+[INFO] 2026-07-18 19:29:35 - Clicking element
+[INFO] 2026-07-18 19:29:35 - Verifying flight results are displayed
+[INFO] 2026-07-18 19:29:35 - Number of flight cards: 1
+[INFO] 2026-07-18 19:29:35 - Clicking Book button
+[INFO] 2026-07-18 19:29:35 - Clicking element
+[INFO] 2026-07-18 19:29:36 - test finished {"status":"failed"}
+[INFO] 2026-07-18 19:38:19 - test started
+[INFO] 2026-07-18 19:38:19 - Opening Home Page
+[INFO] 2026-07-18 19:38:19 - Opening url: /
+[INFO] 2026-07-18 19:38:20 - Opening Login Page
+[INFO] 2026-07-18 19:38:20 - Clicking element
+[INFO] 2026-07-18 19:38:21 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 19:38:21 - Entering value: Password@123
+[INFO] 2026-07-18 19:38:21 - Clicking element
+[INFO] 2026-07-18 19:38:21 - Searching for Flight
+[INFO] 2026-07-18 19:38:21 - Entering value: CCU
+[INFO] 2026-07-18 19:38:21 - Entering value: BOM
+[INFO] 2026-07-18 19:38:21 - Entering value: 2026-08-10
+[INFO] 2026-07-18 19:38:21 - Clicking element
+[INFO] 2026-07-18 19:38:22 - Verifying flight results are displayed
+[INFO] 2026-07-18 19:38:22 - Number of flight cards: 1
+[INFO] 2026-07-18 19:38:22 - Clicking Book button
+[INFO] 2026-07-18 19:38:24 - Seat map render time: 2897 ms
+[INFO] 2026-07-18 19:38:25 - Selected seat: 8B
+[INFO] 2026-07-18 19:38:25 - Clicking element
+[INFO] 2026-07-18 19:38:25 - Filling passenger details
+[INFO] 2026-07-18 19:38:25 - Entering value: Mani
+[INFO] 2026-07-18 19:38:25 - Entering value: Prasad
+[INFO] 2026-07-18 19:38:25 - Entering value: 25
+[INFO] 2026-07-18 19:38:25 - Entering value: mani@example.com
+[INFO] 2026-07-18 19:38:25 - Proceeding to payment
+[INFO] 2026-07-18 19:38:25 - Clicking element
+[INFO] 2026-07-18 19:38:26 - Entering payment details
+[INFO] 2026-07-18 19:38:26 - Entering value: Mani Prasad
+[INFO] 2026-07-18 19:38:26 - Entering value: 3647848312340967
+[INFO] 2026-07-18 19:38:26 - Entering value: 23/30
+[INFO] 2026-07-18 19:38:26 - Entering value: 454
+[INFO] 2026-07-18 19:38:26 - Clicking Pay button
+[INFO] 2026-07-18 19:38:26 - Clicking element
+[INFO] 2026-07-18 19:38:26 - Verifying booking confirmation page
+[INFO] 2026-07-18 19:38:31 - test finished {"status":"failed"}
+[INFO] 2026-07-18 19:41:47 - test started
+[INFO] 2026-07-18 19:41:47 - Opening Home Page
+[INFO] 2026-07-18 19:41:47 - Opening url: /
+[INFO] 2026-07-18 19:41:48 - Opening Login Page
+[INFO] 2026-07-18 19:41:48 - Clicking element
+[INFO] 2026-07-18 19:41:48 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 19:41:48 - Entering value: Password@123
+[INFO] 2026-07-18 19:41:48 - Clicking element
+[INFO] 2026-07-18 19:41:48 - Searching for Flight
+[INFO] 2026-07-18 19:41:48 - Entering value: CCU
+[INFO] 2026-07-18 19:41:49 - Entering value: BOM
+[INFO] 2026-07-18 19:41:49 - Entering value: 2026-08-10
+[INFO] 2026-07-18 19:41:49 - Clicking element
+[INFO] 2026-07-18 19:41:49 - Verifying flight results are displayed
+[INFO] 2026-07-18 19:41:49 - Number of flight cards: 1
+[INFO] 2026-07-18 19:41:49 - Clicking Book button
+[INFO] 2026-07-18 19:41:52 - Seat map render time: 2842 ms
+[INFO] 2026-07-18 19:41:52 - Selected seat: 8B
+[INFO] 2026-07-18 19:41:52 - Clicking element
+[INFO] 2026-07-18 19:41:52 - Filling passenger details
+[INFO] 2026-07-18 19:41:52 - Entering value: Mani
+[INFO] 2026-07-18 19:41:52 - Entering value: Prasad
+[INFO] 2026-07-18 19:41:52 - Entering value: 25
+[INFO] 2026-07-18 19:41:52 - Entering value: mani@example.com
+[INFO] 2026-07-18 19:41:52 - Proceeding to payment
+[INFO] 2026-07-18 19:41:52 - Clicking element
+[INFO] 2026-07-18 19:41:53 - Entering payment details
+[INFO] 2026-07-18 19:41:53 - Entering value: Mani Prasad
+[INFO] 2026-07-18 19:41:53 - Entering value: 3647848312340967
+[INFO] 2026-07-18 19:41:53 - Entering value: 23/30
+[INFO] 2026-07-18 19:41:53 - Entering value: 454
+[INFO] 2026-07-18 19:41:53 - Clicking Pay button
+[INFO] 2026-07-18 19:41:53 - Clicking element
+[INFO] 2026-07-18 19:41:53 - Verifying booking confirmation page
+[INFO] 2026-07-18 19:41:58 - test finished {"status":"failed"}
+[INFO] 2026-07-18 19:44:28 - test started
+[INFO] 2026-07-18 19:44:28 - Opening Home Page
+[INFO] 2026-07-18 19:44:28 - Opening url: /
+[INFO] 2026-07-18 19:44:29 - Opening Login Page
+[INFO] 2026-07-18 19:44:29 - Clicking element
+[INFO] 2026-07-18 19:44:29 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 19:44:29 - Entering value: Password@123
+[INFO] 2026-07-18 19:44:29 - Clicking element
+[INFO] 2026-07-18 19:44:30 - Searching for Flight
+[INFO] 2026-07-18 19:44:30 - Entering value: CCU
+[INFO] 2026-07-18 19:44:30 - Entering value: BOM
+[INFO] 2026-07-18 19:44:30 - Entering value: 2026-08-10
+[INFO] 2026-07-18 19:44:30 - Clicking element
+[INFO] 2026-07-18 19:44:30 - Verifying flight results are displayed
+[INFO] 2026-07-18 19:44:30 - Number of flight cards: 1
+[INFO] 2026-07-18 19:44:30 - Clicking Book button
+[INFO] 2026-07-18 19:44:33 - Seat map render time: 2797 ms
+[INFO] 2026-07-18 19:44:34 - Selected seat: 8B
+[INFO] 2026-07-18 19:44:34 - Clicking element
+[INFO] 2026-07-18 19:44:34 - Filling passenger details
+[INFO] 2026-07-18 19:44:34 - Entering value: Mani
+[INFO] 2026-07-18 19:44:34 - Entering value: Prasad
+[INFO] 2026-07-18 19:44:34 - Entering value: 25
+[INFO] 2026-07-18 19:44:34 - Entering value: mani@example.com
+[INFO] 2026-07-18 19:44:34 - Proceeding to payment
+[INFO] 2026-07-18 19:44:34 - Clicking element
+[INFO] 2026-07-18 19:44:34 - Entering payment details
+[INFO] 2026-07-18 19:44:34 - Entering value: Mani Prasad
+[INFO] 2026-07-18 19:44:34 - Entering value: 3647848312340967
+[INFO] 2026-07-18 19:44:35 - Entering value: 23/30
+[INFO] 2026-07-18 19:44:35 - Entering value: 454
+[INFO] 2026-07-18 19:44:35 - Clicking Pay button
+[INFO] 2026-07-18 19:44:35 - Clicking element
+[INFO] 2026-07-18 19:44:40 - test finished {"status":"failed"}
+[INFO] 2026-07-18 19:46:20 - test started
+[INFO] 2026-07-18 19:46:21 - Opening Home Page
+[INFO] 2026-07-18 19:46:21 - Opening url: /
+[INFO] 2026-07-18 19:46:21 - Opening Login Page
+[INFO] 2026-07-18 19:46:21 - Clicking element
+[INFO] 2026-07-18 19:46:21 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 19:46:21 - Entering value: Password@123
+[INFO] 2026-07-18 19:46:22 - Clicking element
+[INFO] 2026-07-18 19:46:22 - Searching for Flight
+[INFO] 2026-07-18 19:46:22 - Entering value: CCU
+[INFO] 2026-07-18 19:46:22 - Entering value: BOM
+[INFO] 2026-07-18 19:46:22 - Entering value: 2026-08-10
+[INFO] 2026-07-18 19:46:22 - Clicking element
+[INFO] 2026-07-18 19:46:22 - Verifying flight results are displayed
+[INFO] 2026-07-18 19:46:22 - Number of flight cards: 1
+[INFO] 2026-07-18 19:46:22 - Clicking Book button
+[INFO] 2026-07-18 19:46:25 - Seat map render time: 2794 ms
+[INFO] 2026-07-18 19:46:25 - Selected seat: 8B
+[INFO] 2026-07-18 19:46:25 - Clicking element
+[INFO] 2026-07-18 19:46:26 - Filling passenger details
+[INFO] 2026-07-18 19:46:26 - Entering value: Mani
+[INFO] 2026-07-18 19:46:26 - Entering value: Prasad
+[INFO] 2026-07-18 19:46:26 - Entering value: 25
+[INFO] 2026-07-18 19:46:26 - Entering value: mani@example.com
+[INFO] 2026-07-18 19:46:26 - Proceeding to payment
+[INFO] 2026-07-18 19:46:26 - Clicking element
+[INFO] 2026-07-18 19:46:26 - Entering payment details
+[INFO] 2026-07-18 19:46:26 - Entering value: Mani Prasad
+[INFO] 2026-07-18 19:46:26 - Entering value: 3647848312340967
+[INFO] 2026-07-18 19:46:26 - Entering value: 23/30
+[INFO] 2026-07-18 19:46:26 - Entering value: 454
+[INFO] 2026-07-18 19:46:26 - Clicking Pay button
+[INFO] 2026-07-18 19:46:26 - Clicking element
+[INFO] 2026-07-18 19:46:32 - test finished {"status":"failed"}
+[INFO] 2026-07-18 20:12:15 - test started
+[INFO] 2026-07-18 20:12:15 - Opening Home Page
+[INFO] 2026-07-18 20:12:15 - Opening url: /
+[INFO] 2026-07-18 20:12:16 - Opening Login Page
+[INFO] 2026-07-18 20:12:16 - Clicking element
+[INFO] 2026-07-18 20:12:16 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 20:12:16 - Entering value: Password@123
+[INFO] 2026-07-18 20:12:16 - Clicking element
+[INFO] 2026-07-18 20:12:17 - Searching for Flight
+[INFO] 2026-07-18 20:12:17 - Entering value: CCU
+[INFO] 2026-07-18 20:12:17 - Entering value: BOM
+[INFO] 2026-07-18 20:12:17 - Entering value: 2026-08-10
+[INFO] 2026-07-18 20:12:17 - Clicking element
+[INFO] 2026-07-18 20:12:17 - Verifying flight results are displayed
+[INFO] 2026-07-18 20:12:17 - Number of flight cards: 1
+[INFO] 2026-07-18 20:12:17 - Clicking Book button
+[INFO] 2026-07-18 20:12:18 - Seat map render time: 321 ms
+[INFO] 2026-07-18 20:12:18 - Selected seat: 1A
+[INFO] 2026-07-18 20:12:18 - Clicking element
+[INFO] 2026-07-18 20:12:18 - Filling passenger details
+[INFO] 2026-07-18 20:12:18 - Entering value: Mani
+[INFO] 2026-07-18 20:12:18 - Entering value: Prasad
+[INFO] 2026-07-18 20:12:18 - Entering value: 25
+[INFO] 2026-07-18 20:12:18 - Entering value: mani@example.com
+[INFO] 2026-07-18 20:12:18 - Proceeding to payment
+[INFO] 2026-07-18 20:12:18 - Clicking element
+[INFO] 2026-07-18 20:12:19 - Entering payment details
+[INFO] 2026-07-18 20:12:19 - Entering value: Mani Prasad
+[INFO] 2026-07-18 20:12:19 - Entering value: 3647848312340967
+[INFO] 2026-07-18 20:12:19 - Entering value: 23/30
+[INFO] 2026-07-18 20:12:19 - Entering value: 454
+[INFO] 2026-07-18 20:12:19 - Clicking Pay button
+[INFO] 2026-07-18 20:12:19 - Clicking element
+[INFO] 2026-07-18 20:12:19 - Verifying booking confirmation page
+[INFO] 2026-07-18 20:12:19 - test finished {"status":"passed"}

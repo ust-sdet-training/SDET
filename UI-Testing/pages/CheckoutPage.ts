@@ -10,6 +10,7 @@ export class CheckoutPage extends BasePage {
     readonly cardExpiry: Locator
     readonly cardCvv: Locator
     readonly payButton: Locator
+    readonly hold: Locator
 
     constructor(page: Page, log: AppLogger) {
         super(page, log);
@@ -20,6 +21,7 @@ export class CheckoutPage extends BasePage {
         this.cardExpiry = page.getByLabel("Expiry")
         this.cardCvv = page.getByLabel("CVV")
         this.payButton = page.getByRole("button", {name: /^Pay/});
+        this.hold = page.getByRole("alert", {name: "HOLD_EXPIRED"})
     }
 
     async verifyCheckoutPage(): Promise<void> {
@@ -37,5 +39,6 @@ export class CheckoutPage extends BasePage {
     async clickPay(): Promise<void> {
         this.log.info("Clicking Pay button");
         await this.click(this.payButton);
+        // await this.isVisible(this.hold)
     }
 }
