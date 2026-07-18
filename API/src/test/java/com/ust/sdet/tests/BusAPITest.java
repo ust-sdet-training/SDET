@@ -53,6 +53,15 @@ public class BusAPITest {
             .contentType(ContentType.JSON)
             .header("Authorization", "Bearer " + token)
         .when()
+            .post(BASE_URL + "/reset")
+        .then()
+            .statusCode(200)
+            .body("emp", equalTo("1010"));
+
+        given()
+            .contentType(ContentType.JSON)
+            .header("Authorization", "Bearer " + token)
+        .when()
             .get(BASE_URL + "/auth/me")
         .then()
             .statusCode(200)
