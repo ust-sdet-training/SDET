@@ -127,9 +127,19 @@ jobs:
       - name: Ensure Gradle wrapper exists
         working-directory: APIAutomationFinal
         run: |
+          # Clean up if 'gradle' or 'gradle/wrapper' exists as a stray file instead of a directory
+          if [ -e "gradle" ] && [ ! -d "gradle" ]; then
+            echo "Found stray file at 'gradle', removing it"
+            rm -f gradle
+          fi
+          if [ -e "gradle/wrapper" ] && [ ! -d "gradle/wrapper" ]; then
+            echo "Found stray file at 'gradle/wrapper', removing it"
+            rm -f gradle/wrapper
+          fi
+
           if [ ! -f "gradlew" ]; then
             echo "gradlew not found — generating wrapper with installed Gradle"
-            gradle wrapper --gradle-version 8.7
+            gradle wrapper --gradle-version 8.13
           else
             echo "gradlew already present, skipping generation"
           fi
