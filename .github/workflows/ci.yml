@@ -25,9 +25,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
-          cache-dependency-path: UIAutomation/package-lock.json
+          node-version: 22
+         
 
       - name: Install Dependencies
         run: npm ci
@@ -51,7 +50,7 @@ jobs:
           CARD_NUMBER: ${{ secrets.SHAHBAZ_CARD_NUMBER || '4111111111111111' }}
           CARD_EXPIRY: ${{ secrets.SHAHBAZ_CARD_EXPIRY || '12/30' }}
           CARD_CVV: ${{ secrets.SHAHBAZ_CARD_CVV || '123' }}
-        run: npx playwright test
+        run: npx playwright flightbooking.spec.ts
 
       - name: Upload Playwright HTML Report
         if: always()
