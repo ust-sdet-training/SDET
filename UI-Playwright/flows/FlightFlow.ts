@@ -43,19 +43,19 @@ export class FlightFlow {
         await this.home.verifyHomePageLoaded();
     }
 
-    async doLogin(email: string,password: string) {
+    async doLogin(email: string, password: string) {
         await this.header.clickLogInLink();
-        await this.login.login(email,password);
+        await this.login.login(email, password);
         await this.header.verifyLogIn();
     }
 
-    async searchFlight(from: string,fromOption: string, to: string, toOption: string, date: string) {
+    async searchFlight(from: string, fromOption: string, to: string, toOption: string, date: string) {
         await this.header.clickFlightsLink();
         await this.search.verifyFlightSearchPageLoaded();
-        await this.search.searchFlight(from,fromOption, to,toOption, date);
+        await this.search.searchFlight(from, fromOption, to, toOption, date);
     }
 
-    async verifyNoFlightsForInvalidRouteSearch(){
+    async verifyNoFlightsForInvalidRouteSearch() {
         await this.results.invalidRouteSearchResult();
     }
 
@@ -80,7 +80,11 @@ export class FlightFlow {
         await this.payment.fillPaymentDetails(nameOnCard, cardNumber, expiryDate, cvv);
     }
 
-    async verifyTicketConfirmation(status:string) {
+    async isGatewayTimeout(): Promise<boolean> {
+        return await this.payment.isGatewayTimeout();
+    }
+
+    async verifyTicketConfirmation(status: string) {
         await this.confirmation.verifyTicketConfirmationPageLoaded();
         await this.confirmation.verifyConfirmedStatus();
         await this.confirmation.clickViewMyTrips();
@@ -88,7 +92,7 @@ export class FlightFlow {
         await this.trips.verifyBookingStatus(status);
     }
 
-    async cleanBookings(status: string){
+    async cleanBookings(status: string) {
         await this.trips.cancelBooking();
         await this.trips.verifyBookingStatus(status);
     }

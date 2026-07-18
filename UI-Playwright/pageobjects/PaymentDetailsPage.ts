@@ -9,13 +9,15 @@ export class PaymentDetailsPage {
     private expiryDateTextBox = (): Locator => this.page.getByRole('textbox', { name: 'Expiry' });
     private cvvTextBox = (): Locator => this.page.getByRole('textbox', { name: 'CVV' });
     private payButton = (): Locator => this.page.getByRole('button', { name: 'Pay ₹' });
+    private gatewayTimeOutError = (): Locator => this.page.getByRole('alert');
+
 
     async verifyPaymentDetailsPageLoaded() {
         await expect(this.page.url()).toContain('/book/payment');
         await expect(this.nameOnCardTextBox()).toBeVisible();
     }
 
-    async fillPaymentDetails(nameOnCard:string,cardNumber:string,expiryDate:string,cvv:string) {
+    async fillPaymentDetails(nameOnCard: string, cardNumber: string, expiryDate: string, cvv: string) {
         await this.nameOnCardTextBox().fill(nameOnCard);
         await this.cardNumberTextBox().fill(cardNumber);
         await this.expiryDateTextBox().fill(expiryDate);
@@ -23,5 +25,9 @@ export class PaymentDetailsPage {
         await this.payButton().click();
     }
 
-    
+    async isGatewayTimeout(): Promise<boolean> {
+        return await this.gatewayTimeOutError().isVisible();
+    }
+
+
 }

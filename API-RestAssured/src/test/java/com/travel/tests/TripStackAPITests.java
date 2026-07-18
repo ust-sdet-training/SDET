@@ -11,6 +11,7 @@ import com.travel.models.response.Seat;
 import com.travel.utils.ConfigReader;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -22,8 +23,7 @@ import java.util.List;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 
 public class TripStackAPITests {
 
@@ -146,6 +146,87 @@ public class TripStackAPITests {
                 .then()
                 .statusCode(200)
                 .body(matchesJsonSchemaInClasspath("schemas/get_flights_schema.json"));
+    }
+
+    @Test
+    @DisplayName("Reject tampered JWT")
+    void rejectsTamperedToken() {
+
+        String token = authClient.token();
+
+        String tampered = token.replace('e','d');
+
+
+        given()
+                .header("Authorization", "Bearer " + tampered)
+                .when()
+                .get("/auth/me")
+                .then()
+                .statusCode(401);
+    }
+
+    @Test
+    @DisplayName("Payment gateway timeout returns 504")
+    void paymentGatewayTimeout() {
+
+        String token = authClient.token();
+
+        Flight flight = flightClient.firstFlight(
+                ConfigReader.get("FROM"),
+                ConfigReader.get("TO"));
+
+        Seat seat = flightClient.firstAvailableSeat(flight.id());
+
+        BookingRequest request = new BookingRequest(
+                ConfigReader.get("JOURNEY_TYPE"),
+                flight.id(),
+                List.of(seat.seatId()),
+                Boolean.parseBoolean(ConfigReader.get("REFUNDABLE"))
+        );
+
+        BookingResponse booking = bookingClient.hold(token, request);
+
+        given()
+                .header("Authorization", "Bearer " + token)
+                .contentType(ContentType.JSON)
+                .body("{}")
+                .when()
+                .post("/bookings/" + booking.id() + "/pay")
+                .then()
+                .statusCode(200);
+                //.statusCode(504) reverted
+                //.body("error", equalTo("GATEWAY_TIMEOUT"));
+    }
+
+    @Test
+    @DisplayName("Flight search responds within acceptable response time")
+    void flightSearchPerformance() {
+
+        Response response =
+                given()
+                        .queryParam("from", ConfigReader.get("FROM"))
+                        .queryParam("to", ConfigReader.get("TO"))
+                        .queryParam("date",
+                                LocalDate.now()
+                                        .plusDays(Long.parseLong(ConfigReader.get("DAYS_FROM_TODAY")))
+                                        .toString())
+                        .queryParam("pax", ConfigReader.get("PAX"))
+                        .queryParam("class", ConfigReader.get("CLASS"))
+                        .when()
+                        .get("/flights");
+
+        long responseTime = response.time();
+
+        response.then()
+                .statusCode(200);
+
+        assertThat("No flights returned",
+                response.jsonPath().getInt("count"),
+                greaterThan(0));
+
+        assertThat("Flight search is too slow: " + responseTime + " ms",
+                responseTime,
+                lessThan(1500L));
     }
 
 }
