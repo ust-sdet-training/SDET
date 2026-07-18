@@ -20,17 +20,17 @@ export class TripFlow {
         await this.bookingPage.busSearch(from, to, date);
     }
 
-    async selectSeatsForFirstBus(seat: string) {
+    async selectSeatsForFirstBus(seat: string, deck:string) {
         await this.bookingPage.selectFirstAC();
-        await this.bookingPage.selectSeats(seat);
+        await this.bookingPage.selectSeats(seat, deck);
     }
 
     async fillPassengerDetails(firstName: string, lastName: string, age: string, email: string, phone: string) {
         await this.bookingPage.passengerDetails(firstName, lastName, age, email, phone);
     }
 
-    async fillPaymentDetails(cardName: string, cardNumber: string, expiry: string, cvv: string) {
-        await this.bookingPage.paymentDetails(cardName, cardNumber, expiry, cvv);
+    async fillPaymentDetails(cardName: string, cardNumber: string, expiry: string, cvv: string): Promise<boolean> {
+        return await this.bookingPage.paymentDetails(cardName, cardNumber, expiry, cvv);
     }
 
     async verifyBookingIsConfirmed() {

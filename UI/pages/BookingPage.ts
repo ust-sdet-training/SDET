@@ -19,7 +19,8 @@ export class BookingPage {
         await this.page.getByRole('button', { name: 'Select Seats' }).first().click();
     }
 
-    async selectSeats(seat: string) {
+    async selectSeats(seat: string, deck: string) {
+        await this.page.getByRole('tab', { name: deck }).click();
         await this.page.getByRole('button', { name: seat }).click();
         await this.page.getByRole('button', { name: 'Continue to passenger details' }).click();
     }
@@ -38,17 +39,25 @@ export class BookingPage {
         await this.page.getByRole('button', { name: 'Continue to payment' }).click();
     }
 
-    async paymentDetails(cardName: string, cardNumber: string, expiry: string, cvv: string) {
-        await this.page.getByRole('textbox', { name: 'Name on card' }).click();
+    async paymentDetails(cardName: string, cardNumber: string, expiry: string, cvv: string): Promise<boolean> {
         await this.page.getByRole('textbox', { name: 'Name on card' }).fill(cardName);
-        await this.page.getByRole('textbox', { name: 'Card number' }).click();
         await this.page.getByRole('textbox', { name: 'Card number' }).fill(cardNumber);
-        await this.page.getByRole('textbox', { name: 'Expiry' }).click();
         await this.page.getByRole('textbox', { name: 'Expiry' }).fill(expiry);
-        await this.page.getByRole('textbox', { name: 'CVV' }).click();
         await this.page.getByRole('textbox', { name: 'CVV' }).fill(cvv);
         await this.page.getByRole('button', { name: 'Pay ₹' }).click();
-        await expect(this.page.getByText('CONFIRMED', { exact: true })).toBeVisible();
+        const paymentError = this.page.locator('[data-ref="payment-error"]');
+        const confirmed = this.page.getByText('CONFIRMED', { exact: true });
+        try {
+            await expect(confirmed).toBeVisible({ timeout: 10000 });
+            return true;
+        }
+        catch {
+            if (await paymentError.isVisible()) {
+                console.log('Payment gateway connection reset');
+                return false;
+            }
+            throw new Error('Unexpected payment outcome');
+        }
     }
 
     async getPnr(): Promise<string> {

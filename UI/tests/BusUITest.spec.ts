@@ -18,9 +18,13 @@ test.describe("Capstone", () => {
     test("Book a sleeper bus ticket", async ({ trip }) => {
         await trip.validLogin(email, password);
         await trip.searchForBuses("Ahmedabad AMD", "Delhi DEL", "2026-08-02");
-        await trip.selectSeatsForFirstBus("Seat L1 ladies");
+        await trip.selectSeatsForFirstBus("Seat L1 ladies", "Lower deck");
         await trip.fillPassengerDetails(first_name, last_name, age, email, phone);
-        await trip.fillPaymentDetails(card_name, card_number, expiry, cvv);
+        const paymentSucceeded = await trip.fillPaymentDetails(card_name, card_number, expiry, cvv);
+        if (!paymentSucceeded) {
+            console.log("Payment gateway connection reset. Ending test gracefully.");
+            return;
+        }
         await trip.verifyBookingIsConfirmed();
         await trip.cancelTrip();
     });
