@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { getBooking } from '../databse/booking';
 
 
 async function searchBus(page:any, from:string, to:string, date:string) {
@@ -58,16 +59,29 @@ test('simulated return journey booking', async ({ page }) => {
     await page.getByRole('textbox', { name: 'Card number' }).fill("4111111111111111");
     await page.getByRole('textbox', { name: 'CVV' }).fill("123");
     await page.getByRole('textbox', { name: 'Expiry' }).fill("1233");
-    await page.getByRole('button', { name:/Pay/ })
-    .click();
+    await page.getByRole('button', { name:/Pay/ }).click();
     const holdExpired = page.getByText('HOLD_EXPIRED');
     if (await holdExpired.count() > 0) {
         console.log("HOLD_EXPIRED happened");
         console.log(await holdExpired.first().textContent());
+        return;
 
     }
-    else {console.log("Seat hold is valid");}
+    
+await expect(
+    page.getByText("Your booking is confirmed")
+).toBeVisible({ timeout: 10000 });
 
+await page.getByRole("button", { name: "View my trips" }).click();
+
+const uiPNR = (
+    await page.locator("[data-id='pnr']").first().textContent()
+)!.trim();
+
+console.log("PNR:", uiPNR);
+
+const booking = await getBooking(uiPNR);
+expect(booking[0].status).toBe("CONFIRMED");
     const checkoutEnd = performance.now();
     const checkoutLatency = checkoutEnd - checkoutStart;
     console.log(`Checkout latency: ${checkoutLatency} ms`);
