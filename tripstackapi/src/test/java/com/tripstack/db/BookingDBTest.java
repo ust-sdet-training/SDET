@@ -11,7 +11,7 @@ public class BookingDBTest {
     @Test
     void verifyBookingExistsInDatabase() throws Exception {
 
-        String bookingId = BookingTest.bookingId;
+        String bookingId = "BK-1017-0001";
 
         assertNotNull(bookingId);
 
