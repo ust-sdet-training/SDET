@@ -13,7 +13,7 @@ export const config = {
   cvv: process.env.CVV || ""
 };
 
-const required = ["BASE_URL","PREM_TRIPSTACK_EMAIL","TPREM_RIPSTACK_PASSWORD"];
+const required = ["BASE_URL","PREM_TRIPSTACK_EMAIL","PREM_TRIPSTACK_PASSWORD"];
 
 
 for (const key of required) {
