@@ -2,9 +2,9 @@ name: Travel Booking Automation
 
 on:
   push:
-    branches: [ main ]
+    branches: [ bhumika_final ]
   pull_request:
-    branches: [ main ]
+    branches: [ bhumika_final ]
   workflow_dispatch:
 
 jobs:
