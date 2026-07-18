@@ -1,0 +1,58 @@
+name: Full Capstone CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  api-variant:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api-variant
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Confirm required folders
+        run: |
+          pwd
+          ls
+          test -d api-variant
+          test -d Playwright_ui
+          echo "Both folders are present"
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '22'
+          cache: maven
+
+      - name: Run API tests
+        run: mvn test
+
+  playwright-ui:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Playwright_ui
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browser binaries
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: npx playwright test booking.spec.ts
