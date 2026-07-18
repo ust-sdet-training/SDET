@@ -1,5 +1,5 @@
 import { Page } from "@playwright/test";
-
+import 'dotenv/config';
 import { LoginPage } from "../pages/LoginPage";
 import { FlightSearchPage } from "../pages/FlightSearchPage";
 import { BookingPage } from "../pages/BookingPage";

@@ -44,6 +44,10 @@ jobs:
 
       - name: Run Playwright Tests
         working-directory: Playwright
+         env:
+            BASE_URL: ${{ secrets.SALMAN_BASE_URL }}
+            EMAIL: ${{ secrets.SALMAN_AARON_EMAIL }}
+            PASSWORD: ${{ secrets.SALMAN_AARON_PASSWORD }}
         run: npx playwright test
 
       - name: Upload Playwright HTML Report
