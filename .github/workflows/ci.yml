@@ -34,10 +34,10 @@ jobs:
       - name: Run API Tests
         run: gradle clean test
         env:
-          BASE_URL: ${{ secrets.BASE_URL }}
-          EMAIL: ${{ secrets.EMAIL }}
-          PASSWORD: ${{ secrets.PASSWORD }}
-          EXPIRED_TOKEN: ${{ secrets.EXPIRED_TOKEN }}
+          BASE_URL: ${{ secrets.GEORGE_BASE_URL }}
+          EMAIL: ${{ secrets.GEORGE_EMAIL }}
+          PASSWORD: ${{ secrets.GEORGE_PASSWORD }}
+          EXPIRED_TOKEN: ${{ secrets.GEORGE_EXPIRED_TOKEN }}
 
       - name: Upload Allure Results
         if: always()
@@ -86,16 +86,16 @@ jobs:
       - name: Run Playwright Tests
         run: npx playwright test
         env:
-          EMAIL: ${{ secrets.EMAIL }}
-          PASSWORD: ${{ secrets.PASSWORD }}
-          FIRST_NAME: ${{ secrets.FIRST_NAME }}
-          LAST_NAME: ${{ secrets.LAST_NAME }}
-          CARD_NAME: ${{ secrets.CARD_NAME }}
-          CARD_NUMBER: ${{ secrets.CARD_NUMBER }}
-          CARD_EXPIRY: ${{ secrets.CARD_EXPIRY }}
-          CVV: ${{ secrets.CVV }}
-          AGE: ${{ secrets.AGE }}
-          PHONE: ${{ secrets.PHONE }}
+          EMAIL: ${{ secrets.GEORGE_EMAIL }}
+          PASSWORD: ${{ secrets.GEORGE_PASSWORD }}
+          FIRST_NAME: ${{ secrets.GEORGE_FIRST_NAME }}
+          LAST_NAME: ${{ secrets.GEORGE_LAST_NAME }}
+          CARD_NAME: ${{ secrets.GEORGE_CARD_NAME }}
+          CARD_NUMBER: ${{ secrets.GEORGE_CARD_NUMBER }}
+          CARD_EXPIRY: ${{ secrets.GEORGE_CARD_EXPIRY }}
+          CVV: ${{ secrets.GEORGE_CVV }}
+          AGE: ${{ secrets.GEORGE_AGE }}
+          PHONE: ${{ secrets.GEORGE_PHONE }}
 
       - name: Upload Playwright Report
         if: always()
