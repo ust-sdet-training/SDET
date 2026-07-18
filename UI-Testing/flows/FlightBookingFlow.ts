@@ -38,10 +38,18 @@ export class FlightBookingFlow extends BasePage {
 
         // Booking flight
         await flightsPage.verifyFlightResultsDisplayed();
+
+        const start = Date.now();
+
         await flightsPage.clickBookBtn()
 
         // Seat Selection
         await seatingPage.verifySeatingPage();
+
+        const renderTime = Date.now() - start;
+        this.log.info(`Seat map render time: ${renderTime} ms`);
+        console.log(`Seat map render time: ${renderTime} ms`);
+
         const selectedSeat = await seatingPage.selectAvailableSeat();
         await seatingPage.verifySeatSelected(selectedSeat);
         await seatingPage.clickContinue();

@@ -530,3 +530,180 @@
 [INFO] 2026-07-17 20:09:30 - Clicking element
 [INFO] 2026-07-17 20:09:30 - Verifying booking confirmation page
 [INFO] 2026-07-17 20:09:30 - test finished {"status":"passed"}
+[INFO] 2026-07-18 09:28:35 - test started
+[INFO] 2026-07-18 09:28:35 - Opening Home Page
+[INFO] 2026-07-18 09:28:35 - Opening url: /
+[INFO] 2026-07-18 09:28:36 - Opening Login Page
+[INFO] 2026-07-18 09:28:36 - Clicking element
+[INFO] 2026-07-18 09:28:36 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 09:28:36 - Entering value: Password@123
+[INFO] 2026-07-18 09:28:36 - Clicking element
+[INFO] 2026-07-18 09:28:37 - Searching for Flight
+[INFO] 2026-07-18 09:28:37 - Entering value: CCU
+[INFO] 2026-07-18 09:28:37 - Entering value: BOM
+[INFO] 2026-07-18 09:28:37 - Entering value: 2026-08-10
+[INFO] 2026-07-18 09:28:37 - Clicking element
+[INFO] 2026-07-18 09:28:37 - Verifying flight results are displayed
+[INFO] 2026-07-18 09:28:37 - Number of flight cards: 8
+[INFO] 2026-07-18 09:28:37 - Clicking Book button
+[INFO] 2026-07-18 09:28:37 - Clicking element
+[INFO] 2026-07-18 09:28:38 - Selected seat: 6D
+[INFO] 2026-07-18 09:28:38 - Clicking element
+[INFO] 2026-07-18 09:28:38 - Filling passenger details
+[INFO] 2026-07-18 09:28:38 - Entering value: Mani
+[INFO] 2026-07-18 09:28:38 - Entering value: Prasad
+[INFO] 2026-07-18 09:28:38 - Entering value: 25
+[INFO] 2026-07-18 09:28:38 - Entering value: mani@example.com
+[INFO] 2026-07-18 09:28:38 - Proceeding to payment
+[INFO] 2026-07-18 09:28:38 - Clicking element
+[INFO] 2026-07-18 09:28:38 - Entering payment details
+[INFO] 2026-07-18 09:28:38 - Entering value: Mani Prasad
+[INFO] 2026-07-18 09:28:38 - Entering value: 3647848312340967
+[INFO] 2026-07-18 09:28:38 - Entering value: 23/30
+[INFO] 2026-07-18 09:28:39 - Entering value: 454
+[INFO] 2026-07-18 09:28:39 - Clicking Pay button
+[INFO] 2026-07-18 09:28:39 - Clicking element
+[INFO] 2026-07-18 09:28:39 - Verifying booking confirmation page
+[INFO] 2026-07-18 09:28:39 - test finished {"status":"passed"}
+[INFO] 2026-07-18 10:18:37 - test started
+[INFO] 2026-07-18 10:18:37 - Opening Home Page
+[INFO] 2026-07-18 10:18:37 - Opening url: /
+[INFO] 2026-07-18 10:18:37 - Opening Login Page
+[INFO] 2026-07-18 10:18:37 - Clicking element
+[INFO] 2026-07-18 10:18:38 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 10:18:38 - Entering value: Password@123
+[INFO] 2026-07-18 10:18:38 - Clicking element
+[INFO] 2026-07-18 10:18:38 - Searching for Flight
+[INFO] 2026-07-18 10:18:38 - Entering value: CCU
+[INFO] 2026-07-18 10:18:38 - Entering value: BOM
+[INFO] 2026-07-18 10:18:38 - Entering value: 2026-08-10
+[INFO] 2026-07-18 10:18:38 - Clicking element
+[INFO] 2026-07-18 10:18:38 - Verifying flight results are displayed
+[INFO] 2026-07-18 10:18:39 - Number of flight cards: 8
+[INFO] 2026-07-18 10:18:39 - Clicking Book button
+[INFO] 2026-07-18 10:18:39 - Clicking element
+[INFO] 2026-07-18 10:18:39 - Selected seat: 7D
+[INFO] 2026-07-18 10:18:39 - Clicking element
+[INFO] 2026-07-18 10:18:39 - Filling passenger details
+[INFO] 2026-07-18 10:18:39 - Entering value: Mani
+[INFO] 2026-07-18 10:18:39 - Entering value: Prasad
+[INFO] 2026-07-18 10:18:39 - Entering value: 25
+[INFO] 2026-07-18 10:18:39 - Entering value: mani@example.com
+[INFO] 2026-07-18 10:18:39 - Proceeding to payment
+[INFO] 2026-07-18 10:18:39 - Clicking element
+[INFO] 2026-07-18 10:18:40 - Entering payment details
+[INFO] 2026-07-18 10:18:40 - Entering value: Mani Prasad
+[INFO] 2026-07-18 10:18:40 - Entering value: 3647848312340967
+[INFO] 2026-07-18 10:18:40 - Entering value: 23/30
+[INFO] 2026-07-18 10:18:40 - Entering value: 454
+[INFO] 2026-07-18 10:18:40 - Clicking Pay button
+[INFO] 2026-07-18 10:18:40 - Clicking element
+[INFO] 2026-07-18 10:18:40 - Verifying booking confirmation page
+[INFO] 2026-07-18 10:18:40 - test finished {"status":"passed"}
+[INFO] 2026-07-18 10:34:25 - test started
+[INFO] 2026-07-18 10:34:25 - Opening Home Page
+[INFO] 2026-07-18 10:34:25 - Opening url: /
+[INFO] 2026-07-18 10:34:26 - Opening Login Page
+[INFO] 2026-07-18 10:34:26 - Clicking element
+[INFO] 2026-07-18 10:34:26 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 10:34:27 - Entering value: Password@123
+[INFO] 2026-07-18 10:34:27 - Clicking element
+[INFO] 2026-07-18 10:34:27 - Searching for Flight
+[INFO] 2026-07-18 10:34:27 - Entering value: CCU
+[INFO] 2026-07-18 10:34:27 - Entering value: BOM
+[INFO] 2026-07-18 10:34:27 - Entering value: 2026-08-10
+[INFO] 2026-07-18 10:34:27 - Clicking element
+[INFO] 2026-07-18 10:34:27 - Verifying flight results are displayed
+[INFO] 2026-07-18 10:34:28 - Number of flight cards: 8
+[INFO] 2026-07-18 10:34:28 - Clicking Book button
+[INFO] 2026-07-18 10:34:28 - Clicking element
+[INFO] 2026-07-18 10:34:28 - Selected seat: 7E
+[INFO] 2026-07-18 10:34:28 - Clicking element
+[INFO] 2026-07-18 10:34:28 - Filling passenger details
+[INFO] 2026-07-18 10:34:28 - Entering value: Mani
+[INFO] 2026-07-18 10:34:28 - Entering value: Prasad
+[INFO] 2026-07-18 10:34:28 - Entering value: 25
+[INFO] 2026-07-18 10:34:28 - Entering value: mani@example.com
+[INFO] 2026-07-18 10:34:28 - Proceeding to payment
+[INFO] 2026-07-18 10:34:28 - Clicking element
+[INFO] 2026-07-18 10:34:29 - Entering payment details
+[INFO] 2026-07-18 10:34:29 - Entering value: Mani Prasad
+[INFO] 2026-07-18 10:34:29 - Entering value: 3647848312340967
+[INFO] 2026-07-18 10:34:29 - Entering value: 23/30
+[INFO] 2026-07-18 10:34:29 - Entering value: 454
+[INFO] 2026-07-18 10:34:29 - Clicking Pay button
+[INFO] 2026-07-18 10:34:29 - Clicking element
+[INFO] 2026-07-18 10:34:29 - Verifying booking confirmation page
+[INFO] 2026-07-18 10:34:29 - test finished {"status":"passed"}
+[INFO] 2026-07-18 10:35:21 - test started
+[INFO] 2026-07-18 10:35:21 - Opening Home Page
+[INFO] 2026-07-18 10:35:21 - Opening url: /
+[INFO] 2026-07-18 10:35:22 - Opening Login Page
+[INFO] 2026-07-18 10:35:22 - Clicking element
+[INFO] 2026-07-18 10:35:22 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 10:35:22 - Entering value: Password@123
+[INFO] 2026-07-18 10:35:22 - Clicking element
+[INFO] 2026-07-18 10:35:22 - Searching for Flight
+[INFO] 2026-07-18 10:35:22 - Entering value: CCU
+[INFO] 2026-07-18 10:35:22 - Entering value: BOM
+[INFO] 2026-07-18 10:35:23 - Entering value: 2026-08-10
+[INFO] 2026-07-18 10:35:23 - Clicking element
+[INFO] 2026-07-18 10:35:23 - Verifying flight results are displayed
+[INFO] 2026-07-18 10:35:23 - Number of flight cards: 8
+[INFO] 2026-07-18 10:35:23 - Clicking Book button
+[INFO] 2026-07-18 10:35:23 - Clicking element
+[INFO] 2026-07-18 10:35:23 - Seat map render time: 276 ms
+[INFO] 2026-07-18 10:35:23 - Selected seat: 7F
+[INFO] 2026-07-18 10:35:23 - Clicking element
+[INFO] 2026-07-18 10:35:23 - Filling passenger details
+[INFO] 2026-07-18 10:35:23 - Entering value: Mani
+[INFO] 2026-07-18 10:35:23 - Entering value: Prasad
+[INFO] 2026-07-18 10:35:23 - Entering value: 25
+[INFO] 2026-07-18 10:35:24 - Entering value: mani@example.com
+[INFO] 2026-07-18 10:35:24 - Proceeding to payment
+[INFO] 2026-07-18 10:35:24 - Clicking element
+[INFO] 2026-07-18 10:35:24 - Entering payment details
+[INFO] 2026-07-18 10:35:24 - Entering value: Mani Prasad
+[INFO] 2026-07-18 10:35:24 - Entering value: 3647848312340967
+[INFO] 2026-07-18 10:35:24 - Entering value: 23/30
+[INFO] 2026-07-18 10:35:24 - Entering value: 454
+[INFO] 2026-07-18 10:35:24 - Clicking Pay button
+[INFO] 2026-07-18 10:35:24 - Clicking element
+[INFO] 2026-07-18 10:35:24 - Verifying booking confirmation page
+[INFO] 2026-07-18 10:35:24 - test finished {"status":"passed"}
+[INFO] 2026-07-18 11:50:28 - test started
+[INFO] 2026-07-18 11:50:28 - Opening Home Page
+[INFO] 2026-07-18 11:50:28 - Opening url: /
+[INFO] 2026-07-18 11:50:29 - Opening Login Page
+[INFO] 2026-07-18 11:50:29 - Clicking element
+[INFO] 2026-07-18 11:50:30 - Entering value:  sybil@tripstack.test
+[INFO] 2026-07-18 11:50:30 - Entering value: Password@123
+[INFO] 2026-07-18 11:50:30 - Clicking element
+[INFO] 2026-07-18 11:50:31 - Searching for Flight
+[INFO] 2026-07-18 11:50:31 - Entering value: CCU
+[INFO] 2026-07-18 11:50:31 - Entering value: BOM
+[INFO] 2026-07-18 11:50:31 - Entering value: 2026-08-10
+[INFO] 2026-07-18 11:50:31 - Clicking element
+[INFO] 2026-07-18 11:50:31 - Verifying flight results are displayed
+[INFO] 2026-07-18 11:50:31 - Number of flight cards: 8
+[INFO] 2026-07-18 11:50:31 - Clicking Book button
+[INFO] 2026-07-18 11:50:31 - Clicking element
+[INFO] 2026-07-18 11:50:32 - Seat map render time: 431 ms
+[INFO] 2026-07-18 11:50:33 - Selected seat: 7C
+[INFO] 2026-07-18 11:50:33 - Clicking element
+[INFO] 2026-07-18 11:50:33 - Filling passenger details
+[INFO] 2026-07-18 11:50:33 - Entering value: Mani
+[INFO] 2026-07-18 11:50:33 - Entering value: Prasad
+[INFO] 2026-07-18 11:50:33 - Entering value: 25
+[INFO] 2026-07-18 11:50:33 - Entering value: mani@example.com
+[INFO] 2026-07-18 11:50:33 - Proceeding to payment
+[INFO] 2026-07-18 11:50:33 - Clicking element
+[INFO] 2026-07-18 11:50:34 - Entering payment details
+[INFO] 2026-07-18 11:50:34 - Entering value: Mani Prasad
+[INFO] 2026-07-18 11:50:34 - Entering value: 3647848312340967
+[INFO] 2026-07-18 11:50:34 - Entering value: 23/30
+[INFO] 2026-07-18 11:50:34 - Entering value: 454
+[INFO] 2026-07-18 11:50:34 - Clicking Pay button
+[INFO] 2026-07-18 11:50:34 - Clicking element
+[INFO] 2026-07-18 11:50:35 - Verifying booking confirmation page
+[INFO] 2026-07-18 11:50:35 - test finished {"status":"passed"}

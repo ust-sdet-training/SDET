@@ -17,6 +17,8 @@
         <junit.version>5.13.4</junit.version>
         <jackson.version>2.20.0</jackson.version>
         <allure.version>2.29.1</allure.version>
+        <testcontainers.version>1.20.6</testcontainers.version>
+        <use.testcontainers>false</use.testcontainers>
     </properties>
 
     <dependencies>
@@ -71,6 +73,20 @@
             <version>9.4.0</version>
         </dependency>
 
+        <!-- Testcontainers for disposable CI database tests -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- SLF4J -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -120,6 +136,9 @@
                 <version>3.5.3</version>
                 <configuration>
                     <useModulePath>false</useModulePath>
+                    <systemPropertyVariables>
+                        <use.testcontainers>${use.testcontainers}</use.testcontainers>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
 
@@ -131,4 +150,13 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>ci</id>
+            <properties>
+                <use.testcontainers>true</use.testcontainers>
+            </properties>
+        </profile>
+    </profiles>
 </project>
