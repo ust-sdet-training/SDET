@@ -81,3 +81,32 @@ export const performance_data = {
     pincode: "560100",
   },
 };
+
+
+export const payment_latency = {
+  search: {
+    from: "CCU",
+    fromOptionLabel: "Kolkata CCU",
+    to: "BLR",
+    toOptionLabel: "Bengaluru BLR",
+    date: "2026-07-29",
+  },
+
+  flightLabel: "IndiGo 6E-484-R",
+
+  seatDescription: "Seat 6F, window, available",
+
+  passengerSeatLabel: "6F",
+
+  couponLabel: "FLAT ₹100 OFF · use TRIP100",
+
+  bookingRefPrefix: "TS-1029-",
+
+  myTripsSummary: "CONFIRMED",
+
+  address: {
+    city: "Bengaluru",
+    addressLine: "Electronic City Phase 1",
+    pincode: "560100",
+  },
+};

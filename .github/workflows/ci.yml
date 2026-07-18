@@ -113,8 +113,8 @@ jobs:
       baseUrl: https://tripstack.doomple.com/
       CUSTOMER_MAIL: ${{ secrets.SHAHBAZ_CUSTOMER_EMAIL }}
       CUSTOMER_PASSWORD: ${{ secrets.SHAHBAZ_CUSTOMER_PASSWORD }}
-      DB_JDBC_URL: ${{ secrets.SHAHBAZ_DB_JDBC_URL }}
-      DB_USER: ${{ secrets.SHAHBAZ_DB_USER }}
+      DB_JDBC_URL: jdbc:mysql://localhost:3306/tripstack
+      DB_USER: root
       DB_PASSWORD: ${{ secrets.SHAHBAZ_DB_PASSWORD }}
 
     steps:
