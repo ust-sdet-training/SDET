@@ -19,12 +19,16 @@ export class PlanePage extends BasePage {
 
     async selectSeat(){
         await expect(this.firstAvailableSeat).toBeVisible();
+
+        const lockResponse = this.page.waitForResponse(resp =>
+            /seat.*(lock|reserve|hold)/i.test(resp.url())
+        );
+
         await this.firstAvailableSeat.click();
-        
-        // const seatNumber = "15C";
-        // await this.page
-        //     .locator(`[data-seat="${seatNumber}"]`)
-        //     .click();
+
+        const response = await lockResponse;
+        expect(response.ok()).toBeTruthy(); // will fail loudly here instead of timing out on button state
+
         await expect(this.continueBtn).toBeEnabled();
         await this.continueBtn.click();
     }
