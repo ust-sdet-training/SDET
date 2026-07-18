@@ -4,17 +4,17 @@ export class PassengerPage {
 
     constructor(private page: Page) {}
 
-    async enterPassenger() {
+    async enterPassenger(firstName: string, lastName: string, age: string, email: string, phone: string) {
 
-        await this.page.getByRole("textbox", { name: "First name" }).fill("Erin");
+        await this.page.getByRole("textbox", { name: "First name" }).fill(firstName);
 
-        await this.page.getByRole("textbox", { name: "Last name" }).fill("Tripstack");
+        await this.page.getByRole("textbox", { name: "Last name" }).fill(lastName);
 
-        await this.page.getByRole("spinbutton", { name: "Age" }).fill("22");
+        await this.page.getByRole("spinbutton", { name: "Age" }).fill(age);
 
-        await this.page.getByRole("textbox", { name: "Email" }).fill("erin@tripstack.test");
+        await this.page.getByRole("textbox", { name: "Email" }).fill(email);
 
-        await this.page.getByRole("textbox", { name: "Phone number" }).fill("1234567890");
+        await this.page.getByRole("textbox", { name: "Phone number" }).fill(phone);
 
         await this.page.getByRole("button", {name: "Continue to payment"}).click();
     }
