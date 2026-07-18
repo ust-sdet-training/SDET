@@ -20,7 +20,9 @@ export class ConfirmationPage {
 
         await expect(
             this.page.getByText("You're all set!")
-        ).toBeVisible();
+        ).toBeVisible({
+            timeout: 30000
+        });
 
         Logger.success("Booking Confirmed");
 

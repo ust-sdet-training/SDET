@@ -438,28 +438,280 @@
 17-07-2026 17:16:01 [INFO] Clicking Pay Button
 17-07-2026 17:16:01 [INFO] ✅ Booking Confirmed
 17-07-2026 17:16:01 [INFO] ✅ PNR Generated
-18-07-2026 18:42:18 [INFO] Opening TripStack
-18-07-2026 18:42:19 [INFO] Opening Login Page
-18-07-2026 18:42:19 [INFO] Entering Username
-18-07-2026 18:42:19 [INFO] Entering Password
-18-07-2026 18:42:19 [INFO] Clicking Sign In
-18-07-2026 18:42:20 [INFO] ✅ Login Successful
-18-07-2026 18:42:20 [INFO] Opening Bus Module
-18-07-2026 18:42:20 [INFO] Selecting Source : Hyderabad HYD
-18-07-2026 18:42:20 [INFO] Selecting Destination : Delhi DEL
-18-07-2026 18:42:20 [INFO] Journey Date : 2026-08-06
-18-07-2026 18:42:20 [INFO] Searching Bus
-18-07-2026 18:42:20 [INFO] Applying AC Seater Filter
-18-07-2026 18:42:20 [INFO] ✅ Orange Tours Bus Displayed
-18-07-2026 18:42:20 [INFO] Selecting Bus
-18-07-2026 18:42:21 [INFO] Selecting Seat S22
-18-07-2026 18:42:21 [INFO] Entering Passenger Details
-18-07-2026 18:42:21 [INFO] Proceeding to Payment
-18-07-2026 18:42:21 [INFO] Verifying Payment Page
-18-07-2026 18:42:21 [INFO] Entering Card Holder Name
-18-07-2026 18:42:22 [INFO] Entering Card Number
-18-07-2026 18:42:22 [INFO] Entering Expiry
-18-07-2026 18:42:22 [INFO] Entering CVV
-18-07-2026 18:42:22 [INFO] Clicking Pay Button
-18-07-2026 18:42:22 [INFO] ✅ Booking Confirmed
-18-07-2026 18:42:22 [INFO] ✅ PNR Generated
+18-07-2026 05:48:31 [INFO] Opening TripStack
+18-07-2026 05:48:33 [INFO] Opening Login Page
+18-07-2026 05:48:33 [INFO] Entering Username
+18-07-2026 05:48:33 [INFO] Entering Password
+18-07-2026 05:48:33 [INFO] Clicking Sign In
+18-07-2026 05:48:34 [INFO] ✅ Login Successful
+18-07-2026 05:48:34 [INFO] Opening Bus Module
+18-07-2026 05:48:34 [INFO] Selecting Source : Hyderabad HYD
+18-07-2026 05:48:34 [INFO] Selecting Destination : Delhi DEL
+18-07-2026 05:48:35 [INFO] Journey Date : 2026-08-06
+18-07-2026 05:48:35 [INFO] Searching Bus
+18-07-2026 05:48:35 [INFO] Applying AC Seater Filter
+18-07-2026 05:48:35 [INFO] ✅ Orange Tours Bus Displayed
+18-07-2026 05:48:35 [INFO] Selecting Bus
+18-07-2026 05:48:35 [INFO] Selecting Seat S22
+18-07-2026 05:48:36 [INFO] Entering Passenger Details
+18-07-2026 05:48:36 [INFO] Proceeding to Payment
+18-07-2026 05:48:36 [INFO] Verifying Payment Page
+18-07-2026 05:48:37 [INFO] Entering Card Holder Name
+18-07-2026 05:48:37 [INFO] Entering Card Number
+18-07-2026 05:48:37 [INFO] Entering Expiry
+18-07-2026 05:48:37 [INFO] Entering CVV
+18-07-2026 05:48:37 [INFO] Clicking Pay Button
+18-07-2026 05:48:37 [INFO] ✅ Booking Confirmed
+18-07-2026 05:48:37 [INFO] ✅ PNR Generated
+18-07-2026 05:48:57 [INFO] Opening TripStack
+18-07-2026 05:48:58 [INFO] Opening Login Page
+18-07-2026 05:48:59 [INFO] Entering Username
+18-07-2026 05:48:59 [INFO] Entering Password
+18-07-2026 05:48:59 [INFO] Clicking Sign In
+18-07-2026 05:48:59 [INFO] ✅ Login Successful
+18-07-2026 05:48:59 [INFO] Opening Bus Module
+18-07-2026 05:49:00 [INFO] Selecting Source : Hyderabad HYD
+18-07-2026 05:49:00 [INFO] Selecting Destination : Delhi DEL
+18-07-2026 05:49:00 [INFO] Journey Date : 2026-08-06
+18-07-2026 05:49:00 [INFO] Searching Bus
+18-07-2026 05:49:00 [INFO] Applying AC Seater Filter
+18-07-2026 05:49:00 [INFO] ✅ Orange Tours Bus Displayed
+18-07-2026 05:49:00 [INFO] Selecting Bus
+18-07-2026 05:49:01 [INFO] Selecting Seat S22
+18-07-2026 21:11:07 [INFO] Opening TripStack
+18-07-2026 21:11:09 [INFO] Opening Login Page
+18-07-2026 21:11:09 [INFO] Entering Username
+18-07-2026 21:11:09 [INFO] Entering Password
+18-07-2026 21:11:09 [INFO] Clicking Sign In
+18-07-2026 21:11:10 [INFO] ✅ Login Successful
+18-07-2026 21:11:10 [INFO] Opening Bus Module
+18-07-2026 21:11:11 [INFO] Selecting Source : Hyderabad HYD
+18-07-2026 21:11:11 [INFO] Selecting Destination : Delhi DEL
+18-07-2026 21:11:11 [INFO] Journey Date : 2026-08-06
+18-07-2026 21:11:11 [INFO] Searching Bus
+18-07-2026 21:11:12 [INFO] Applying AC Seater Filter
+18-07-2026 21:11:12 [INFO] ✅ Orange Tours Bus Displayed
+18-07-2026 21:11:12 [INFO] Selecting Bus
+18-07-2026 21:11:13 [INFO] Selecting Seat S22
+18-07-2026 21:11:50 [INFO] Opening TripStack
+18-07-2026 21:11:52 [INFO] Opening Login Page
+18-07-2026 21:11:52 [INFO] Entering Username
+18-07-2026 21:11:52 [INFO] Entering Password
+18-07-2026 21:11:52 [INFO] Clicking Sign In
+18-07-2026 21:11:53 [INFO] ✅ Login Successful
+18-07-2026 21:11:53 [INFO] Opening Bus Module
+18-07-2026 21:11:54 [INFO] Selecting Source : Hyderabad HYD
+18-07-2026 21:11:54 [INFO] Selecting Destination : Delhi DEL
+18-07-2026 21:11:54 [INFO] Journey Date : 2026-08-06
+18-07-2026 21:11:54 [INFO] Searching Bus
+18-07-2026 21:11:55 [INFO] Applying AC Seater Filter
+18-07-2026 21:11:55 [INFO] ✅ Orange Tours Bus Displayed
+18-07-2026 21:11:55 [INFO] Selecting Bus
+18-07-2026 21:11:55 [INFO] Selecting Seat S2
+18-07-2026 21:11:56 [INFO] Entering Passenger Details
+18-07-2026 21:11:57 [INFO] Proceeding to Payment
+18-07-2026 21:11:57 [INFO] Verifying Payment Page
+18-07-2026 21:11:57 [INFO] Entering Card Holder Name
+18-07-2026 21:11:57 [INFO] Entering Card Number
+18-07-2026 21:11:58 [INFO] Entering Expiry
+18-07-2026 21:11:58 [INFO] Entering CVV
+18-07-2026 21:11:58 [INFO] Clicking Pay Button
+18-07-2026 21:42:39 [INFO] Opening TripStack
+18-07-2026 21:42:40 [INFO] Opening Login Page
+18-07-2026 21:42:41 [INFO] Entering Username
+18-07-2026 21:42:41 [INFO] Entering Password
+18-07-2026 21:42:41 [INFO] Clicking Sign In
+18-07-2026 21:42:42 [INFO] ✅ Login Successful
+18-07-2026 21:42:42 [INFO] Opening Bus Module
+18-07-2026 21:42:42 [INFO] Selecting Source : Hyderabad HYD
+18-07-2026 21:42:42 [INFO] Selecting Destination : Delhi DEL
+18-07-2026 21:42:43 [INFO] Journey Date : 2026-08-06
+18-07-2026 21:42:43 [INFO] Searching Bus
+18-07-2026 21:42:43 [INFO] Applying AC Seater Filter
+18-07-2026 21:42:43 [INFO] ✅ Orange Tours Bus Displayed
+18-07-2026 21:42:43 [INFO] Selecting Bus
+18-07-2026 21:42:44 [INFO] Selecting Seat S2
+18-07-2026 21:42:44 [INFO] Entering Passenger Details
+18-07-2026 21:42:45 [INFO] Proceeding to Payment
+18-07-2026 23:28:50 [INFO] Opening TripStack
+18-07-2026 23:28:52 [INFO] Opening Login Page
+18-07-2026 23:28:53 [INFO] Entering Username
+18-07-2026 23:28:54 [INFO] Entering Password
+18-07-2026 23:28:54 [INFO] Clicking Sign In
+18-07-2026 23:28:55 [INFO] ✅ Login Successful
+18-07-2026 23:28:55 [INFO] Opening Bus Module
+18-07-2026 23:28:57 [INFO] Selecting Source : Hyderabad HYD
+18-07-2026 23:28:58 [INFO] Selecting Destination : Delhi DEL
+18-07-2026 23:28:59 [INFO] Journey Date : 2026-08-06
+18-07-2026 23:28:59 [INFO] Searching Bus
+18-07-2026 23:28:59 [INFO] Applying AC Seater Filter
+18-07-2026 23:29:01 [INFO] ✅ Orange Tours Bus Displayed
+18-07-2026 23:29:01 [INFO] Selecting Bus
+18-07-2026 23:29:03 [INFO] Selecting Seat S2
+18-07-2026 23:29:06 [INFO] Entering Passenger Details
+18-07-2026 23:29:09 [INFO] Proceeding to Payment
+18-07-2026 23:30:58 [INFO] Opening TripStack
+18-07-2026 23:31:00 [INFO] Opening Login Page
+18-07-2026 23:31:01 [INFO] Entering Username
+18-07-2026 23:31:01 [INFO] Entering Password
+18-07-2026 23:31:01 [INFO] Clicking Sign In
+18-07-2026 23:31:02 [INFO] ✅ Login Successful
+18-07-2026 23:31:02 [INFO] Opening Bus Module
+18-07-2026 23:31:03 [INFO] Selecting Source : Hyderabad HYD
+18-07-2026 23:31:03 [INFO] Selecting Destination : Delhi DEL
+18-07-2026 23:31:04 [INFO] Journey Date : 2026-08-06
+18-07-2026 23:31:04 [INFO] Searching Bus
+18-07-2026 23:31:04 [INFO] Applying AC Seater Filter
+18-07-2026 23:31:04 [INFO] ✅ Orange Tours Bus Displayed
+18-07-2026 23:31:04 [INFO] Selecting Bus
+18-07-2026 23:31:05 [INFO] Selecting Seat S2
+18-07-2026 23:31:56 [INFO] Opening TripStack
+18-07-2026 23:31:58 [INFO] Opening Login Page
+18-07-2026 23:31:59 [INFO] Entering Username
+18-07-2026 23:31:59 [INFO] Entering Password
+18-07-2026 23:31:59 [INFO] Clicking Sign In
+18-07-2026 23:32:00 [INFO] ✅ Login Successful
+18-07-2026 23:32:00 [INFO] Opening Bus Module
+18-07-2026 23:32:00 [INFO] Selecting Source : Hyderabad HYD
+18-07-2026 23:32:01 [INFO] Selecting Destination : Delhi DEL
+18-07-2026 23:32:01 [INFO] Journey Date : 2026-08-06
+18-07-2026 23:32:01 [INFO] Searching Bus
+18-07-2026 23:32:02 [INFO] Applying AC Seater Filter
+18-07-2026 23:32:02 [INFO] ✅ Orange Tours Bus Displayed
+18-07-2026 23:32:02 [INFO] Selecting Bus
+18-07-2026 23:32:02 [INFO] Selecting Seat S20
+18-07-2026 23:32:03 [INFO] Entering Passenger Details
+18-07-2026 23:32:03 [INFO] Proceeding to Payment
+18-07-2026 23:32:58 [INFO] Opening TripStack
+18-07-2026 23:32:59 [INFO] Opening Login Page
+18-07-2026 23:33:00 [INFO] Entering Username
+18-07-2026 23:33:00 [INFO] Entering Password
+18-07-2026 23:33:00 [INFO] Clicking Sign In
+18-07-2026 23:33:01 [INFO] ✅ Login Successful
+18-07-2026 23:33:01 [INFO] Opening Bus Module
+18-07-2026 23:33:01 [INFO] Selecting Source : Hyderabad HYD
+18-07-2026 23:33:02 [INFO] Selecting Destination : Delhi DEL
+18-07-2026 23:33:02 [INFO] Journey Date : 2026-08-06
+18-07-2026 23:33:02 [INFO] Searching Bus
+18-07-2026 23:33:02 [INFO] Applying AC Seater Filter
+18-07-2026 23:33:03 [INFO] ✅ Orange Tours Bus Displayed
+18-07-2026 23:33:03 [INFO] Selecting Bus
+18-07-2026 23:33:03 [INFO] Selecting Seat S20
+18-07-2026 23:34:00 [INFO] Opening TripStack
+18-07-2026 23:34:01 [INFO] Opening Login Page
+18-07-2026 23:34:02 [INFO] Entering Username
+18-07-2026 23:34:02 [INFO] Entering Password
+18-07-2026 23:34:02 [INFO] Clicking Sign In
+18-07-2026 23:34:03 [INFO] ✅ Login Successful
+18-07-2026 23:34:03 [INFO] Opening Bus Module
+18-07-2026 23:34:04 [INFO] Selecting Source : Hyderabad HYD
+18-07-2026 23:34:04 [INFO] Selecting Destination : Delhi DEL
+18-07-2026 23:34:04 [INFO] Journey Date : 2026-08-06
+18-07-2026 23:34:04 [INFO] Searching Bus
+18-07-2026 23:34:05 [INFO] Applying AC Seater Filter
+18-07-2026 23:34:05 [INFO] ✅ Orange Tours Bus Displayed
+18-07-2026 23:34:05 [INFO] Selecting Bus
+18-07-2026 23:34:05 [INFO] Selecting Seat S11
+18-07-2026 23:34:06 [INFO] Entering Passenger Details
+18-07-2026 23:34:07 [INFO] Proceeding to Payment
+18-07-2026 23:36:23 [INFO] Opening TripStack
+18-07-2026 23:36:25 [INFO] Opening Login Page
+18-07-2026 23:36:25 [INFO] Entering Username
+18-07-2026 23:36:26 [INFO] Entering Password
+18-07-2026 23:36:26 [INFO] Clicking Sign In
+18-07-2026 23:36:27 [INFO] ✅ Login Successful
+18-07-2026 23:36:27 [INFO] Opening Bus Module
+18-07-2026 23:36:27 [INFO] Selecting Source : Hyderabad HYD
+18-07-2026 23:36:28 [INFO] Selecting Destination : Delhi DEL
+18-07-2026 23:36:28 [INFO] Journey Date : 2026-08-06
+18-07-2026 23:36:28 [INFO] Searching Bus
+18-07-2026 23:36:28 [INFO] Applying AC Seater Filter
+18-07-2026 23:36:28 [INFO] ✅ Orange Tours Bus Displayed
+18-07-2026 23:36:28 [INFO] Selecting Bus
+18-07-2026 23:36:29 [INFO] Selecting Seat S11
+18-07-2026 23:38:17 [INFO] Opening TripStack
+18-07-2026 23:38:20 [INFO] Opening Login Page
+18-07-2026 23:38:20 [INFO] Entering Username
+18-07-2026 23:38:20 [INFO] Entering Password
+18-07-2026 23:38:20 [INFO] Clicking Sign In
+18-07-2026 23:38:21 [INFO] ✅ Login Successful
+18-07-2026 23:38:21 [INFO] Opening Bus Module
+18-07-2026 23:38:22 [INFO] Selecting Source : Hyderabad HYD
+18-07-2026 23:38:22 [INFO] Selecting Destination : Delhi DEL
+18-07-2026 23:38:22 [INFO] Journey Date : 2026-08-06
+18-07-2026 23:38:22 [INFO] Searching Bus
+18-07-2026 23:38:23 [INFO] Applying AC Seater Filter
+18-07-2026 23:38:23 [INFO] ✅ Orange Tours Bus Displayed
+18-07-2026 23:38:23 [INFO] Selecting Bus
+18-07-2026 23:38:23 [INFO] Selecting Seat S11
+18-07-2026 23:39:20 [INFO] Opening TripStack
+18-07-2026 23:39:23 [INFO] Opening Login Page
+18-07-2026 23:39:23 [INFO] Entering Username
+18-07-2026 23:39:23 [INFO] Entering Password
+18-07-2026 23:39:23 [INFO] Clicking Sign In
+18-07-2026 23:39:25 [INFO] ✅ Login Successful
+18-07-2026 23:39:25 [INFO] Opening Bus Module
+18-07-2026 23:39:25 [INFO] Selecting Source : Hyderabad HYD
+18-07-2026 23:39:26 [INFO] Selecting Destination : Delhi DEL
+18-07-2026 23:39:26 [INFO] Journey Date : 2026-08-06
+18-07-2026 23:39:26 [INFO] Searching Bus
+18-07-2026 23:39:27 [INFO] Applying AC Seater Filter
+18-07-2026 23:39:27 [INFO] ✅ Orange Tours Bus Displayed
+18-07-2026 23:39:27 [INFO] Selecting Bus
+18-07-2026 23:39:27 [INFO] Selecting Seat S29
+18-07-2026 23:39:28 [INFO] Entering Passenger Details
+18-07-2026 23:39:29 [INFO] Proceeding to Payment
+18-07-2026 23:49:30 [INFO] Opening TripStack
+18-07-2026 23:49:32 [INFO] Opening Login Page
+18-07-2026 23:49:33 [INFO] Entering Username
+18-07-2026 23:49:33 [INFO] Entering Password
+18-07-2026 23:49:33 [INFO] Clicking Sign In
+18-07-2026 23:49:34 [INFO] ✅ Login Successful
+18-07-2026 23:49:34 [INFO] Opening Bus Module
+18-07-2026 23:49:34 [INFO] Selecting Source : Hyderabad HYD
+18-07-2026 23:49:35 [INFO] Selecting Destination : Delhi DEL
+18-07-2026 23:49:35 [INFO] Journey Date : 2026-08-06
+18-07-2026 23:49:35 [INFO] Searching Bus
+18-07-2026 23:49:36 [INFO] Applying AC Seater Filter
+18-07-2026 23:49:36 [INFO] ✅ Orange Tours Bus Displayed
+18-07-2026 23:49:36 [INFO] Selecting Bus
+18-07-2026 23:49:37 [INFO] Selecting Seat S29
+18-07-2026 23:49:38 [INFO] Entering Passenger Details
+18-07-2026 23:49:38 [INFO] Proceeding to Payment
+19-07-2026 00:06:43 [INFO] Opening TripStack
+19-07-2026 00:06:44 [INFO] Opening Login Page
+19-07-2026 00:06:45 [INFO] Entering Username
+19-07-2026 00:06:45 [INFO] Entering Password
+19-07-2026 00:06:45 [INFO] Clicking Sign In
+19-07-2026 00:06:45 [INFO] ✅ Login Successful
+19-07-2026 00:06:45 [INFO] Opening Bus Module
+19-07-2026 00:06:46 [INFO] Selecting Source : Hyderabad HYD
+19-07-2026 00:06:46 [INFO] Selecting Destination : Delhi DEL
+19-07-2026 00:06:46 [INFO] Journey Date : 2026-08-07
+19-07-2026 00:06:46 [INFO] Searching Bus
+19-07-2026 00:06:46 [INFO] Applying AC Seater Filter
+19-07-2026 00:06:46 [INFO] ✅ Orange Tours Bus Displayed
+19-07-2026 00:06:46 [INFO] Selecting Bus
+19-07-2026 00:06:47 [INFO] Selecting Seat S2
+19-07-2026 00:06:47 [INFO] Entering Passenger Details
+19-07-2026 00:06:47 [INFO] Proceeding to Payment
+19-07-2026 00:30:26 [INFO] Opening TripStack
+19-07-2026 00:30:27 [INFO] Opening Login Page
+19-07-2026 00:30:28 [INFO] Entering Username
+19-07-2026 00:30:28 [INFO] Entering Password
+19-07-2026 00:30:28 [INFO] Clicking Sign In
+19-07-2026 00:30:29 [INFO] ✅ Login Successful
+19-07-2026 00:30:29 [INFO] Opening Bus Module
+19-07-2026 00:30:29 [INFO] Selecting Source : Hyderabad HYD
+19-07-2026 00:30:29 [INFO] Selecting Destination : Delhi DEL
+19-07-2026 00:30:29 [INFO] Journey Date : 2026-08-07
+19-07-2026 00:30:29 [INFO] Searching Bus
+19-07-2026 00:30:30 [INFO] Applying AC Seater Filter
+19-07-2026 00:30:30 [INFO] ✅ Orange Tours Bus Displayed
+19-07-2026 00:30:30 [INFO] Selecting Bus
+19-07-2026 00:30:30 [INFO] Selecting Seat S2
+19-07-2026 00:30:30 [INFO] Entering Passenger Details
+19-07-2026 00:30:30 [INFO] Proceeding to Payment
+19-07-2026 00:30:36 [INFO] ✅ Booking Confirmed
+19-07-2026 00:30:36 [INFO] ✅ PNR Generated
+19-07-2026 00:30:37 [INFO] ✅ Trip found in My Trips

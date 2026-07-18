@@ -7,12 +7,14 @@ export class MyTripsPage {
 
     async verifyTripExists() {
 
-    await expect(
-        this.page.getByRole('heading', {
-            name: /My Trips/i
-        })
-    ).toBeVisible();
+        await expect(
+            this.page.getByRole('heading', {
+                name: /My Trips/i
+            })
+        ).toBeVisible();
 
-}
+        Logger.success("Trip found in My Trips");
+
+    }
 
 }

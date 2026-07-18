@@ -1,64 +1,79 @@
-import { expect, Page } from "@playwright/test";
-import { Logger } from "../src/logger/logger";
+import { expect, Locator, Page } from '@playwright/test';
 
 export class PaymentPage {
 
-    constructor(private page: Page) {}
+    readonly page: Page;
 
-    private cardName = () =>
-        this.page.locator("#cardName");
+    readonly cardName: Locator;
+    readonly cardNumber: Locator;
+    readonly expiry: Locator;
+    readonly cvv: Locator;
+    readonly payButton: Locator;
+    readonly paymentError: Locator;
 
-    private cardNumber = () =>
-        this.page.locator("#cardNumber");
+    constructor(page: Page) {
 
-    private cardExpiry = () =>
-        this.page.locator("#cardExpiry");
+        this.page = page;
 
-    private cardCvv = () =>
-        this.page.locator("#cardCvv");
+        this.cardName = page.locator('input[name="cardName"]');
+        this.cardNumber = page.locator('input[name="cardNumber"]');
+        this.cvv = page.locator('input[name="cardCvv"]');
+        this.expiry = page.locator('input[name="cardExpiry"]');
 
-    private payButton = () =>
-        this.page.getByRole("button", {
+        this.payButton = page.getByRole('button', {
             name: /pay/i
         });
 
+        this.paymentError = page.locator(
+            '[data-ref="payment-error"]'
+        );
+    }
+
     async verifyPaymentPage() {
 
-        Logger.info("Verifying Payment Page");
-
-        await expect(this.cardName()).toBeVisible();
-        await expect(this.cardNumber()).toBeVisible();
-        await expect(this.cardExpiry()).toBeVisible();
-        await expect(this.cardCvv()).toBeVisible();
-
+        await expect(
+            this.page.getByRole('heading', {
+                name: /secure checkout/i
+            })
+        ).toBeVisible();
     }
 
     async enterCardDetails(
-        cardName: string,
-        cardNumber: string,
+        name: string,
+        number: string,
         expiry: string,
         cvv: string
     ) {
 
-        Logger.info("Entering Card Holder Name");
-        await this.cardName().fill(cardName);
-
-        Logger.info("Entering Card Number");
-        await this.cardNumber().fill(cardNumber);
-
-        Logger.info("Entering Expiry");
-        await this.cardExpiry().fill(expiry);
-
-        Logger.info("Entering CVV");
-        await this.cardCvv().fill(cvv);
+        await this.cardName.fill(name);
+        await this.cardNumber.fill(number);
+        await this.expiry.fill(expiry);
+        await this.cvv.fill(cvv);
 
     }
 
     async payNow() {
 
-        Logger.info("Clicking Pay Button");
+        await this.payButton.click();
 
-        await this.payButton().click();
+    }
+
+    async isPaymentDeclined(): Promise<boolean> {
+
+        try {
+
+            await this.paymentError.waitFor({
+                state: 'visible',
+                timeout: 3000
+            });
+
+            return true;
+
+        } catch {
+
+            return false;
+
+        }
 
     }
 

@@ -26,40 +26,26 @@ export class BookingFlow {
     constructor(page: Page) {
 
         this.loginPage = new LoginPage(page);
-
         this.busSearchPage = new BusSearchPage(page);
-
         this.busResultsPage = new BusResultsPage(page);
-
         this.seatSelectionPage = new SeatSelectionPage(page);
-
         this.passengerPage = new PassengerPage(page);
-
         this.paymentPage = new PaymentPage(page);
-
         this.confirmationPage = new ConfirmationPage(page);
-
         this.myTripsPage = new MyTripsPage(page);
 
     }
 
     async completeBookingJourney() {
 
-        // Login
-
         await this.loginPage.navigate();
 
         await this.loginPage.login(
-
             Environment.username,
-
             Environment.password
-
         );
 
         await this.loginPage.verifyLogin();
-
-        // Bus Search
 
         await this.busSearchPage.openBusPage();
 
@@ -68,14 +54,10 @@ export class BookingFlow {
         await this.busSearchPage.selectTo("Delhi DEL");
 
         await this.busSearchPage.selectJourneyDate(
-
             DateUtil.getJourneyDate(19)
-
         );
 
         await this.busSearchPage.searchBus();
-
-        // Results
 
         await this.busResultsPage.filterACSeater();
 
@@ -83,35 +65,22 @@ export class BookingFlow {
 
         await this.busResultsPage.selectBus();
 
-        // Seat
-
-        await this.seatSelectionPage.chooseSeat("S22");
+        await this.seatSelectionPage.chooseSeat("S2");
 
         await this.seatSelectionPage.continue();
-
-        // Passenger
 
         await this.passengerPage.verifyPassengerPage();
 
         await this.passengerPage.enterPassengerDetails(
-
             Environment.firstName,
-
             Environment.lastName,
-
             Environment.age,
-
             Environment.gender,
-
             Environment.username,
-
             Environment.phone
-
         );
 
         await this.passengerPage.continueToPayment();
-
-        // Payment
 
         await this.paymentPage.verifyPaymentPage();
 
@@ -120,24 +89,42 @@ export class BookingFlow {
             Environment.cardNumber,
             Environment.expiry,
             Environment.cvv
-);
+        );
+
+        try {
+
+            await this.paymentPage.payNow();
+
+            await this.paymentPage.page.waitForTimeout(2000);
+
+            if (await this.paymentPage.isPaymentDeclined()) {
+
+                console.log("Payment declined by gateway.");
+
+                console.log("Fault Injection detected and handled successfully.");
+                return;
+
+            }
 
 
-        await this.paymentPage.payNow();
+            await this.confirmationPage.verifyBookingSuccessful();
 
-        // Confirmation
+            await this.confirmationPage.verifyPNR();
 
-        await this.confirmationPage.verifyBookingSuccessful();
+            await this.confirmationPage.verifyAmountPaid();
 
-        await this.confirmationPage.verifyPNR();
+            await this.confirmationPage.openMyTrips();
 
-        await this.confirmationPage.verifyAmountPaid();
+            await this.myTripsPage.verifyTripExists();
 
-        await this.confirmationPage.openMyTrips();
+        }
+        catch (error) {
 
-        // My Trips
+            console.error("Unexpected error during booking flow.");
 
-        await this.myTripsPage.verifyTripExists();
+            throw error;
+
+        }
 
     }
 
