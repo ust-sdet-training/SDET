@@ -6,6 +6,7 @@ import com.ust.tripStack.config.DatabaseConfig;
 import com.ust.tripStack.report.ExtentTestListener;
 import com.ust.tripStack.support.DbSupport;
 import com.ust.tripStack.support.TestEnvironment;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -24,23 +25,38 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(ExtentTestListener.class)
 public class FlightBookingSteps {
 
-    String user = TestEnvironment.required("DB_USER");
-    String db_password = TestEnvironment.required("DB_PASSWORD");
-    String databaseurl = TestEnvironment.required("DB_JDBC_URL");
+    private String user;
+    private String db_password;
+    private String databaseurl;
+    private String email;
+    private String password;
 
-    AuthClient auth = new AuthClient();
-    HomeClient home = new HomeClient();
-    SeatClient seat = new SeatClient();
-    PaymentClient payment = new PaymentClient();
-    TicketClient ticketClient = new TicketClient();
-    DbSupport dbSupport = new DbSupport(new DatabaseConfig(databaseurl, user, db_password));
-
-    String email = TestEnvironment.required("CUSTOMER_MAIL");
-    String password = TestEnvironment.required("CUSTOMER_PASSWORD");
+    private AuthClient auth;
+    private HomeClient home;
+    private SeatClient seat;
+    private PaymentClient payment;
+    private TicketClient ticketClient;
+    private DbSupport dbSupport;
 
     static String token;
     static String bookingId;
     static String pnr;
+
+    @Before
+    public void initializeClients() {
+        user = TestEnvironment.required("DB_USER");
+        db_password = TestEnvironment.required("DB_PASSWORD");
+        databaseurl = TestEnvironment.required("DB_JDBC_URL");
+        email = TestEnvironment.required("CUSTOMER_MAIL");
+        password = TestEnvironment.required("CUSTOMER_PASSWORD");
+
+        auth = new AuthClient();
+        home = new HomeClient();
+        seat = new SeatClient();
+        payment = new PaymentClient();
+        ticketClient = new TicketClient();
+        dbSupport = new DbSupport(new DatabaseConfig(databaseurl, user, db_password));
+    }
 
     @Given("customer logs into tripStack")
     public void customer_logs_into_tripStack() {
@@ -48,6 +64,7 @@ public class FlightBookingSteps {
         token = res.jsonPath().getString("token");
         assertNotNull(token, "Token should not be null after login");
     }
+
 
     @Given("customer resets and searches for flight")
     public void customer_resets_and_searches_for_flight() {
