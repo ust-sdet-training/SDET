@@ -9,7 +9,7 @@ export class SearchResultsPage{
             })
         ).toBeVisible();
         await expect(
-            this.page.getByRole("article",{name:flight})
+            this.page.getByText(flight)
         ).toBeVisible();
         await this.page
             .getByLabel(flight)

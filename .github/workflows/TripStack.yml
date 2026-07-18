@@ -1,0 +1,146 @@
+name: TripStack CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  database-test:
+    name: Database Tests
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_DATABASE: tripstack
+          MYSQL_ROOT_PASSWORD: ci-password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -uroot -pci-password"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    env:
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_NAME: tripstack
+      DB_USER: root
+      DB_PASSWORD: ci-password
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '22'
+          cache: maven
+
+      - name: Run Database Tests
+        working-directory: Api-maven
+        run: mvn -Dtest=DatabaseConnectionTest test
+
+  playwright-test:
+    name: Playwright Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: ui-playwright/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ui-playwright
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        working-directory: ui-playwright
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright Tests
+        working-directory: ui-playwright
+        run: npx playwright test booking.spec.ts
+
+      - name: Upload Playwright Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            ui-playwright/playwright-report
+            ui-playwright/test-results
+          retention-days: 30
+
+  performance-tests:
+    name: Performance Tests
+    runs-on: ubuntu-latest
+    needs: database-test
+
+    defaults:
+      run:
+        working-directory: Performance
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install k6
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gnupg software-properties-common
+          curl -fsSL https://dl.k6.io/key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/k6-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+          sudo apt-get update
+          sudo apt-get install -y k6
+
+      - name: Run Performance Tests
+        env:
+          BASE_URL: ${{ secrets.Hemanth_BASE_URL }}
+          TRIPSTACK_USERNAME: ${{ secrets.Hemanth_TRIPSTACK_USERNAME }}
+          TRIPSTACK_PASSWORD: ${{ secrets.Hemanth_TRIPSTACK_PASSWORD }}
+        run: |
+          k6 run scripts/search.js --summary-export=summary.json
+
+      - name: Upload k6 Summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-summary
+          path: Performance/summary.json
+          if-no-files-found: warn
+
+  security-tests:
+    name: Security Tests
+    runs-on: ubuntu-latest
+    needs: performance-tests
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run OWASP ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.14.0
+        with:
+          target: ${{ secrets.Hemanth_BASE_URL }}
+          allow_issue_writing: false
+          fail_action: false
+
+      - name: Upload ZAP Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-report
+          path: report_html.html
+          if-no-files-found: warn

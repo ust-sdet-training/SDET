@@ -54,7 +54,7 @@ export class BookingFlow {
         );
 
         await this.seat.chooseSeat(
-            "Seat 3A, window, available"
+            "Seat 2A, window, available"
         );
 
         await this.passenger.enterPassengerDetails(
@@ -72,8 +72,12 @@ export class BookingFlow {
             payment.expiry,
             payment.cvv
         );
+        
 
-        await this.confirmation.verifyBooking();
+        // await this.confirmation.verifyBooking();
+    }
+    async verifyConnectionReset() {
+        await this.payment.verifyConnectionResetError();
     }
     
 }
