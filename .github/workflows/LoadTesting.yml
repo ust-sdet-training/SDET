@@ -1,0 +1,23 @@
+name: API CI
+
+on:
+  push:
+    branches: [ "Aravind_Final_Capstone" ]
+  pull_request:
+    branches: [ "Aravind_Final_Capstone" ]
+
+jobs:
+  k6_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run k6 load test
+        uses: grafana/k6-action@v0.3.1
+        env:
+          ARAVIND_BASE_URL_UI: ${{ secrets.ARAVIND_BASE_URL_UI }}
+          ARAVIND_PASSWORD: ${{ secrets.ARAVIND_PASSWORD }}
+        with:
+          filename: UI/perfomancetesting/load-test.ts

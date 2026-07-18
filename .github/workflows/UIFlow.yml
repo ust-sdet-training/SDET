@@ -40,12 +40,3 @@ jobs:
           name: playwright-report
           path: UI/playwright-report/
           retention-days: 30
-
-      - name: Run k6 browser test
-        uses: grafana/run-k6-action@v1
-        env:
-          K6_BROWSER_ENABLED: true
-          ARAVIND_USERNAME: ${{ secrets.ARAVIND_USERNAME }}
-          ARAVIND_PASSWORD: ${{ secrets.ARAVIND_PASSWORD }}
-        with:
-          path: performancetesting/load-test.ts

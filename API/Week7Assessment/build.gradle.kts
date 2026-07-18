@@ -82,6 +82,13 @@ val FlightBookingFlowTest by tasks.registering(Test::class) {
     include("**/MainTest.class")
     include("**/SecurityNegativeTest.class")
     maxParallelForks = 1
+
+    testLogging {
+        events("passed", "skipped", "failed", "standardOut", "standardError")
+        showExceptions = true
+        showCauses = true
+        showStackTraces = true
+    }
 }
 
 tasks.test {
