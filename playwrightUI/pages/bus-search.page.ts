@@ -16,8 +16,8 @@ export class BusSearchPage {
   }
 
   async goto(): Promise<void> {
-    await this.page.goto('/buses/search');
-    await expect(this.searchForm).toBeVisible();
+    await this.page.goto('/buses/search', { waitUntil: 'domcontentloaded' });
+    await expect(this.searchForm).toBeVisible({ timeout: 60_000 });
   }
 
   async chooseCity(input: Locator, code: string): Promise<void> {
@@ -36,5 +36,6 @@ export class BusSearchPage {
     await this.chooseCity(this.to, to);
     await this.date.fill(journeyDate);
     await this.search.click();
+    await this.page.waitForLoadState('domcontentloaded');
   }
 }

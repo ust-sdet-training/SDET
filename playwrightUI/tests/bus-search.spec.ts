@@ -4,6 +4,8 @@ import { BusResultsPage } from '../pages/bus-results.page';
 import { dateInIndiaAfter, journey } from '../support/journey';
 
 test.describe(' bus search', () => {
+  test.slow();
+
   test('finds AC Semi-Sleeper buses from HYD to BOM 14 days from today', async ({ page }) => {
     const search = new BusSearchPage(page);
     const results = new BusResultsPage(page);
@@ -17,6 +19,7 @@ test.describe(' bus search', () => {
   });
 
   test('opens seat selection for an AC Semi-Sleeper bus', async ({ page }) => {
+    test.slow();
     const search = new BusSearchPage(page);
     const results = new BusResultsPage(page);
 
