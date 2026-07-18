@@ -132,12 +132,9 @@ jobs:
           cache: maven
 
 
-      - name: Run Container Suite (Testcontainers/MySQL)
-        run: mvn test -Dtest=DbSupportContainerTest
-
-      - name: Run Remaining Suite (BookingE2E, PTest, WireMockTest, RunCucumberTest)
+      - name: Run Test
         if: always()
-        run: mvn test -Dtest=BookingE2E,WireMockTest,RunCucumberTest
+        run: mvn clean test
 
       - name: Upload Container Suite reports
         if: always()
