@@ -110,7 +110,7 @@ jobs:
 
     env:
       CI: true
-      baseUrl: https://tripstack.doomple.com/
+      BASE_URL: https://tripstack.doomple.com/
       CUSTOMER_MAIL: chetan@tripstack.test
       CUSTOMER_PASSWORD: ${{ secrets.SHAHBAZ_CUSTOMER_PASSWORD }}
       TEST_USE_TESTCONTAINERS: "true"
