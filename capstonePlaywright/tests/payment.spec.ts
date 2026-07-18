@@ -2,7 +2,7 @@ import { test } from "@playwright/test";
 
 import { LoginPage } from "../pages/LoginPage";
 import { SearchPage } from "../pages/SearchPage";
-import { PaymentPage } from "../pages/Payment";
+import { PaymentPage } from "../pages/payment";
 
 import { user } from "../fixtures/test-fixtures";
 
