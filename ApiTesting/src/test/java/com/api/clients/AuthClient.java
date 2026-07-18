@@ -21,8 +21,8 @@ public class AuthClient {
 
     public Response loginAsDave(){
         Map<String, String> body = Map.of(
-                "email", TestData.getName()+"@tripstack.test",
-                "password", System.getenv("HEIDI_PASSWORD")
+                "email", Secrets.get("HEIDI_EMAIL"),
+                "password",Secrets.get("HEIDI_PASSWORD")
         );
         return loginSpec(body);
     }

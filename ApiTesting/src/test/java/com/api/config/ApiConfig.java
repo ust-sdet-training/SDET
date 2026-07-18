@@ -8,5 +8,5 @@ public class ApiConfig {
     }
 
     public static final String API_BASE_URL =
-            System.getenv("BASE_URL");
+            Secrets.get("BASE_URL");
 }
