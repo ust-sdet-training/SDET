@@ -30,9 +30,7 @@ test.describe("SHOPKART", ()=>{
         await pass.passengerselect(environment.firstname,environment.lastname,"23","Male",environment.email,environment.number)
 
 
-        await pay.pay(environment.cardname,environment.cardnumber,environment.expiry,environment.cvv)
-
-        await confirm.confirm()
+        await confirm.confirm(environment.cardname,environment.cardnumber,environment.expiry,environment.cvv)
 
 
         log.info("FLight Search Complete");

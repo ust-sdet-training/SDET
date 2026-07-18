@@ -11,13 +11,13 @@ export class Seatflows{
 
     }
 
-    async seat(seat:string)
+    async seat()
     {
 
         await expect(this.page).toHaveURL(/FL-DELBLR-51/)
         await expect(this.page.getByText('Vistara')).toBeVisible()
 
-        await this.sp.seatSelect(seat)
+        await this.sp.seatSelect()
     }
 
 

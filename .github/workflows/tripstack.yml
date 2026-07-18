@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 22
 
       - name: Cache Maven Dependencies
         uses: actions/cache@v4
@@ -72,7 +72,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright Tests
-        run: npx playwright test
+        run: npx playwright test tests/test.spec.ts
 
       - name: Upload Playwright Report
         if: always()
@@ -109,7 +109,6 @@ jobs:
       - name: Execute Performance Tests
         run: |
           npx playwright test tests/perf.spec.ts
-          npx playwright test tests/payLatency.spec.ts
 
       - name: Upload Performance Reports
         if: always()

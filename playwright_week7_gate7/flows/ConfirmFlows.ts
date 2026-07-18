@@ -11,15 +11,17 @@ export class Confirmflows{
 
     }
 
-    async confirm()
+    async confirm(cardName:string,card:string,expiry:string,cvv:string)
     {
 
-        await expect(this.page).toHaveURL(/confirmation/)
-        await expect(this.page.getByRole('heading', {name:/all set/, level:1})).toBeVisible()
-        await expect(this.page.locator('[data-id="state"]')).toHaveText("CONFIRMED")
+        await expect(this.page).toHaveURL(/payment/)
+        await expect(this.page.getByRole('heading', {name:/Secure checkout/, level:1})).toBeVisible()
+        await expect(this.page.getByRole('heading', {name:/checkout/, level:1})).toBeVisible()
+
+        await this.conp.confirmation(cardName,card,expiry,cvv)
        
 
-        await this.conp.confirmation()
+        
     }
 
 

@@ -1,4 +1,4 @@
-import {Page} from '@playwright/test'
+import {Page,expect} from '@playwright/test'
 
 export class Seatspage
 {
@@ -6,11 +6,16 @@ export class Seatspage
 
    
 
-    async seatSelect(seatnumber:string)
+    async seatSelect()
     {
-        const seat = this.page.locator('.seat.available').first();
+        const seat = this.page.locator('.seat.available').first()
+        await seat.scrollIntoViewIfNeeded()
+        await expect(seat).toBeVisible();
         await seat.click();
-        await this.page.getByRole('button',{name:/Continue/}).click()
+        const btn=await this.page.locator('#continue-btn')
+        await expect(btn).toBeEnabled({ timeout: 10000 })
+        await btn.click();
+
     }   
 }
  
