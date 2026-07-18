@@ -15,8 +15,6 @@ test-results/
 *.zip
 
 # Environment variables
-.env
-.env.*
 
 # Logs
 logs/
