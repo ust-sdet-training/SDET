@@ -42,9 +42,6 @@ public final class Secrets {
                         .load();
             }
         }
-
-        System.out.println("[Secrets] WARNING: .env not found in any candidate directory. "
-                + "user.dir=" + System.getProperty("user.dir"));
         return Dotenv.configure().ignoreIfMissing().ignoreIfMalformed().load();
     }
 }
