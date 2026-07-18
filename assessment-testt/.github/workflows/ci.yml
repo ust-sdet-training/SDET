@@ -1,0 +1,107 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  api-tests:
+    name: API tests (RestAssured + JDBC)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: "22"
+
+      - name: Run API tests
+        working-directory: api-automation
+        run: mvn -DskipTests=false -Dtest=DbValidationTest,DbSeederTest,SecurityApiTest test --batch-mode
+
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: api-automation/target/allure-results || api-automation/allure-results || api-automation/target/surefire-reports
+
+  ui-tests:
+    name: UI tests (Playwright)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Install UI dependencies
+        working-directory: ui--automation
+        run: |
+          npm ci
+          npx playwright install --with-deps
+
+      - name: Run Playwright tests (headed for trace)
+        working-directory: ui--automation
+        env:
+          CI: true
+        run: |
+          npx playwright test --project=chromium --reporter=list --trace on
+
+      - name: Upload Playwright trace & report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: ui--automation/playwright-report || ui--automation/test-results || ui--automation/allure-results
+
+  perf-gate:
+    name: Performance gate (k6)
+    runs-on: ubuntu-latest
+    needs: api-tests
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Install k6
+        uses: loadimpact/k6-action@v0.2.0
+
+      - name: Run k6 smoke test
+        env:
+          BASE_URL: ${{ secrets.API_BASE_URL || env.API_BASE_URL }}
+          API_USER_EMAIL: ${{ secrets.API_USER_EMAIL || env.API_USER_EMAIL }}
+          API_USER_PASSWORD: ${{ secrets.API_USER_PASSWORD || env.API_USER_PASSWORD }}
+        run: |
+          # run the perf script and export summary
+          k6 run perf/checkout-smoke.js --summary-export=perf.json
+
+      - name: Check perf against baseline
+        run: |
+          node ci/checkPerf.js perf.json perf/baseline.json
+
+      - name: Upload perf summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: perf-summary
+          path: perf.json
+
+  publish-status:
+    name: Publish status and block merge
+    runs-on: ubuntu-latest
+    needs: [api-tests, ui-tests, perf-gate]
+    steps:
+      - name: Mark success
+        run: echo "All checks passed"

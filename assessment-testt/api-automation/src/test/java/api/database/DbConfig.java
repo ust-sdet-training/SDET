@@ -8,6 +8,5 @@ public final class DbConfig {
     public static final String DB_PASSWORD = PropertyReader.getProperty("DB_PASSWORD", "");
 
     private DbConfig() {
-        // helper only
     }
 }

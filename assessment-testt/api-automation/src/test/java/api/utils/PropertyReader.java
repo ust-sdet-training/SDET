@@ -51,6 +51,10 @@ public final class PropertyReader {
     }
 
     public static String getProperty(String key, String defaultValue) {
+        String sys = System.getProperty(key);
+        if (sys != null && !sys.isBlank()) {
+            return sys;
+        }
         return PROPERTIES.getProperty(key, defaultValue);
     }
 

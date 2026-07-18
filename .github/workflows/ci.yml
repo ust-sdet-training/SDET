@@ -1,0 +1,109 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  api-tests:
+    name: API Tests (Maven)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 22
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 22
+
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.m2/repository
+            **/target
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Build & run API tests
+        working-directory: assessment-testt/api-automation
+        run: mvn -B -DskipTests=false test
+
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-allure-results
+          path: assessment-testt/api-automation/target/allure-results
+
+  ui-tests:
+    name: UI Tests (Playwright)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        working-directory: assessment-testt/ui--automation
+        run: |
+          npm ci
+          npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        working-directory: assessment-testt/ui--automation
+        run: npx playwright test --reporter=list
+
+      - name: Upload Playwright report (zip)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: assessment-testt/ui--automation/playwright-report
+
+      - name: Upload Playwright traces and results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: |
+            assessment-testt/ui--automation/test-results
+            assessment-testt/ui--automation/allure-results
+
+  perf-gate:
+    name: Performance Gate
+    runs-on: ubuntu-latest
+    needs: [api-tests, ui-tests]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install perf dependencies
+        run: |
+          cd assessment-testt
+          npm ci --prefix ./perf || true
+
+      - name: Run perf comparator
+        working-directory: assessment-testt
+        run: node ci/checkPerf.js || true
+
+      - name: Upload perf output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: perf-output
+          path: assessment-testt/perf

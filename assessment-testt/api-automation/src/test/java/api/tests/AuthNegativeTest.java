@@ -14,7 +14,6 @@ public class AuthNegativeTest {
     void loginWithBadCredentialsShouldFail() {
         Response resp = ApiClient.loginRaw(AppConfig.USER_EMAIL, "wrong-password");
         int status = resp.getStatusCode();
-        // Expecting non-200 (401/403) for bad credentials
         assertThat("Login should not succeed with bad credentials", status == 200, equalTo(false));
     }
 }

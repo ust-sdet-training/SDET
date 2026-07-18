@@ -62,11 +62,9 @@ test("E24 end-to-end bus booking and PNR validation", async ({
     `Verified ${pnrValues.length} booking(s) belong to ${expectedPnrPrefix}`,
   );
 
-  // Cancel the first booking so the test can be re-run cleanly
   const cancelButton = page.getByRole("button", { name: "Cancel" }).first();
   await cancelButton.click();
 
-  // Try common confirmation buttons in the cancellation modal
   const confirmButtons = [
     page.getByRole("button", { name: "Confirm" }),
     page.getByRole("button", { name: "Yes" }),
@@ -84,9 +82,7 @@ test("E24 end-to-end bus booking and PNR validation", async ({
         cancelled = true;
         break;
       }
-    } catch (e) {
-      // ignore and try next
-    }
+    } catch (e) {}
   }
 
   if (!cancelled) {

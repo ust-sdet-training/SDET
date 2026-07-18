@@ -68,6 +68,14 @@
             <version>9.4.0</version>
         </dependency>
 
+        <!-- Testcontainers for isolated DB in CI -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <version>1.19.0</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Allure -->
         <dependency>
             <groupId>io.qameta.allure</groupId>
