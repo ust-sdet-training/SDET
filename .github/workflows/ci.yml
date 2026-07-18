@@ -1,0 +1,133 @@
+name: TripStack Final Capstone CI
+
+on:
+
+  push:
+    branches:
+      - kavya_final_capstone
+
+  pull_request:
+    branches:
+      - kavya_final_capstone
+
+jobs:
+  playwright:
+
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 40
+
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Packages
+        run: npm ci
+
+      - name: Install Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright Tests
+        run: |
+          npx playwright test
+
+      - name: Upload Playwright Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Playwright-Report
+          path: playwright-report/
+
+      - name: Upload Playwright Traces
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Playwright-Traces
+          path: test-results/
+
+  api:
+
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 40
+
+    services:
+
+      mysql:
+
+        image: mysql:8.4
+
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: tripstack
+
+        ports:
+          - 3306:3306
+
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    env:
+
+      DB_URL: jdbc:mysql://localhost:3306/tripstack
+
+      DB_USERNAME: root
+
+      DB_PASSWORD: root
+
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 22
+
+      - name: Wait for MySQL
+        run: |
+          sleep 25
+
+      - name: Create bookings table
+        run: |
+          mysql -h127.0.0.1 -uroot -proot tripstack <<EOF
+          CREATE TABLE IF NOT EXISTS bookings (
+              id INT AUTO_INCREMENT PRIMARY KEY,
+              booking_id VARCHAR(50),
+              pnr VARCHAR(50),
+              passenger_name VARCHAR(100),
+              status VARCHAR(30)
+          );
+          EOF
+
+      - name: Run API + DB Tests
+        run: mvn clean test
+
+      - name: Generate Allure Results
+        if: always()
+        run: mvn allure:report
+
+      - name: Upload Allure Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Allure-Report
+          path: target/site/allure-maven-plugin
+
+      - name: Upload Surefire Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Maven-Test-Results
+          path: target/surefire-reports

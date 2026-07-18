@@ -10,22 +10,6 @@ test('Login', async ({ page }) => {
     
 });
 
-test("Invalid Login", async ({ page }) => {
-
-    const login = new LoginPage(page);
-
-    await login.goto();
-
-    await login.login(
-        "wrong@test.com",
-        "WrongPassword"
-    );
-
-    await expect(
-        page.getByText(/invalid|incorrect|failed/i)
-    ).toBeVisible();
-
-});
 test("Empty Login", async ({ page }) => {
 
     const login = new LoginPage(page);

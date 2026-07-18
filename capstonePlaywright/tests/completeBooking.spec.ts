@@ -39,6 +39,6 @@ test("Track Ticket", async ({ page }) => {
 
     await ticket.pay();
 
-    await ticket.clickViewTrackButton();
+    await ticket.openMyTrips();
 
 });
