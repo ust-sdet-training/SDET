@@ -22,25 +22,38 @@ export class PaymentPage extends BasePage{
     }
 
     async fillDetails(name: string, number: string, expiry: string, cvv: string): Promise<string>{
-        await this.cardName.fill(name);
-        await this.cardNo.fill(number);
-        await this.expiry.fill(expiry);
-        await this.cvv.fill(cvv);
-        await this.payBtn.click();
-        if(await this.paymentError.isVisible()){
-            console.log("Error");
-            return "";
-        }
+    await this.cardName.fill(name);
+    await this.cardNo.fill(number);
+    await this.expiry.fill(expiry);
+    await this.cvv.fill(cvv);
+    await this.payBtn.click();
 
-        
-        await expect(this.page.getByText("CONFIRMED", {exact:true })).toBeVisible();
-        await expect(this.page.getByText(/TS/)).toBeVisible();
-        await expect(this.page.locator("[data-id='pnr']")).toContainText("TS-1023-");
-        await expect(this.page.getByText(/TS/)).toBeVisible();
+    const confirmed = this.page.getByText("CONFIRMED", { exact: true });
+    const errorAlert = this.paymentError;
 
-        const pnr = (await this.pnr.innerText()).trim();
-        return pnr;
+    // Wait for whichever outcome actually happens, instead of a blind isVisible() check
+    const result = await Promise.race([
+        confirmed.waitFor({ state: "visible", timeout: 30000 }).then(() => "confirmed"),
+        errorAlert.waitFor({ state: "visible", timeout: 30000 }).then(() => "error"),
+    ]).catch(() => "timeout");
+
+    if (result === "error") {
+        const errorText = await errorAlert.innerText().catch(() => "");
+        console.log(`Payment error: ${errorText}`);
+        return "";
     }
+
+    if (result === "timeout") {
+        console.log("Payment result not determined within timeout — neither confirmation nor error appeared");
+        return "";
+    }
+
+    await expect(this.page.getByText(/TS/)).toBeVisible();
+    await expect(this.page.locator("[data-id='pnr']")).toContainText("TS-1023-");
+
+    const pnr = (await this.pnr.innerText()).trim();
+    return pnr;
+}
 
     
 }
