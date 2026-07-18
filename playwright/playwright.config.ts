@@ -11,7 +11,7 @@ export default defineConfig({
   reporter: [["html"], ["list"] ,["blob"]],
   
   use: {
-    baseURL: process.env.BASE_URL,
+    baseURL: process.env.BASE_TRIP_HEIDI_URL,
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     video:"retain-on-failure",
