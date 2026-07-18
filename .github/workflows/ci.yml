@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+      - cipiraj_Final_Capstone
   pull_request:
     branches:
       - main
+      - cipiraj_Final_Capstone
 
 jobs:
   api-tests:
