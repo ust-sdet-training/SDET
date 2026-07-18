@@ -25,14 +25,15 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
-         
+          node-version: 20
+          cache: npm
+          cache-dependency-path: UIAutomation/package-lock.json
 
       - name: Install Dependencies
         run: npm ci
 
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps chromium
 
       - name: Run Playwright Tests
         env:
@@ -50,7 +51,7 @@ jobs:
           CARD_NUMBER: ${{ secrets.SHAHBAZ_CARD_NUMBER || '4111111111111111' }}
           CARD_EXPIRY: ${{ secrets.SHAHBAZ_CARD_EXPIRY || '12/30' }}
           CARD_CVV: ${{ secrets.SHAHBAZ_CARD_CVV || '123' }}
-        run: npx playwright flightbooking.spec.ts
+        run: npx playwright test
 
       - name: Upload Playwright HTML Report
         if: always()
@@ -119,6 +120,19 @@ jobs:
           distribution: temurin
           java-version: '22'
           cache: gradle
+
+      - name: Set up Gradle (for wrapper fallback)
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Ensure Gradle wrapper exists
+        working-directory: APIAutomationFinal
+        run: |
+          if [ ! -f "gradlew" ]; then
+            echo "gradlew not found — generating wrapper with installed Gradle"
+            gradle wrapper --gradle-version 8.7
+          else
+            echo "gradlew already present, skipping generation"
+          fi
 
       - name: Grant execute permission for Gradle wrapper
         working-directory: APIAutomationFinal
