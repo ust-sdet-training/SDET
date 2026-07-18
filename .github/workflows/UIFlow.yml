@@ -29,7 +29,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
-      - env:
+        env:
           ARAVIND_PASSWORD: ${{ secrets.ARAVIND_PASSWORD }}
           ARAVIND_BASE_URL_UI: ${{ secrets.ARAVIND_BASE_URL_UI }}
         run: npx playwright test
@@ -38,5 +38,5 @@ jobs:
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
-          path: ui/playwright-report/
+          path: UI/playwright-report/
           retention-days: 30
