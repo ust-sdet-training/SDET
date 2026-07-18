@@ -31,7 +31,6 @@ export class PaymentPage extends BasePage{
     const confirmed = this.page.getByText("CONFIRMED", { exact: true });
     const errorAlert = this.paymentError;
 
-    // Wait for whichever outcome actually happens, instead of a blind isVisible() check
     const result = await Promise.race([
         confirmed.waitFor({ state: "visible", timeout: 30000 }).then(() => "confirmed"),
         errorAlert.waitFor({ state: "visible", timeout: 30000 }).then(() => "error"),
