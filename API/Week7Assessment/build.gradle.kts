@@ -74,12 +74,13 @@ fun Test.useProjectTestClasses() {
 }
 
 
-val CatalogFlowTestPOM by tasks.registering(Test::class) {
-    description = "Check the catalog flow test"
+val FlightBookingFlowTest by tasks.registering(Test::class) {
+    description = "Check the flightbooking flow test"
     group = "verification"
     useProjectTestClasses()
     useJUnitPlatform()
     include("**/MainTest.class")
+    include("**/SecurityNegativeTest.class")
     maxParallelForks = 1
 }
 

@@ -1,0 +1,33 @@
+name: API CI
+
+on:
+  push:
+    branches: [ "Aravind_Final_Capstone" ]
+  pull_request:
+    branches: [ "Aravind_Final_Capstone" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17' 
+        distribution: 'temurin'
+
+    - name: Install Gradle
+      uses: gradle/actions/setup-gradle@v3
+      with:
+        gradle-version: '8.8' 
+
+    - name: Build and test with Gradle
+      working-directory: API/Week7Assessment
+      env:
+        ARAVIND_BASE_URL_API: ${{ secrets.ARAVIND_BASE_URL_API }}
+        ARAVIND_PASSWORD: ${{ secrets.ARAVIND_PASSWORD }}
+      run: gradle FlightBookingFlowTest

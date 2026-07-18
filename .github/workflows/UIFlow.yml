@@ -1,3 +1,11 @@
+name: UI CI
+
+on:
+  push:
+    branches: [ "Aravind_Final_Capstone" ]
+  pull_request:
+    branches: [ "Aravind_Final_Capstone" ]
+
 jobs:
   test:
     timeout-minutes: 60
@@ -5,7 +13,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ui
+        working-directory: UI
 
     steps:
       - uses: actions/checkout@v4
@@ -21,6 +29,9 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
+      - env:
+          ARAVIND_PASSWORD: ${{ secrets.ARAVIND_PASSWORD }}
+          ARAVIND_BASE_URL_UI: ${{ secrets.ARAVIND_BASE_URL_UI }}
         run: npx playwright test
 
       - uses: actions/upload-artifact@v4

@@ -11,7 +11,7 @@ public class ConfigSpec {
     public RequestSpecification setHeaders(){
         return
                 given()
-                .baseUri(TestEnvironment.required("BASE_URL"))
+                .baseUri(TestEnvironment.required("ARAVIND_BASE_URL_API"))
                 .basePath("/api")
                 .contentType(ContentType.JSON);
     }
