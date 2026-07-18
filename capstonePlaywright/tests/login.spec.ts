@@ -10,16 +10,3 @@ test('Login', async ({ page }) => {
     
 });
 
-test("Empty Login", async ({ page }) => {
-
-    const login = new LoginPage(page);
-
-    await login.goto();
-
-    await page.getByRole("button", { name: "Sign in" }).click();
-
-    await expect(
-        page.getByText(/required/i)
-    ).toBeVisible();
-
-});

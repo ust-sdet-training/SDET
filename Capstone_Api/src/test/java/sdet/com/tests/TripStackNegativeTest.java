@@ -129,4 +129,44 @@ public class TripStackNegativeTest {
 
         assertThat(response.statusCode()).isEqualTo(404);
     }
+
+    @Test
+    void shouldNotAllowTravellerToAccessAdminEndpoint() {
+
+        String token =
+                given()
+                        .baseUri(BASE_URL)
+                        .contentType(ContentType.JSON)
+                        .body(Map.of(
+                                "email", "peggy@tripstack.test",
+                                "password", "Password@123"
+                        ))
+                        .when()
+                        .post("/api/auth/login")
+                        .then()
+                        .statusCode(200)
+                        .extract()
+                        .jsonPath()
+                        .getString("token");
+
+        Response response =
+                given()
+                        .baseUri(BASE_URL)
+                        .header("Authorization", "Bearer " + token)
+                        .when()
+                        .get("/api/auth/admin-ping");
+
+        assertThat(response.statusCode()).isEqualTo(403);
+
+        assertThat(response.jsonPath().getString("error"))
+                .isEqualTo("forbidden");
+
+        assertThat(response.jsonPath().getList("required"))
+                .contains("admin");
+
+        assertThat(response.jsonPath().getString("role"))
+                .isEqualTo("traveller");
+    }
+
+
 }
