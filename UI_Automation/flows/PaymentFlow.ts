@@ -17,6 +17,10 @@ export class PaymentFlow{
         await this.paymentPage.enterCVV(EnvCheck.TESTUSER_CARD_CVV);
     }
 
+    async alertMessageRecieved(){
+        expect(await this.paymentPage.alertMessage()).toBeVisible();
+    }
+
     async completePayment(){
         await this.paymentPage.clickPayment();
     }

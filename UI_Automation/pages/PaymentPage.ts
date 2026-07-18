@@ -11,6 +11,7 @@ export class PaymentPage{
 
     paymentButton = () : Locator => this.page.locator('button[type="submit"]');
 
+    alert = () : Locator => this.page.getByRole("alert");
 
     async enterNameOnCard(name: string){
         await this.inputNameOnCard().fill(name);
@@ -30,5 +31,9 @@ export class PaymentPage{
 
     async clickPayment(){
         await this.paymentButton().click();
+    }
+
+    async alertMessage(){
+        return await this.alert();
     }
 }
