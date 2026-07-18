@@ -66,11 +66,16 @@ test("Bus booking happy path", async ({
   // Payment
   await book.payment();
 
-  await expect(page.getByRole("button", { name: "View my trips",})).toBeVisible();
   log.info("Payment successful");
   await book.confirmSeat();
-  await expect(page).toHaveURL(/.*trip.*/i);
   evidence.bookingCompleted = true;
-
+  
   log.info("Booking completed successfully");
+  
+  await page.getByRole("button", { name: "View my trips",}).click();
+  await expect(page).toHaveURL(/.*trip.*/i);
+  await expect(page.getByRole('heading', { name: 'My Trips' })).toBeVisible();
+  await page.getByRole('button', { name: 'Cancel' }).click();
+  
+  log.info("Ticket cancellation completed successfully");
 });
