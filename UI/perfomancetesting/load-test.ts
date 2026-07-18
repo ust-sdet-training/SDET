@@ -2,7 +2,6 @@ import { browser } from 'k6/browser';
 import { expect } from 'https://jslib.k6.io/k6-testing/0.3.0/index.js';
 import { Options } from 'k6/options';
 
-import {getPassword} from '../Config/Secrets'
 
 import userLoginInfo from '../test-data/UserLoginInfo.json'
 
@@ -30,12 +29,11 @@ export default async function (): Promise<void> {
 
   try {
     await page.goto('https://tripstack.doomple.com/login');
+ 
+    const baseUrl = __ENV.ARAVIND_BASE_URL_UI;
+    const password = __ENV.ARAVIND_PASSWORD;;
 
-    // TypeScript expects string types for filling inputs
-    const username: string = userLoginInfo["Carol"].email|| 'carol@tripstacks.test'; 
-    const password: string = getPassword();
-
-    await page.locator('input[type="email"]').fill(username);
+    await page.locator('input[type="email"]').fill("carol@tripstack.test");
     await page.locator('input[type="password"]').fill(password);
     
     await Promise.all([
