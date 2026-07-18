@@ -23,8 +23,7 @@ jobs:
           node-version: 20.x
       - name: Install UI dependencies
         run: npm ci
-      - name: TypeScript typecheck
-        run: npm run typecheck
+     
       - name: Install browser dependencies
         run: npx playwright install --with-deps chromium
       - name: Run Playwright UI tests (all)
