@@ -2,7 +2,7 @@ name: TripStack CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, Sankaran_Final_Capstone]
   pull_request:
     branches: [main]
 
@@ -54,15 +54,15 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        working-directory: ./Playwright_UI
+        working-directory: ./CapStone_UI_Final
         run: npm ci
 
       - name: Install Playwright browsers
-        working-directory: ./Playwright_UI
+        working-directory: ./CapStone_UI_Final
         run: npx playwright install --with-deps
 
       - name: Run UI tests
-        working-directory: ./Playwright_UI
+        working-directory: ./CapStone_UI_Final
         run: npx playwright test
 
       - name: Upload traces
