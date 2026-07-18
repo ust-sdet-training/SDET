@@ -22,6 +22,7 @@ export class SearchResultPage extends BasePage {
 
     async openFirstResult(){
         await this.firstBookButton.click();
+        await expect(this.page.locator(".seat.available").first()).toBeVisible();
         
     }
 

@@ -19,13 +19,7 @@ public class FlightTests extends BaseTest {
 
     @Test
     void shouldSearchFlights() {
-        Response response = flightClient.searchFlights(
-                "PUN",
-                "DEL",
-                "2026-08-09",
-                1,
-                "economy"
-        );
+        Response response = flightClient.searchFlights("PUN", "DEL", "2026-08-09", 1, "economy");
 
         response.then()
                 .statusCode(200)
@@ -39,13 +33,7 @@ public class FlightTests extends BaseTest {
 
     @Test
     void shouldGetSeatMap() {
-        Response search = flightClient.searchFlights(
-                "PUN",
-                "DEL",
-                "2026-08-09",
-                1,
-                "economy"
-        );
+        Response search = flightClient.searchFlights("PUN", "DEL", "2026-08-09", 1, "economy");
 
         String flightId = search.jsonPath().getString("flights[0].id");
         Response seats = flightClient.getSeatMap(flightId, "economy");
@@ -59,17 +47,10 @@ public class FlightTests extends BaseTest {
 
     @Test
     void shouldRejectMissingFromAndTo() {
-        Response response = flightClient.searchFlights(
-                "",
-                "",
-                "2026-08-09",
-                1,
-                "economy"
-        );
+        Response response = flightClient.searchFlights("", "", "2026-08-09", 1, "economy");
 
         response.then()
                 .statusCode(400)
-                .body("error",
-                        equalTo("from and to are required"));
+                .body("error", equalTo("from and to are required"));
     }
 }

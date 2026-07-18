@@ -33,12 +33,6 @@ public class BookingBuilder {
 
     public BookingRequest build() {
 
-        return new BookingRequest(
-                journeyType,
-                inventoryId,
-                seatIds,
-                refundable,
-                holdTtlSec
-        );
+        return new BookingRequest(journeyType, inventoryId, seatIds, refundable, holdTtlSec);
     }
 }

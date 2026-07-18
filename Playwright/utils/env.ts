@@ -4,8 +4,8 @@ dotenv.config();
 
 export const config = {
   baseUrl: process.env.BASE_URL|| "",
-  email: process.env.USER_EMAIL || "",
-  password: process.env.PASSWORD || "",
+  email: process.env.PREM_TRIPSTACK_EMAIL || "",
+  password: process.env.PREM_TRIPSTACK_PASSWORD || "",
   headless: process.env.HEADLESS === "false",
   cardName: process.env.CARD_NAME || "",
   cardNo: process.env.CARD_NO || "",
@@ -13,7 +13,7 @@ export const config = {
   cvv: process.env.CVV || ""
 };
 
-const required = ["BASE_URL","USER_EMAIL","PASSWORD"];
+const required = ["BASE_URL","PREM_TRIPSTACK_EMAIL","TPREM_RIPSTACK_PASSWORD"];
 
 
 for (const key of required) {

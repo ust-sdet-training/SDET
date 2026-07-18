@@ -1,0 +1,121 @@
+name: TripStack Capstone CI
+
+on:
+  push:
+    branches:
+      - premchand-final-capstone
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+
+  api-db-tests:
+    name: API + DB Tests
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: API-DB Capstone
+
+    env:
+      baseUrl: https://api.tripstack.doomple.com/
+      apiUrl: https://api.tripstack.doomple.com/
+
+      TRIPSTACK_EMAIL: ${{ secrets.PREM_TRIPSTACK_EMAIL }}
+      TRIPSTACK_PASSWORD: ${{ secrets.PREM_TRIPSTACK_PASSWORD }}
+
+      DB_USER: ${{ secrets.PREM_DB_USER }}
+      DB_PASSWORD: ${{ secrets.PREM_DB_PASSWORD }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 22
+          cache: maven
+
+      - name: Run Maven Tests
+        run: mvn clean test
+
+      - name: Upload Allure Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: API-DB Capstone/allure-results
+
+
+  performance-tests:
+    name: Performance Tests
+
+    runs-on: ubuntu-latest
+
+    needs: api-db-tests
+
+    defaults:
+      run:
+        working-directory: API-DB Capstone
+
+    env:
+      BASE_URL: https://api.tripstack.doomple.com
+
+      USER_EMAIL: ${{ secrets.PREM_TRIPSTACK_EMAIL }}
+      PASSWORD: ${{ secrets.PREM_TRIPSTACK_PASSWORD }}
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup k6
+        uses: grafana/setup-k6-action@v1
+
+      - name: Execute Performance Test
+        run: |
+          k6 run performance/searchResults.js
+
+  ui-tests:
+    name: Playwright UI Tests
+    runs-on: ubuntu-latest
+    needs: api-db-tests
+
+    defaults:
+      run:
+        working-directory: Playwright
+
+    env:
+      BASE_URL: https://tripstack.doomple.com/
+
+      TRIPSTACK_EMAIL: ${{ secrets.PREM_TRIPSTACK_EMAIL }}
+      TRIPSTACK_PASSWORD: ${{ secrets.PREM_TRIPSTACK_PASSWORD }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright Tests
+        run: npx playwright test
+
+      - name: Upload Playwright Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: Playwright/playwright-report

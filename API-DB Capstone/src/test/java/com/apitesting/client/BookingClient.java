@@ -41,13 +41,10 @@ public class BookingClient {
                 .get("/bookings/" + pnr);
     }
 
-//    public Response getBookings(
-//            String token
-//    ) {
-//
-//        return given()
-//                .spec(ApiSpecBuilders.authSpec(token))
-//                .when()
-//                .get("/bookings");
-//    }
+    public Response cancel(String token, String bookingId) {
+        return given()
+                .spec(ApiSpecBuilders.authSpec(token))
+                .when()
+                .post("/bookings/" + bookingId + "/cancel");
+    }
 }

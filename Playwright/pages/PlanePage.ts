@@ -18,12 +18,14 @@ export class PlanePage extends BasePage {
     header = () => this.page.getByRole("heading", {name:"Who's travelling?"});
 
     async selectSeat(){
+        await expect(this.firstAvailableSeat).toBeVisible();
         await this.firstAvailableSeat.click();
         
         // const seatNumber = "15C";
         // await this.page
         //     .locator(`[data-seat="${seatNumber}"]`)
         //     .click();
+        await expect(this.continueBtn).toBeEnabled();
         await this.continueBtn.click();
     }
 

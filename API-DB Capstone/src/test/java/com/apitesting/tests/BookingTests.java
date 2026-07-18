@@ -4,10 +4,12 @@ import com.apitesting.client.BookingClient;
 import com.apitesting.client.FlightClient;
 import com.apitesting.data.builder.BookingBuilder;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import com.apitesting.data.TestData;
 
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 public class BookingTests extends BaseTest {
@@ -22,14 +24,7 @@ public class BookingTests extends BaseTest {
     }
 
     private String getFlightId() {
-        Response response = flightClient.searchFlights(
-                TestData.FROM,
-                TestData.TO,
-                TestData.DATE,
-                1,
-                TestData.CABIN
-        );
-
+        Response response = flightClient.searchFlights(TestData.FROM, TestData.TO, TestData.DATE, 1, TestData.CABIN);
         return response.jsonPath().getString("flights[0].id");
     }
 
@@ -37,8 +32,10 @@ public class BookingTests extends BaseTest {
         Response response = flightClient.getSeatMap(flightId, TestData.CABIN);
         response.prettyPrint();
         return response.jsonPath()
-                .getString("rows[2].seats.find { it.occupied == false }.seat_id");
+                .getString("rows.find { it.seats.find { s -> s.occupied == false } }" +
+                        ".seats.find { it.occupied == false }.seat_id");
     }
+
 
     @Test
     void shouldCreateBooking() {
@@ -89,6 +86,7 @@ public class BookingTests extends BaseTest {
         String bookingId = hold.jsonPath().getString("id");
         bookingClient.pay(authToken, bookingId);
         Response confirm = bookingClient.confirm(authToken, bookingId);
+        confirm.then().log().all();
         confirm.then()
                 .statusCode(200)
                 .body("state", equalTo("CONFIRMED"))
@@ -109,13 +107,15 @@ public class BookingTests extends BaseTest {
         bookingClient.pay(authToken, bookingId);
 
         Response confirm = bookingClient.confirm(authToken, bookingId);
+        confirm.then().log().all();
         String pnr = confirm.jsonPath().getString("pnr");
 
         Response response = bookingClient.getBooking(authToken, pnr);
-
+        response.then().log().all();
         response.then()
                 .statusCode(200)
                 .body("pnr", equalTo(pnr))
                 .body("state", equalTo("CONFIRMED"));
     }
+
 }

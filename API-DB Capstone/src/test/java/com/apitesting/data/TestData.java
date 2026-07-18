@@ -18,7 +18,5 @@ public final class TestData {
                     .plusDays(23)
                     .format(DateTimeFormatter.ISO_LOCAL_DATE);
 
-//    public static final String JOURNEY_TYPE = "flight";
-//    public static final boolean REFUNDABLE = true;
-//    public static final int HOLD_TTL = 120;
+
 }

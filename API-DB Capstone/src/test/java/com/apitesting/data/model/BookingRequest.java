@@ -13,11 +13,7 @@ public class BookingRequest {
     public BookingRequest() {
     }
 
-    public BookingRequest(String journeyType,
-                          String inventoryId,
-                          List<String> seatIds,
-                          boolean refundable,
-                          int holdTtlSec) {
+    public BookingRequest(String journeyType, String inventoryId, List<String> seatIds, boolean refundable, int holdTtlSec) {
 
         this.journeyType = journeyType;
         this.inventoryId = inventoryId;
