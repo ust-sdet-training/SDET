@@ -37,4 +37,21 @@ public class ApiSpecBuilders {
                 .expectStatusCode(200)
                 .build();
     }
+
+    public static RequestSpecification notokenreqSpecget() {
+        return new RequestSpecBuilder()
+                .setBaseUri(Config.baseurl)
+                .setBasePath("/api")
+                .setContentType(ContentType.JSON)
+                .build();
+    }
+
+    public static RequestSpecification invalidokenreqSpecget() {
+        return new RequestSpecBuilder()
+                .setBaseUri(Config.baseurl)
+                .setBasePath("/api")
+                .setContentType(ContentType.JSON)
+                .addHeader("Authorization", "Bearer Invalid" )
+                .build();
+    }
 }
