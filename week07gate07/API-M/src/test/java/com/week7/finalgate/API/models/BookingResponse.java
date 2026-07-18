@@ -50,4 +50,19 @@ public class BookingResponse {
     public int getAmountPaise() {
         return amountPaise;
     }
+    public String getJourneyType() {
+        return journeyType;
+    }
+
+    public String getInventoryId() {
+        return inventoryId;
+    }
+
+    public boolean isRefundable() {
+        return refundable;
+    }
+
+    public String getHoldExpiresAt() {
+        return holdExpiresAt;
+    }
 }

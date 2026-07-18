@@ -1,15 +1,14 @@
 package com.week7.finalgate.DB.config;
 
-public final class DbConfig {
-
-    private DbConfig() {}
+public class DbConfig {
 
     public static final String URL =
-            "jdbc:postgresql://localhost:5432/tripstack";
+            System.getProperty("DB_URL");
 
     public static final String USER =
-            "postgres";
+            System.getProperty("DB_USERNAME");
 
     public static final String PASSWORD =
-            "postgres";
+            System.getProperty("root");
+
 }

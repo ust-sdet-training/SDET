@@ -1,20 +1,26 @@
 package com.week7.finalgate.DB.model;
 
+import java.sql.Timestamp;
+
 public class BookingRecord {
 
-    private String bookingId;
+    private String bookingUuid;
     private String pnr;
-    private String employeeId;
-    private String state;
-    private String seatId;
+    private String empId;
+    private String journeyType;
+    private String inventoryId;
+    private String bookingState;
     private int amountPaise;
+    private boolean refundable;
+    private Timestamp holdExpiresAt;
+    private Timestamp createdAt;
 
-    public String getBookingId() {
-        return bookingId;
+    public String getBookingUuid() {
+        return bookingUuid;
     }
 
-    public void setBookingId(String bookingId) {
-        this.bookingId = bookingId;
+    public void setBookingUuid(String bookingUuid) {
+        this.bookingUuid = bookingUuid;
     }
 
     public String getPnr() {
@@ -25,28 +31,36 @@ public class BookingRecord {
         this.pnr = pnr;
     }
 
-    public String getEmployeeId() {
-        return employeeId;
+    public String getEmpId() {
+        return empId;
     }
 
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
+    public void setEmpId(String empId) {
+        this.empId = empId;
     }
 
-    public String getState() {
-        return state;
+    public String getJourneyType() {
+        return journeyType;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setJourneyType(String journeyType) {
+        this.journeyType = journeyType;
     }
 
-    public String getSeatId() {
-        return seatId;
+    public String getInventoryId() {
+        return inventoryId;
     }
 
-    public void setSeatId(String seatId) {
-        this.seatId = seatId;
+    public void setInventoryId(String inventoryId) {
+        this.inventoryId = inventoryId;
+    }
+
+    public String getBookingState() {
+        return bookingState;
+    }
+
+    public void setBookingState(String bookingState) {
+        this.bookingState = bookingState;
     }
 
     public int getAmountPaise() {
@@ -55,5 +69,29 @@ public class BookingRecord {
 
     public void setAmountPaise(int amountPaise) {
         this.amountPaise = amountPaise;
+    }
+
+    public boolean isRefundable() {
+        return refundable;
+    }
+
+    public void setRefundable(boolean refundable) {
+        this.refundable = refundable;
+    }
+
+    public Timestamp getHoldExpiresAt() {
+        return holdExpiresAt;
+    }
+
+    public void setHoldExpiresAt(Timestamp holdExpiresAt) {
+        this.holdExpiresAt = holdExpiresAt;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 }
