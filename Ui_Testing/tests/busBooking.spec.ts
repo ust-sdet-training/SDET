@@ -12,7 +12,7 @@ test("login",async({request,book,log,evidence})=>
     await book.enterdetails(Env.firstname,Env.lastname,Env.age,Env.email,Env.ph_no)
     log.info("Enter the passender details")
     await book.payment(Env.firstname,Env.cardnumber,Env.exp,Env.cvv)
-    log.info("Enter the cardnumber")
+    log.info("Enter the cardnumber and do the payment")
 
 
 

@@ -16,5 +16,4 @@ public class BaseConfig {
             dotenv.get("PASSWORD");
 
 
-    public static final String NAME=dotenv.get("NAME");
 }

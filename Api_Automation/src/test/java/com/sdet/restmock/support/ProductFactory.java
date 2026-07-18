@@ -49,38 +49,30 @@ public class ProductFactory {
             .setAccept("application/json")
             .build();
 
+    public static RequestSpecification booking=new RequestSpecBuilder()
+            .setBaseUri(baseURL)
+            .setBasePath("/api/bookings")
+            .setContentType("application/json")
+            .setAccept("application/json")
+            .build();
+
+    public static RequestSpecification tampered=new RequestSpecBuilder()
+            .setBaseUri(baseURL)
+            .setBasePath("/api/auth/me")
+            .setContentType("application/json")
+            .setAccept("application/json")
+            .build();
+
+
+
+
+
     public static RequestSpecification getdel=new RequestSpecBuilder()
             .setBaseUri(baseURL)
             .setBasePath("booking/2")
             .setContentType("application/json")
             .setAccept("application/json")
             .build();
-
-//    public static RequestSpecification patch=new RequestSpecBuilder()
-//            .setBaseUri(baseURL)
-////            .addParam(BaseConfig.NAME,BaseConfig.PASSWORD)
-//            .setBasePath("booking/2")
-//            .setContentType("application/json")
-//            .setAccept("application/json")
-////            .addHeader("Authorization","Basic YWRtaW46cGFzc3dvcmQxMjM=")
-//            .addCookie("token",Token)
-//            .build();
-
-
-
-    public static RequestSpecification booktic=new RequestSpecBuilder()
-            .setBaseUri(baseURL)
-            .setBasePath("api/bookings")
-            .setContentType("application/json")
-            .setAccept("application/json")
-            .build();
-
-    public static RequestSpecification pay=new RequestSpecBuilder()
-            .setBaseUri(baseURL)
-            .setContentType("application/json")
-            .setAccept("application/json")
-            .build();
-
 
 
     public static RequestSpecification post=new RequestSpecBuilder()
@@ -95,7 +87,7 @@ public class ProductFactory {
     public static String getAuthToken()
     {
         String token=given()
-                .baseUri(baseURL).log().all()
+                .baseUri(baseURL)
                 .contentType("application/json")
                 .body(tok)
                 .when()
@@ -104,16 +96,16 @@ public class ProductFactory {
         return token;
     }
 
-    public static String getid()
-    {
-        String id=given()
-                .baseUri(baseURL).log().all()
-                .contentType("application/json")
-                .body(UserData.busdetails)
-                .header("Authorization", "Bearer " + Token)
-                .when()
-                .post("api/bookings")
-                .then().log().all().extract().path("id");
-        return id;
-    }
+//    public static String getid()
+//    {
+//        String id=given()
+//                .baseUri(baseURL).log().all()
+//                .contentType("application/json")
+//                .body(UserData.busdetails)
+//                .header("Authorization", "Bearer " + Token)
+//                .when()
+//                .post("api/bookings")
+//                .then().log().all().extract().path("id");
+//        return id;
+//    }
 }

@@ -58,4 +58,10 @@ export class TripStackFlow  {
         
 
     }
+
+    async paymentExpectFailure(firstname: string,cardnumber: string,exp: string,cvv: string) 
+    {
+    await this.paymentPage.enterPaymentDetails(firstname,cardnumber,exp,cvv
+    );
+}
 }
