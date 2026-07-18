@@ -8,17 +8,16 @@ export class SearchResultsPage extends BasePage {
     }
 
     // Locators
-    private flights = () => this.page.locator('#results article');
-
     private firstBookButton = () =>
-        this.flights()
-            .first()
-            .locator('a[role="button"]');
+        this.page
+            .getByRole('region', { name: 'Flight results' })
+            .getByRole('button', { name: 'Book' })
+            .first();
 
     // Verify Results
     async verifyResults() {
 
-        await expect(this.flights().first()).toBeVisible();
+        await expect(this.firstBookButton()).toBeVisible();
 
     }
 

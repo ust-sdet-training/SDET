@@ -93,7 +93,7 @@
           "specs": [
             {
               "title": "Book Flight Successfully",
-              "ok": true,
+              "ok": false,
               "tags": [],
               "tests": [
                 {
@@ -106,32 +106,48 @@
                     {
                       "workerIndex": 0,
                       "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 6577,
-                      "errors": [],
+                      "status": "failed",
+                      "duration": 10986,
+                      "error": {
+                        "message": "Error: Payment Failed : payment gateway timed out",
+                        "stack": "Error: Payment Failed : payment gateway timed out\n    at PaymentPage.payNow (C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\pages\\PaymentPage.ts:87:19)\n    at PaymentPage.makePayment (C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\pages\\PaymentPage.ts:105:9)\n    at FlightBookingFlow.bookFlight (C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\flows\\FlightBookingFlow.ts:37:9)\n    at C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\tests\\booking.spec.ts:17:21",
+                        "location": {
+                          "file": "C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\pages\\PaymentPage.ts",
+                          "column": 19,
+                          "line": 87
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39m..\\pages\\PaymentPage.ts:87\n\n\u001b[0m \u001b[90m 85 |\u001b[39m                 \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpaymentError()\u001b[33m.\u001b[39mtextContent()\u001b[33m;\u001b[39m\n \u001b[90m 86 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 87 |\u001b[39m             \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\n \u001b[90m    |\u001b[39m                   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 88 |\u001b[39m                 \u001b[32m`Payment Failed : ${message}`\u001b[39m\n \u001b[90m 89 |\u001b[39m             )\u001b[33m;\u001b[39m\n \u001b[90m 90 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\pages\\PaymentPage.ts",
+                            "column": 19,
+                            "line": 87
+                          },
+                          "message": "Error: Payment Failed : payment gateway timed out\n\n\u001b[90m   at \u001b[39m..\\pages\\PaymentPage.ts:87\n\n\u001b[0m \u001b[90m 85 |\u001b[39m                 \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpaymentError()\u001b[33m.\u001b[39mtextContent()\u001b[33m;\u001b[39m\n \u001b[90m 86 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 87 |\u001b[39m             \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\n \u001b[90m    |\u001b[39m                   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 88 |\u001b[39m                 \u001b[32m`Payment Failed : ${message}`\u001b[39m\n \u001b[90m 89 |\u001b[39m             )\u001b[33m;\u001b[39m\n \u001b[90m 90 |\u001b[39m\u001b[0m\n\u001b[2m    at PaymentPage.payNow (C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\pages\\PaymentPage.ts:87:19)\u001b[22m\n\u001b[2m    at PaymentPage.makePayment (C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\pages\\PaymentPage.ts:105:9)\u001b[22m\n\u001b[2m    at FlightBookingFlow.bookFlight (C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\flows\\FlightBookingFlow.ts:37:9)\u001b[22m\n\u001b[2m    at C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\tests\\booking.spec.ts:17:21\u001b[22m"
+                        }
+                      ],
                       "stdout": [
                         {
-                          "text": "Available seats: \u001b[33m113\u001b[39m\n"
+                          "text": "Available seats: \u001b[33m110\u001b[39m\n"
                         },
                         {
-                          "text": "Selected seat index: \u001b[33m46\u001b[39m\n"
+                          "text": "Selected seat index: \u001b[33m94\u001b[39m\n"
                         },
                         {
                           "text": "Seat selected successfully\n"
-                        },
-                        {
-                          "text": "PNR : TS-1015-0059\n"
                         }
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-07-18T06:58:17.407Z",
+                      "startTime": "2026-07-18T19:51:07.946Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screenshot",
                           "contentType": "image/png",
-                          "path": "C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\test-results\\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\\test-finished-1.png"
+                          "path": "C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\test-results\\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\\test-failed-1.png"
                         },
                         {
                           "name": "video",
@@ -139,14 +155,24 @@
                           "path": "C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\test-results\\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\\video.webm"
                         },
                         {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\test-results\\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\\error-context.md"
+                        },
+                        {
                           "name": "trace",
                           "contentType": "application/zip",
                           "path": "C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\test-results\\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\\trace.zip"
                         }
-                      ]
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\310970\\Desktop\\SaturdayFinal\\SDET\\ui\\pages\\PaymentPage.ts",
+                        "column": 19,
+                        "line": 87
+                      }
                     }
                   ],
-                  "status": "expected"
+                  "status": "unexpected"
                 }
               ],
               "id": "a3a10f2351dcc49e1cb9-f20ebdbcadb92eddeee2",
@@ -161,11 +187,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-07-18T06:58:16.607Z",
-    "duration": 10543.952000000001,
-    "expected": 1,
+    "startTime": "2026-07-18T19:51:07.006Z",
+    "duration": 14366.39,
+    "expected": 0,
     "skipped": 0,
-    "unexpected": 0,
+    "unexpected": 1,
     "flaky": 0
   }
 }

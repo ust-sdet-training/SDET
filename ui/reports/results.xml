@@ -1,19 +1,58 @@
-<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="10.543952">
-<testsuite name="booking.spec.ts" timestamp="2026-07-18T06:58:16.831Z" hostname="Google Chrome" tests="1" failures="0" skipped="0" time="6.577" errors="0">
-<testcase name="TripStack Flight Booking › Book Flight Successfully" classname="booking.spec.ts" time="6.577">
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="1" time="14.366389999999999">
+<testsuite name="booking.spec.ts" timestamp="2026-07-18T19:51:07.259Z" hostname="Google Chrome" tests="1" failures="0" skipped="0" time="10.986" errors="1">
+<testcase name="TripStack Flight Booking › Book Flight Successfully" classname="booking.spec.ts" time="10.986">
 <system-out>
-<![CDATA[Available seats: [33m113[39m
-Selected seat index: [33m46[39m
+<![CDATA[Available seats: [33m110[39m
+Selected seat index: [33m94[39m
 Seat selected successfully
-PNR : TS-1015-0059
 
-[[ATTACHMENT|..\test-results\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\test-finished-1.png]]
+[[ATTACHMENT|..\test-results\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\test-failed-1.png]]
 
 [[ATTACHMENT|..\test-results\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\video.webm]]
+
+[[ATTACHMENT|..\test-results\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\error-context.md]]
 
 [[ATTACHMENT|..\test-results\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\trace.zip]]
 ]]>
 </system-out>
+<error message="Payment Failed : payment gateway timed out" type="Error">
+<![CDATA[  [Google Chrome] › booking.spec.ts:5:9 › TripStack Flight Booking › Book Flight Successfully ──────
+
+    Error: Payment Failed : payment gateway timed out
+
+       at ..\pages\PaymentPage.ts:87
+
+      85 |                 await this.paymentError().textContent();
+      86 |
+    > 87 |             throw new Error(
+         |                   ^
+      88 |                 `Payment Failed : ${message}`
+      89 |             );
+      90 |
+        at PaymentPage.payNow (C:\Users\310970\Desktop\SaturdayFinal\SDET\ui\pages\PaymentPage.ts:87:19)
+        at PaymentPage.makePayment (C:\Users\310970\Desktop\SaturdayFinal\SDET\ui\pages\PaymentPage.ts:105:9)
+        at FlightBookingFlow.bookFlight (C:\Users\310970\Desktop\SaturdayFinal\SDET\ui\flows\FlightBookingFlow.ts:37:9)
+        at C:\Users\310970\Desktop\SaturdayFinal\SDET\ui\tests\booking.spec.ts:17:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\test-results\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ..\test-results\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\test-results\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\test-results\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\test-results\booking-TripStack-Flight-Booking-Book-Flight-Successfully-Google-Chrome\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</error>
 </testcase>
 </testsuite>
 </testsuites>
