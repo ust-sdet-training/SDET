@@ -6,6 +6,7 @@ on:
       - main
       - master
       - develop
+      - karthikeyan_final_capstone
 
   pull_request:
     branches:
