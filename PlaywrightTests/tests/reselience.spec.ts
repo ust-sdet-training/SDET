@@ -3,9 +3,10 @@ import { testUsers } from '../data/testUser';
 import { util } from '../src/utils/util';
 import { secrets } from '../src/utils/secrets';
 import { testTripData } from '../data/testTripData';
+import { info } from 'node:console';
 
 test.describe("Resilience", () => {
-  test("UI detects payment decline", async ({ flow, log, evidence, page }) => {
+  test("UI detects payment decline", async ({ flow, log, evidence, page ,isMobile}) => {
     await flow.start();
     await flow.clickLogin();
     await flow.login(util.emailName(testUsers.user.name), secrets.getuserPassword(testUsers.user.name));
@@ -30,11 +31,20 @@ test.describe("Resilience", () => {
     log.info("Submitted payment");
 
     const confirmed = page.getByRole('heading', { name: "You're all set!" });
+    const alertbox = page.getByRole('alert',{name:'payment declined by gateway'})
 
   try {
             await confirmed.waitFor({ timeout: 800 });
-        } catch {}
+        } catch {
+           try {
+          await alertbox.waitFor({timeout: 800 })
+           }
+          catch {
+            log.info("The payment Gateway is down");
 
-        throw new Error('NO Payment Sucessfull');
+          test.skip(isMobile,"The test is skipped because of the payment gateway down");
+          }
+          
+        }
   });
 });

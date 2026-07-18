@@ -20,8 +20,6 @@ export class BusListPage{
         const upper = xp.AVAIALBLESLEEPERSEATUPPER(this.page).first();
         const lower = xp.AVAIALBLESLEEPERSEATLOWER(this.page).first();
 
-    
-        
         try {
             await upper.waitFor({ timeout: 800 });
             return await upper.click();
@@ -30,10 +28,7 @@ export class BusListPage{
         try {
             await lower.waitFor({ timeout: 800 });
             return await lower.click();
-        } catch {}
-
-        throw new Error('No seat available');
-
+        } catch {throw new Error('No seat available');}
 
     }
     async clickContinue(){

@@ -15,7 +15,6 @@ export const test = diagnosticTest.extend<{
         continue;
       }
 
-      // Handle PNG / Buffer
       if (Buffer.isBuffer(value)) {
         await testInfo.attach(`${name}.png`, {
           body: value,
@@ -25,7 +24,6 @@ export const test = diagnosticTest.extend<{
         continue;
       }
 
-      // Handle JSON object or string
       const safeValue =
         typeof value === "string"
           ? value
