@@ -65,6 +65,6 @@ jobs:
       - name: Run Playwright Tests
         working-directory: playwright
         env:
-          BASE_URL: ${{ secrets.BASE_TRIP_HEIDI_URL }}
+          BASEBASE_TRIP_HEIDI_URL: ${{ secrets.BASE_TRIP_HEIDI_URL }}
           TRIPSTACK_HEIDI_PASSWORD: ${{ secrets.TRIPSTACK_HEIDI_PASSWORD }}
         run: npx playwright test ./tests/finalcapstone.spec.ts
