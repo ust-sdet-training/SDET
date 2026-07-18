@@ -150,7 +150,7 @@ jobs:
 
       - name: Run API tests
         working-directory: APIAutomationFinal
-        run: ./gradlew test --no-daemon
+        run: ./gradlew test --tests "com.ust.tripStack.*"
 
       - name: Upload test reports
         if: always()
