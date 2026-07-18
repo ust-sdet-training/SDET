@@ -38,9 +38,7 @@ jobs:
       - name: Run Tests
         working-directory: ApiTesting
         run: ./gradlew test
-        env:
-         BASE_URL: ${{ secrets.BASE_TRIP_HEIDI_URL }}
-         HEIDI_PASSWORD: ${{ secrets.TRIPSTACK_HEIDI_PASSWORD }}
+       
         
 
 
