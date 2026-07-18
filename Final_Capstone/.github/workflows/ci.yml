@@ -2,9 +2,9 @@ name: Full Capstone CI
 
 on:
   push:
-    branches: [ main, manju_final_capstone ]
+    branches: [ main, branch ]
   pull_request:
-    branches: [ main, manju_final_capstone ]
+    branches: [ main, branch ]
   workflow_dispatch:
 
 jobs:
