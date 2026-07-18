@@ -1,0 +1,163 @@
+name: TripStack CI
+
+on:
+  push:
+    branches:
+      -  vikram-final-capstone
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  tripstack-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      # Checkout
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      # -------------------------------
+      # UI TESTS
+      # -------------------------------
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: playwrightUI/package-lock.json
+
+      - name: Install Playwright
+        working-directory: playwrightUI
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Run Playwright Tests
+        continue-on-error: true
+        working-directory: playwrightUI
+        env:
+          CI: true
+          TRIPSTACK_BASE_URL: https://tripstack.doomple.com
+          TRIPSTACK_EMAIL: ${{ secrets.TRIPSTACK_EMAIL }}
+          TRIPSTACK_PASSWORD: ${{ secrets.TRIPSTACK_PASSWORD }}
+        run: |
+          npx playwright test
+
+      # -------------------------------
+      # API TESTS
+      # -------------------------------
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Run RestAssured Tests
+        continue-on-error: true
+        working-directory: APITesting
+        env:
+          TRIPSTACK_BASE_URL: https://tripstack.doomple.com
+          TRIPSTACK_EMAIL: ${{ secrets.TRIPSTACK_EMAIL }}
+          TRIPSTACK_PASSWORD: ${{ secrets.TRIPSTACK_PASSWORD }}
+        run: |
+          mvn clean test
+
+      # -------------------------------
+      # MERGE ALLURE RESULTS
+      # -------------------------------
+      - name: Prepare Allure Results
+        if: always()
+        run: |
+          rm -rf allure-results
+          mkdir allure-results
+
+          if [ -d playwrightUI/allure-results ]; then
+            cp -R playwrightUI/allure-results/* allure-results/ || true
+          fi
+
+          if [ -d APITesting/target/allure-results ]; then
+            cp -R APITesting/target/allure-results/* allure-results/ || true
+          fi
+
+      - name: Verify Allure Results
+        if: always()
+        run: |
+          echo "===== ALLURE FILES ====="
+          find allure-results -type f || true
+
+      # -------------------------------
+      # Upload Raw Results
+      # -------------------------------
+      - name: Upload Allure Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+          if-no-files-found: warn
+
+      # -------------------------------
+      # Download Previous History
+      # -------------------------------
+      - name: Checkout gh-pages
+        if: always()
+        continue-on-error: true
+        uses: actions/checkout@v5
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      # -------------------------------
+      # Generate Allure Report
+      # -------------------------------
+      - name: Generate Allure Report
+        if: always()
+        uses: simple-elf/allure-report-action@master
+        with:
+          allure_results: allure-results
+          allure_report: allure-report
+          allure_history: allure-history
+          gh_pages: gh-pages
+
+      # -------------------------------
+      # Upload HTML Report
+      # -------------------------------
+      - name: Upload Allure Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report
+          if-no-files-found: warn
+
+      # -------------------------------
+      # Deploy to GitHub Pages
+      # -------------------------------
+      - name: Deploy Report
+        if: always()
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: allure-history
+          clean: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # -------------------------------
+      # Summary
+      # -------------------------------
+      - name: Report Link
+        if: always()
+        run: |
+          OWNER="${{ github.repository_owner }}"
+          REPO="${{ github.event.repository.name }}"
+          URL="https://${OWNER}.github.io/${REPO}/"
+
+          echo "✅ TripStack CI Completed"
+          echo "📊 Allure Report: ${URL}"
+          echo "📊 [Open Allure Report](${URL})" >> $GITHUB_STEP_SUMMARY

@@ -8,6 +8,10 @@ function required(name: string): string {
   return value;
 }
 
+function optional(name: string, fallback: string): string {
+  return process.env[name] ?? fallback;
+}
+
 export const env = {
   credentials(): Credentials {
     return {
@@ -17,18 +21,18 @@ export const env = {
   },
   passenger(): Passenger {
     return {
-      firstName: required('TRIPSTACK_PASSENGER_FIRST_NAME'),
-      lastName: required('TRIPSTACK_PASSENGER_LAST_NAME'),
-      age: required('TRIPSTACK_PASSENGER_AGE'),
-      phone: required('TRIPSTACK_PASSENGER_PHONE'),
+      firstName: optional('TRIPSTACK_PASSENGER_FIRST_NAME', 'Test'),
+      lastName: optional('TRIPSTACK_PASSENGER_LAST_NAME', 'Traveller'),
+      age: optional('TRIPSTACK_PASSENGER_AGE', '30'),
+      phone: optional('TRIPSTACK_PASSENGER_PHONE', '9999999999'),
     };
   },
   paymentCard(): PaymentCard {
     return {
-      name: required('TRIPSTACK_PAYMENT_CARD_NAME'),
-      number: required('TRIPSTACK_PAYMENT_CARD_NUMBER'),
-      expiry: required('TRIPSTACK_PAYMENT_CARD_EXPIRY'),
-      cvv: required('TRIPSTACK_PAYMENT_CARD_CVV'),
+      name: optional('TRIPSTACK_PAYMENT_CARD_NAME', 'Test Traveller'),
+      number: optional('TRIPSTACK_PAYMENT_CARD_NUMBER', '4242424242424242'),
+      expiry: optional('TRIPSTACK_PAYMENT_CARD_EXPIRY', '12/34'),
+      cvv: optional('TRIPSTACK_PAYMENT_CARD_CVV', '123'),
     };
   },
   bookingEnabled(): boolean {

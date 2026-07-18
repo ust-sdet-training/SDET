@@ -43,6 +43,18 @@ class BookingNegativeTest extends BaseApiTest {
     }
 
     @Test
+    void rejectsTamperedBearerToken() {
+        String validToken = loginUser();
+        String tamperedToken = validToken.substring(0, validToken.length() - 1) + (validToken.endsWith("A") ? "B" : "A");
+
+        Response response = given()
+                .header("Authorization", "Bearer " + tamperedToken)
+                .get("/api/auth/me");
+
+        assertEquals(401, response.getStatusCode());
+    }
+
+    @Test
     void rejectsAnEmptySeatHold() {
         String token = loginUser();
         BookingClient bookingClient = new BookingClient(token);
