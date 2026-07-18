@@ -1,5 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
-import {Env } from './config/Env'
+import {Env } from '../Ui_Testing/config/Env';
 const CI = !!process.env.CI;
  
 export default defineConfig({
@@ -22,4 +22,3 @@ export default defineConfig({
         }
     ]
 });
- 
