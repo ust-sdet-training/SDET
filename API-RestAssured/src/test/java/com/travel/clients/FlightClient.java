@@ -29,7 +29,7 @@ public class FlightClient extends BaseAPIClient {
     }
 
     public Flight firstFlight(String from, String to) {
-        return search(from, to, LocalDate.now().plusDays(9).toString()).flights().get(0);
+        return search(from, to, LocalDate.now().plusDays(Long.parseLong(ConfigReader.get("DAYS_FROM_TODAY"))).toString()).flights().getFirst();
     }
 
     public SeatMapResponse seatMap(String flightId) {

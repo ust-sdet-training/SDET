@@ -10,7 +10,7 @@ export const User = {
     })(),
     sortBy: 'Price',
     flightName: 'IndiGo 6E-494',
-    seat: 'Seat 3D, aisle, available',
+    seat: '7D',
     firstName: 'Ivan',
     lastName: 'Iyengar',
     gender: 'Male',

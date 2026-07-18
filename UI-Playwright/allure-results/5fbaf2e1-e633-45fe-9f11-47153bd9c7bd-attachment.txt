@@ -1,3 +1,0 @@
-2026-07-17 16:10:19 [INFO] Flight Booking Test Starts..
-2026-07-17 16:10:21 [INFO] User Login Sucessful
-2026-07-17 16:10:22 [INFO] No Flights Listed For Invalid Route Search

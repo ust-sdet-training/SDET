@@ -138,7 +138,7 @@ public class TripStackAPITests {
         given()
                 .queryParam("from", ConfigReader.get("FROM"))
                 .queryParam("to", ConfigReader.get("TO"))
-                .queryParam("date", String.valueOf(LocalDate.now().plusDays(9)))
+                .queryParam("date", String.valueOf(LocalDate.now().plusDays(Long.parseLong(ConfigReader.get("DAYS_FROM_TODAY")))))
                 .queryParam("pax", ConfigReader.get("PAX"))
                 .queryParam("cls", ConfigReader.get("CLASS"))
                 .when()

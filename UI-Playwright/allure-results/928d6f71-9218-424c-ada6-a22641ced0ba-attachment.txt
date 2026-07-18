@@ -1,7 +1,0 @@
-2026-07-17 16:13:35 [INFO] Flight Booking Test Starts..
-2026-07-17 16:13:37 [INFO] User Login Sucessful
-2026-07-17 16:13:38 [INFO] IndiGo 6E-494 is available and selected succesfully
-2026-07-17 16:13:38 [INFO] Seat 3D, aisle, available and selected succesfully
-2026-07-17 16:13:39 [INFO] Flight Booking Sucessful
-2026-07-17 16:13:39 [INFO] Deleting Booked Flight Seat
-2026-07-17 16:13:40 [INFO] Booked Flight Seat Deleted Successfully
