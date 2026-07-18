@@ -39,9 +39,9 @@ jobs:
 
       - name: Run API Tests
         env:
-          BASE_URL: ${{ secrets.BASE_URL }}
-          EMAIL: ${{ secrets.EMAIL }}
-          PASSWORD: ${{ secrets.PASSWORD }}
+          BASE_URL: ${{ secrets.SALMAN_BASE_URL }}
+          EMAIL: ${{ secrets.SALMAN_AARON_EMAIL }}
+          PASSWORD: ${{ secrets.SALMAN_AARON_PASSWORD }}
         run: mvn clean test
 
       - name: Upload Surefire Reports

@@ -33,15 +33,19 @@ jobs:
           cache: npm
 
       - name: Install Playwright Dependencies
+        working-directory: Playwright
         run: npm ci
 
       - name: Install Playwright Browsers
+        working-directory: Playwright
         run: npx playwright install --with-deps
 
       - name: Verify Playwright Installation
+        working-directory: Playwright
         run: npx playwright --version
 
       - name: Run Playwright Tests
+        working-directory: Playwright
         run: npx playwright test
 
       - name: Upload Playwright HTML Report
@@ -49,6 +53,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: playwright-html-report
+          working-directory: Playwright
           path: playwright-report/
           retention-days: 7
 
@@ -57,6 +62,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: playwright-test-results
+          working-directory: Playwright
           path: test-results/
           retention-days: 7
 
@@ -65,6 +71,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: screenshots
+          working-directory: Playwright
           path: |
             test-results/**/*.png
           if-no-files-found: ignore
@@ -74,6 +81,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: videos
+          working-directory: Playwright
           path: |
             test-results/**/*.webm
           if-no-files-found: ignore
@@ -83,6 +91,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: traces
+          working-directory: Playwright
           path: |
             test-results/**/*.zip
           if-no-files-found: ignore
