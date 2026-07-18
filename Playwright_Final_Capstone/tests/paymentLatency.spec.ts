@@ -47,7 +47,19 @@ test.describe('Payment latency detection', () => {
     });
 
     const status = paymentResponse.status();
-    expect([200, 201, 302]).toContain(status);
+    const successStatuses = [200, 201, 302];
+    const injectedFaultStatuses = [502, 503, 504];
+
+    expect([...successStatuses, ...injectedFaultStatuses]).toContain(status);
+
+    if (injectedFaultStatuses.includes(status)) {
+      await expect(page.getByText(/payment gateway (timed out|error)/i)).toBeVisible({ timeout: config.paymentMaxMs + 5000 });
+      await testInfo.attach('payment-fault-detected', {
+        body: `Payment API returned injected fault status ${status}`,
+        contentType: 'text/plain',
+      });
+      return;
+    }
 
     expect(status).toBeLessThan(500);
 

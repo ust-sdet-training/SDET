@@ -45,7 +45,7 @@ test.describe('E07 Flight booking', () => {
     let bookingSucceeded = false;
     let bookedPNR = '';
 
-    const paymentError = page.getByText(/payment gateway timed out/i);
+    const paymentError = page.getByText(/payment gateway (timed out|error)/i);
 
     testLog.start('Flight booking flow', {
       scenario: 'flight-booking',
