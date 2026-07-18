@@ -29,12 +29,6 @@ public final class BookingFactory {
                 .build();
     }
 
-    public static BookingRow aCancelledBooking() {
-        return BookingRowBuilder.aBooking()
-                .state("CANCELLED")
-                .refundable(false)
-                .build();
-    }
 
     public static BookingRow aMultiSeatBooking(List<String> seatIds) {
         return BookingRowBuilder.aBooking()
@@ -43,7 +37,4 @@ public final class BookingFactory {
                 .build();
     }
 
-    public static BookingRow randomBooking() {
-        return BookingRowBuilder.aBooking().build();
-    }
 }

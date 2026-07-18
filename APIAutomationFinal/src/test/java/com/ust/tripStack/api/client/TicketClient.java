@@ -2,7 +2,6 @@ package com.ust.tripStack.api.client;
 
 import io.restassured.response.Response;
 
-import java.util.Map;
 
 import static com.ust.tripStack.support.SpecFactory.commonJsonRequest;
 import static io.restassured.RestAssured.given;

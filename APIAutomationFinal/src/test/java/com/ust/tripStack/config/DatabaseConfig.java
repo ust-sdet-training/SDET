@@ -4,9 +4,6 @@ import com.ust.tripStack.support.TestEnvironment;
 
 public record DatabaseConfig(String jdbcUrl, String username, String password) {
 
-    public static DatabaseConfig fromContainer(String jdbcUrl, String username, String password) {
-        return new DatabaseConfig(jdbcUrl, username, password);
-    }
 
     public static DatabaseConfig fromEnvironmentCredential() {
         String jdbcUrl = required("DB_JDBC_URL");

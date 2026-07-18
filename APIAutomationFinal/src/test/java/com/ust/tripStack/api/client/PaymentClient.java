@@ -2,8 +2,6 @@ package com.ust.tripStack.api.client;
 
 import io.restassured.response.Response;
 
-import java.util.List;
-import java.util.Map;
 
 import static com.ust.tripStack.support.SpecFactory.commonJsonRequest;
 import static io.restassured.RestAssured.given;
@@ -30,7 +28,3 @@ public class PaymentClient {
                 .post("/bookings/{id}/confirm");
     }
 }
-
-
-///api/bookings/{id}/pay
-///api/bookings/{id}/confirm
