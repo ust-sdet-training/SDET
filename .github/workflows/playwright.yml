@@ -3,11 +3,11 @@ name: UI & Performance Automation
 on:
   push:
     branches:
-      - main
+      - Salman_Final_Capstone
 
   pull_request:
     branches:
-      - main
+      - Salman_Final_Capstone
 
   workflow_dispatch:
 
