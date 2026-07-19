@@ -4,12 +4,12 @@ on:
   push:
     branches:
       - main
-      - Salman_Final_Capstone
+      
 
   pull_request:
     branches:
       - main
-      - Salman_Final_Capstone
+      
 
   workflow_dispatch:
 
@@ -42,6 +42,7 @@ jobs:
         run: mvn clean compile
 
       - name: Run API Tests
+        working-directory: API
         env:
           BASE_URL: ${{ secrets.SALMAN_BASE_URL }}
           EMAIL: ${{ secrets.SALMAN_AARON_EMAIL }}
@@ -53,11 +54,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: surefire-reports
-          path: target/surefire-reports/
+          path: API/target/surefire-reports/
 
       - name: Upload Test Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: target/
+          path: API/target/

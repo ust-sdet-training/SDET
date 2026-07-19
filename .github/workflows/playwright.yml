@@ -1,0 +1,169 @@
+name: UI & Performance Automation
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+
+  playwright-tests:
+
+    name: Run Playwright UI Tests
+
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 30
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Playwright Dependencies
+        working-directory: Playwright
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        working-directory: Playwright
+        run: npx playwright install --with-deps
+
+      - name: Verify Playwright Installation
+        working-directory: Playwright
+        run: npx playwright --version
+
+      - name: Run Playwright Tests
+        working-directory: Playwright
+        env:
+          BASE_URL: ${{ secrets.SALMAN_BASE_URL }}
+          EMAIL: ${{ secrets.SALMAN_AARON_EMAIL }}
+          PASSWORD: ${{ secrets.SALMAN_AARON_PASSWORD }}
+        run: npx playwright test
+
+      - name: Upload Playwright HTML Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-html-report
+          path: Playwright/playwright-report/
+          retention-days: 7
+
+      - name: Upload Playwright Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-test-results
+          path: Playwright/test-results/
+          retention-days: 7
+
+      - name: Upload Screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: Playwright/test-results/**/*.png
+          if-no-files-found: ignore
+
+      - name: Upload Videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: videos
+          path: Playwright/test-results/**/*.webm
+          if-no-files-found: ignore
+
+      - name: Upload Traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: traces
+          path: Playwright/test-results/**/*.zip
+          if-no-files-found: ignore
+
+
+  performance-tests:
+
+    name: Run K6 Performance Tests
+
+    runs-on: ubuntu-latest
+
+    needs: playwright-tests
+
+    timeout-minutes: 20
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install K6
+        run: |
+          sudo gpg -k
+          sudo apt-get update
+          sudo apt-get install -y gnupg software-properties-common
+
+          curl -fsSL https://dl.k6.io/key.gpg \
+            | sudo gpg --dearmor \
+            -o /usr/share/keyrings/k6-archive-keyring.gpg
+
+          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" \
+            | sudo tee /etc/apt/sources.list.d/k6.list
+
+          sudo apt-get update
+          sudo apt-get install -y k6
+
+      - name: Verify K6 Installation
+        run: k6 version
+
+      - name: Create Reports Folder
+        working-directory: Performance
+        run: mkdir -p reports
+
+      - name: Run Login Performance Test
+        working-directory: Performance
+        env:
+          BASE_URL: ${{ secrets.SALMAN_BASE_URL }}
+          EMAIL: ${{ secrets.SALMAN_AARON_EMAIL }}
+          PASSWORD: ${{ secrets.SALMAN_AARON_PASSWORD }}
+        run: |
+          k6 run scripts/loginPerformance.js \
+          --summary-export=reports/login-summary.json
+
+      - name: Run Search Performance Test
+        working-directory: Performance
+        env:
+          BASE_URL: ${{ secrets.SALMAN_BASE_URL }}
+          EMAIL: ${{ secrets.SALMAN_AARON_EMAIL }}
+          PASSWORD: ${{ secrets.SALMAN_AARON_PASSWORD }}
+        run: |
+          k6 run scripts/searchPerformance.js \
+          --summary-export=reports/search-summary.json
+
+      - name: Run Booking Performance Test
+        working-directory: Performance
+        env:
+          BASE_URL: ${{ secrets.SALMAN_BASE_URL }}
+          EMAIL: ${{ secrets.SALMAN_AARON_EMAIL }}
+          PASSWORD: ${{ secrets.SALMAN_AARON_PASSWORD }}
+        run: |
+          k6 run scripts/bookingPerformance.js \
+          --summary-export=reports/booking-summary.json
+
+      - name: Upload Performance Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: performance-reports
+          path: Performance/reports/
+          retention-days: 7

@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 import { FlightSearchLocators } from "../locators/FlightSearchLocators";
 import { logger } from "../logger/logger";
 
@@ -16,6 +16,8 @@ export class FlightSearchPage {
 
     async selectSource(city: string) {
         logger.info(`Selecting source city: ${city}`);
+        await expect(this.locator.fromDropdown).toBeVisible({timeout: 30000});
+
         await this.locator.fromDropdown.click();
         await this.page.getByRole("option", { name: city }).click();
     }
