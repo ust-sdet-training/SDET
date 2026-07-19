@@ -16,13 +16,10 @@ public class BookingClient {
                 .header("Authorization", "Bearer " + token)
                 .body(request)
                 .log().all()
-
                 .when()
                 .post(ConfigReader.get("booking.endpoint"))
-
                 .then()
                 .log().all()
-
                 .extract()
                 .response();
     }

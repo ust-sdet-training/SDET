@@ -1,4 +1,4 @@
-import { Locator, Page } from "@playwright/test";
+import { Locator, Page, expect } from "@playwright/test";
 import { BasePage } from "./BasePage";
 import { logger } from "../utils/Logger";
 
@@ -11,6 +11,7 @@ export class PaymentPage extends BasePage {
     readonly expiryTextbox: Locator;
     readonly cvvTextbox: Locator;
     readonly payButton: Locator;
+    readonly paymentTimeoutMessage: Locator;
 
     constructor(page: Page) {
 
@@ -20,6 +21,7 @@ export class PaymentPage extends BasePage {
         this.expiryTextbox = page.getByLabel("Expiry");
         this.cvvTextbox = page.getByLabel("CVV");
         this.payButton = page.getByRole("button", {name: "Pay"});
+        this.paymentTimeoutMessage = page.getByText("payment gateway timed out");
 
     }
 
@@ -38,5 +40,10 @@ export class PaymentPage extends BasePage {
         logger.info("[PaymentPage] Submitting payment");
         await this.click(this.payButton, "Pay button");
     }
+
+    async verifyPaymentGatewayTimeout() {
+    logger.info("[PaymentPage] Verifying payment gateway timeout");
+    await expect(this.paymentTimeoutMessage).toBeVisible();
+}
 
 }

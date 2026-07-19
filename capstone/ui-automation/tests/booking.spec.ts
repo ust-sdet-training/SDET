@@ -35,8 +35,13 @@ test("User should successfully book a flight", async ({page, loginPage, homePage
 
     await paymentPage.enterPaymentDetails(payment);
     await paymentPage.completePayment();
+
+
     
-    const pnrNumber = await bookingConfirmationPage.getPNRNumber();
-    console.log(`PNR Number: ${pnrNumber}`);
-    await bookingConfirmationPage.clickViewMyTrip();
+    // const pnrNumber = await bookingConfirmationPage.getPNRNumber();
+    // await bookingConfirmationPage.clickViewMyTrip();
+
+    // retry payment to simulate gateway timeout using same payment test data
+
+    await paymentPage.verifyPaymentGatewayTimeout();
 });

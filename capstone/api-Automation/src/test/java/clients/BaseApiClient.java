@@ -1,15 +1,10 @@
 package clients;
 
 import io.restassured.response.Response;
-
 import static io.restassured.RestAssured.given;
-
-
 public class BaseApiClient {
 
-
     protected Response get(String endpoint) {
-
         return given()
                 .spec(spec.RequestSpec.request())
                 .when()
@@ -17,7 +12,6 @@ public class BaseApiClient {
     }
 
     protected Response getWithAuth(String endpoint, String token) {
-
         return given()
                 .spec(spec.RequestSpec.request())
                 .header("Authorization", "Bearer " + token)
@@ -26,7 +20,6 @@ public class BaseApiClient {
     }
 
     protected Response post(String endpoint, Object body) {
-
         return given()
                 .spec(spec.RequestSpec.request())
                 .body(body)

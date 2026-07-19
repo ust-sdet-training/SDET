@@ -5,9 +5,7 @@ import clients.AuthClient;
 import org.junit.jupiter.api.Test;
 import utils.TokenManager;
 
-
 public class AuthTest {
-
 
     @Test
     void loginTest(){

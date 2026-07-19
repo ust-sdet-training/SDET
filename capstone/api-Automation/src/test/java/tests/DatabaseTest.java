@@ -11,23 +11,14 @@ public class DatabaseTest {
     @Test
     void shouldInsertBookingIntoDatabase(){
 
-        BookingDBValidator validator =
-                new BookingDBValidator();
-
+        BookingDBValidator validator = new BookingDBValidator();
         validator.insertBooking(
                 "B001",
                 "flight",
                 "FL-DELBLR-51",
                 "HELD"
         );
-
-        assertTrue(
-                validator.bookingExists("B001")
-        );
-
-        assertEquals(
-                "HELD",
-                validator.getState("B001")
-        );
+        assertTrue(validator.bookingExists("B001"));
+        assertEquals("HELD", validator.getState("B001"));
     }
 }

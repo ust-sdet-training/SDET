@@ -9,14 +9,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import utils.ConfigReader;
 import utils.TokenManager;
-import spec.RequestSpec;
-
+import specs.RequestSpec;
 
 public class BookingNegativeTest {
     @Test
     void shouldRejectBookingWithoutInventory(){
-        String token =
-                TokenManager.getToken();
+        String token = TokenManager.getToken();
         Response response =
                 given()
                         .spec(RequestSpec.request())
@@ -36,14 +34,11 @@ public class BookingNegativeTest {
                                 """
                         )
                         .when()
-                        .post(
-                                ConfigReader.get("booking.endpoint")
-                        )
+                        .post(ConfigReader.get("booking.endpoint"))
                         .then()
                         .log().all()
                         .extract()
                         .response();
         assertEquals(400, response.statusCode());
     }
-
 }

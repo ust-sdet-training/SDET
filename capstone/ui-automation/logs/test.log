@@ -379,3 +379,155 @@
 2026-07-18T07:22:49.778Z [INFO] [PaymentPage] Clicking Pay button
 2026-07-18T07:22:50.201Z [INFO] [BookingConfirmationPage] Reading booking reference number
 2026-07-18T07:22:50.265Z [INFO] [BookingConfirmationPage] Opening My Trips page
+2026-07-18T12:58:15.269Z [INFO] [LoginPage] Starting login flow
+2026-07-18T12:58:15.279Z [INFO] [LoginPage] Clicking Login link
+2026-07-18T12:58:15.640Z [INFO] [LoginPage] Filling email
+2026-07-18T12:58:15.704Z [INFO] [LoginPage] Filling password
+2026-07-18T12:58:15.732Z [INFO] [LoginPage] Clicking Sign in button
+2026-07-18T12:58:16.369Z [INFO] [LoginPage] Login submitted
+2026-07-18T12:58:16.370Z [INFO] [HomePage] Searching for a flight
+2026-07-18T12:58:16.370Z [INFO] [HomePage] Filling departure city
+2026-07-18T12:58:16.546Z [INFO] [HomePage] Filling destination city
+2026-07-18T12:58:16.700Z [INFO] [HomePage] Filling travel date
+2026-07-18T12:58:16.728Z [INFO] [HomePage] Clicking Search button
+2026-07-18T12:58:17.015Z [INFO] [SearchResultPage] Verifying search results
+2026-07-18T12:58:17.149Z [INFO] [SearchResultPage] Booking flight at index 0
+2026-07-18T12:58:17.512Z [INFO] [SeatSelectionPage] Selecting seat 11D
+2026-07-18T12:58:17.685Z [INFO] [SeatSelectionPage] Continuing to passenger details
+2026-07-18T12:58:17.686Z [INFO] [SeatSelectionPage] Clicking Continue button
+2026-07-18T12:58:18.035Z [INFO] [PassengerPage] Filling passenger details
+2026-07-18T12:58:18.035Z [INFO] [PassengerPage] Filling first name
+2026-07-18T12:58:18.100Z [INFO] [PassengerPage] Filling last name
+2026-07-18T12:58:18.136Z [INFO] [PassengerPage] Filling age
+2026-07-18T12:58:18.211Z [INFO] [PassengerPage] Filling email
+2026-07-18T12:58:18.230Z [INFO] [PassengerPage] Filling phone number
+2026-07-18T12:58:18.263Z [INFO] [PassengerPage] Continuing to payment
+2026-07-18T12:58:18.263Z [INFO] [PassengerPage] Clicking Continue button
+2026-07-18T12:58:18.689Z [INFO] [PaymentPage] Entering payment details
+2026-07-18T12:58:18.689Z [INFO] [PaymentPage] Filling card holder name
+2026-07-18T12:58:18.744Z [INFO] [PaymentPage] Filling card number
+2026-07-18T12:58:18.771Z [INFO] [PaymentPage] Filling expiry date
+2026-07-18T12:58:18.801Z [INFO] [PaymentPage] Filling CVV
+2026-07-18T12:58:18.834Z [INFO] [PaymentPage] Submitting payment
+2026-07-18T12:58:18.835Z [INFO] [PaymentPage] Clicking Pay button
+2026-07-18T12:58:22.114Z [INFO] [BookingConfirmationPage] Reading booking reference number
+2026-07-18T13:04:56.481Z [INFO] [LoginPage] Starting login flow
+2026-07-18T13:04:56.487Z [INFO] [LoginPage] Clicking Login link
+2026-07-18T13:04:56.810Z [INFO] [LoginPage] Filling email
+2026-07-18T13:04:56.855Z [INFO] [LoginPage] Filling password
+2026-07-18T13:04:56.875Z [INFO] [LoginPage] Clicking Sign in button
+2026-07-18T13:04:57.595Z [INFO] [LoginPage] Login submitted
+2026-07-18T13:04:57.596Z [INFO] [HomePage] Searching for a flight
+2026-07-18T13:04:57.597Z [INFO] [HomePage] Filling departure city
+2026-07-18T13:04:57.757Z [INFO] [HomePage] Filling destination city
+2026-07-18T13:04:57.842Z [INFO] [HomePage] Filling travel date
+2026-07-18T13:04:57.870Z [INFO] [HomePage] Clicking Search button
+2026-07-18T13:04:58.146Z [INFO] [SearchResultPage] Verifying search results
+2026-07-18T13:04:58.247Z [INFO] [SearchResultPage] Booking flight at index 0
+2026-07-18T13:04:58.574Z [INFO] [SeatSelectionPage] Selecting seat 12D
+2026-07-18T13:04:58.800Z [INFO] [SeatSelectionPage] Continuing to passenger details
+2026-07-18T13:04:58.800Z [INFO] [SeatSelectionPage] Clicking Continue button
+2026-07-18T13:04:59.066Z [INFO] [PassengerPage] Filling passenger details
+2026-07-18T13:04:59.066Z [INFO] [PassengerPage] Filling first name
+2026-07-18T13:04:59.154Z [INFO] [PassengerPage] Filling last name
+2026-07-18T13:04:59.179Z [INFO] [PassengerPage] Filling age
+2026-07-18T13:04:59.249Z [INFO] [PassengerPage] Filling email
+2026-07-18T13:04:59.272Z [INFO] [PassengerPage] Filling phone number
+2026-07-18T13:04:59.302Z [INFO] [PassengerPage] Continuing to payment
+2026-07-18T13:04:59.302Z [INFO] [PassengerPage] Clicking Continue button
+2026-07-18T13:04:59.718Z [INFO] [PaymentPage] Entering payment details
+2026-07-18T13:04:59.719Z [INFO] [PaymentPage] Filling card holder name
+2026-07-18T13:04:59.783Z [INFO] [PaymentPage] Filling card number
+2026-07-18T13:04:59.817Z [INFO] [PaymentPage] Filling expiry date
+2026-07-18T13:04:59.854Z [INFO] [PaymentPage] Filling CVV
+2026-07-18T13:05:54.240Z [INFO] [LoginPage] Starting login flow
+2026-07-18T13:05:54.246Z [INFO] [LoginPage] Clicking Login link
+2026-07-18T13:05:54.599Z [INFO] [LoginPage] Filling email
+2026-07-18T13:05:54.670Z [INFO] [LoginPage] Filling password
+2026-07-18T13:05:54.698Z [INFO] [LoginPage] Clicking Sign in button
+2026-07-18T13:05:55.258Z [INFO] [LoginPage] Login submitted
+2026-07-18T13:05:55.259Z [INFO] [HomePage] Searching for a flight
+2026-07-18T13:05:55.259Z [INFO] [HomePage] Filling departure city
+2026-07-18T13:05:55.482Z [INFO] [HomePage] Filling destination city
+2026-07-18T13:05:55.560Z [INFO] [HomePage] Filling travel date
+2026-07-18T13:05:55.586Z [INFO] [HomePage] Clicking Search button
+2026-07-18T13:05:55.809Z [INFO] [SearchResultPage] Verifying search results
+2026-07-18T13:05:55.913Z [INFO] [SearchResultPage] Booking flight at index 0
+2026-07-18T13:05:56.316Z [INFO] [SeatSelectionPage] Selecting seat 12D
+2026-07-18T13:06:40.703Z [INFO] [LoginPage] Starting login flow
+2026-07-18T13:06:40.713Z [INFO] [LoginPage] Clicking Login link
+2026-07-18T13:06:41.000Z [INFO] [LoginPage] Filling email
+2026-07-18T13:06:41.039Z [INFO] [LoginPage] Filling password
+2026-07-18T13:06:41.058Z [INFO] [LoginPage] Clicking Sign in button
+2026-07-18T13:06:41.385Z [INFO] [LoginPage] Login submitted
+2026-07-18T13:06:41.385Z [INFO] [HomePage] Searching for a flight
+2026-07-18T13:06:41.386Z [INFO] [HomePage] Filling departure city
+2026-07-18T13:06:41.534Z [INFO] [HomePage] Filling destination city
+2026-07-18T13:06:41.624Z [INFO] [HomePage] Filling travel date
+2026-07-18T13:06:41.646Z [INFO] [HomePage] Clicking Search button
+2026-07-18T13:06:41.790Z [INFO] [SearchResultPage] Verifying search results
+2026-07-18T13:06:41.865Z [INFO] [SearchResultPage] Booking flight at index 0
+2026-07-18T13:06:42.036Z [INFO] [SeatSelectionPage] Selecting seat 14D
+2026-07-18T13:07:10.872Z [INFO] [LoginPage] Starting login flow
+2026-07-18T13:07:10.879Z [INFO] [LoginPage] Clicking Login link
+2026-07-18T13:07:11.183Z [INFO] [LoginPage] Filling email
+2026-07-18T13:07:11.233Z [INFO] [LoginPage] Filling password
+2026-07-18T13:07:11.256Z [INFO] [LoginPage] Clicking Sign in button
+2026-07-18T13:07:11.838Z [INFO] [LoginPage] Login submitted
+2026-07-18T13:07:11.839Z [INFO] [HomePage] Searching for a flight
+2026-07-18T13:07:11.839Z [INFO] [HomePage] Filling departure city
+2026-07-18T13:07:11.968Z [INFO] [HomePage] Filling destination city
+2026-07-18T13:07:12.053Z [INFO] [HomePage] Filling travel date
+2026-07-18T13:07:12.075Z [INFO] [HomePage] Clicking Search button
+2026-07-18T13:07:12.342Z [INFO] [SearchResultPage] Verifying search results
+2026-07-18T13:07:12.388Z [INFO] [SearchResultPage] Booking flight at index 0
+2026-07-18T13:07:12.647Z [INFO] [SeatSelectionPage] Selecting seat 15D
+2026-07-18T13:07:12.862Z [INFO] [SeatSelectionPage] Continuing to passenger details
+2026-07-18T13:07:12.863Z [INFO] [SeatSelectionPage] Clicking Continue button
+2026-07-18T13:07:13.096Z [INFO] [PassengerPage] Filling passenger details
+2026-07-18T13:07:13.097Z [INFO] [PassengerPage] Filling first name
+2026-07-18T13:07:13.189Z [INFO] [PassengerPage] Filling last name
+2026-07-18T13:07:13.215Z [INFO] [PassengerPage] Filling age
+2026-07-18T13:07:13.271Z [INFO] [PassengerPage] Filling email
+2026-07-18T13:07:13.296Z [INFO] [PassengerPage] Filling phone number
+2026-07-18T13:07:13.330Z [INFO] [PassengerPage] Continuing to payment
+2026-07-18T13:07:13.330Z [INFO] [PassengerPage] Clicking Continue button
+2026-07-18T13:07:13.784Z [INFO] [PaymentPage] Entering payment details
+2026-07-18T13:07:13.785Z [INFO] [PaymentPage] Filling card holder name
+2026-07-18T13:07:13.850Z [INFO] [PaymentPage] Filling card number
+2026-07-18T13:07:13.879Z [INFO] [PaymentPage] Filling expiry date
+2026-07-18T13:07:13.914Z [INFO] [PaymentPage] Filling CVV
+2026-07-18T13:07:13.946Z [INFO] [PaymentPage] Submitting payment
+2026-07-18T13:07:13.946Z [INFO] [PaymentPage] Clicking Pay button
+2026-07-19T02:40:47.916Z [INFO] [LoginPage] Starting login flow
+2026-07-19T02:40:47.921Z [INFO] [LoginPage] Clicking Login link
+2026-07-19T02:40:48.263Z [INFO] [LoginPage] Filling email
+2026-07-19T02:40:48.304Z [INFO] [LoginPage] Filling password
+2026-07-19T02:40:48.325Z [INFO] [LoginPage] Clicking Sign in button
+2026-07-19T02:40:48.876Z [INFO] [LoginPage] Login submitted
+2026-07-19T02:40:48.879Z [INFO] [HomePage] Searching for a flight
+2026-07-19T02:40:48.879Z [INFO] [HomePage] Filling departure city
+2026-07-19T02:40:49.025Z [INFO] [HomePage] Filling destination city
+2026-07-19T02:40:49.109Z [INFO] [HomePage] Filling travel date
+2026-07-19T02:40:49.131Z [INFO] [HomePage] Clicking Search button
+2026-07-19T02:40:49.378Z [INFO] [SearchResultPage] Verifying search results
+2026-07-19T02:40:49.488Z [INFO] [SearchResultPage] Booking flight at index 0
+2026-07-19T02:40:49.777Z [INFO] [SeatSelectionPage] Selecting seat 16D
+2026-07-19T02:40:49.956Z [INFO] [SeatSelectionPage] Continuing to passenger details
+2026-07-19T02:40:49.956Z [INFO] [SeatSelectionPage] Clicking Continue button
+2026-07-19T02:40:50.187Z [INFO] [PassengerPage] Filling passenger details
+2026-07-19T02:40:50.188Z [INFO] [PassengerPage] Filling first name
+2026-07-19T02:40:50.249Z [INFO] [PassengerPage] Filling last name
+2026-07-19T02:40:50.270Z [INFO] [PassengerPage] Filling age
+2026-07-19T02:40:50.355Z [INFO] [PassengerPage] Filling email
+2026-07-19T02:40:50.383Z [INFO] [PassengerPage] Filling phone number
+2026-07-19T02:40:50.410Z [INFO] [PassengerPage] Continuing to payment
+2026-07-19T02:40:50.410Z [INFO] [PassengerPage] Clicking Continue button
+2026-07-19T02:40:50.811Z [INFO] [PaymentPage] Entering payment details
+2026-07-19T02:40:50.811Z [INFO] [PaymentPage] Filling card holder name
+2026-07-19T02:40:50.855Z [INFO] [PaymentPage] Filling card number
+2026-07-19T02:40:50.893Z [INFO] [PaymentPage] Filling expiry date
+2026-07-19T02:40:50.924Z [INFO] [PaymentPage] Filling CVV
+2026-07-19T02:40:50.947Z [INFO] [PaymentPage] Submitting payment
+2026-07-19T02:40:50.948Z [INFO] [PaymentPage] Clicking Pay button
+2026-07-19T02:40:54.198Z [INFO] [PaymentPage] Verifying payment gateway timeout
